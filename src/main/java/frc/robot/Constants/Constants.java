@@ -37,6 +37,7 @@ public final class Constants {
     public static final double MAX_VOLTAGE = 12.0;
 
     // possibly change per this years gearbox
+    // 6380 is top rpm of the falcon, 60 to convert rpm to seconds
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 /
         60.0 *
         SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
