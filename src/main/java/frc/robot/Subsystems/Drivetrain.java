@@ -80,4 +80,9 @@ public class Drivetrain {
 
         return _instance;
     }
+
+    public void drive(double translationX, double translationY, double rotationZ)
+    {
+
+    }
 }
