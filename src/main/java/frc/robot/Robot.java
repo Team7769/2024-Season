@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 
 /**
@@ -20,10 +22,14 @@ public class Robot extends TimedRobot {
    */
 
    private Drivetrain _drivetrain;
+   private XboxController _driverController;
+   private XboxController _operatorController;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
+    _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+    _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
   }
 
   @Override
@@ -39,7 +45,22 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    teleopDrive();
+  }
+
+  private void teleopDrive() {
+    // The X translation will be the vertical value of the left driver joystick
+    var translationX = -_driverController.getLeftY();
+
+    // The Y translation will be the horizontal value of the left driver joystick
+    var translationY = -_driverController.getLeftX();
+
+    // The rotation will be the horizontal value of the right driver joystick
+    var rotation = -_driverController.getRightX();
+
+    _drivetrain.drive(translationX, translationY, rotation);
+  }
 
   @Override
   public void disabledInit() {}

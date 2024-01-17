@@ -5,6 +5,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
+
+    // Controller USB ports
+    public static final int kDriverControllerUsbSlot = 0;
+    public static final int kOperatorControllerUsbSlot = 1;
+
     // Swerve CAN IDs
     public static final int kFrontLeftDriveId = 2;
     public static final int kFrontLeftSteerId = 3;
