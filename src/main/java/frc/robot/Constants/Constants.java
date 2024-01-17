@@ -1,5 +1,7 @@
 package frc.robot.Constants;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -33,6 +35,14 @@ public final class Constants {
     public static final double kBackRightEncoderOffset = -Math.toRadians(144.044);
     
     public static final double MAX_VOLTAGE = 12.0;
+
+    // possibly change per this years gearbox
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 /
+        60.0 *
+        SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
+        SdsModuleConfigurations.MK4I_L2.getWheelDiameter() *
+        Math.PI;
+
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
     private static final double DRIVETRAIN_TRACK_WIDTH_METERS = Units.inchesToMeters(19.5);
     private static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19.5);
