@@ -13,10 +13,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 
 public class Drivetrain {
@@ -29,7 +32,7 @@ public class Drivetrain {
 
     private final SwerveDrivePoseEstimator _drivePoseEstimator;
 
-    private final SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
+    private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
@@ -37,6 +40,8 @@ public class Drivetrain {
     private final double _gyroOffset = 0.0;
 
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+
+    private final Field2d m_field = new Field2d();
 
     private Drivetrain()
     {
@@ -113,18 +118,92 @@ public class Drivetrain {
         return _instance;
     }
 
-    public Rotation2d getGyroRotation() {
+    // public void zeroSensors() {
+    //     resetOdometry();
+    // }
+
+    public void logTelemetry()
+    {
+        var pose = _drivePoseEstimator.getEstimatedPosition();
+        
+        m_field.setRobotPose(pose);
+
+        SmartDashboard.putNumber("drivetrainGyroAngle",
+                                 getGyroRotation().getDegrees());
+
+        SmartDashboard.putNumber("drivetrainChassisSpeedsVx",
+                                 _chassisSpeeds.vxMetersPerSecond);
+
+        SmartDashboard.putNumber("drivetrainChassisSpeedsVy",
+                                 _chassisSpeeds.vyMetersPerSecond);
+
+        SmartDashboard.putNumber("drivetrainChassisSpeedsWz",
+                                 _chassisSpeeds.omegaRadiansPerSecond);
+
+        SmartDashboard.putNumber("drivetrainGyroOffset", _gyroOffset);
+        SmartDashboard.putNumber("drivetrainPitch",
+                                 _gyro.getRoll().getValueAsDouble());
+
+        SmartDashboard.putNumber("drivetrainOdometryX", pose.getX());
+        SmartDashboard.putNumber("drivetrainOdometryY", pose.getY());
+        SmartDashboard.putNumber("drivetrainOdometryZ",
+                                 pose.getRotation().getDegrees());
+    }
+
+    public void updateOdometry()
+    {
+
+        _drivePoseEstimator.updateWithTime(
+            Timer.getFPGATimestamp(),
+            getGyroRotation(),
+            new SwerveModulePosition[] {
+                new SwerveModulePosition(
+                    _frontLeftModule.getDriveDistance() *
+                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
+                    new Rotation2d(_frontLeftModule.getSteerAngle())
+                ),
+
+                new SwerveModulePosition(
+                    _frontRightModule.getDriveDistance() *
+                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
+                    new Rotation2d(_frontRightModule.getSteerAngle())
+                ),
+
+                new SwerveModulePosition(
+                    _backLeftModule.getDriveDistance() *
+                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
+                    new Rotation2d(_backLeftModule.getSteerAngle())
+                ),
+
+                new SwerveModulePosition(
+                    _backRightModule.getDriveDistance() *
+                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
+                    new Rotation2d(_backRightModule.getSteerAngle())
+                ),
+            }
+        );
+    }
+
+    // public void resetOdometry()
+    // {
+
+    // }
+
+    public Rotation2d getGyroRotation()
+    {
         // return rotation2d with first method
         return _gyro.getRotation2d();
     }
 
-    public Rotation2d getGyroRotationWithOffset() {
+    public Rotation2d getGyroRotationWithOffset()
+    {
         // return rotation2d + offset with second method
         return Rotation2d.fromDegrees(_gyro.getRotation2d().getDegrees() +
                                       _gyroOffset);
     }
 
-    private void setModuleStates(SwerveModuleState[] moduleStates) {
+    private void setModuleStates(SwerveModuleState[] moduleStates)
+    {
         // set voltage to deliver to motors and angle to rotate wheel to
         _frontLeftModule.set(moduleStates[0].speedMetersPerSecond /
                              Constants.MAX_VELOCITY_METERS_PER_SECOND *
