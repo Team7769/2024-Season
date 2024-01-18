@@ -147,22 +147,22 @@ public class Drivetrain {
                              moduleStates[3].angle.getRadians());
     }
 
-    public void drive(double translationX, double translationY, double rotationZ)
+    public void fieldOrientedDrive(double translationX, double translationY, double rotationZ)
     {
-        // convert joystick values to chassis speeds which take into account
-        // the game field
-        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX,
-                                                               translationY,
-                                                               rotationZ,
-                                                               getGyroRotationWithOffset());
+        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX, translationY, rotationZ, getGyroRotationWithOffset());
 
-        var moduleStates = Constants
-            ._kinematics
-            .toSwerveModuleStates(_chassisSpeeds);
+        drive(_chassisSpeeds);
+    }
+    
+
+
+    public void drive(ChassisSpeeds _chassisSpeeds)
+    {
+        // Sets all the modules to their proper states
+        var moduleStates = Constants._kinematics.toSwerveModuleStates(_chassisSpeeds);
 
         // normalize speed based on max velocity meters
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,
-                                                    Constants.MAX_VELOCITY_METERS_PER_SECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,Constants.MAX_VELOCITY_METERS_PER_SECOND);
 
         setModuleStates(moduleStates);
         _moduleStates = moduleStates;
