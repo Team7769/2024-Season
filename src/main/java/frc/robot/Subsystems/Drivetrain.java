@@ -6,9 +6,12 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -24,7 +27,9 @@ public class Drivetrain {
     private final SwerveModule _backLeftModule;
     private final SwerveModule _backRightModule;
 
-    private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
+    private final SwerveDrivePoseEstimator _drivePoseEstimator;
+
+    private final SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
@@ -84,6 +89,18 @@ public class Drivetrain {
             .withSteerEncoderPort(Constants.kBackRightSteerEncoderId)
             .withSteerOffset(Constants.kBackRightEncoderOffset)
             .build();
+
+        _drivePoseEstimator = new SwerveDrivePoseEstimator(
+            Constants._kinematics,
+            getGyroRotation(),
+            new SwerveModulePosition[] {
+                _frontLeftModule.getPosition(),
+                _frontRightModule.getPosition(),
+                _backLeftModule.getPosition(),
+                _backRightModule.getPosition()
+            },
+            new Pose2d()
+        );
     }
 
     public static Drivetrain getInstance()
@@ -96,12 +113,19 @@ public class Drivetrain {
         return _instance;
     }
 
+    public Rotation2d getGyroRotation() {
+        // return rotation2d with first method
+        return _gyro.getRotation2d();
+    }
+
     public Rotation2d getGyroRotationWithOffset() {
+        // return rotation2d + offset with second method
         return Rotation2d.fromDegrees(_gyro.getRotation2d().getDegrees() +
                                       _gyroOffset);
     }
 
     private void setModuleStates(SwerveModuleState[] moduleStates) {
+        // set voltage to deliver to motors and angle to rotate wheel to
         _frontLeftModule.set(moduleStates[0].speedMetersPerSecond /
                              Constants.MAX_VELOCITY_METERS_PER_SECOND *
                              Constants.MAX_VOLTAGE,
@@ -125,6 +149,8 @@ public class Drivetrain {
 
     public void drive(double translationX, double translationY, double rotationZ)
     {
+        // convert joystick values to chassis speeds which take into account
+        // the game field
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX,
                                                                translationY,
                                                                rotationZ,
@@ -134,6 +160,7 @@ public class Drivetrain {
             ._kinematics
             .toSwerveModuleStates(_chassisSpeeds);
 
+        // normalize speed based on max velocity meters
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,
                                                     Constants.MAX_VELOCITY_METERS_PER_SECOND);
 
