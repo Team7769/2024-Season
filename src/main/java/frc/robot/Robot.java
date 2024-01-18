@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     // The rotation will be the horizontal value of the right driver joystick
     var rotation = -_driverController.getRightX();
 
-    _drivetrain.drive(translationX, translationY, rotation);
+    _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
 
   @Override
