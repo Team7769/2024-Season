@@ -232,8 +232,6 @@ public class Drivetrain {
 
         drive(_chassisSpeeds);
     }
-    
-
 
     public void drive(ChassisSpeeds _chassisSpeeds)
     {
