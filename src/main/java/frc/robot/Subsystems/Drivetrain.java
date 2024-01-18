@@ -149,7 +149,7 @@ public class Drivetrain {
         SmartDashboard.putNumber("drivetrainOdometryZ",
                                  pose.getRotation().getDegrees());
     }
-
+    
     public void updateOdometry()
     {
 
@@ -201,7 +201,10 @@ public class Drivetrain {
         return Rotation2d.fromDegrees(_gyro.getRotation2d().getDegrees() +
                                       _gyroOffset);
     }
-
+    /** Takes a list of SwerveModuleStates for each swerve modual and sets each swerve modual to that state (the angle and speed of the wheel).
+     * 
+     * @param moduleStates A list that contains the necessary state for each swerve modual from front left and right to back left and back right in that order.
+     */
     private void setModuleStates(SwerveModuleState[] moduleStates)
     {
         // set voltage to deliver to motors and angle to rotate wheel to
@@ -226,13 +229,30 @@ public class Drivetrain {
                              moduleStates[3].angle.getRadians());
     }
 
+    /** Method that takes translations from the drive controller creates a chassisSpeed object and feeds it into the drive method
+        Drive and fieldOrientedDrive are seperate due to autonomus getting chassis speed directly with no need to translate
+
+        @param translationX Double value from the left joysticks vertical axis multiplied by max velocity as fromFieldRelativeSpeeds
+        requires m/s (Used for translation)
+
+        @param translationY Double value from the left joysticks horizontal axis once again multiplied by max velocity (Used for translation)
+
+        @param rotationZ Double value from the right joysticks horizontal axis once again multiplied by max velocity (Used for rotation)
+     */ 
     public void fieldOrientedDrive(double translationX, double translationY, double rotationZ)
     {
-        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX, translationY, rotationZ, getGyroRotationWithOffset());
+        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
+                                                                translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+                                                                rotationZ * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+                                                                getGyroRotationWithOffset());
 
         drive(_chassisSpeeds);
     }
 
+    /** Method that takes a ChassisSpeeds object and sets each swerve module to it's required state (position, speed, etc) also stores the last modual states applied.
+     * 
+     * @param _chassisSpeeds A variable for a ChasisSpeeds object hold X, Y, and rotational velocity as well as the 2D rotation of the robot.
+     */
     public void drive(ChassisSpeeds _chassisSpeeds)
     {
         // Sets all the modules to their proper states
