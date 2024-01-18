@@ -45,6 +45,11 @@ public final class Constants {
         Math.PI;
 
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
+    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4_L2.getDriveReduction() *
+        SdsModuleConfigurations.MK4_L2.getWheelDiameter() *
+        Math.PI /
+        DRIVE_ENCODER_COUNTS_PER_REVOLUTION;
+
     private static final double DRIVETRAIN_TRACK_WIDTH_METERS = Units.inchesToMeters(19.5);
     private static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19.5);
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND = 3 * Math.PI;
