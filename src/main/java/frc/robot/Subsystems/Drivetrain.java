@@ -29,7 +29,7 @@ public class Drivetrain {
 
     private final SwerveDrivePoseEstimator _drivePoseEstimator;
 
-    private final SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
+    private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
