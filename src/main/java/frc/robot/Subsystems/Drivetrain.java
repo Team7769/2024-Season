@@ -157,29 +157,10 @@ public class Drivetrain {
             Timer.getFPGATimestamp(),
             getGyroRotation(),
             new SwerveModulePosition[] {
-                new SwerveModulePosition(
-                    _frontLeftModule.getDriveDistance() *
-                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
-                    new Rotation2d(_frontLeftModule.getSteerAngle())
-                ),
-
-                new SwerveModulePosition(
-                    _frontRightModule.getDriveDistance() *
-                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
-                    new Rotation2d(_frontRightModule.getSteerAngle())
-                ),
-
-                new SwerveModulePosition(
-                    _backLeftModule.getDriveDistance() *
-                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
-                    new Rotation2d(_backLeftModule.getSteerAngle())
-                ),
-
-                new SwerveModulePosition(
-                    _backRightModule.getDriveDistance() *
-                    Constants.DRIVE_ENCODER_CONVERSION_FACTOR,
-                    new Rotation2d(_backRightModule.getSteerAngle())
-                ),
+                _frontLeftModule.getPosition(),
+                _frontRightModule.getPosition(),
+                _backLeftModule.getPosition(),
+                _backRightModule.getPosition()
             }
         );
     }
@@ -239,12 +220,16 @@ public class Drivetrain {
 
         @param rotationZ Double value from the right joysticks horizontal axis once again multiplied by max velocity (Used for rotation)
      */ 
-    public void fieldOrientedDrive(double translationX, double translationY, double rotationZ)
+    public void fieldOrientedDrive(double translationX,
+                                   double translationY,
+                                   double rotationZ)
     {
-        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
-                                                                translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
-                                                                rotationZ * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
-                                                                getGyroRotationWithOffset());
+        _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
+            translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+            rotationZ * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+            getGyroRotationWithOffset()
+        );
 
         drive(_chassisSpeeds);
     }
@@ -256,10 +241,15 @@ public class Drivetrain {
     public void drive(ChassisSpeeds _chassisSpeeds)
     {
         // Sets all the modules to their proper states
-        var moduleStates = Constants._kinematics.toSwerveModuleStates(_chassisSpeeds);
+        var moduleStates = Constants
+            ._kinematics
+            .toSwerveModuleStates(_chassisSpeeds);
 
         // normalize speed based on max velocity meters
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,Constants.MAX_VELOCITY_METERS_PER_SECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(
+            moduleStates,
+            Constants.MAX_VELOCITY_METERS_PER_SECOND
+        );
 
         setModuleStates(moduleStates);
         _moduleStates = moduleStates;
