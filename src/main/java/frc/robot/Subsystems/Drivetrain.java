@@ -227,7 +227,7 @@ public class Drivetrain {
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
             translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
-            rotationZ * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+            rotationZ * Constants.MAX_ANGULAR_VELOCITY_PER_SECOND, 
             getGyroRotationWithOffset()
         );
 
