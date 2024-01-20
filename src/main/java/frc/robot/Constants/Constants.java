@@ -36,10 +36,10 @@ public final class Constants {
     // public static final double kBackLeftEncoderOffset = -Math.toRadians(16.52);
     // public static final double kBackRightEncoderOffset = -Math.toRadians(144.044);
 
-    public static final double kFrontLeftEncoderOffset = -Math.toRadians(265.078125);
-    public static final double kFrontRightEncoderOffset = -Math.toRadians(168.662109375);
-    public static final double kBackLeftEncoderOffset = -Math.toRadians(38.3203125);
-    public static final double kBackRightEncoderOffset = -Math.toRadians(113.55468749999999);
+    public static final double kFrontLeftEncoderOffset = Math.toRadians(265.078125);
+    public static final double kFrontRightEncoderOffset = Math.toRadians(168.662109375);
+    public static final double kBackLeftEncoderOffset = Math.toRadians(38.3203125);
+    public static final double kBackRightEncoderOffset = Math.toRadians(113.55468749999999);
     
     public static final double MAX_VOLTAGE = 12.0;
 
