@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
-
+import frc.robot.utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -53,14 +53,21 @@ public class Robot extends TimedRobot {
   }
 
   private void teleopDrive() {
+
     // The X translation will be the vertical value of the left driver joystick
-    var translationX = -_driverController.getLeftY();
+    var translationX = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
+        Constants.XY_Axis_outputTable, _driverController.getLeftY()) * Constants.MAX_VELOCITY_METERS_PER_SECOND;
 
     // The Y translation will be the horizontal value of the left driver joystick
-    var translationY = -_driverController.getLeftX();
+    var translationY = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
+        Constants.XY_Axis_outputTable, _driverController.getLeftX()) * Constants.MAX_VELOCITY_METERS_PER_SECOND;
 
     // The rotation will be the horizontal value of the right driver joystick
-    var rotation = _driverController.getRightX();
+    
+    var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
+        Constants.RotAxis_outputTable,
+        _driverController.getRightX()) * Constants.MAX_ANGULAR_VELOCITY_PER_SECOND;
+    
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
     {
