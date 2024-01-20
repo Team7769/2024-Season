@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Autonomous.TestAutonomous;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 
@@ -24,7 +25,7 @@ public class Robot extends TimedRobot {
    private Drivetrain _drivetrain;
    private XboxController _driverController;
    private XboxController _operatorController;
-
+   private TestAutonomous _autonomous;
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
@@ -36,10 +37,14 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    _autonomous = new TestAutonomous();
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    _autonomous.execute();
+  }
 
   @Override
   public void teleopInit() {}
