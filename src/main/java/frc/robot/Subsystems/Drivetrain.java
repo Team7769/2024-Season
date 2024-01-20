@@ -230,6 +230,10 @@ public class Drivetrain {
             rotationZ * Constants.MAX_ANGULAR_VELOCITY_PER_SECOND, 
             getGyroRotationWithOffset()
         );
+        
+        SmartDashboard.putNumber("chassisSpeedsX", _chassisSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("chassisSpeedsY", _chassisSpeeds.vyMetersPerSecond);
+        SmartDashboard.putNumber("chassisSpeedsZ", _chassisSpeeds.omegaRadiansPerSecond);    
 
         drive(_chassisSpeeds);
     }

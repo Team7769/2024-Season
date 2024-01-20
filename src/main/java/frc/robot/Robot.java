@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 
@@ -60,12 +61,16 @@ public class Robot extends TimedRobot {
     var translationY = -_driverController.getLeftX();
 
     // The rotation will be the horizontal value of the right driver joystick
-    var rotation = _driverController.getRightX();
+    var rotation = -_driverController.getRightX();
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
     {
       _drivetrain.reset();
     }
+
+    SmartDashboard.putNumber("translationX", translationX);
+    SmartDashboard.putNumber("translationY", translationY);
+    SmartDashboard.putNumber("rotationZ", rotation);
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
