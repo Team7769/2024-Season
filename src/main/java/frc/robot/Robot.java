@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.utilities.OneDimensionalLookup;
@@ -56,17 +57,17 @@ public class Robot extends TimedRobot {
 
     // The X translation will be the vertical value of the left driver joystick
     var translationX = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
-        Constants.XY_Axis_outputTable, _driverController.getLeftY()) * Constants.MAX_VELOCITY_METERS_PER_SECOND;
+        Constants.XY_Axis_outputTable, _driverController.getLeftY());
 
     // The Y translation will be the horizontal value of the left driver joystick
     var translationY = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
-        Constants.XY_Axis_outputTable, _driverController.getLeftX()) * Constants.MAX_VELOCITY_METERS_PER_SECOND;
+        Constants.XY_Axis_outputTable, _driverController.getLeftX());
 
     // The rotation will be the horizontal value of the right driver joystick
     
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
         Constants.RotAxis_outputTable,
-        _driverController.getRightX()) * Constants.MAX_ANGULAR_VELOCITY_PER_SECOND;
+        _driverController.getRightX());
     
 
     if (_driverController.getBackButton() && _driverController.getStartButton())

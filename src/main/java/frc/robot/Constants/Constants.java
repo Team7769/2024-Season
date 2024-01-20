@@ -31,15 +31,11 @@ public final class Constants {
 
     public static final int kPigeonId = 14;
     
-    // public static final double kFrontLeftEncoderOffset = -Math.toRadians(89.469);
-    // public static final double kFrontRightEncoderOffset = -Math.toRadians(239.502);
-    // public static final double kBackLeftEncoderOffset = -Math.toRadians(16.52);
-    // public static final double kBackRightEncoderOffset = -Math.toRadians(144.044);
+    public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
+    public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
+    public static final double kBackLeftEncoderOffset = -Math.toRadians(219.55078);
+    public static final double kBackRightEncoderOffset = -Math.toRadians(295.40039);
 
-    public static final double kFrontLeftEncoderOffset = -Math.toRadians(265.078125);
-    public static final double kFrontRightEncoderOffset = -Math.toRadians(168.662109375);
-    public static final double kBackLeftEncoderOffset = -Math.toRadians(38.3203125);
-    public static final double kBackRightEncoderOffset = -Math.toRadians(113.55468749999999);
     
     public static final double MAX_VOLTAGE = 12.0;
 
@@ -57,8 +53,8 @@ public final class Constants {
         Math.PI /
         DRIVE_ENCODER_COUNTS_PER_REVOLUTION;
 
-    private static final double DRIVETRAIN_TRACK_WIDTH_METERS = Units.inchesToMeters(19.5);
-    private static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19.5);
+    private static final double DRIVETRAIN_TRACK_WIDTH_METERS = 0.52705;
+    private static final double DRIVETRAIN_WHEELBASE_METERS = 0.52705;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND = 3 * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND_SQUARED = MAX_ANGULAR_VELOCITY_PER_SECOND*
     MAX_ANGULAR_VELOCITY_PER_SECOND;
