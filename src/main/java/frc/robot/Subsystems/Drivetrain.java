@@ -254,4 +254,12 @@ public class Drivetrain {
         setModuleStates(moduleStates);
         _moduleStates = moduleStates;
     }
+
+    /** 
+     * Method that resets the pigeon current direction the robot is facing will be the front
+     */
+    public void reset()
+    {
+        _gyro.setYaw(0);
+    }
 }

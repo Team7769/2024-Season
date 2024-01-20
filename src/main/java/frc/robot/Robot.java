@@ -60,7 +60,12 @@ public class Robot extends TimedRobot {
     var translationY = -_driverController.getLeftX();
 
     // The rotation will be the horizontal value of the right driver joystick
-    var rotation = -_driverController.getRightX();
+    var rotation = _driverController.getRightX();
+
+    if (_driverController.getBackButton() && _driverController.getStartButton())
+    {
+      _drivetrain.reset();
+    }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
