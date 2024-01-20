@@ -68,10 +68,6 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
-    SmartDashboard.putNumber("translationX", translationX);
-    SmartDashboard.putNumber("translationY", translationY);
-    SmartDashboard.putNumber("rotationZ", rotation);
-
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
 
