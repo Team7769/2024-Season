@@ -6,9 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
-
+import frc.robot.utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -33,7 +34,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    _drivetrain.logTelemetry();
+    _drivetrain.updateOdometry();
+  }
 
   @Override
   public void autonomousInit() {}
@@ -50,16 +54,28 @@ public class Robot extends TimedRobot {
   }
 
   private void teleopDrive() {
+
     // The X translation will be the vertical value of the left driver joystick
-    var translationX = -_driverController.getLeftY();
+    var translationX = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
+        Constants.XY_Axis_outputTable, _driverController.getLeftY());
 
     // The Y translation will be the horizontal value of the left driver joystick
-    var translationY = -_driverController.getLeftX();
+    var translationY = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
+        Constants.XY_Axis_outputTable, _driverController.getLeftX());
 
     // The rotation will be the horizontal value of the right driver joystick
-    var rotation = -_driverController.getRightX();
+    
+    var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
+        Constants.RotAxis_outputTable,
+        _driverController.getRightX());
+    
 
-    _drivetrain.drive(translationX, translationY, rotation);
+    if (_driverController.getBackButton() && _driverController.getStartButton())
+    {
+      _drivetrain.reset();
+    }
+
+    _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
 
   @Override
