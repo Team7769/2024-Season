@@ -33,7 +33,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    _drivetrain.logTelemetry();
+    _drivetrain.updateOdometry();
+  }
 
   @Override
   public void autonomousInit() {}

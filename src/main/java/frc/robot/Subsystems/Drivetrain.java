@@ -36,7 +36,7 @@ public class Drivetrain {
 
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
-    private final Pigeon2 _gyro = new Pigeon2(0);
+    private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
     private final double _gyroOffset = 0.0;
 
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
