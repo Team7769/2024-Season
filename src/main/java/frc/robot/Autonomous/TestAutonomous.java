@@ -1,5 +1,8 @@
 package frc.robot.Autonomous;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
+
 public class TestAutonomous extends AutonomousMode
 {
     private int _step;
