@@ -1,5 +1,7 @@
 package frc.robot.Constants;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -26,16 +28,33 @@ public final class Constants {
     public static final int kBackRightDriveId = 11;
     public static final int kBackRightSteerId = 12;
     public static final int kBackRightSteerEncoderId = 13;
+
+    public static final int kPigeonId = 14;
     
-    public static final double kFrontLeftEncoderOffset = -Math.toRadians(89.469);
-    public static final double kFrontRightEncoderOffset = -Math.toRadians(239.502);
-    public static final double kBackLeftEncoderOffset = -Math.toRadians(16.52);
-    public static final double kBackRightEncoderOffset = -Math.toRadians(144.044);
+    public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
+    public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
+    public static final double kBackLeftEncoderOffset = -Math.toRadians(219.55078);
+    public static final double kBackRightEncoderOffset = -Math.toRadians(295.40039);
+
     
     public static final double MAX_VOLTAGE = 12.0;
+
+    // possibly change per this years gearbox
+    // 6380 is top rpm of the falcon, 60 to convert rpm to seconds
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 /
+        60.0 *
+        SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
+        SdsModuleConfigurations.MK4I_L2.getWheelDiameter() *
+        Math.PI;
+
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
-    private static final double DRIVETRAIN_TRACK_WIDTH_METERS = Units.inchesToMeters(19.5);
-    private static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19.5);
+    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4_L2.getDriveReduction() *
+        SdsModuleConfigurations.MK4_L2.getWheelDiameter() *
+        Math.PI /
+        DRIVE_ENCODER_COUNTS_PER_REVOLUTION;
+
+    private static final double DRIVETRAIN_TRACK_WIDTH_METERS = 0.52705;
+    private static final double DRIVETRAIN_WHEELBASE_METERS = 0.52705;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND = 3 * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND_SQUARED = MAX_ANGULAR_VELOCITY_PER_SECOND*
     MAX_ANGULAR_VELOCITY_PER_SECOND;
