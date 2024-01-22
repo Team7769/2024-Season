@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -281,7 +282,7 @@ public class Drivetrain {
         _drivePoseEstimator.resetPosition(getGyroRotation(), null, null),
         _chassisSpeeds,
         drive(_chassisSpeeds),
-        new HolonomicPathFollowerConfig(_gyroOffset, _gyroOffset, null),
+        new HolonomicPathFollowerConfig(Constants.MAX_MODULE_SPEED, Constants.DRIVE_BASE_RADIUS, new ReplanningConfig()),
         shouldFlip);
     }
 }
