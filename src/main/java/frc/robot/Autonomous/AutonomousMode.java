@@ -1,7 +1,5 @@
 package frc.robot.Autonomous;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-
 public abstract class AutonomousMode 
 {
 

@@ -37,6 +37,7 @@ public class Drivetrain {
 
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
+    SwerveModulePosition[] _modulePositions = new SwerveModulePosition[4];
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
     private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
@@ -213,6 +214,19 @@ public class Drivetrain {
                              moduleStates[3].angle.getRadians());
     }
 
+    /**
+     * This method gets the SwerveModulePosition of each swerve modual and returns an array of them.
+     * 
+     * @return SwerveModulePosition[] returns an array of swerve module positions 
+     */
+    public SwerveModulePosition[] getModulePositions()
+    {
+        _modulePositions[0] = _frontLeftModule.getPosition();
+        _modulePositions[1] = _frontRightModule.getPosition();
+        _modulePositions[2] = _backLeftModule.getPosition();
+        _modulePositions[3] = _backRightModule.getPosition();
+        return _modulePositions;
+    }
     /** Method that takes translations from the drive controller creates a chassisSpeed object and feeds it into the drive method
         Drive and fieldOrientedDrive are seperate due to autonomus getting chassis speed directly with no need to translate
 
@@ -277,12 +291,12 @@ public class Drivetrain {
      */
     public void configAuton(boolean shouldFlip)
     {
-        
         AutoBuilder.configureHolonomic(_drivePoseEstimator.getEstimatedPosition(), 
-        _drivePoseEstimator.resetPosition(getGyroRotation(), null, null),
+        _drivePoseEstimator.resetPosition(getGyroRotation(), _modulePositions, _drivePoseEstimator.getEstimatedPosition()),
         _chassisSpeeds,
         drive(_chassisSpeeds),
         new HolonomicPathFollowerConfig(Constants.MAX_MODULE_SPEED, Constants.DRIVE_BASE_RADIUS, new ReplanningConfig()),
-        shouldFlip);
+        shouldFlip,
+        this);
     }
 }
