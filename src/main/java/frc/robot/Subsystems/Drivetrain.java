@@ -1,6 +1,8 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -265,5 +267,21 @@ public class Drivetrain {
     public void reset()
     {
         _gyro.setYaw(0);
+    }
+
+    /**
+     * Configs the AutoBuilder and takes a boolean for if the path shoulkd be flipped
+     * 
+     * @param shouldFlip Determines if the path should be flipped if Blue Alliance false if Red Alliance true
+     */
+    public void configAuton(boolean shouldFlip)
+    {
+        
+        AutoBuilder.configureHolonomic(_drivePoseEstimator.getEstimatedPosition(), 
+        _drivePoseEstimator.resetPosition(getGyroRotation(), null, null),
+        _chassisSpeeds,
+        drive(_chassisSpeeds),
+        new HolonomicPathFollowerConfig(_gyroOffset, _gyroOffset, null),
+        shouldFlip);
     }
 }

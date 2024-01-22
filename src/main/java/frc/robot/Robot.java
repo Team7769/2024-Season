@@ -6,11 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-<<<<<<< HEAD
 import frc.robot.Autonomous.TestAutonomous;
-=======
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
->>>>>>> e2d821c9cfc6d2aa8965826ada2e744047604fc6
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.utilities.OneDimensionalLookup;

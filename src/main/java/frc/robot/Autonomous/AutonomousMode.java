@@ -24,9 +24,4 @@ public abstract class AutonomousMode
     {
         return false;
     }
-
-    public static void configAuton()
-    {
-        AutoBuilder.configureHolonomic();
-    }
 }
