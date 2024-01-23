@@ -1,9 +1,6 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -17,7 +14,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -282,21 +278,5 @@ public class Drivetrain {
     public void reset()
     {
         _gyro.setYaw(0);
-    }
-
-    /**
-     * Configs the AutoBuilder and takes a boolean for if the path shoulkd be flipped
-     * 
-     * @param shouldFlip Determines if the path should be flipped if Blue Alliance false if Red Alliance true
-     */
-    public void configAuton(boolean shouldFlip)
-    {
-        AutoBuilder.configureHolonomic(_drivePoseEstimator.getEstimatedPosition(), 
-        _drivePoseEstimator.resetPosition(getGyroRotation(), _modulePositions, _drivePoseEstimator.getEstimatedPosition()),
-        _chassisSpeeds,
-        drive(_chassisSpeeds),
-        new HolonomicPathFollowerConfig(Constants.MAX_MODULE_SPEED, Constants.DRIVE_BASE_RADIUS, new ReplanningConfig()),
-        shouldFlip,
-        this);
     }
 }
