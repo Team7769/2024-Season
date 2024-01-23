@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     _autoChooser.addOption("TestAutnomous", 1);
 
     SmartDashboard.putData(_autoChooser);
+    SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
   }
 

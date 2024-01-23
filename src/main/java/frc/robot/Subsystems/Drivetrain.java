@@ -106,6 +106,7 @@ public class Drivetrain {
             },
             new Pose2d()
         );
+        SmartDashboard.putData("Field",m_field);
     }
 
     public static Drivetrain getInstance()
