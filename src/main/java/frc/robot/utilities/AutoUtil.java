@@ -6,7 +6,7 @@ import frc.robot.Autonomous.TestAutonomous;
 public class AutoUtil {
 
     /**
-     * Method that will 
+     * Method that will return an autnomous mode depending on the one selected
      * 
      * @param _selectedAutoInit Determined by what is selected on the driver station
      * @return returns a specific autonomous mode that can be intialized and executed.
