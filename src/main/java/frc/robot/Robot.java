@@ -80,7 +80,6 @@ public class Robot extends TimedRobot {
         Constants.XY_Axis_outputTable, _driverController.getLeftX());
 
     // The rotation will be the horizontal value of the right driver joystick
-    
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
         Constants.RotAxis_outputTable,
         _driverController.getRightX());
