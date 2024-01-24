@@ -47,8 +47,8 @@ public final class Constants {
         Math.PI;
     public static final double MAX_MODULE_SPEED = 5.3;
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
-    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-        SdsModuleConfigurations.MK4_L2.getWheelDiameter() *
+    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4_L3.getDriveReduction() *
+        SdsModuleConfigurations.MK4_L3.getWheelDiameter() *
         Math.PI /
         DRIVE_ENCODER_COUNTS_PER_REVOLUTION;
 
