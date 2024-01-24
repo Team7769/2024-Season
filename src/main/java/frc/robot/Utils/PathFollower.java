@@ -8,6 +8,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.path.PathPlannerTrajectory.State;
+import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -38,8 +39,13 @@ public class PathFollower {
     // private final double _rotateKi = 0.0;
     // private final double _rotateKd = 0.0;
 
-    private final double[] _translationConstants = {5.5, 0.0, 0.0};
-    private final double[] _rotationConstants = {4.5, 0.0, 0.0};
+    private final PIDConstants _translationConstants = new PIDConstants(5.5,
+                                                                        0.0,
+                                                                        0.0);
+
+    private final PIDConstants _rotationConstants = new PIDConstants(4.5,
+                                                                     0.0,
+                                                                     0.0);
 
     // private PIDController _translationXPID;
     // private PIDController _translationYPID;
@@ -68,7 +74,7 @@ public class PathFollower {
             _translationConstants,
             _rotationConstants,
             Constants.MAX_VELOCITY_METERS_PER_SECOND,
-            Constants.DRIVETRAIN_WHEELBASE_METERS // TODO: check if correct variable
+            Constants.DRIVE_BASE_RADIUS
         );
     }
 
@@ -100,7 +106,7 @@ public class PathFollower {
         return _timer.hasElapsed(_currentTrajectory.getTotalTimeSeconds());
     }
 
-    public SwerveModuleState[] getPathTarget(Pose2d currentPose) {
+    public ChassisSpeeds getPathTarget(Pose2d currentPose) {
         State desiredState = _currentTrajectory.sample(_timer.get());
         
         // SmartDashboard.putNumber("desiredX", desiredState.poseMeters.getX());
@@ -112,8 +118,6 @@ public class PathFollower {
         // new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         // currentPose);
 
-        _controller.calculateRobotRelativeSpeeds(currentPose, desiredState)
-        var outputModuleStates = _controller.calculate(currentPose, desiredState);
-        return Constants._kinematics.toSwerveModuleStates(outputModuleStates);
+        return _controller.calculateRobotRelativeSpeeds(currentPose, desiredState);
     }
 }

@@ -58,6 +58,8 @@ public final class Constants {
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND = 3 * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND_SQUARED = MAX_ANGULAR_VELOCITY_PER_SECOND*
     MAX_ANGULAR_VELOCITY_PER_SECOND;
+
+    public static final double DRIVE_BASE_RADIUS = 0.3698875;
     
     //setting up kinematics
     public static final SwerveDriveKinematics _kinematics = new SwerveDriveKinematics(
