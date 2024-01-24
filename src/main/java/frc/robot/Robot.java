@@ -36,12 +36,11 @@ public class Robot extends TimedRobot {
     _drivetrain = Drivetrain.getInstance();
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
-
-    _autoChooser.setDefaultOption("Do Nothing", 0);
-    _autoChooser.addOption("TestAutnomous", 1);
-
-    SmartDashboard.putData(_autoChooser);
+    // loads the auto modes
+    AutoUtil.autonmousDropDown(_autoChooser);
+    // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
+    // finds the selected autonomous
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
   }
 
