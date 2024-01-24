@@ -42,8 +42,8 @@ public final class Constants {
     // 6380 is top rpm of the falcon, 60 to convert rpm to seconds
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 /
         60.0 *
-        SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
-        SdsModuleConfigurations.MK4I_L2.getWheelDiameter() *
+        SdsModuleConfigurations.MK4I_L3.getDriveReduction() *
+        SdsModuleConfigurations.MK4I_L3.getWheelDiameter() *
         Math.PI;
     public static final double MAX_MODULE_SPEED = 5.3;
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
