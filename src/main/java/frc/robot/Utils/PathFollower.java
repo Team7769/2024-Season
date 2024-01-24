@@ -28,6 +28,7 @@ public class PathFollower {
 
     private PathPlannerTrajectory _currentTrajectory;
 
+    // init as -1 so that when user starts first path, go to 0
     private int _pathIndex = -1;
 
     // constants, shall we keep here or move to constants file?
@@ -78,6 +79,7 @@ public class PathFollower {
         );
     }
 
+    // should be used to start first path
     public void startNextPath(ChassisSpeeds startingSpeeds,
                               Rotation2d startingRotation) {
 
@@ -118,6 +120,7 @@ public class PathFollower {
         // new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         // currentPose);
 
-        return _controller.calculateRobotRelativeSpeeds(currentPose, desiredState);
+        return _controller.calculateRobotRelativeSpeeds(currentPose,
+                                                        desiredState);
     }
 }
