@@ -4,7 +4,6 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.util.Units;
 
 public final class Constants {
 
@@ -43,13 +42,13 @@ public final class Constants {
     // 6380 is top rpm of the falcon, 60 to convert rpm to seconds
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 /
         60.0 *
-        SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
-        SdsModuleConfigurations.MK4I_L2.getWheelDiameter() *
+        SdsModuleConfigurations.MK4I_L3.getDriveReduction() *
+        SdsModuleConfigurations.MK4I_L3.getWheelDiameter() *
         Math.PI;
-
+    public static final double MAX_MODULE_SPEED = 5.3;
     public static final double DRIVE_ENCODER_COUNTS_PER_REVOLUTION = 2048;
-    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-        SdsModuleConfigurations.MK4_L2.getWheelDiameter() *
+    public static final double DRIVE_ENCODER_CONVERSION_FACTOR = SdsModuleConfigurations.MK4I_L3.getDriveReduction() *
+        SdsModuleConfigurations.MK4I_L3.getWheelDiameter() *
         Math.PI /
         DRIVE_ENCODER_COUNTS_PER_REVOLUTION;
 
@@ -58,7 +57,7 @@ public final class Constants {
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND = 3 * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_PER_SECOND_SQUARED = MAX_ANGULAR_VELOCITY_PER_SECOND*
     MAX_ANGULAR_VELOCITY_PER_SECOND;
-    
+    public static final double DRIVE_BASE_RADIUS = 0.3698875;
     //setting up kinematics
     public static final SwerveDriveKinematics _kinematics = new SwerveDriveKinematics(
             // Front Left
