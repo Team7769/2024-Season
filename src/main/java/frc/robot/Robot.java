@@ -6,9 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Autonomous.AutonomousMode;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.utilities.AutoUtil;
 import frc.robot.utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,12 +28,20 @@ public class Robot extends TimedRobot {
    private Drivetrain _drivetrain;
    private XboxController _driverController;
    private XboxController _operatorController;
+   private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
+   private AutonomousMode _currentAuto;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+    // loads the auto modes
+    AutoUtil.autonmousDropDown(_autoChooser);
+    // puts the drop down to select auton modes on shuffleboard
+    SmartDashboard.putData("Selected Auto Mode", _autoChooser);
+    // finds the selected autonomous
+    _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
   }
 
   @Override
@@ -40,10 +51,14 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    _currentAuto.initialize();
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    _currentAuto.execute();
+  }
 
   @Override
   public void teleopInit() {}
@@ -64,7 +79,6 @@ public class Robot extends TimedRobot {
         Constants.XY_Axis_outputTable, _driverController.getLeftX());
 
     // The rotation will be the horizontal value of the right driver joystick
-    
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
         Constants.RotAxis_outputTable,
         _driverController.getRightX());

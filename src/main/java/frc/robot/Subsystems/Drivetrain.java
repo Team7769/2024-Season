@@ -14,7 +14,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -34,6 +33,7 @@ public class Drivetrain {
 
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
+    SwerveModulePosition[] _modulePositions = new SwerveModulePosition[4];
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
     private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
@@ -52,7 +52,7 @@ public class Drivetrain {
                                       BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
-            .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+            .withGearRatio(SdsModuleConfigurations.MK4I_L3)
             .withDriveMotor(MotorType.FALCON, Constants.kFrontLeftDriveId)
             .withSteerMotor(MotorType.NEO, Constants.kFrontLeftSteerId)
             .withSteerEncoderPort(Constants.kFrontLeftSteerEncoderId)
@@ -64,7 +64,7 @@ public class Drivetrain {
                                       BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
-            .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+            .withGearRatio(SdsModuleConfigurations.MK4I_L3)
             .withDriveMotor(MotorType.FALCON, Constants.kFrontRightDriveId)
             .withSteerMotor(MotorType.NEO, Constants.kFrontRightSteerId)
             .withSteerEncoderPort(Constants.kFrontRightSteerEncoderId)
@@ -76,7 +76,7 @@ public class Drivetrain {
                                       BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
-            .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+            .withGearRatio(SdsModuleConfigurations.MK4I_L3)
             .withDriveMotor(MotorType.FALCON, Constants.kBackLeftDriveId)
             .withSteerMotor(MotorType.NEO, Constants.kBackLeftSteerId)
             .withSteerEncoderPort(Constants.kBackLeftSteerEncoderId)
@@ -88,7 +88,7 @@ public class Drivetrain {
                                       BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
-            .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+            .withGearRatio(SdsModuleConfigurations.MK4I_L3)
             .withDriveMotor(MotorType.FALCON, Constants.kBackRightDriveId)
             .withSteerMotor(MotorType.NEO, Constants.kBackRightSteerId)
             .withSteerEncoderPort(Constants.kBackRightSteerEncoderId)
@@ -106,6 +106,7 @@ public class Drivetrain {
             },
             new Pose2d()
         );
+        SmartDashboard.putData("Field",m_field);
     }
 
     public static Drivetrain getInstance()
@@ -210,6 +211,19 @@ public class Drivetrain {
                              moduleStates[3].angle.getRadians());
     }
 
+    /**
+     * This method gets the SwerveModulePosition of each swerve modual and returns an array of them.
+     * 
+     * @return SwerveModulePosition[] returns an array of swerve module positions 
+     */
+    public SwerveModulePosition[] getModulePositions()
+    {
+        _modulePositions[0] = _frontLeftModule.getPosition();
+        _modulePositions[1] = _frontRightModule.getPosition();
+        _modulePositions[2] = _backLeftModule.getPosition();
+        _modulePositions[3] = _backRightModule.getPosition();
+        return _modulePositions;
+    }
     /** Method that takes translations from the drive controller creates a chassisSpeed object and feeds it into the drive method
         Drive and fieldOrientedDrive are seperate due to autonomus getting chassis speed directly with no need to translate
 
