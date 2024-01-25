@@ -18,7 +18,7 @@ public class TestAutonomous extends AutonomousMode {
         _finalStep = 2;
 
         _drivetrain = Drivetrain.getInstance();
-        _pathFollower = new PathFollower("Test.auto");
+        _pathFollower = new PathFollower("Test");
     }
 
 
