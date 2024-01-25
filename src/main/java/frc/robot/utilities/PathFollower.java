@@ -1,20 +1,16 @@
-package frc.robot.Utils;
+package frc.robot.Utilities;
 
 import java.util.List;
 
-import com.pathplanner.lib.commands.FollowPathHolonomic;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.path.PathPlannerTrajectory.State;
 import com.pathplanner.lib.util.PIDConstants;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.Constants;
@@ -54,7 +50,7 @@ public class PathFollower {
 
     private PPHolonomicDriveController _controller;
 
-    PathFollower(String autoName) {
+    public PathFollower(String autoName) {
         _pathGroup = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
         _startingPose = PathPlannerAuto.getStaringPoseFromAutoFile(autoName);
 
@@ -96,12 +92,19 @@ public class PathFollower {
             path = path.flipPath();
         }
 
+        if (_startingPose == null) {
+            _startingPose = path.getPreviewStartingHolonomicPose();
+            startingRotation = path.getPreviewStartingHolonomicPose().getRotation();
+        }
+
         _currentTrajectory = path.getTrajectory(startingSpeeds,
                                                 startingRotation);
-
-
         _timer.reset();
         _timer.start();
+    }
+
+    public Pose2d getStartingPose() {
+        return _startingPose;
     }
 
     public boolean isPathFinished() {

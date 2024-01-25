@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
-import frc.robot.utilities.AutoUtil;
-import frc.robot.utilities.OneDimensionalLookup;
+import frc.robot.Utilities.AutoUtil;
+import frc.robot.Utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
