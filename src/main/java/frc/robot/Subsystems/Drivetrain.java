@@ -285,10 +285,9 @@ public class Drivetrain {
         _gyro.setYaw(0);
     }
 
-    public void setStartingPose(Pose2d startingPose, double initialHolonomicRotationDegrees) {
-        reset();
-        _gyroOffset = initialHolonomicRotationDegrees;
-        _drivePoseEstimator.resetPosition(getGyroRotation(), getModulePositions(), startingPose);
+    public void setStartingPose(Pose2d startingPose) {
+        _gyro.setYaw(startingPose.getRotation().getDegrees());
+        _drivePoseEstimator.resetPosition(startingPose.getRotation(), getModulePositions(), startingPose);
     }
 
     public Pose2d getPose(){

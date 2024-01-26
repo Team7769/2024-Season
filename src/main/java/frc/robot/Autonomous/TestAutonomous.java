@@ -30,7 +30,7 @@ public class TestAutonomous extends AutonomousMode {
 
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
                     nextStep();
                 }
                 break;
@@ -52,7 +52,7 @@ public class TestAutonomous extends AutonomousMode {
     {
         _pathFollower.startNextPath(new ChassisSpeeds(), new Rotation2d());
         var startingPose = _pathFollower.getStartingPose();
-        _drivetrain.setStartingPose(startingPose, startingPose.getRotation().getDegrees());
+        _drivetrain.setStartingPose(startingPose);
     }
 
     public void abort()

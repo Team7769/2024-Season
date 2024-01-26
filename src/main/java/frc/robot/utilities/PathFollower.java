@@ -27,15 +27,6 @@ public class PathFollower {
     // init as -1 so that when user starts first path, go to 0
     private int _pathIndex = -1;
 
-    // constants, shall we keep here or move to constants file?
-    // private final double _translateKp = 5.5; //5.5
-    // private final double _translateKi = 0.0;
-    // private final double _translateKd = 0.0;
-
-    // private final double _rotateKp = 4.5; //4.5
-    // private final double _rotateKi = 0.0;
-    // private final double _rotateKd = 0.0;
-
     private final PIDConstants _translationConstants = new PIDConstants(5.5,
                                                                         0.0,
                                                                         0.0);
@@ -44,10 +35,6 @@ public class PathFollower {
                                                                      0.0,
                                                                      0.0);
 
-    // private PIDController _translationXPID;
-    // private PIDController _translationYPID;
-    // private PIDController _thetaController;
-
     private PPHolonomicDriveController _controller;
 
     public PathFollower(String autoName) {
@@ -55,18 +42,6 @@ public class PathFollower {
         _startingPose = PathPlannerAuto.getStaringPoseFromAutoFile(autoName);
 
         _timer = new Timer();
-
-        // _translationXPID = new PIDController(_translateKp,
-        //                                      _translateKi,
-        //                                      _translateKd);
-
-        // _translationYPID = new PIDController(_translateKp,
-        //                                      _translateKi,
-        //                                      _translateKd);
-
-        // _thetaController = new PIDController(_rotateKp, _rotateKi, _rotateKd);
-        // _thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
         _controller = new PPHolonomicDriveController(
             _translationConstants,
             _rotationConstants,
@@ -92,11 +67,6 @@ public class PathFollower {
             path = path.flipPath();
         }
 
-        if (_startingPose == null) {
-            _startingPose = path.getPreviewStartingHolonomicPose();
-            startingRotation = path.getPreviewStartingHolonomicPose().getRotation();
-        }
-
         _currentTrajectory = path.getTrajectory(startingSpeeds,
                                                 startingRotation);
         _timer.reset();
@@ -113,15 +83,6 @@ public class PathFollower {
 
     public ChassisSpeeds getPathTarget(Pose2d currentPose) {
         State desiredState = _currentTrajectory.sample(_timer.get());
-        
-        // SmartDashboard.putNumber("desiredX", desiredState.poseMeters.getX());
-        // SmartDashboard.putNumber("desiredY", desiredState.poseMeters.getY());
-        // SmartDashboard.putNumber("desiredZ", desiredState.poseMeters.getRotation().getDegrees());
-        // SmartDashboard.putNumber("desiredHolonomic", desiredState.holonomicRotation.getDegrees());
-
-        // PathPlannerServer.sendPathFollowingData(
-        // new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
-        // currentPose);
 
         return _controller.calculateRobotRelativeSpeeds(currentPose,
                                                         desiredState);
