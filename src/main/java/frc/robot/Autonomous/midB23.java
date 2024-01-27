@@ -1,28 +1,29 @@
 package frc.robot.Autonomous;
 
+import java.util.Timer;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.units.Time;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
 
-public class midShootBShoot2Shoot extends AutonomousMode {
-    
-    private PathFollower _pathFollower;
+public class midB23 extends AutonomousMode{
+    private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
-    private int _step;
+    private int _count;
+    private Timer _timer = new Timer(); // 15s for auto mode
 
-    public midShootBShoot2Shoot()
-    {
+    public midB23(){
         _drivetrain = Drivetrain.getInstance();
         _pathFollower = new PathFollower("MID SHOOT B SHOOT 2 SHOOT");
     }
 
     @Override
-    public void execute()
-    {
-        switch (_step) {
+    public void execute(){
+        switch (_count) {
             case 0:
                 _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                nextStep();
+                _count++;
                 break;
 
             case 1:
@@ -31,7 +32,7 @@ public class midShootBShoot2Shoot extends AutonomousMode {
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    nextStep();
+                    _count++;
                 }
                 break;
 
@@ -41,7 +42,7 @@ public class midShootBShoot2Shoot extends AutonomousMode {
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    nextStep();
+                    _count++;
                 }
                 break;
 
@@ -51,7 +52,7 @@ public class midShootBShoot2Shoot extends AutonomousMode {
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    nextStep();
+                    _count++;
                 }
                 break;
 
@@ -59,34 +60,37 @@ public class midShootBShoot2Shoot extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
+                    _count++;
                 }
                 break;
 
             case 5:
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
+            case 6:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    _count++;
+                }
+                break;
+            default:
+                System.out.println("Program fail.");
+                _drivetrain.drive(new ChassisSpeeds());
+                break;
         }
     }
 
     @Override
-    public void initialize() {
+    public void abort(){}
+    @Override
+    public boolean isComplete(){
+        return _count >= 7;
+    }
+    @Override
+    public void initialize(){
         var startingPose = _pathFollower.getStartingPose();
         _drivetrain.setStartingPose(startingPose);
-        _step = 0;
-    }
-
-    @Override
-    public void abort() {
-
-    }
-
-    @Override
-    public boolean isComplete() {
-        return _step >= 6;
-    }
-
-    private void nextStep() {
-        _step++;
+        _count = 0;
     }
 }

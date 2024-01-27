@@ -19,8 +19,8 @@ public class AutoUtil {
                 return new TestAutonomous();
             case(TEST_AUTONOMOUS):
                 return new TestAutonomous();
-            case(MID_SHOOT_B_SHOOT_2_SHOOT):
-                return new midShootBShoot2Shoot();
+            case(MID_B_2):
+                return new midB2();
         }
         return null;
     }
@@ -35,12 +35,12 @@ public class AutoUtil {
         
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
-        _autoChooser.addOption("Mid shoot B shoot 2 shoot", MID_SHOOT_B_SHOOT_2_SHOOT);
+        _autoChooser.addOption("Mid B 2 (3)", MID_B_2);
     }
 
     // list of all auto modes 
     // every mode needs its own number 
     public static final int DO_NOTHING = 0;
     public static final int TEST_AUTONOMOUS = 1;
-    public static final int MID_SHOOT_B_SHOOT_2_SHOOT = 2;
+    public static final int MID_B_2 = 2;
 }
