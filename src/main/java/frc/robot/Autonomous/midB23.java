@@ -23,7 +23,7 @@ public class midB23 extends AutonomousMode{
         switch (_count) {
             case 0:
                 _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                _count++;
+                nextStep();
                 break;
 
             case 1:
@@ -32,7 +32,7 @@ public class midB23 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    _count++;
+                    nextStep();
                 }
                 break;
 
@@ -42,7 +42,7 @@ public class midB23 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    _count++;
+                    nextStep();
                 }
                 break;
 
@@ -52,7 +52,7 @@ public class midB23 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    _count++;
+                    nextStep();
                 }
                 break;
 
@@ -60,27 +60,43 @@ public class midB23 extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+<<<<<<< HEAD
+                    nextStep();
+=======
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     _count++;
+>>>>>>> 164ab794978da93fe7d5efdce0c6063b5f35823b
                 }
                 break;
-
             case 5:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+<<<<<<< HEAD
+                    nextStep();
+=======
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     _count++;
+>>>>>>> 164ab794978da93fe7d5efdce0c6063b5f35823b
                 }
                 break;
             case 6:
+<<<<<<< HEAD
                 _drivetrain.drive(new ChassisSpeeds());
+=======
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+>>>>>>> fb686229a7d0314738bd800fd407953e30986610
                 break;
         }
     }
 
     @Override
     public void abort(){}
+
     @Override
     public boolean isComplete(){
         return _count >= 7;
@@ -90,5 +106,8 @@ public class midB23 extends AutonomousMode{
         var startingPose = _pathFollower.getStartingPose();
         _drivetrain.setStartingPose(startingPose);
         _count = 0;
+    }
+    private void nextStep() {
+        _count++;
     }
 }
