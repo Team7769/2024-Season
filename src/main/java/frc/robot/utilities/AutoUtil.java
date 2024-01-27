@@ -1,8 +1,7 @@
 package frc.robot.Utilities;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.Autonomous.AutonomousMode;
-import frc.robot.Autonomous.TestAutonomous;
+import frc.robot.Autonomous.*;
 
 public class AutoUtil {
 
@@ -20,6 +19,8 @@ public class AutoUtil {
                 return new TestAutonomous();
             case(TEST_AUTONOMOUS):
                 return new TestAutonomous();
+            case(MID_SHOOT_B_SHOOT_2_SHOOT):
+                return new midShootBShoot2Shoot();
         }
         return null;
     }
@@ -34,10 +35,12 @@ public class AutoUtil {
         
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
+        _autoChooser.addOption("Mid shoot B shoot 2 shoot", MID_SHOOT_B_SHOOT_2_SHOOT);
     }
 
     // list of all auto modes 
     // every mode needs its own number 
     public static final int DO_NOTHING = 0;
     public static final int TEST_AUTONOMOUS = 1;
+    public static final int MID_SHOOT_B_SHOOT_2_SHOOT = 2;
 }

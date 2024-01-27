@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.36086297850199,
-        "y": 5.609490705429342
+        "x": 8.0,
+        "y": 5.81
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.426549104168107,
-        "y": 5.515804013063089
+        "x": 7.4504979823083755,
+        "y": 6.031080821077477
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.166884855880981,
-        "y": 6.347273407813577
+        "x": 4.956089798056913,
+        "y": 6.195032532718418
       },
       "prevControl": {
-        "x": 4.253439605310023,
-        "y": 6.241875878901544
+        "x": 7.181148741755401,
+        "y": 6.171610859626855
       },
       "nextControl": {
-        "x": 6.174119767808892,
-        "y": 6.4634928207283355
+        "x": 2.588777510065601,
+        "y": 6.219951609434116
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.965774790322761,
-        "y": 5.796864090161846
+        "x": 1.3,
+        "y": 5.5
       },
       "prevControl": {
-        "x": 6.548763568283198,
-        "y": 5.925683292165444
+        "x": 1.721590115648134,
+        "y": 5.558554182728908
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "mid shoot B shoot 2 shoot",
+  "folder": "mid shoot b shoot 2 shoot",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
