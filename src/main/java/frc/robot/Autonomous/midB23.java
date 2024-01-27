@@ -11,7 +11,6 @@ public class midB23 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
     private int _count;
-    private Timer _timer = new Timer(); // 15s for auto mode
 
     public midB23(){
         _drivetrain = Drivetrain.getInstance();
