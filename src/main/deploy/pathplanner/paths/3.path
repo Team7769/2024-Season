@@ -1,0 +1,65 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3842846515935527,
+        "y": 5.562647359246215
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6841875081753006,
+        "y": 5.679755724704031
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.499367172771434,
+        "y": 5.995948311440133
+      },
+      "prevControl": {
+        "x": 3.074405417602965,
+        "y": 5.81633128347772
+      },
+      "nextControl": {
+        "x": 5.892956721719433,
+        "y": 6.171610859626855
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.000907299960106,
+        "y": 5.808574926707629
+      },
+      "prevControl": {
+        "x": 6.443366039371167,
+        "y": 6.230165042355764
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "mid shoot B shoot 2 shoot",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
