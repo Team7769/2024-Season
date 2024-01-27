@@ -37,7 +37,7 @@ public class Drivetrain {
     // needs device id constant or port value
     // are we using pigeon2? example uses pigeon2
     private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
-    private final double _gyroOffset = 0.0;
+    private double _gyroOffset = 0.0;
 
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
@@ -131,6 +131,8 @@ public class Drivetrain {
 
         SmartDashboard.putNumber("drivetrainGyroAngle",
                                  getGyroRotation().getDegrees());
+        SmartDashboard.putNumber("drivetrainGyroAngleWithOffset",
+                                 getGyroRotationWithOffset().getDegrees());
 
         SmartDashboard.putNumber("drivetrainChassisSpeedsVx",
                                  _chassisSpeeds.vxMetersPerSecond);
@@ -254,14 +256,15 @@ public class Drivetrain {
 
     /** Method that takes a ChassisSpeeds object and sets each swerve module to it's required state (position, speed, etc) also stores the last modual states applied.
      * 
-     * @param _chassisSpeeds A variable for a ChasisSpeeds object hold X, Y, and rotational velocity as well as the 2D rotation of the robot.
+     * @param chassisSpeeds A variable for a ChasisSpeeds object hold X, Y, and rotational velocity as well as the 2D rotation of the robot.
      */
-    public void drive(ChassisSpeeds _chassisSpeeds)
+    public void drive(ChassisSpeeds chassisSpeeds)
     {
         // Sets all the modules to their proper states
         var moduleStates = Constants
             ._kinematics
-            .toSwerveModuleStates(_chassisSpeeds);
+            .toSwerveModuleStates(chassisSpeeds);
+        
 
         // normalize speed based on max velocity meters
         SwerveDriveKinematics.desaturateWheelSpeeds(
@@ -271,6 +274,7 @@ public class Drivetrain {
 
         setModuleStates(moduleStates);
         _moduleStates = moduleStates;
+        _chassisSpeeds = chassisSpeeds;
     }
 
     /** 
@@ -279,5 +283,15 @@ public class Drivetrain {
     public void reset()
     {
         _gyro.setYaw(0);
+    }
+
+    public void setStartingPose(Pose2d startingPose) {
+        _gyroOffset = startingPose.getRotation().getDegrees();
+        SmartDashboard.putNumber("startingPoseRotation", startingPose.getRotation().getDegrees());
+        _drivePoseEstimator.resetPosition(_gyro.getRotation2d(), getModulePositions(), startingPose);
+    }
+
+    public Pose2d getPose(){
+        return _drivePoseEstimator.getEstimatedPosition();
     }
 }
