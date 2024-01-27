@@ -1,27 +1,22 @@
 package frc.robot.Autonomous;
 
-import java.util.Timer;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.Time;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
 
-public class midB23 extends AutonomousMode{
+public class midB54 extends AutonomousMode{
+
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
     private int _count;
-<<<<<<< HEAD
-=======
-    
->>>>>>> 1f0d93ba671bbe87f3f92ab7cdc80a6050836154
 
-    public midB23(){
+    public midB54()
+    {
         _drivetrain = Drivetrain.getInstance();
-        _pathFollower = new PathFollower("MID B 2 3");
+        _pathFollower = new PathFollower("MID B 5 4");
     }
 
-    @Override
+     @Override
     public void execute(){
         switch (_count) {
             case 0:
