@@ -4,13 +4,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
 
-public class midShootBShoot2Shoot extends AutonomousMode {
+public class midB2 extends AutonomousMode {
     
     private PathFollower _pathFollower;
     private Drivetrain _drivetrain;
     private int _step;
 
-    public midShootBShoot2Shoot()
+    public midB2()
     {
         _drivetrain = Drivetrain.getInstance();
         _pathFollower = new PathFollower("MID SHOOT B SHOOT 2 SHOOT");
