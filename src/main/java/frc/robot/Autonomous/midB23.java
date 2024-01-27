@@ -60,12 +60,18 @@ public class midB23 extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     _count++;
                 }
                 break;
 
             case 5:
-                _drivetrain.drive(new ChassisSpeeds());
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _count++;
+                }
                 break;
             case 6:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
