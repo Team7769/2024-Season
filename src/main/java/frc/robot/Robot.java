@@ -47,7 +47,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
-    _drivetrain.updateOdometry();
   }
 
   @Override
@@ -57,6 +56,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    _drivetrain.updateOdometry();
     _currentAuto.execute();
   }
 
@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     teleopDrive();
+    _drivetrain.updateOdometry();
   }
 
   private void teleopDrive() {

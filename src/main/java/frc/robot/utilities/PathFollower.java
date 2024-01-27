@@ -27,11 +27,11 @@ public class PathFollower {
     // init as -1 so that when user starts first path, go to 0
     private int _pathIndex = -1;
 
-    private final PIDConstants _translationConstants = new PIDConstants(5.5,
+    private final PIDConstants _translationConstants = new PIDConstants(1.75,
                                                                         0.0,
                                                                         0.0);
 
-    private final PIDConstants _rotationConstants = new PIDConstants(4.5,
+    private final PIDConstants _rotationConstants = new PIDConstants(1.5,
                                                                      0.0,
                                                                      0.0);
 
@@ -54,7 +54,7 @@ public class PathFollower {
     public void startNextPath(ChassisSpeeds startingSpeeds,
                               Rotation2d startingRotation) {
 
-        if (_pathIndex + 1 >= _pathGroup.size()) {
+        if (_pathIndex + 1 > _pathGroup.size()) {
             return; // if this is reached, we are doing something wrong
         }
 

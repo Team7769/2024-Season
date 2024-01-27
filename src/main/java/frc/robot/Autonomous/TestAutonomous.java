@@ -26,31 +26,34 @@ public class TestAutonomous extends AutonomousMode {
     {
         switch (_step) {
             case 0:
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-
-                if (_pathFollower.isPathFinished()){
-                    _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
-                    nextStep();
-                }
+                _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                nextStep();
                 break;
             case 1:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
                 break;
             case 2:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            case 3:
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
         }
     }
 
     public void initialize()
-    {
-        _pathFollower.startNextPath(new ChassisSpeeds(), new Rotation2d());
+    {        
         var startingPose = _pathFollower.getStartingPose();
         _drivetrain.setStartingPose(startingPose);
     }

@@ -286,8 +286,9 @@ public class Drivetrain {
     }
 
     public void setStartingPose(Pose2d startingPose) {
-        _gyro.setYaw(startingPose.getRotation().getDegrees());
-        _drivePoseEstimator.resetPosition(startingPose.getRotation(), getModulePositions(), startingPose);
+        _gyroOffset = startingPose.getRotation().getDegrees();
+        SmartDashboard.putNumber("startingPoseRotation", startingPose.getRotation().getDegrees());
+        _drivePoseEstimator.resetPosition(_gyro.getRotation2d(), getModulePositions(), startingPose);
     }
 
     public Pose2d getPose(){
