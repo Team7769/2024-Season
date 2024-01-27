@@ -54,11 +54,14 @@ public class PathFollower {
     public void startNextPath(ChassisSpeeds startingSpeeds,
                               Rotation2d startingRotation) {
 
-        if (_pathIndex + 1 > _pathGroup.size()) {
+        _pathIndex += 1;
+
+        // if we have a size of 1 (one path) and an index of 0 marks the first
+        // path then on our second run when pathindex reaches 1 it would be
+        // out of range of the list
+        if (_pathIndex >= _pathGroup.size()) {
             return; // if this is reached, we are doing something wrong
         }
-
-        _pathIndex += 1;
 
         var path = _pathGroup.get(_pathIndex);
 
@@ -69,6 +72,7 @@ public class PathFollower {
 
         _currentTrajectory = path.getTrajectory(startingSpeeds,
                                                 startingRotation);
+
         _timer.reset();
         _timer.start();
     }
