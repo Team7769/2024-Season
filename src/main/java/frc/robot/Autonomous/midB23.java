@@ -15,7 +15,7 @@ public class midB23 extends AutonomousMode{
 
     public midB23(){
         _drivetrain = Drivetrain.getInstance();
-        _pathFollower = new PathFollower("MID SHOOT B SHOOT 2 SHOOT");
+        _pathFollower = new PathFollower("MID B 2 3");
     }
 
     @Override
