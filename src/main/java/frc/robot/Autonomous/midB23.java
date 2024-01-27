@@ -10,8 +10,7 @@ import frc.robot.Utilities.PathFollower;
 public class midB23 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
-    private int _count;    
-
+    private int _count;
     public midB23(){
         _drivetrain = Drivetrain.getInstance();
         _pathFollower = new PathFollower("MID B 2 3");
