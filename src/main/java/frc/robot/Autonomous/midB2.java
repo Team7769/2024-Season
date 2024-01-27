@@ -50,20 +50,11 @@ public class midB2 extends AutonomousMode {
 
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
                 break;
 
             case 4:
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-                if (_pathFollower.isPathFinished()){
-                    _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-                break;
-
-            case 5:
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
         }
