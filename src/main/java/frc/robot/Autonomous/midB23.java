@@ -11,10 +11,6 @@ public class midB23 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
     private int _count;
-<<<<<<< HEAD
-=======
-    
->>>>>>> 1f0d93ba671bbe87f3f92ab7cdc80a6050836154
 
     public midB23(){
         _drivetrain = Drivetrain.getInstance();
