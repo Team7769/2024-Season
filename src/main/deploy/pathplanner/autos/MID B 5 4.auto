@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start mid to b"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 5 to b"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 4 to b"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
