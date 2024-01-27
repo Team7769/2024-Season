@@ -22,18 +22,6 @@
           "data": {
             "pathName": "3"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "5"
-          }
         }
       ]
     }

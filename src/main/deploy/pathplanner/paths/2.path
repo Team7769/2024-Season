@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8761397865163765,
-        "y": 5.527514849608872
+        "x": 4.780427249870191,
+        "y": 6.405827590542485
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.5
+        "x": 7.965774790322761,
+        "y": 5.820285763253409
       },
       "prevControl": {
-        "x": 1.9292964403332504,
-        "y": 5.515804013063089
+        "x": 6.056908433360374,
+        "y": 6.522935956000301
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -0.4855458300081482,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "mid shoot b shoot 2 shoot",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
