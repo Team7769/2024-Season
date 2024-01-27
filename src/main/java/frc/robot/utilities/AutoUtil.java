@@ -21,6 +21,8 @@ public class AutoUtil {
                 return new TestAutonomous();
             case(MID_B_2):
                 return new midB2();
+            case(MID_B_2_3):
+                return new midB23();
         }
         return null;
     }
@@ -36,6 +38,7 @@ public class AutoUtil {
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
         _autoChooser.addOption("Mid B 2 (3)", MID_B_2);
+        _autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
     }
 
     // list of all auto modes 
@@ -43,4 +46,5 @@ public class AutoUtil {
     public static final int DO_NOTHING = 0;
     public static final int TEST_AUTONOMOUS = 1;
     public static final int MID_B_2 = 2;
+    public static final int MID_B_2_3 = 3;
 }

@@ -15,7 +15,7 @@ public class midB23 extends AutonomousMode{
 
     public midB23(){
         _drivetrain = Drivetrain.getInstance();
-        _pathFollower = new PathFollower("MID SHOOT B SHOOT 2 SHOOT");
+        _pathFollower = new PathFollower("MID B 2 3");
     }
 
     @Override
@@ -60,14 +60,24 @@ public class midB23 extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+<<<<<<< HEAD
                     nextStep();
+=======
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _count++;
+>>>>>>> 164ab794978da93fe7d5efdce0c6063b5f35823b
                 }
                 break;
             case 5:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+<<<<<<< HEAD
                     nextStep();
+=======
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _count++;
+>>>>>>> 164ab794978da93fe7d5efdce0c6063b5f35823b
                 }
                 break;
             case 6:
