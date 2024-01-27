@@ -8,19 +8,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1"
+            "pathName": "start mid to b"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "2"
+            "pathName": "start b to 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3"
+            "pathName": "start 2 to b"
           }
         }
       ]
