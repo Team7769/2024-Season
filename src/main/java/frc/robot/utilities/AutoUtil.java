@@ -41,6 +41,7 @@ public class AutoUtil {
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
         _autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
         _autoChooser.addOption("Mid B 5 4 (4)", MID_B_5_4);
+        _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
     }
 
     // list of all auto modes 
