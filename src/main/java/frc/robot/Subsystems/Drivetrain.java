@@ -42,6 +42,7 @@ public class Drivetrain {
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final Field2d m_field = new Field2d();
+    private final VisionSystem _visionSystem;
 
     private Drivetrain()
     {
@@ -106,7 +107,9 @@ public class Drivetrain {
             },
             new Pose2d()
         );
+
         SmartDashboard.putData("Field",m_field);
+        _visionSystem = VisionSystem.getInstance();
     }
 
     public static Drivetrain getInstance()
@@ -155,9 +158,16 @@ public class Drivetrain {
     
     public void updateOdometry()
     {
+        var timestamp = Timer.getFPGATimestamp();
 
+        // Example updating the pose estimator with the vision measurement.
+        var botpose = _visionSystem.getBotpose();
+        if (botpose != null) {
+            _drivePoseEstimator.addVisionMeasurement(botpose, timestamp);
+        }
+        
         _drivePoseEstimator.updateWithTime(
-            Timer.getFPGATimestamp(),
+            timestamp,
             getGyroRotation(),
             new SwerveModulePosition[] {
                 _frontLeftModule.getPosition(),
