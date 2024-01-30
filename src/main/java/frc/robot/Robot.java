@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
-    _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
   }
 
   @Override
@@ -51,6 +50,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    _drivetrain.reset();
+    _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
     _currentAuto.initialize();
   }
 

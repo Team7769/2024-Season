@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.Constants;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PathFollower {
     private Timer _timer;
@@ -60,6 +61,7 @@ public class PathFollower {
 
         _pathIndex += 1;
 
+        SmartDashboard.putNumber("pathIndex", _pathIndex);
         var path = _pathGroup.get(_pathIndex);
 
         var alliance = DriverStation.getAlliance();
