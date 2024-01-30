@@ -24,8 +24,13 @@ public class VisionSystem {
     // Example metod for getting the botpose from the limelight
     public Pose2d getBotpose() {
         // Normal botpose array
-        var botPoseArray = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(new double[6]);
 
+        var tid = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(-1.0);
+
+        if (tid < 0) {
+            return null;
+        }
+        
         // Alliance specific botpose array
         double[] wpiBotposeArray;
         if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
@@ -35,6 +40,17 @@ public class VisionSystem {
         }
 
         // Example: Return new Pose with the three array values.
-        return new Pose2d(wpiBotposeArray[0], wpiBotposeArray[1], Rotation2d.fromDegrees(wpiBotposeArray[2]));
+        return new Pose2d(wpiBotposeArray[0], wpiBotposeArray[1], Rotation2d.fromDegrees(wpiBotposeArray[5]));
+    }
+
+    public double getLatency() {
+        double[] wpiBotposeArray;
+        if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            wpiBotposeArray = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[6]);
+        } else {
+            wpiBotposeArray = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+        }
+
+        return wpiBotposeArray[6];
     }
 }

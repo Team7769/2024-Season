@@ -163,7 +163,8 @@ public class Drivetrain {
         // Example updating the pose estimator with the vision measurement.
         var botpose = _visionSystem.getBotpose();
         if (botpose != null) {
-            _drivePoseEstimator.addVisionMeasurement(botpose, timestamp);
+            var latencyAdjusted = Timer.getFPGATimestamp() - (_visionSystem.getLatency()/1000.0);
+            _drivePoseEstimator.addVisionMeasurement(botpose, latencyAdjusted);
         }
         
         _drivePoseEstimator.updateWithTime(
