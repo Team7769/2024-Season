@@ -1,9 +1,6 @@
 package frc.robot.Autonomous;
 
-import java.util.Timer;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.Time;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
 

@@ -1,6 +1,5 @@
 package frc.robot.Autonomous;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
