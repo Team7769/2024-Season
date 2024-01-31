@@ -34,11 +34,20 @@ public class LEDController {
         config.brightnessScalar = brightness;
     }
 
+    /**
+     * Method that sets the color of the leds
+     * @param red red value
+     * @param green green value
+     * @param blue blue value
+     */
+    
     public void setLEDs(int red, int green, int blue)
     {
         candle.setLEDs(red, green, blue);
     }
-
+    /**
+     * Turns the brightness of the candle to 0 basically off.
+     */
     public void off()
     {
         config.brightnessScalar = 0;
