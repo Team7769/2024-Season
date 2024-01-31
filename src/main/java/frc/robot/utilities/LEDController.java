@@ -2,7 +2,6 @@ package frc.robot.Utilities;
 
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
-import com.ctre.phoenix.led.CANdle.LEDStripType;
 
 import frc.robot.Constants.Constants;
 
