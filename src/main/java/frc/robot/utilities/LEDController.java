@@ -35,7 +35,7 @@ public class LEDController {
     }
 
     /**
-     * Method that sets the color of the leds
+     * Method that sets the color of the leds with a value from 0 - 255
      * @param red red value
      * @param green green value
      * @param blue blue value
