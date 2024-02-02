@@ -1,18 +1,8 @@
 package frc.robot.Subsystems;
 
 public class Jukebox {
-    
-    enum ElevatorState
-    {
-        IDK,
-        RAMPUP,
-        SHOOT,
-        RESET,
-        DUMPAMP,
-        SETUPFORAMP,
-        EXTEND,
-        CLIMB
-    }
+
+    private ElevatorState currentState;
 
 
 
@@ -36,6 +26,30 @@ public class Jukebox {
 
     // @Override
     // public void logTelemetry(){}
+
+    private void switchCurrentState(){}
+
+    public void setState(ElevatorState e)
+    {
+        switch (e) {
+            case IDK:
+                
+                break;
+        
+            case RAMPUP:
+                break;
+            case SHOOT:
+                break;
+            case RESET:
+                break;
+            case DUMPAMP:
+                break;
+            case SETUPFORAMP:
+                break;
+            case EXTEND:
+                break;
+        }
+    }
 
     
 }
