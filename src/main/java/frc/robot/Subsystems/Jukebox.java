@@ -2,6 +2,12 @@ package frc.robot.Subsystems;
 
 public class Jukebox {
 
+ enum ElevatorState
+ {
+    IDK
+ }
+
+
     private static Jukebox _instance;
 
     public Jukebox()
