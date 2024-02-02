@@ -30,8 +30,8 @@ public final class Constants {
 
     public static final int kPigeonId = 14;
 
-    public static final int kLElevator = 17;
-    public static final int kRElevator = 18;
+    public static final int kLElevatorId = 17;
+    public static final int kRElevatorId = 18;
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);

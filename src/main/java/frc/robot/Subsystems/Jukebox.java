@@ -1,7 +1,13 @@
 package frc.robot.Subsystems;
 
-public class Jukebox {
+import com.revrobotics.CANSparkMax;
+import frc.robot.Constants.Constants;
     
+public class Jukebox {
+    private static Jukebox _instance;
+    private CANSparkMax _elevatorL;
+    private CANSparkMax _elevatorR;
+
     enum ElevatorState
     {
         IDK,
@@ -14,14 +20,12 @@ public class Jukebox {
         CLIMB
     }
 
-
-
-
-    private static Jukebox _instance;
+    
 
     public Jukebox()
     {
-        
+        _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
+        _elevatorR = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
     }
 
     public static Jukebox getInstance()
