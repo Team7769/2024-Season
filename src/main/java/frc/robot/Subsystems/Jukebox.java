@@ -1,18 +1,19 @@
 package frc.robot.Subsystems;
 
 public class Jukebox {
+    enum ElevatorState
+    {
+        IDK,
+        RAMPUP,
+        SHOOT,
+        RESET,
+        DUMPAMP,
+        SETUPFORAMP,
+        EXTEND,
+        CLIMB
+    }
 
- enum ElevatorState
- {
-    IDK,
-    RAMPUP,
-    SHOOT,
-    RESET,
-    DUMPAMP,
-    SETUPFORAMP,
-    EXTEND,
-    CLIMB
- }
+
 
 
     private static Jukebox _instance;
