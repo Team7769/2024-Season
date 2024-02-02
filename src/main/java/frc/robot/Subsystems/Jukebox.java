@@ -4,7 +4,14 @@ public class Jukebox {
 
  enum ElevatorState
  {
-    IDK
+    IDK,
+    RAMPUP,
+    SHOOT,
+    RESET,
+    DUMPAMP,
+    SETUPFORAMP,
+    EXTEND,
+    CLIMB
  }
 
 
