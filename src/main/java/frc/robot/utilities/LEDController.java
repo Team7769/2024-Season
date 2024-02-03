@@ -1,25 +1,30 @@
 package frc.robot.Utilities;
 
-import com.ctre.phoenix.led.Animation;
-import com.ctre.phoenix.led.CANdle;
-import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.*;
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
+
 import frc.robot.Constants.Constants;
 
 public class LEDController {
 
     private static LEDController _instance;
-    private CANdle candle1;
-    private CANdle candle2;
-    private CANdle candle3;
+    private CANdle idleCandle;
+    private CANdle stateCandle1;
+    private CANdle stateCandle2;
     private CANdleConfiguration config;
     private Animation idle;
+    private Animation packingHeat;
+    private Animation fire;
+    private int numLeds;
 
     public LEDController()
     {
-        candle1 = new CANdle(Constants.kCANdleId);
+        numLeds = 100;
+        stateCandle1 = new CANdle(Constants.kCANdleId);
         config = new CANdleConfiguration();
         idle = new SingleFadeAnimation(0, 0, 255);
+        packingHeat = new FireAnimation(.5, .5, numLeds, 1, .5, false, 0);
+        fire = new ColorFlowAnimation(0, 255, 0, 0, .1, numLeds, Direction.Forward);
     }
 
     public static LEDController getInstance()
@@ -48,7 +53,7 @@ public class LEDController {
     
     public void setLEDs(int red, int green, int blue)
     {
-        candle1.setLEDs(red, green, blue);
+        idleCandle.setLEDs(red, green, blue);
     }
     /**
      * Turns the brightness of the candle to 0 basically off.
@@ -60,6 +65,20 @@ public class LEDController {
 
     public void idleLights()
     {
-        candle1.animate(idle);
+        idleCandle.animate(idle);
+        stateCandle1.animate(idle);
+        stateCandle2.animate(idle);
+    }
+
+    public void holdingPieceLights()
+    {
+        stateCandle1.animate(packingHeat);
+        stateCandle2.animate(packingHeat);
+    }
+
+    public void fireAwayLights()
+    {
+        stateCandle1.animate(fire);
+        stateCandle2.animate(fire);
     }
 }
