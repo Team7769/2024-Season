@@ -168,27 +168,31 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    // private void IDK(){}
-    // private void RESET(){}
-    // private void HOLD_POSITION(){}
-    // private void UP_ELEVATOR(){}
-    // private void DOWN_ELEVATOR(){}
+    private void IDK(){}
+    
 
     public void handleCurrentState()
     {
-        switch (noteboxCurrentState) {
+        switch(noteboxCurrentState){
             case IDK:
-                IDK();
                 break;
-            case RESET:
-                RESET();
+            case ELEVATOR_UP:
                 break;
-            case HOLD_POSITION:
-                HOLD_POSITION();
+            case POLLER_UP:
                 break;
-            case UP_ELEVATOR:
+            case TILT_UP_OR_DOWN:
                 break;
-            case DOWN_ELEVATOR:
+            case IS_NOTE_IN_HOLDER:
+                break;
+            case RAMP_UP_SHOOTER:
+                break;
+            case IS_NOTE_IN_SHOOTER_POSITION:
+                break;
+            case SHOOT_NOTE:
+                break;
+            case ELEVATOR_DOWN:
+                break;
+            case IS_STATE_FINISH:
                 break;
             default:
                 IDK();
@@ -198,20 +202,6 @@ public class Jukebox {
 
     public void setState(JukeboxEnum n)
     {
-        switch (n) {
-            case IDK:
-                break;
-            case RESET:
-                break;
-            case HOLD_POSITION:
-                break;
-            case UP_ELEVATOR:
-                break;
-            case DOWN_ELEVATOR:
-                break;
-            default:
-                break;
-        }
 
         noteboxCurrentState = n;
     }

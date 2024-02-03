@@ -2,9 +2,16 @@ package frc.robot.Subsystems;
 
     public enum JukeboxEnum
     {
-        IDK,
-        RESET,
-        HOLD_POSITION,
-        UP_ELEVATOR,
-        DOWN_ELEVATOR,
+        IDK, // everything is idk
+        ELEVATOR_UP, // set the elevator to a positive voltage
+        POLLER_UP, // Polls up the note to the holder
+        TILT_UP_OR_DOWN, // this tilt up or down
+        IS_NOTE_IN_HOLDER, // Checks to make sure the note is in the holder, but does not touch the shooter motors
+        RAMP_UP_SHOOTER, // ramp up the motors
+        IS_NOTE_IN_SHOOTER_POSITION, // check to make sure the note is in a shooter position
+        SHOOT_NOTE, // spin the poller up motor to the shooter
+        ELEVATOR_DOWN, // set the elevator down
+        IS_STATE_FINISH // check to make sure some states are finish before another state start
+
+
     }
