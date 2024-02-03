@@ -25,7 +25,7 @@ public class Jukebox {
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
     private Timer _timer;
-    
+
     private double manualElevatorSpeed;
     
 
@@ -46,17 +46,17 @@ public class Jukebox {
         _elevatorL.burnFlash();
         // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
-
+        // the timer is needed for handleElevatorPosistion
         _timer = new Timer();
-
+        // creates the feed foward for the elevator
         _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
         Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
-
+        // the constraints our elevator has
         _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
-
+        // our desired state and current state
         _goal = new TrapezoidProfile.State();
         _profileSetpoint = new TrapezoidProfile.State();
-
+        // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
     }
@@ -99,7 +99,7 @@ public class Jukebox {
 
     public void setSetpoint(double position)
     {
-        _goal = new TrapezoidProfile.State(position, 0);
+        
     }
 
     public boolean isItAtSetpoint()
