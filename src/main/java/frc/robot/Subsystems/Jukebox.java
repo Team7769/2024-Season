@@ -91,6 +91,11 @@ public class Jukebox {
         _feedForward.calculate(_profileSetpoint.velocity));
     }
 
+
+    private void down(){}
+
+    private void up(){}
+
     private void setSetpoint(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
