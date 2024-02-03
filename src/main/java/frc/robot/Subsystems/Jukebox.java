@@ -32,21 +32,6 @@ public class Jukebox {
     private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
     private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
 
-    enum ElevatorState
-    {
-        IDK,
-        RAMPUP,
-        SHOOT,
-        RESET,
-        DUMPAMP,
-        SETUPFORAMP,
-        EXTEND,
-        CLIMB
-    }
-    private final double k_Proportional=0;
-    private final double k_integral=0;
-    private final double k_derivative=0;
-
 
     
 
@@ -89,6 +74,19 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
+
+    private void IDK(){
+        _elevatorL.set(0);
+        _elevatorR.set(0);
+    }
+    private void RAMPUP(){}
+    private void SHOOT(){}
+    private void RESET(){}
+    private void DUMPAMP(){}
+    private void SETUPFORAMP(){}
+    private void EXTEND(){}
+    private void CLIMB(){}
+
     private void handleCurrentState()
     {
         switch (currentState) {
@@ -105,6 +103,8 @@ public class Jukebox {
             case SETUPFORAMP:
                 break;
             case EXTEND:
+                break;
+            case CLIMB:
                 break;
             default:
                 break;
@@ -129,6 +129,8 @@ public class Jukebox {
             case SETUPFORAMP:
                 break;
             case EXTEND:
+                break;
+            case CLIMB:
                 break;
         }
     }
