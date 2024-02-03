@@ -1,6 +1,6 @@
 package frc.robot.Subsystems;
 
-    public enum Notebox
+    public enum JukeboxEnum
     {
         IDK,
         RESET,

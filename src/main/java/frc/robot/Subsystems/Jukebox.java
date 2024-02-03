@@ -22,7 +22,7 @@ public class Jukebox {
     private CANSparkMax _shooterAngle;
     private SparkPIDController _elevatorController;
     private ElevatorFeedforward _feedForward;
-    private Notebox noteboxCurrentState = Notebox.IDK;
+    private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDK;
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
@@ -179,7 +179,7 @@ public class Jukebox {
         }
     }
 
-    public void setState(Notebox n)
+    public void setState(JukeboxEnum n)
     {
         switch (n) {
             case IDK:
@@ -199,7 +199,7 @@ public class Jukebox {
         noteboxCurrentState = n;
     }
 
-    public boolean isFinish(Notebox c)
+    public boolean isFinish(JukeboxEnum c)
     {
         if(noteboxCurrentState != c){
             return true;
