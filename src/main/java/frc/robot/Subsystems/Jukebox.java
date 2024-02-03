@@ -170,17 +170,15 @@ public class Jukebox {
     }
 
     private void HOLD_POSITION(){
-        handleElevatorPosition();
         _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     private void UP_ELEVATOR(){
-        handleElevatorPosition();
-        _elevatorL.set()
+        _elevatorL.set(0.5);
     }
 
     private void DOWN_ELEVATOR(){
-
+        _elevatorL.set(-0.5);
     }
 
     public void handleCurrentState()
