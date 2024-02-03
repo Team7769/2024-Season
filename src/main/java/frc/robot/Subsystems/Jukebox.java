@@ -18,6 +18,8 @@ public class Jukebox {
     private static double _oldPosition;
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
+    private CANSparkMax _feeder;
+    private CANSparkMax _shooterAngle;
     private SparkPIDController _elevatorController;
     private ElevatorFeedforward _feedForward;
     private Notebox noteboxCurrentState = Notebox.IDK;
@@ -31,7 +33,7 @@ public class Jukebox {
 
     public Jukebox()
     {
-        // elevator motor setup
+        // motor setup
         // right elevator motor setup
         _elevatorR = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorR.setIdleMode(IdleMode.kBrake);
@@ -46,6 +48,18 @@ public class Jukebox {
         _elevatorL.burnFlash();
         // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
+        // shooter angle motor setup
+        _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
+        _shooterAngle.setIdleMode(IdleMode.kBrake);
+        _shooterAngle.setSmartCurrentLimit(20, 100);
+        _shooterAngle.setInverted(false);
+        _shooterAngle.burnFlash();
+        // feeder motor setup
+        _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
+        _feeder.setIdleMode(IdleMode.kBrake);
+        _feeder.setSmartCurrentLimit(20, 100);
+        _feeder.setInverted(false);
+        _feeder.burnFlash();
         // the timer is needed for handleElevatorPosistion
         _timer = new Timer();
         // creates the feed foward for the elevator
@@ -59,6 +73,7 @@ public class Jukebox {
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
+
     }
 
     public static Jukebox getInstance()
