@@ -5,6 +5,7 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -21,13 +22,29 @@ public class Jukebox {
     private CANSparkMax _elevatorR;
     private CANSparkMax _feeder;
     private CANSparkMax _shooterAngle;
+
+
+
+    private SparkPIDController _shooterAngleController;
     private SparkPIDController _elevatorController;
+
+
     private ElevatorFeedforward _feedForward;
     private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDK;
+
+
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
+
+    private TrapezoidProfile.Constraints _shooterConstraints;
+    private TrapezoidProfile.State _shooterGoal;
+    private TrapezoidProfile.State _shooterSetPoint;
+
+
     private Timer _timer;
+
+
 
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
@@ -96,6 +113,10 @@ public class Jukebox {
         _goal = new TrapezoidProfile.State();
         _profileSetpoint = new TrapezoidProfile.State();
 
+        // our desired state and current state with the shooter
+        _shooterGoal = new TrapezoidProfile.State();
+        _shooterSetPoint = new TrapezoidProfile.State();
+
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
@@ -113,19 +134,25 @@ public class Jukebox {
     }
     
     private void handleElevatorPosition() {
-       
         var profile = new TrapezoidProfile(_constraints);
         _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
         _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkBase.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
+
+
+
+
+
     /**
      * Method that will set the angle of the shooter.
      * This should also be apply to the tilt angle too.
      * Once the shooter angle is set it should auto apply the tilt angle.
+     * 1 means it set it clockwise
+     * -1 means it set it counterclockwise
      */
-    public void setShooterAngle(double desiredAngle) {
-
+    private void setShooterAngle(double desiredPosition) {
+        _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
     }
     
     /**
@@ -142,6 +169,9 @@ public class Jukebox {
             _oldPosition = position;
         }
     }
+
+
+    
 
 
     public void holdPosition()
@@ -164,6 +194,8 @@ public class Jukebox {
 
     private void IDK(){
         setElevatorPosition(0);
+        setShooterAngle(0);
+        _timer.reset();
     }
 
     private void HOLD_POSITION(){
@@ -184,10 +216,12 @@ public class Jukebox {
             case IDK:
                 break;
             case ELEVATOR_UP:
+                UP_ELEVATOR();
                 break;
             case POLLER_UP:
                 break;
             case TILT_UP:
+                setShooterAngle(.5);
                 break;
             case IS_NOTE_IN_HOLDER:
                 break;
@@ -198,8 +232,10 @@ public class Jukebox {
             case SHOOT_NOTE:
                 break;
             case TILT_DOWN:
+                setElevatorPosition(-.5);
                 break;
             case ELEVATOR_DOWN:
+                DOWN_ELEVATOR();
                 break;
             case IS_STATE_FINISH:
                 break;
