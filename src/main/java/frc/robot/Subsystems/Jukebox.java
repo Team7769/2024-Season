@@ -130,7 +130,7 @@ public class Jukebox {
      * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
      * @param position takes a double and makes the goal state.
      */
-    public void setElevatorPosition(double position, String elevatorPositionMotors)
+    private void setElevatorPosition(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
@@ -139,20 +139,6 @@ public class Jukebox {
             _timer.reset();
             _oldPosition = position;
         }
-    }
-
-    public void setManualElevatorDown(){}
-
-    public void up(){}
-
-    public void setSetpoint(double position)
-    {
-        
-    }
-
-    public boolean isItAtSetpoint()
-    {
-        return false;
     }
 
     public void holdPosition()
@@ -175,8 +161,7 @@ public class Jukebox {
 
     private void IDK()
     {
-        _elevatorL.set(0);
-        _elevatorR.set(0);
+        setElevatorPosition(0);
         _timer.stop();
 
     }
@@ -205,10 +190,10 @@ public class Jukebox {
                 HOLD_POSITION();
                 break;
             case UP_ELEVATOR:
-                setElevatorPosition(10,"UP");
+                setElevatorPosition(.5);
                 break;
             case DOWN_ELEVATOR:
-                setElevatorPosition(10, "DOWN");
+                setElevatorPosition(-.5);
                 break;
             default:
                 IDK();
