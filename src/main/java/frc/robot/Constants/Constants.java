@@ -38,7 +38,10 @@ public final class Constants {
     public static final double kBackLeftEncoderOffset = -Math.toRadians(219.55078);
     public static final double kBackRightEncoderOffset = -Math.toRadians(295.40039);
 
-    
+    public static final double kElavatorFeedforwardKs = 0;
+    public static final double kElavatorFeedforwardKv = 0;
+    public static final double kElavatorFeedforwardKg = 0;
+
     public static final double MAX_VOLTAGE = 12.0;
 
     // possibly change per this years gearbox
