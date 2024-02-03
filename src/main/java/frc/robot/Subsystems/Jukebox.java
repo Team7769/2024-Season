@@ -102,6 +102,7 @@ public class Jukebox {
         _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
         _shooterL.setIdleMode(IdleMode.kCoast);
         _shooterL.setSmartCurrentLimit(20, 100);
+        _shooterL.setInverted(true);
         _shooterL.burnFlash();
 
         // right shooter motor setup
@@ -116,8 +117,6 @@ public class Jukebox {
 
         // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
-
-        _shooterL.setInverted(true);
 
         // shooter angle motor setup
         _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
