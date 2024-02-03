@@ -6,7 +6,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -167,8 +167,23 @@ public class Jukebox {
         manualElevatorSpeed = s;
     }
     
-    // @Override
-    // public void logTelemetry(){}
+    public void logTelemetry() {
+        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
+
+        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
+
+        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
+        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
+        
+        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
+    }
 
     private void IDK(){
         setElevatorPosition(0);
