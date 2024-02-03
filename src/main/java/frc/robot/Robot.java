@@ -36,11 +36,8 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
-<<<<<<< HEAD
    private LEDController _ledController;
-=======
    private Jukebox _jukebox;
->>>>>>> dbb116237af2f9d5c32456c1d01ffebfcf9e58f9
 
   @Override
   public void robotInit() {

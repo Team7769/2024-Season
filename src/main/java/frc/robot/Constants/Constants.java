@@ -30,9 +30,7 @@ public final class Constants {
 
     public static final int kPigeonId = 14;
 
-<<<<<<< HEAD
     public static final int kCANdleId = 15;
-=======
     public static final int kLElevatorId = 17;
     public static final int kRElevatorId = 18;
     public static final int kFeederId = 19;
@@ -40,7 +38,6 @@ public final class Constants {
     public static final int kShooterLeftMotorId = 21;
     public static final int kShooterRightMotorId = 22;
     public static final int kIntakeMotorId = 16;
->>>>>>> dbb116237af2f9d5c32456c1d01ffebfcf9e58f9
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
