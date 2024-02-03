@@ -9,5 +9,6 @@ package frc.robot.Subsystems;
         DUMPAMP,
         SETUPFORAMP,
         EXTEND,
-        CLIMB
+        CLIMB,
+        HOLD
     }

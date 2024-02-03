@@ -31,6 +31,10 @@ public class Jukebox {
     private final double kMaxAccel = 5;
     private final double kAllowedError = 3;
 
+    private double manualElevatorSpeed = 0.0;
+
+    private final double speedToHoldElevator = 0.0;
+
     private ElevatorFeedforward _feedForward;
 
     private SparkPIDController _elevatorController;
@@ -42,6 +46,7 @@ public class Jukebox {
     private final double k_Proportional = 0;
     private final double k_integral = 0;
     private final double k_derivative = 0;
+    private Timer timer;
 
     private static double _oldPosition;
     
@@ -96,22 +101,46 @@ public class Jukebox {
             _oldPosition = position;
         }
     }
+
+    private void down(){}
+
+    private void up(){}
+
+    private void setSetpoint(double position)
+    {
+        _goal = new TrapezoidProfile.State(position, 0);
+
+        switch (currentState) {
+            case RESET:
+                break;
+            case HOLD:
+                break;
+            case DUMPAMP:
+                break;
+            case SETUPFORAMP:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void holdPosition()
+    {
+        handleElevatorPosition();
+        _elevatorL.set(speedToHoldElevator);
+    }
+
+    public void setManualElevatorSpeed(double s)
+    {
+        if (Math.abs(s) <= .10)
+        {
+            s = 0.0;
+        }
+        manualElevatorSpeed = s;
+    }
     
     // @Override
     // public void logTelemetry(){}
-
-
-    private void IDK(){
-        _elevatorL.set(0);
-        _elevatorR.set(0);
-    }
-    private void RAMPUP(){}
-    private void SHOOT(){}
-    private void RESET(){}
-    private void DUMPAMP(){}
-    private void SETUPFORAMP(){}
-    private void EXTEND(){}
-    private void CLIMB(){}
 
     private void handleCurrentState()
     {
@@ -141,9 +170,7 @@ public class Jukebox {
     {
         switch (e) {
             case IDK:
-                
                 break;
-        
             case RAMPUP:
                 break;
             case SHOOT:
