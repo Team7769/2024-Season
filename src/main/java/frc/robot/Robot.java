@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.IntakeState;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Jukebox;
+import frc.robot.Subsystems.JukeboxEnum;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.OneDimensionalLookup;
@@ -33,10 +35,12 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+   private Jukebox _jukebox;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
+    _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
@@ -130,6 +134,16 @@ public class Robot extends TimedRobot {
     if (_operatorController.getYButton()) {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
+
+    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
+    {
+        _jukebox.setState(JukeboxEnum.ELEVATOR_UP);
+    }
+    
+    if((_operatorController.getPOV() >= 135) && (_operatorController.getPOV() <= 225))
+    {
+        _jukebox.setState(JukeboxEnum.ELEVATOR_DOWN);
+    }
   }
 
   @Override
@@ -137,4 +151,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void simulationPeriodic() {}
+
+
 }
