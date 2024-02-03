@@ -16,10 +16,6 @@ import frc.robot.Constants.Constants;
     
 public class Jukebox extends Subsystem{
     
-
-
-
-    
     private static Jukebox _instance;
     private static double _oldPosition;
 
@@ -27,44 +23,32 @@ public class Jukebox extends Subsystem{
     private CANSparkMax _elevatorR;
     private CANSparkMax _feeder;
     private CANSparkMax _shooterAngle;
-
-
     private CANSparkMax _shooterL;
     private CANSparkMax _shooterR;
-
-
 
     private SparkPIDController _shooterAngleController;
     private SparkPIDController _elevatorController;
     private SparkPIDController _shooterController;
 
-
     private ElevatorFeedforward _feedForward;
     private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDK;
-
 
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
-
     private TrapezoidProfile.Constraints _shooterConstraints;
     private TrapezoidProfile.State _shooterGoal;
     private TrapezoidProfile.State _shooterSetPoint;
 
-
     private DigitalInput _noteHolder;
     private DigitalInput _noteShooter;
 
-
     private Timer _timer;
-
 
     // Create a constant speed for each of the motors 
     private double _shooterSpeed = 0;
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
-
-
 
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
@@ -81,10 +65,8 @@ public class Jukebox extends Subsystem{
     // private final double kMaxAccel = 5;
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
-
     private double manualElevatorSpeed;
     
-
     public Jukebox()
     {
         // motor setup
