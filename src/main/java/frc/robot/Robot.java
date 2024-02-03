@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
-    _ledController.idleLights();
+    _ledController.idleLights();  
   }
 
   @Override
