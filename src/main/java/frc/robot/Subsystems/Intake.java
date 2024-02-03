@@ -139,10 +139,8 @@ public class Intake {
         SmartDashboard.putNumber("intakeMotorOutputCurrent",
                                  _motor.getOutputCurrent());
         
+
+        SmartDashboard.putNumber("intakeMotorOutput", _motor.get());
     }
-
-    
-
-
 }
 
