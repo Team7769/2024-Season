@@ -284,10 +284,10 @@ public class Jukebox {
     {
         switch(noteboxCurrentState){
             case ELEVATOR_UP:
-                setElevatorPosition(.5);
+                UP_ELEVATOR(.5);
                 break;
             case ELEVATOR_DOWN:
-                setElevatorPosition(-.5);
+                DOWN_ELEVATOR(.5);
                 break;
             case TILT_UP:
                 setShooterAngle(1);
@@ -305,7 +305,7 @@ public class Jukebox {
                 feed(.5);
                 break;
             case SPIT:
-                spit(-.5);
+                spit(.5);
                 break;
             case HOLD_POSITION:
                 HOLD_POSITION();
