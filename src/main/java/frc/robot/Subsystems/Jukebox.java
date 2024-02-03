@@ -171,5 +171,15 @@ public class Jukebox {
         noteboxCurrentState = n;
     }
 
+    public boolean isFinish(Notebox c)
+    {
+        if(noteboxCurrentState != c){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     
 }
