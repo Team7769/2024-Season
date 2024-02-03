@@ -34,18 +34,6 @@ public class Jukebox {
     private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
     private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
     private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
-
-    enum ElevatorState
-    {
-        IDK,
-        RAMPUP,
-        SHOOT,
-        RESET,
-        DUMPAMP,
-        SETUPFORAMP,
-        EXTEND,
-        CLIMB
-    }
     private final double k_Proportional=0;
     private final double k_integral=0;
     private final double k_derivative=0;
