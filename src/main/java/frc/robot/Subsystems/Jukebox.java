@@ -22,6 +22,8 @@ public class Jukebox {
 
     private double manualElevatorSpeed;
 
+    private Notebox noteboxCurrentState = Notebox.IDK;
+
     private ElevatorFeedforward _feedForward;
 
     private SparkPIDController _elevatorController;
@@ -128,6 +130,50 @@ public class Jukebox {
     
     // @Override
     // public void logTelemetry(){}
+
+    private void IDK(){}
+    private void RESET(){}
+    private void HOLD_POSITION(){}
+    private void UP_ELEVATOR(){}
+    private void DOWN_ELEVATOR(){}
+
+    public void handleCurrentState()
+    {
+        switch (noteboxCurrentState) {
+            case IDK:
+                break;
+            case RESET:
+                break;
+            case HOLD_POSITION:
+                break;
+            case UP_ELEVATOR:
+                break;
+            case DOWN_ELEVATOR:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setState(Notebox n)
+    {
+        switch (n) {
+            case IDK:
+                break;
+            case RESET:
+                break;
+            case HOLD_POSITION:
+                break;
+            case UP_ELEVATOR:
+                break;
+            case DOWN_ELEVATOR:
+                break;
+            default:
+                break;
+        }
+
+        noteboxCurrentState = n;
+    }
 
     
 }
