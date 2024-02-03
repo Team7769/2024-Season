@@ -31,6 +31,10 @@ public class Jukebox {
     private final double kMaxAccel = 5;
     private final double kAllowedError = 3;
 
+    private double manualElevatorSpeed = 0.0;
+
+    private final double speedToHoldElevator = 0.0;
+
     private ElevatorFeedforward _feedForward;
 
     private SparkPIDController _elevatorController;
@@ -104,6 +108,21 @@ public class Jukebox {
                 break;
         }
     }
+
+    private void holdPosition()
+    {
+        handleElevatorPosition();
+        _elevatorL.set(speedToHoldElevator);
+    }
+
+    public void setManualElevatorSpeed(double s)
+    {
+        if (Math.abs(s) <= .10)
+        {
+            s = 0.0;
+        }
+        manualElevatorSpeed = s;
+    }
     
     // @Override
     // public void logTelemetry(){}
@@ -136,9 +155,7 @@ public class Jukebox {
     {
         switch (e) {
             case IDK:
-                
                 break;
-        
             case RAMPUP:
                 break;
             case SHOOT:
