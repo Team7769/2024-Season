@@ -5,6 +5,8 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.units.Time;
+import edu.wpi.first.wpilibj.Timer;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -39,6 +41,8 @@ public class Jukebox {
     private final double k_Proportional=0;
     private final double k_integral=0;
     private final double k_derivative=0;
+
+    private Timer timer;
 
 
     
@@ -86,23 +90,23 @@ public class Jukebox {
     private void setSetpoint(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
+
+        switch (currentState) {
+            case RESET:
+                break;
+            case HOLD:
+                break;
+            case DUMPAMP:
+                break;
+            case SETUPFORAMP:
+                break;
+            default:
+                break;
+        }
     }
     
     // @Override
     // public void logTelemetry(){}
-
-
-    private void IDK(){
-        _elevatorL.set(0);
-        _elevatorR.set(0);
-    }
-    private void RAMPUP(){}
-    private void SHOOT(){}
-    private void RESET(){}
-    private void DUMPAMP(){}
-    private void SETUPFORAMP(){}
-    private void EXTEND(){}
-    private void CLIMB(){}
 
     private void handleCurrentState()
     {
