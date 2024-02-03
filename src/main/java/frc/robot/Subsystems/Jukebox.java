@@ -6,6 +6,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -175,15 +176,17 @@ public class Jukebox {
         noteboxCurrentState = n;
     }
 
-    public boolean isFinish(Notebox c)
+    /*
+     * This function is used to test the elevator states
+     * Comment out this function during the actual match
+     */
+    private void TestStateM(XboxController x)
     {
-        if(noteboxCurrentState != c){
-            return true;
-        } else {
-            return false;
+        if(x.getYButton())
+        {
+            //ToDo
         }
     }
-
 
     
 }
