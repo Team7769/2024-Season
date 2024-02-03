@@ -114,6 +114,11 @@ public class Jukebox {
         }
     }
 
+    public boolean isItAtSetpoint()
+    {
+        return false;
+    }
+
     private void holdPosition()
     {
         handleElevatorPosition();
