@@ -1,7 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -30,6 +30,8 @@ public class Jukebox {
     private final double kAllowedError = 3;
 
     private ElevatorFeedforward _feedForward;
+
+    private SparkPIDController _elevatorController;
 
     private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
     private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
@@ -89,7 +91,7 @@ public class Jukebox {
        
         var profile = new TrapezoidProfile(_constraints, _goal, _profileSetpoint);
         _profileSetpoint = profile.calculate(0.02);
-        _elevatorL.setReference(_profileSetpoint.position, com.revrobotics.CANSparkMax.ControlType.kPosition, 0,
+        _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkMax.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
 
