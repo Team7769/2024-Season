@@ -95,7 +95,7 @@ public class Jukebox {
         }
     }
 
-    private void setManualElevatorDown(){}
+    public void setManualElevatorDown(){}
 
     public void up(){}
 
