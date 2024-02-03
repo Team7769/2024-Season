@@ -8,7 +8,7 @@ import frc.robot.Constants.Constants;
 import frc.robot.Enums.IntakeState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Intake {
+public class Intake extends Subsystem{
     private static Intake _instance;
 
     private CANSparkMax _motor;
@@ -128,7 +128,7 @@ public class Intake {
         _currentState = state;
     }
 
-    //@Override
+    @Override
     public void logTelemetry()
     {
         SmartDashboard.putString("intakeMotorState", _currentState.name());

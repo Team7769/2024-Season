@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 
-public class Drivetrain {
+public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
 
     private final SwerveModule _frontLeftModule;
