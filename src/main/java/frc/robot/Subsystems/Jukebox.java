@@ -5,7 +5,6 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.units.Time;
 import edu.wpi.first.wpilibj.Timer;
 
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -18,7 +17,8 @@ public class Jukebox {
     private static Jukebox _instance;
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
-    private ElevatorState currentState = ElevatorState.IDK;
+
+    private Timer _timer;
 
     private final double kP = 0.015;
     private final double kI = 0.0;
@@ -42,13 +42,13 @@ public class Jukebox {
     private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
     private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
     private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
-    private final double k_Proportional=0;
-    private final double k_integral=0;
-    private final double k_derivative=0;
 
+    private final double k_Proportional = 0;
+    private final double k_integral = 0;
+    private final double k_derivative = 0;
     private Timer timer;
 
-
+    private static double _oldPosition;
     
 
     public Jukebox()
@@ -67,10 +67,11 @@ public class Jukebox {
         
         _elevatorR.follow(_elevatorL);
 
-        currentState = ElevatorState.IDK;
-        
+        _timer = new Timer();
         _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
         Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
+
+        _oldPosition = 0;
     }
 
     public static Jukebox getInstance()
@@ -85,12 +86,21 @@ public class Jukebox {
 
     private void handleElevatorPosition() {
        
-        var profile = new TrapezoidProfile(_constraints, _goal, _profileSetpoint);
-        _profileSetpoint = profile.calculate(0.02);
+        var profile = new TrapezoidProfile(_constraints);
+        _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
         _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkMax.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
 
+    private void setPosition(double position)
+    {
+        _goal = new TrapezoidProfile.State(position, 0);
+        if (_oldPosition != position)
+        {
+            _timer.reset();
+            _oldPosition = position;
+        }
+    }
 
     private void down(){}
 
