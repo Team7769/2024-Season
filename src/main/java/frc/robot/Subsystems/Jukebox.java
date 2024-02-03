@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -28,9 +29,26 @@ public class Jukebox {
     private final double kMaxAccel = 5;
     private final double kAllowedError = 3;
 
+    private ElevatorFeedforward _feedForward;
+
     private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
     private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
     private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
+
+    enum ElevatorState
+    {
+        IDK,
+        RAMPUP,
+        SHOOT,
+        RESET,
+        DUMPAMP,
+        SETUPFORAMP,
+        EXTEND,
+        CLIMB
+    }
+    private final double k_Proportional=0;
+    private final double k_integral=0;
+    private final double k_derivative=0;
 
 
     
@@ -53,6 +71,8 @@ public class Jukebox {
 
         currentState = ElevatorState.IDK;
         
+        _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
+        Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
     }
 
     public static Jukebox getInstance()
@@ -65,12 +85,19 @@ public class Jukebox {
         return _instance;
     }
 
-
+    private void handleElevatorPosition() {
+       
+        var profile = new TrapezoidProfile(_constraints, _goal, _profileSetpoint);
+        _profileSetpoint = profile.calculate(0.02);
+        _elevatorL.setReference(_profileSetpoint.position, com.revrobotics.CANSparkMax.ControlType.kPosition, 0,
+        _feedForward.calculate(_profileSetpoint.velocity));
+    }
 
     private void setSetpoint(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
     }
+    
     // @Override
     // public void logTelemetry(){}
 
