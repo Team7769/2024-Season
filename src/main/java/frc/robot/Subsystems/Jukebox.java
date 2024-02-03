@@ -76,15 +76,19 @@ public class Jukebox {
 
         return _instance;
     }
-
+    
     public void handleElevatorPosition() {
        
         var profile = new TrapezoidProfile(_constraints);
         _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
-        _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkMax.ControlType.kPosition, 0,
+        _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkBase.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
-
+    
+    /**
+     * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
+     * @param position takes a double and makes the goal state.
+     */
     public void setPosition(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
@@ -127,11 +131,11 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    private void IDK(){}
-    private void RESET(){}
-    private void HOLD_POSITION(){}
-    private void UP_ELEVATOR(){}
-    private void DOWN_ELEVATOR(){}
+    // private void IDK(){}
+    // private void RESET(){}
+    // private void HOLD_POSITION(){}
+    // private void UP_ELEVATOR(){}
+    // private void DOWN_ELEVATOR(){}
 
     public void handleCurrentState()
     {
