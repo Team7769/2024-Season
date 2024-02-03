@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
@@ -15,14 +16,23 @@ public class Intake {
     private IntakeState _currentState = IntakeState.STOP;
 
     //WILL BE CHANGED TO REFLECT ACTUAL VALUES
-    private double _intakeSpeed = 1;
-    private double _ejectSpeed = -1;
-    private double _stopped = 0;
-    private double _passiveEjectSpeed = -0.5;
+    private final double kIntakeSpeed = 1;
+    private final double kEjectSpeed = -1;
+    private final double kStopSpeed = 0;
+    private final double kPassiveEjectSpeed = -0.5;
+
+    private final int kMotorStallLimit = 20;
+    private final int kMotorFreeLimit = 100;
+    private final boolean kInverted = false;
 
     Intake() {
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
                                  MotorType.kBrushless);
+
+        _motor.setIdleMode(IdleMode.kBrake);
+        _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
+        _motor.setInverted(kInverted);
+        _motor.burnFlash();
     }
     
 
@@ -35,19 +45,19 @@ public class Intake {
     }
 
     public void stop() {
-        _motor.set(_stopped);
+        _motor.set(kStopSpeed);
     }
     
     public void intake() {
-        _motor.set(_intakeSpeed);
+        _motor.set(kIntakeSpeed);
     }
 
     public void eject() {
-        _motor.set(_ejectSpeed);
+        _motor.set(kEjectSpeed);
     }
 
     public void passiveEject() {
-        _motor.set(_passiveEjectSpeed);
+        _motor.set(kPassiveEjectSpeed);
     }
 
     public void handleCurrentState() {
