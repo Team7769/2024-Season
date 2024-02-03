@@ -1,6 +1,9 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -10,6 +13,21 @@ public class Jukebox {
     private static Jukebox _instance;
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
+
+    private final double kP = 0.015;
+    private final double kI = 0.0;
+    private final double kD = 0.001;
+    private final double kFF = 0.0;
+    private final double kIz = 0.0;
+    private final double kMaxOutput = 1.00;
+    private final double kMinOutput = -1.00;
+    private final double kMaxVel = 5;
+    private final double kMaxAccel = 5;
+    private final double kAllowedError = 3;
+
+    private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
+    private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
+    private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
 
     enum ElevatorState
     {
@@ -27,10 +45,18 @@ public class Jukebox {
 
     public Jukebox()
     {
-        _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorR = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
-        _elevatorR.follow(_elevatorL);
+        _elevatorR.setIdleMode(IdleMode.kBrake);
+        _elevatorR.setSmartCurrentLimit(20, 100);
+        _elevatorR.setInverted(true);
+        _elevatorR.burnFlash();
+
+        _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorL.setIdleMode(IdleMode.kBrake);
+        _elevatorL.setSmartCurrentLimit(20, 100);
+        _elevatorL.setInverted(false);
+        _elevatorL.burnFlash();
+        _elevatorR.follow(_elevatorL);
     }
 
     public static Jukebox getInstance()
@@ -43,6 +69,12 @@ public class Jukebox {
         return _instance;
     }
 
+
+
+    private void setSetpoint(double position)
+    {
+        _goal = new TrapezoidProfile.State(position, 0);
+    }
     // @Override
     // public void logTelemetry(){}
 
