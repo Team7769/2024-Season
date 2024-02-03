@@ -13,7 +13,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants.Constants;
     
 public class Jukebox {
-
+    
     private static Jukebox _instance;
     private static double _oldPosition;
     private CANSparkMax _elevatorL;
@@ -27,6 +27,22 @@ public class Jukebox {
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
     private Timer _timer;
+
+    // private final double kElavatorFeedforwardKs = 0;
+    // private final double kElavatorFeedforwardKv = 0;
+    // private final double kElavatorFeedforwardKg = 0;
+
+    // private final double kP = 0.015;
+    // private final double kI = 0.0;
+    // private final double kD = 0.001;
+    // private final double kFF = 0.0;
+    // private final double kIz = 0.0;
+    // private final double kMaxOutput = 1.00;
+    // private final double kMinOutput = -1.00;
+    // private final double kMaxVel = 5;
+    // private final double kMaxAccel = 5;
+    // private final double kAllowedError = 3;
+    // private final double speedToHoldElevator = 0.0;
 
     private double manualElevatorSpeed;
     
