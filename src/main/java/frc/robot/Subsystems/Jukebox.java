@@ -5,7 +5,6 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,7 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
     
-public class Jukebox {
+public class Jukebox extends Subsystem{
     
 
 
@@ -128,13 +127,9 @@ public class Jukebox {
         _shooterAngle.setSmartCurrentLimit(20, 100);
         _shooterAngle.setInverted(false);
         _shooterAngle.burnFlash();
-
-        // Spark MAX
         _shooterAngleController = _shooterAngle.getPIDController();
 
-
         _shooterController = _shooterL.getPIDController();
-
         _shooterController.setOutputRange(0, 1);
 
         // feeder motor setup
@@ -187,7 +182,6 @@ public class Jukebox {
         _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkBase.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
-
 
     /**
      * Method that will set the angle of the shooter.
@@ -325,7 +319,4 @@ public class Jukebox {
     {
         return false;
     }
-
-
-    
 }
