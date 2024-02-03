@@ -14,8 +14,11 @@ public class Intake {
 
     private IntakeState _currentState = IntakeState.DISABLED;
 
-    private double _intakeSpeed = 0;
-    private double _reverseSpeed = 0;
+    //WILL BE CHANGED TO REFLECT ACTUAL VALUES
+    private double _intakeSpeed = 1;
+    private double _reverseSpeed = -1;
+    private double _stopped = 0;
+    private double _passiveReverseSpeed = -0.5;
 
     Intake() {
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
@@ -32,7 +35,7 @@ public class Intake {
     }
 
     public void disable() {
-        _motor.set(0);
+        _motor.set(_stopped);
     }
     
     public void intake() {
@@ -43,18 +46,23 @@ public class Intake {
         _motor.set(_reverseSpeed);
     }
 
+    public void passiveReverse()
+    {
+        _motor.set(_passiveReverseSpeed);
+    }
+
     // public void setState(IntakeState state) {
     //     switch (state) {
     //         case IntakeState.Disabled
     //     }
     // }
 
-    @Override
+    //@Override
     public void logTelemetry()
     {
-        SmartDashboard.putString("intakeState", _currentState.name());
-        SmartDashboard.putNumber("intakeTemperature", _motor.getMotorTemperature());
-        
+        SmartDashboard.putString("intakeMotorState", _currentState.name());
+        SmartDashboard.putNumber("intakeMotorTemperature", _motor.getMotorTemperature());
+        SmartDashboard.putNumber("intakeMotorOutputCurrent", _motor.getOutputCurrent());
         
     }
 
