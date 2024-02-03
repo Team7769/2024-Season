@@ -122,8 +122,12 @@ public class Intake {
     public void logTelemetry()
     {
         SmartDashboard.putString("intakeMotorState", _currentState.name());
-        SmartDashboard.putNumber("intakeMotorTemperature", _motor.getMotorTemperature());
-        SmartDashboard.putNumber("intakeMotorOutputCurrent", _motor.getOutputCurrent());
+
+        SmartDashboard.putNumber("intakeMotorTemperature",
+                                 _motor.getMotorTemperature());
+
+        SmartDashboard.putNumber("intakeMotorOutputCurrent",
+                                 _motor.getOutputCurrent());
         
     }
 
