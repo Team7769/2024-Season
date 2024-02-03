@@ -270,7 +270,6 @@ public class Jukebox {
 
     private void HOLD_POSITION(){
         handleElevatorPosition();
-        _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     private void UP_ELEVATOR(double v){
@@ -320,7 +319,6 @@ public class Jukebox {
     public void setState(JukeboxEnum n)
     {
         noteboxCurrentState = n;
-        handleCurrentState();
     }
 
     private boolean IS_STATE_FINISH()
