@@ -78,7 +78,7 @@ public class Jukebox {
         // our desired state and current state
         _goal = new TrapezoidProfile.State();
         _profileSetpoint = new TrapezoidProfile.State();
-        
+
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
@@ -107,7 +107,7 @@ public class Jukebox {
      * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
      * @param position takes a double and makes the goal state.
      */
-    public void setPosition(double position)
+    public void setElevatorPosition(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
