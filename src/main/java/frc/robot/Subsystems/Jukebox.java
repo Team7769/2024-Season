@@ -112,7 +112,7 @@ public class Jukebox {
         return _instance;
     }
     
-    public void handleElevatorPosition() {
+    private void handleElevatorPosition() {
        
         var profile = new TrapezoidProfile(_constraints);
         _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
@@ -130,8 +130,9 @@ public class Jukebox {
      * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
      * @param position takes a double and makes the goal state.
      */
-    public void setElevatorPosition(double position)
+    private void setElevatorPosition(double position)
     {
+        _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
             _goal = new TrapezoidProfile.State(position, 0);
@@ -147,6 +148,12 @@ public class Jukebox {
     public boolean isItAtSetpoint()
     {
         return false;
+    }
+
+    public void holdPosition()
+    {
+        handleElevatorPosition();
+        _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     public void setManualElevatorSpeed(double s)
@@ -194,12 +201,11 @@ public class Jukebox {
                 HOLD_POSITION();
                 break;
             case UP_ELEVATOR:
-                UP_ELEVATOR();
                 break;
             case DOWN_ELEVATOR:
-                DOWN_ELEVATOR();
                 break;
             default:
+                IDK();
                 break;
         }
     }
