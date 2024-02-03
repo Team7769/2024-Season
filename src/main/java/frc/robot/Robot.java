@@ -109,6 +109,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    testOperate();
+  }
+
+  private void testOperate()
+  {
     if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
     {
         _jukebox.setState(JukeboxEnum.ELEVATOR_UP);
