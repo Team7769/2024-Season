@@ -94,22 +94,9 @@ public class Jukebox {
 
     private void up(){}
 
-    private void setSetpoint(double position)
+    public void setSetpoint(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
-
-        switch (currentState) {
-            case RESET:
-                break;
-            case HOLD:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            default:
-                break;
-        }
     }
 
     public boolean isItAtSetpoint()
@@ -134,52 +121,6 @@ public class Jukebox {
     
     // @Override
     // public void logTelemetry(){}
-
-    private void handleCurrentState()
-    {
-        switch (currentState) {
-            case IDK:
-                break;
-            case RAMPUP:
-                break;
-            case SHOOT:
-                break;
-            case RESET:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            case EXTEND:
-                break;
-            case CLIMB:
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void setState(ElevatorState e)
-    {
-        switch (e) {
-            case IDK:
-                break;
-            case RAMPUP:
-                break;
-            case SHOOT:
-                break;
-            case RESET:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            case EXTEND:
-                break;
-            case CLIMB:
-                break;
-        }
-    }
 
     
 }
