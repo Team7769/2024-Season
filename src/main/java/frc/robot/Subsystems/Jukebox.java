@@ -15,24 +15,18 @@ import frc.robot.Constants.Constants;
 public class Jukebox {
 
     private static Jukebox _instance;
+    private static double _oldPosition;
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
-
-    private Timer _timer;
-
-    private double manualElevatorSpeed;
-
-    private Notebox noteboxCurrentState = Notebox.IDK;
-
-    private ElevatorFeedforward _feedForward;
-
     private SparkPIDController _elevatorController;
-
+    private ElevatorFeedforward _feedForward;
+    private Notebox noteboxCurrentState = Notebox.IDK;
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
-
-    private static double _oldPosition;
+    private Timer _timer;
+    
+    private double manualElevatorSpeed;
     
 
     public Jukebox()
