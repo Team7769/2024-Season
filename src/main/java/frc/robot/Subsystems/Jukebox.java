@@ -120,7 +120,9 @@ public class Jukebox {
         _feedForward.calculate(_profileSetpoint.velocity));
     }
     /**
-     * Method that will set the angle of the shooter
+     * Method that will set the angle of the shooter.
+     * This should also be apply to the tilt angle too.
+     * Once the shooter angle is set it should auto apply the tilt angle.
      */
     public void setShooterAngle(double desiredAngle) {
 
@@ -141,14 +143,6 @@ public class Jukebox {
         }
     }
 
-    public void setManualElevatorDown(){}
-
-    public void up(){}
-
-    public boolean isItAtSetpoint()
-    {
-        return false;
-    }
 
     public void holdPosition()
     {
@@ -168,11 +162,21 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    // private void IDK(){}
-    // private void RESET(){}
-    // private void HOLD_POSITION(){}
-    // private void UP_ELEVATOR(){}
-    // private void DOWN_ELEVATOR(){}
+    private void IDK(){
+        setElevatorPosition(0);
+    }
+
+    private void HOLD_POSITION(){
+        _elevatorL.set(Constants.speedToHoldElevator);
+    }
+
+    private void UP_ELEVATOR(){
+        _elevatorL.set(0.5);
+    }
+
+    private void DOWN_ELEVATOR(){
+        _elevatorL.set(-0.5);
+    }
 
     public void handleCurrentState()
     {
@@ -183,7 +187,7 @@ public class Jukebox {
                 break;
             case POLLER_UP:
                 break;
-            case TILT_UP_OR_DOWN:
+            case TILT_UP:
                 break;
             case IS_NOTE_IN_HOLDER:
                 break;
@@ -192,6 +196,8 @@ public class Jukebox {
             case IS_NOTE_IN_SHOOTER_POSITION:
                 break;
             case SHOOT_NOTE:
+                break;
+            case TILT_DOWN:
                 break;
             case ELEVATOR_DOWN:
                 break;
@@ -205,8 +211,13 @@ public class Jukebox {
 
     public void setState(JukeboxEnum n)
     {
-
+        // Add the intake stake
         noteboxCurrentState = n;
+    }
+
+    private boolean IS_STATE_FINISH()
+    {
+        return false;
     }
 
 
