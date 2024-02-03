@@ -106,24 +106,6 @@ public class Jukebox {
 
     private void up(){}
 
-    private void setSetpoint(double position)
-    {
-        _goal = new TrapezoidProfile.State(position, 0);
-
-        switch (currentState) {
-            case RESET:
-                break;
-            case HOLD:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            default:
-                break;
-        }
-    }
-
     private void holdPosition()
     {
         handleElevatorPosition();
