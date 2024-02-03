@@ -102,6 +102,12 @@ public class Jukebox {
         _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkBase.ControlType.kPosition, 0,
         _feedForward.calculate(_profileSetpoint.velocity));
     }
+    /**
+     * Method that will set the angle of the shooter
+     */
+    public void setShooterAngle(double desiredAngle) {
+
+    }
     
     /**
      * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
