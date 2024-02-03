@@ -40,36 +40,45 @@ public class Jukebox {
         _elevatorR.setSmartCurrentLimit(20, 100);
         _elevatorR.setInverted(true);
         _elevatorR.burnFlash();
+
         // left elevator motor setup
         _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(20, 100);
         _elevatorL.setInverted(false);
         _elevatorL.burnFlash();
+
         // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
+
         // shooter angle motor setup
         _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
         _shooterAngle.setIdleMode(IdleMode.kBrake);
         _shooterAngle.setSmartCurrentLimit(20, 100);
         _shooterAngle.setInverted(false);
         _shooterAngle.burnFlash();
+
         // feeder motor setup
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
         _feeder.setIdleMode(IdleMode.kBrake);
         _feeder.setSmartCurrentLimit(20, 100);
         _feeder.setInverted(false);
         _feeder.burnFlash();
+
         // the timer is needed for handleElevatorPosistion
         _timer = new Timer();
+
         // creates the feed foward for the elevator
         _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
         Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
+
         // the constraints our elevator has
         _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
+
         // our desired state and current state
         _goal = new TrapezoidProfile.State();
         _profileSetpoint = new TrapezoidProfile.State();
+        
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
