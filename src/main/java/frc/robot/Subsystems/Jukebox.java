@@ -20,9 +20,7 @@ public class Jukebox {
 
     private Timer _timer;
 
-    private double manualElevatorSpeed = 0.0;
-
-    
+    private double manualElevatorSpeed;
 
     private ElevatorFeedforward _feedForward;
 
@@ -37,29 +35,34 @@ public class Jukebox {
 
     public Jukebox()
     {
+        // elevator motor setup
+        // right elevator motor setup
         _elevatorR = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorR.setIdleMode(IdleMode.kBrake);
         _elevatorR.setSmartCurrentLimit(20, 100);
         _elevatorR.setInverted(true);
         _elevatorR.burnFlash();
-
+        // left elevator motor setup
         _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(20, 100);
         _elevatorL.setInverted(false);
         _elevatorL.burnFlash();
-        
+        // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
 
         _timer = new Timer();
+
         _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
         Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
 
         _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
+
         _goal = new TrapezoidProfile.State();
         _profileSetpoint = new TrapezoidProfile.State();
 
         _oldPosition = 0;
+        manualElevatorSpeed = 0.0;
     }
 
     public static Jukebox getInstance()
@@ -72,7 +75,7 @@ public class Jukebox {
         return _instance;
     }
 
-    private void handleElevatorPosition() {
+    public void handleElevatorPosition() {
        
         var profile = new TrapezoidProfile(_constraints);
         _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
@@ -80,7 +83,7 @@ public class Jukebox {
         _feedForward.calculate(_profileSetpoint.velocity));
     }
 
-    private void setPosition(double position)
+    public void setPosition(double position)
     {
         _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
@@ -90,16 +93,16 @@ public class Jukebox {
         }
     }
 
-    private void down(){}
+    public void down(){}
 
-    private void up(){}
+    public void up(){}
 
     public boolean isItAtSetpoint()
     {
         return false;
     }
 
-    private void holdPosition()
+    public void holdPosition()
     {
         handleElevatorPosition();
         _elevatorL.set(Constants.speedToHoldElevator);
@@ -116,4 +119,6 @@ public class Jukebox {
     
     // @Override
     // public void logTelemetry(){}    
+
+
 }
