@@ -112,7 +112,7 @@ public class Jukebox {
         return _instance;
     }
     
-    public void handleElevatorPosition() {
+    private void handleElevatorPosition() {
        
         var profile = new TrapezoidProfile(_constraints);
         _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
@@ -130,34 +130,23 @@ public class Jukebox {
      * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
      * @param position takes a double and makes the goal state.
      */
-    public void setElevatorPosition(double position)
+    public void setElevatorPosition(double position, String elevatorPositionMotors)
     {
+        if (elevatorPositionMotors == "UP"){
+            _elevatorL.setInverted(true);
+            _elevatorR.setInverted(true);
+        } else if (elevatorPositionMotors == "DOWN") {
+            _elevatorL.setInverted(false);
+            _elevatorR.setInverted(false);
+        } else {
+            IDK();
+        }
         _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
             _timer.reset();
             _oldPosition = position;
         }
-    }
-
-    public void setManualElevatorDown(){}
-
-    public void up(){}
-
-    public void setSetpoint(double position)
-    {
-        
-    }
-
-    public boolean isItAtSetpoint()
-    {
-        return false;
-    }
-
-    public void holdPosition()
-    {
-        handleElevatorPosition();
-        _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     public void setManualElevatorSpeed(double s)
@@ -172,26 +161,45 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    // private void IDK(){}
-    // private void RESET(){}
-    // private void HOLD_POSITION(){}
-    // private void UP_ELEVATOR(){}
-    // private void DOWN_ELEVATOR(){}
+    private void IDK()
+    {
+        _elevatorL.set(0);
+        _elevatorR.set(0);
+        _timer.stop();
+
+    }
+    private void RESET()
+    {
+        _timer.restart();
+        _oldPosition = 0;
+        manualElevatorSpeed = 0.0;
+
+    }
+    private void HOLD_POSITION()
+    {
+        handleElevatorPosition();
+        _elevatorL.set(Constants.speedToHoldElevator);
+    }
 
     public void handleCurrentState()
     {
         switch (noteboxCurrentState) {
             case IDK:
+                IDK();
                 break;
             case RESET:
                 break;
             case HOLD_POSITION:
+                HOLD_POSITION();
                 break;
             case UP_ELEVATOR:
+                setElevatorPosition(10,"UP");
                 break;
             case DOWN_ELEVATOR:
+                setElevatorPosition(10, "DOWN");
                 break;
             default:
+                IDK();
                 break;
         }
     }
