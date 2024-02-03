@@ -132,21 +132,33 @@ public class Jukebox {
      */
     public void setElevatorPosition(double position, String elevatorPositionMotors)
     {
-        if (elevatorPositionMotors == "UP"){
-            _elevatorL.setInverted(true);
-            _elevatorR.setInverted(true);
-        } else if (elevatorPositionMotors == "DOWN") {
-            _elevatorL.setInverted(false);
-            _elevatorR.setInverted(false);
-        } else {
-            IDK();
-        }
         _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
+            _goal = new TrapezoidProfile.State(position, 0);
             _timer.reset();
             _oldPosition = position;
         }
+    }
+
+    public void setManualElevatorDown(){}
+
+    public void up(){}
+
+    public void setSetpoint(double position)
+    {
+        
+    }
+
+    public boolean isItAtSetpoint()
+    {
+        return false;
+    }
+
+    public void holdPosition()
+    {
+        handleElevatorPosition();
+        _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     public void setManualElevatorSpeed(double s)
