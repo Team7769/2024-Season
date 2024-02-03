@@ -29,6 +29,8 @@ public final class Constants {
     public static final int kBackRightSteerEncoderId = 13;
 
     public static final int kPigeonId = 14;
+
+    public static final int kIntakeMotorId = 16;
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
