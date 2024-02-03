@@ -168,8 +168,11 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    private void IDK(){}
-    
+    // private void IDK(){}
+    // private void RESET(){}
+    // private void HOLD_POSITION(){}
+    // private void UP_ELEVATOR(){}
+    // private void DOWN_ELEVATOR(){}
 
     public void handleCurrentState()
     {
