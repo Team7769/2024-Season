@@ -12,7 +12,8 @@ package frc.robot.Subsystems;
         SHOOT_NOTE, // spin the poller up motor to the shooter
         TILT_DOWN, // this tilt down with the shooter
         ELEVATOR_DOWN, // set the elevator down
-        IS_STATE_FINISH // check to make sure some states are finish before another state start
-
+        IS_STATE_FINISH, // check to make sure some states are finish before another state start
+        SPIT, // Spits the note out of the jukebox
+        FEED // feeds the note to the shooter wheels
 
     }

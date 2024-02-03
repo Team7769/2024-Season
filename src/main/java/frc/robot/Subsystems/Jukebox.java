@@ -7,7 +7,7 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -151,8 +151,13 @@ public class Jukebox {
      * 1 means it set it clockwise
      * -1 means it set it counterclockwise
      */
+<<<<<<< HEAD
     private void setShooterAngle(double desiredPosition) {
         _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
+=======
+    private void setShooterAngle(double desiredAngle) {
+
+>>>>>>> 923c5c6eb8760bcb0a489c1207511988d3e404fa
     }
     
     /**
@@ -161,7 +166,6 @@ public class Jukebox {
      */
     private void setElevatorPosition(double position)
     {
-        _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
             _goal = new TrapezoidProfile.State(position, 0);
@@ -170,17 +174,30 @@ public class Jukebox {
         }
     }
 
+    private void feed()
+    {
+        _feeder.set(0.5);
+    }
 
+    private void spit()
+    {
+        _feeder.set(-0.5);
+    }
+
+<<<<<<< HEAD
     
 
 
     public void holdPosition()
+=======
+    private void holdPosition()
+>>>>>>> 923c5c6eb8760bcb0a489c1207511988d3e404fa
     {
         handleElevatorPosition();
         _elevatorL.set(Constants.speedToHoldElevator);
     }
 
-    public void setManualElevatorSpeed(double s)
+    private void setManualElevatorSpeed(double s)
     {
         if (Math.abs(s) <= .10)
         {
@@ -189,8 +206,23 @@ public class Jukebox {
         manualElevatorSpeed = s;
     }
     
-    // @Override
-    // public void logTelemetry(){}
+    public void logTelemetry() {
+        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
+
+        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
+
+        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
+        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
+        
+        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
+    }
 
     private void IDK(){
         setElevatorPosition(0);
@@ -238,6 +270,12 @@ public class Jukebox {
                 DOWN_ELEVATOR();
                 break;
             case IS_STATE_FINISH:
+                break;
+            case SPIT:
+                spit();
+                break;
+            case FEED:
+                feed();
                 break;
             default:
                 IDK();
