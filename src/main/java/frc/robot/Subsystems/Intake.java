@@ -12,13 +12,13 @@ public class Intake {
 
     private CANSparkMax _motor;
 
-    private IntakeState _currentState = IntakeState.DISABLED;
+    private IntakeState _currentState = IntakeState.STOP;
 
     //WILL BE CHANGED TO REFLECT ACTUAL VALUES
     private double _intakeSpeed = 1;
-    private double _reverseSpeed = -1;
+    private double _ejectSpeed = -1;
     private double _stopped = 0;
-    private double _passiveReverseSpeed = -0.5;
+    private double _passiveEjectSpeed = -0.5;
 
     Intake() {
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
@@ -34,7 +34,7 @@ public class Intake {
         return _instance;
     }
 
-    public void disable() {
+    public void stop() {
         _motor.set(_stopped);
     }
     
@@ -42,20 +42,51 @@ public class Intake {
         _motor.set(_intakeSpeed);
     }
 
-    public void reverse() {
-        _motor.set(_reverseSpeed);
+    public void eject() {
+        _motor.set(_ejectSpeed);
     }
 
-    public void passiveReverse()
-    {
-        _motor.set(_passiveReverseSpeed);
+    public void passiveEject() {
+        _motor.set(_passiveEjectSpeed);
     }
 
-    // public void setState(IntakeState state) {
-    //     switch (state) {
-    //         case IntakeState.Disabled
-    //     }
-    // }
+    // adding function running code in setwantedstate just because im scared
+    // of controller debouncing potentially giving our robot a seizure
+    public void handleCurrentState() {}
+
+    public void setWantedState(IntakeState state) {
+        if (state == _currentState) return;
+
+        switch (state) {
+            case STOP:
+                stop();
+
+                break;
+            
+            case INTAKE:
+                intake();
+
+                break;
+
+            case PASSIVE_EJECT:
+                passiveEject();
+
+                break;
+
+            case EJECT:
+                eject();
+
+                break;
+
+            default:
+                stop(); // better safe than sorry
+
+                break;
+        }
+
+        // may want to move this before function calls
+        _currentState = state;
+    }
 
     //@Override
     public void logTelemetry()
