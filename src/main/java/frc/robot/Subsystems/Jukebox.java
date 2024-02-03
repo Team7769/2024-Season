@@ -149,12 +149,6 @@ public class Jukebox {
         return false;
     }
 
-    public void holdPosition()
-    {
-        handleElevatorPosition();
-        _elevatorL.set(Constants.speedToHoldElevator);
-    }
-
     public void setManualElevatorSpeed(double s)
     {
         if (Math.abs(s) <= .10)
@@ -167,24 +161,45 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    // private void IDK(){}
-    // private void RESET(){}
-    // private void HOLD_POSITION(){}
-    // private void UP_ELEVATOR(){}
-    // private void DOWN_ELEVATOR(){}
+    private void IDK(){
+
+    }
+
+    private void RESET(){
+
+    }
+
+    private void HOLD_POSITION(){
+        handleElevatorPosition();
+        _elevatorL.set(Constants.speedToHoldElevator);
+    }
+
+    private void UP_ELEVATOR(){
+        handleElevatorPosition();
+        _elevatorL.set()
+    }
+
+    private void DOWN_ELEVATOR(){
+
+    }
 
     public void handleCurrentState()
     {
         switch (noteboxCurrentState) {
             case IDK:
+                IDK();
                 break;
             case RESET:
+                RESET();
                 break;
             case HOLD_POSITION:
+                HOLD_POSITION();
                 break;
             case UP_ELEVATOR:
+                UP_ELEVATOR();
                 break;
             case DOWN_ELEVATOR:
+                DOWN_ELEVATOR();
                 break;
             default:
                 break;
