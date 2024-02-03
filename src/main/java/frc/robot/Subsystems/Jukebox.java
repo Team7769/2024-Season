@@ -93,11 +93,7 @@ public class Jukebox {
         }
     }
 
-<<<<<<< HEAD
-    public void down(){}
-=======
     private void setManualElevatorDown(){}
->>>>>>> a1b4e242a7b2753c27c45e6eef2e77e9335b97e7
 
     public void up(){}
 
@@ -140,11 +136,6 @@ public class Jukebox {
     }
     
     // @Override
-<<<<<<< HEAD
-    // public void logTelemetry(){}    
-
-
-=======
     // public void logTelemetry(){}
 
     private void handleCurrentState()
@@ -194,5 +185,4 @@ public class Jukebox {
     }
 
     
->>>>>>> a1b4e242a7b2753c27c45e6eef2e77e9335b97e7
 }
