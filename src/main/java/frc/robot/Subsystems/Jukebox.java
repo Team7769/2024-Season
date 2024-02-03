@@ -134,7 +134,6 @@ public class Jukebox {
      */
     private void setElevatorPosition(double position)
     {
-        _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
             _goal = new TrapezoidProfile.State(position, 0);
