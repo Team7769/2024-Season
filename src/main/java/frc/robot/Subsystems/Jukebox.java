@@ -124,7 +124,7 @@ public class Jukebox {
      * This should also be apply to the tilt angle too.
      * Once the shooter angle is set it should auto apply the tilt angle.
      */
-    public void setShooterAngle(double desiredAngle) {
+    private void setShooterAngle(double desiredAngle) {
 
     }
     
@@ -143,14 +143,23 @@ public class Jukebox {
         }
     }
 
+    private void feed()
+    {
+        _feeder.set(0.5);
+    }
 
-    public void holdPosition()
+    private void spit()
+    {
+        _feeder.set(-0.5);
+    }
+
+    private void holdPosition()
     {
         handleElevatorPosition();
         _elevatorL.set(Constants.speedToHoldElevator);
     }
 
-    public void setManualElevatorSpeed(double s)
+    private void setManualElevatorSpeed(double s)
     {
         if (Math.abs(s) <= .10)
         {
@@ -204,6 +213,12 @@ public class Jukebox {
                 DOWN_ELEVATOR();
                 break;
             case IS_STATE_FINISH:
+                break;
+            case SPIT:
+                spit();
+                break;
+            case FEED:
+                feed();
                 break;
             default:
                 IDK();
