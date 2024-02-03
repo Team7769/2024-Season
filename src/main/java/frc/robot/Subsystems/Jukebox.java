@@ -141,6 +141,15 @@ public class Jukebox {
         }
     }
 
+    public void setManualElevatorDown(){}
+
+    public void up(){}
+
+    public boolean isItAtSetpoint()
+    {
+        return false;
+    }
+
     public void holdPosition()
     {
         handleElevatorPosition();
@@ -159,24 +168,11 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    private void IDK()
-    {
-        setElevatorPosition(0);
-        _timer.stop();
-
-    }
-    private void RESET()
-    {
-        _timer.restart();
-        _oldPosition = 0;
-        manualElevatorSpeed = 0.0;
-
-    }
-    private void HOLD_POSITION()
-    {
-        handleElevatorPosition();
-        _elevatorL.set(Constants.speedToHoldElevator);
-    }
+    // private void IDK(){}
+    // private void RESET(){}
+    // private void HOLD_POSITION(){}
+    // private void UP_ELEVATOR(){}
+    // private void DOWN_ELEVATOR(){}
 
     public void handleCurrentState()
     {
@@ -185,15 +181,14 @@ public class Jukebox {
                 IDK();
                 break;
             case RESET:
+                RESET();
                 break;
             case HOLD_POSITION:
                 HOLD_POSITION();
                 break;
             case UP_ELEVATOR:
-                setElevatorPosition(.5);
                 break;
             case DOWN_ELEVATOR:
-                setElevatorPosition(-.5);
                 break;
             default:
                 IDK();
