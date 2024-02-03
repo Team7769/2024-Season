@@ -2,6 +2,9 @@ package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -14,18 +17,9 @@ public class Jukebox {
     private CANSparkMax _elevatorR;
     private ElevatorState currentState = ElevatorState.IDK;
 
-    private final double kSmartMotionP = 0;
-    private final double kSmartMotionI = 0;
-    private final double kSmartMotionD = 0;
-    private final double kSmartMotionFF = 0;
-    private final double kSmartMotionIZ = 0;
-    private final double kSmartMotionMaxOutput = 0;
-    private final double kSmartMotionMinOutput = 0;
-    private final double kSmartMotionMaxVel = 225;
-    private final double kSmartMotionMaxAccel = 150;
-    private final double kAllowedError = 3;
-
-
+    private final double k_Proportional=0;
+    private final double k_integral=0;
+    private final double k_derivative=0;
 
 
     
@@ -54,7 +48,7 @@ public class Jukebox {
     // @Override
     // public void logTelemetry(){}
 
-    private void switchCurrentState()
+    private void handleCurrentState()
     {
         switch (currentState) {
             case IDK:
@@ -70,6 +64,8 @@ public class Jukebox {
             case SETUPFORAMP:
                 break;
             case EXTEND:
+                break;
+            default:
                 break;
         }
     }
