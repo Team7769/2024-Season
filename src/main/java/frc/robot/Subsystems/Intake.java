@@ -50,14 +50,8 @@ public class Intake {
         _motor.set(_passiveEjectSpeed);
     }
 
-    // adding function running code in setwantedstate just because im scared
-    // of controller debouncing potentially giving our robot a seizure
-    public void handleCurrentState() {}
-
-    public void setWantedState(IntakeState state) {
-        if (state == _currentState) return;
-
-        switch (state) {
+    public void handleCurrentState() {
+        switch (_currentState) {
             case STOP:
                 stop();
 
@@ -65,6 +59,13 @@ public class Intake {
             
             case INTAKE:
                 intake();
+
+                // pseudocode if we have to interpret the jukebox data vs the
+                // jukebox sending us states 
+
+                // if (Jukebox.getInstance().hasNote()) {
+                //     setWantedState(IntakeState.PASSIVE_EJECT);
+                // }
 
                 break;
 
@@ -79,10 +80,39 @@ public class Intake {
                 break;
 
             default:
-                stop(); // better safe than sorry
-
                 break;
         }
+    }
+
+    public void setWantedState(IntakeState state) {
+        if (state == _currentState) return;
+
+        // switch (state) {
+        //     case STOP:
+        //         stop();
+
+        //         break;
+            
+        //     case INTAKE:
+        //         intake();
+
+        //         break;
+
+        //     case PASSIVE_EJECT:
+        //         passiveEject();
+
+        //         break;
+
+        //     case EJECT:
+        //         eject();
+
+        //         break;
+
+        //     default:
+        //         stop(); // better safe than sorry
+
+        //         break;
+        // }
 
         // may want to move this before function calls
         _currentState = state;
