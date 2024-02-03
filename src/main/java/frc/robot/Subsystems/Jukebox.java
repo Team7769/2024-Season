@@ -176,8 +176,5 @@ public class Jukebox {
         } else {
             return false;
         }
-    }
-
-
-    
+    }   
 }
