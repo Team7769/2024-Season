@@ -6,5 +6,5 @@ public abstract class Subsystem {
 
     public void logTelemetry() {}
 
-    public void zeroSensors() {}
+    public void resetSensors() {}
 }
