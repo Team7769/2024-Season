@@ -166,7 +166,7 @@ public class Jukebox {
     }
 
     private void RESET(){
-
+        setElevatorPosition(0);
     }
 
     private void HOLD_POSITION(){
