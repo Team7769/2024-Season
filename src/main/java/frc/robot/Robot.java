@@ -10,7 +10,11 @@ import frc.robot.Autonomous.AutonomousMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
+import frc.robot.Enums.IntakeState;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Jukebox;
+import frc.robot.Subsystems.JukeboxEnum;
+import frc.robot.Subsystems.Intake;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
@@ -27,15 +31,23 @@ public class Robot extends TimedRobot {
    */
 
    private Drivetrain _drivetrain;
+   private Intake _intake;
    private XboxController _driverController;
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+<<<<<<< HEAD
    private LEDController _ledController;
+=======
+   private Jukebox _jukebox;
+>>>>>>> dbb116237af2f9d5c32456c1d01ffebfcf9e58f9
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
+    _jukebox = Jukebox.getInstance();
+    _intake = Intake.getInstance();
+
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
     // loads the auto modes
@@ -75,7 +87,6 @@ public class Robot extends TimedRobot {
   }
 
   private void teleopDrive() {
-
     // The X translation will be the vertical value of the left driver joystick
     var translationX = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
         Constants.XY_Axis_outputTable, _driverController.getLeftY());
@@ -96,6 +107,8 @@ public class Robot extends TimedRobot {
     }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+
+    _operatorController.getPOV();
   }
 
   @Override
@@ -108,11 +121,43 @@ public class Robot extends TimedRobot {
   public void testInit() {}
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    testOperate();
+  }
+
+  private void testOperate() {
+    if (_operatorController.getAButton()) {
+      _intake.setWantedState(IntakeState.INTAKE);
+    }
+
+    if (_operatorController.getBButton()) {
+      _intake.setWantedState(IntakeState.STOP);
+    }
+
+    if (_operatorController.getXButton()) {
+      _intake.setWantedState(IntakeState.EJECT);
+    }
+
+    if (_operatorController.getYButton()) {
+      _intake.setWantedState(IntakeState.PASSIVE_EJECT);
+    }
+
+    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
+    {
+        _jukebox.setState(JukeboxEnum.ELEVATOR_UP);
+    }
+    
+    if((_operatorController.getPOV() >= 135) && (_operatorController.getPOV() <= 225))
+    {
+        _jukebox.setState(JukeboxEnum.ELEVATOR_DOWN);
+    }
+  }
 
   @Override
   public void simulationInit() {}
 
   @Override
   public void simulationPeriodic() {}
+
+
 }

@@ -30,13 +30,39 @@ public final class Constants {
 
     public static final int kPigeonId = 14;
 
+<<<<<<< HEAD
     public static final int kCANdleId = 15;
+=======
+    public static final int kLElevatorId = 17;
+    public static final int kRElevatorId = 18;
+    public static final int kFeederId = 19;
+    public static final int kShooterAngleId = 20;
+    public static final int kShooterLeftMotorId = 21;
+    public static final int kShooterRightMotorId = 22;
+    public static final int kIntakeMotorId = 16;
+>>>>>>> dbb116237af2f9d5c32456c1d01ffebfcf9e58f9
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
     public static final double kBackLeftEncoderOffset = -Math.toRadians(219.55078);
     public static final double kBackRightEncoderOffset = -Math.toRadians(295.40039);
 
+    public static final double kElavatorFeedforwardKs = 0;
+    public static final double kElavatorFeedforwardKv = 0;
+    public static final double kElavatorFeedforwardKg = 0;
+
+    public static final double kP = 0.015;
+    public static final double kI = 0.0;
+    public static final double kD = 0.001;
+    public static final double kFF = 0.0;
+    public static final double kIz = 0.0;
+    public static final double kMaxOutput = 1.00;
+    public static final double kMinOutput = -1.00;
+    public static final double kMaxVel = 5;
+    public static final double kMaxAccel = 5;
+    public static final double kAllowedError = 3;
+
+    public static final double speedToHoldElevator = 0.0;
     
     public static final double MAX_VOLTAGE = 12.0;
 
