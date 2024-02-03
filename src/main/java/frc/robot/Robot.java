@@ -43,12 +43,13 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
-    _ledController.idleLights();
+    
   }
 
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
+    _ledController.idleLights();
   }
 
   @Override
