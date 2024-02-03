@@ -266,8 +266,6 @@ public class Jukebox {
         setElevatorPosition(0);
         setShooterAngle(0);
         ShooterDeploy(0);
-        _timer.reset();
-        noteboxCurrentState = JukeboxEnum.IDK;
     }
 
     private void HOLD_POSITION(){
