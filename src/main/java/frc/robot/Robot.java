@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.AutoUtil;
+import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+   private LEDController _ledController;
 
   @Override
   public void robotInit() {
@@ -41,6 +43,7 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
+    _ledController.idleLights();
   }
 
   @Override
