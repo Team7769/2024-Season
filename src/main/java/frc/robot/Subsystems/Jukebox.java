@@ -132,9 +132,9 @@ public class Jukebox {
      */
     public void setElevatorPosition(double position)
     {
-        _goal = new TrapezoidProfile.State(position, 0);
         if (_oldPosition != position)
         {
+            _goal = new TrapezoidProfile.State(position, 0);
             _timer.reset();
             _oldPosition = position;
         }
@@ -143,11 +143,6 @@ public class Jukebox {
     public void setManualElevatorDown(){}
 
     public void up(){}
-
-    public void setSetpoint(double position)
-    {
-        
-    }
 
     public boolean isItAtSetpoint()
     {
