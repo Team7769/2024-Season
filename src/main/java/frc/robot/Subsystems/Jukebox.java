@@ -46,7 +46,6 @@ public class Jukebox {
     private final double k_Proportional = 0;
     private final double k_integral = 0;
     private final double k_derivative = 0;
-    private Timer timer;
 
     private static double _oldPosition;
     
@@ -106,24 +105,6 @@ public class Jukebox {
 
     private void up(){}
 
-    private void setSetpoint(double position)
-    {
-        _goal = new TrapezoidProfile.State(position, 0);
-
-        switch (currentState) {
-            case RESET:
-                break;
-            case HOLD:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            default:
-                break;
-        }
-    }
-
     public boolean isItAtSetpoint()
     {
         return false;
@@ -145,53 +126,5 @@ public class Jukebox {
     }
     
     // @Override
-    // public void logTelemetry(){}
-
-    private void handleCurrentState()
-    {
-        switch (currentState) {
-            case IDK:
-                break;
-            case RAMPUP:
-                break;
-            case SHOOT:
-                break;
-            case RESET:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            case EXTEND:
-                break;
-            case CLIMB:
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void setState(ElevatorState e)
-    {
-        switch (e) {
-            case IDK:
-                break;
-            case RAMPUP:
-                break;
-            case SHOOT:
-                break;
-            case RESET:
-                break;
-            case DUMPAMP:
-                break;
-            case SETUPFORAMP:
-                break;
-            case EXTEND:
-                break;
-            case CLIMB:
-                break;
-        }
-    }
-
-    
+    // public void logTelemetry(){}    
 }
