@@ -20,32 +20,17 @@ public class Jukebox {
 
     private Timer _timer;
 
-    private final double kP = 0.015;
-    private final double kI = 0.0;
-    private final double kD = 0.001;
-    private final double kFF = 0.0;
-    private final double kIz = 0.0;
-    private final double kMaxOutput = 1.00;
-    private final double kMinOutput = -1.00;
-    private final double kMaxVel = 5;
-    private final double kMaxAccel = 5;
-    private final double kAllowedError = 3;
-
     private double manualElevatorSpeed = 0.0;
 
-    private final double speedToHoldElevator = 0.0;
+    
 
     private ElevatorFeedforward _feedForward;
 
     private SparkPIDController _elevatorController;
 
-    private final TrapezoidProfile.Constraints _constraints = new TrapezoidProfile.Constraints(kMaxVel, kMaxAccel);
-    private TrapezoidProfile.State _goal = new TrapezoidProfile.State();
-    private TrapezoidProfile.State _profileSetpoint = new TrapezoidProfile.State();
-
-    private final double k_Proportional = 0;
-    private final double k_integral = 0;
-    private final double k_derivative = 0;
+    private TrapezoidProfile.Constraints _constraints;
+    private TrapezoidProfile.State _goal;
+    private TrapezoidProfile.State _profileSetpoint;
 
     private static double _oldPosition;
     
@@ -69,6 +54,10 @@ public class Jukebox {
         _timer = new Timer();
         _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
         Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
+
+        _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
+        _goal = new TrapezoidProfile.State();
+        _profileSetpoint = new TrapezoidProfile.State();
 
         _oldPosition = 0;
     }
@@ -113,7 +102,7 @@ public class Jukebox {
     private void holdPosition()
     {
         handleElevatorPosition();
-        _elevatorL.set(speedToHoldElevator);
+        _elevatorL.set(Constants.speedToHoldElevator);
     }
 
     public void setManualElevatorSpeed(double s)
