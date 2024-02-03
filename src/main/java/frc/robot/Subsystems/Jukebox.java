@@ -6,6 +6,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,15 +19,21 @@ public class Jukebox {
     
     private static Jukebox _instance;
     private static double _oldPosition;
+
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
     private CANSparkMax _feeder;
     private CANSparkMax _shooterAngle;
 
 
+    private CANSparkMax _shooterL;
+    private CANSparkMax _shooterR;
+
+
 
     private SparkPIDController _shooterAngleController;
     private SparkPIDController _elevatorController;
+    private SparkPIDController _shooterController;
 
 
     private ElevatorFeedforward _feedForward;
@@ -42,7 +49,17 @@ public class Jukebox {
     private TrapezoidProfile.State _shooterSetPoint;
 
 
+    private DigitalInput _noteHolder;
+    private DigitalInput _noteShooter;
+
+
     private Timer _timer;
+
+
+    // Create a constant speed for each of the motors 
+    private double _shooterSpeed = 0;
+    private double _elevatorSpeed = 0;
+    private double _angleSpeed = 0;
 
 
 
@@ -82,6 +99,23 @@ public class Jukebox {
         _elevatorL.setInverted(false);
         _elevatorL.burnFlash();
 
+        // left shooter motor setup
+        _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
+        _shooterL.setIdleMode(IdleMode.kCoast);
+        _shooterL.setSmartCurrentLimit(20, 100);
+        _shooterL.setInverted(false);
+        _shooterL.burnFlash();
+
+        // right shooter motor setup
+        _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
+        _shooterR.setIdleMode(IdleMode.kCoast);
+        _shooterR.setSmartCurrentLimit(20, 100);
+        _shooterR.setInverted(false);
+        _shooterR.burnFlash();
+
+        // make the left shooter moter follow the right
+        _shooterR.follow(_elevatorL);
+
         // makes the right motor follow the left motor
         _elevatorR.follow(_elevatorL);
 
@@ -91,6 +125,14 @@ public class Jukebox {
         _shooterAngle.setSmartCurrentLimit(20, 100);
         _shooterAngle.setInverted(false);
         _shooterAngle.burnFlash();
+
+        // Spark MAX
+        _shooterAngleController = _shooterAngle.getPIDController();
+
+
+        _shooterController = _shooterL.getPIDController();
+
+        _shooterController.setOutputRange(0, 1);
 
         // feeder motor setup
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
@@ -121,6 +163,9 @@ public class Jukebox {
         _oldPosition = 0;
         manualElevatorSpeed = 0.0;
 
+        _noteHolder = new DigitalInput(1);
+        _noteShooter = new DigitalInput(2);
+
     }
 
     public static Jukebox getInstance()
@@ -141,9 +186,6 @@ public class Jukebox {
     }
 
 
-
-
-
     /**
      * Method that will set the angle of the shooter.
      * This should also be apply to the tilt angle too.
@@ -151,13 +193,16 @@ public class Jukebox {
      * 1 means it set it clockwise
      * -1 means it set it counterclockwise
      */
-<<<<<<< HEAD
     private void setShooterAngle(double desiredPosition) {
         _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
-=======
-    private void setShooterAngle(double desiredAngle) {
+    }
 
->>>>>>> 923c5c6eb8760bcb0a489c1207511988d3e404fa
+    /**
+     * ShooterDeploy ramps up the shooter motors to the max
+     */
+    private void ShooterDeploy(double v)
+    {
+        _shooterL.set(v);
     }
     
     /**
@@ -174,27 +219,14 @@ public class Jukebox {
         }
     }
 
-    private void feed()
+    private void feed(double v)
     {
-        _feeder.set(0.5);
+        _feeder.set(v);
     }
 
-    private void spit()
+    private void spit( double v)
     {
-        _feeder.set(-0.5);
-    }
-
-<<<<<<< HEAD
-    
-
-
-    public void holdPosition()
-=======
-    private void holdPosition()
->>>>>>> 923c5c6eb8760bcb0a489c1207511988d3e404fa
-    {
-        handleElevatorPosition();
-        _elevatorL.set(Constants.speedToHoldElevator);
+        _feeder.set(-v);
     }
 
     private void setManualElevatorSpeed(double s)
@@ -222,60 +254,61 @@ public class Jukebox {
         SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
         SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
         SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
+
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
     }
 
     private void IDK(){
         setElevatorPosition(0);
         setShooterAngle(0);
+        ShooterDeploy(0);
         _timer.reset();
+        noteboxCurrentState = JukeboxEnum.IDK;
     }
 
     private void HOLD_POSITION(){
+        handleElevatorPosition();
         _elevatorL.set(Constants.speedToHoldElevator);
     }
 
-    private void UP_ELEVATOR(){
-        _elevatorL.set(0.5);
+    private void UP_ELEVATOR(double v){
+        _elevatorL.set(v);
     }
 
-    private void DOWN_ELEVATOR(){
-        _elevatorL.set(-0.5);
+    private void DOWN_ELEVATOR(double v){
+        _elevatorL.set(-v);
     }
 
     public void handleCurrentState()
     {
         switch(noteboxCurrentState){
-            case IDK:
-                break;
             case ELEVATOR_UP:
-                UP_ELEVATOR();
-                break;
-            case POLLER_UP:
-                break;
-            case TILT_UP:
-                setShooterAngle(.5);
-                break;
-            case IS_NOTE_IN_HOLDER:
-                break;
-            case RAMP_UP_SHOOTER:
-                break;
-            case IS_NOTE_IN_SHOOTER_POSITION:
-                break;
-            case SHOOT_NOTE:
-                break;
-            case TILT_DOWN:
-                setElevatorPosition(-.5);
+                setElevatorPosition(.5);
                 break;
             case ELEVATOR_DOWN:
-                DOWN_ELEVATOR();
+                setElevatorPosition(-.5);
                 break;
-            case IS_STATE_FINISH:
+            case TILT_UP:
+                setShooterAngle(1);
                 break;
-            case SPIT:
-                spit();
+            case TILT_DOWN:
+                setShooterAngle(0);
+                break;
+            case RAMP_UP_SHOOTER:
+                ShooterDeploy(1);
+                break;
+            case RAMP_DOWN_SHOOTER:
+                ShooterDeploy(0);
                 break;
             case FEED:
-                feed();
+                feed(.5);
+                break;
+            case SPIT:
+                spit(-.5);
+                break;
+            case HOLD_POSITION:
+                HOLD_POSITION();
                 break;
             default:
                 IDK();
@@ -285,8 +318,8 @@ public class Jukebox {
 
     public void setState(JukeboxEnum n)
     {
-        // Add the intake stake
         noteboxCurrentState = n;
+        handleCurrentState();
     }
 
     private boolean IS_STATE_FINISH()

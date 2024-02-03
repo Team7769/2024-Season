@@ -34,6 +34,8 @@ public final class Constants {
     public static final int kRElevatorId = 18;
     public static final int kFeederId = 19;
     public static final int kShooterAngleId = 20;
+    public static final int kShooterLeftMotorId = 21;
+    public static final int kShooterRightMotorId = 22;
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
