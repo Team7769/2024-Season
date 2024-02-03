@@ -184,6 +184,7 @@ public class Jukebox {
             case IDK:
                 break;
             case ELEVATOR_UP:
+                UP_ELEVATOR();
                 break;
             case POLLER_UP:
                 break;
@@ -200,6 +201,7 @@ public class Jukebox {
             case TILT_DOWN:
                 break;
             case ELEVATOR_DOWN:
+                DOWN_ELEVATOR();
                 break;
             case IS_STATE_FINISH:
                 break;
