@@ -13,6 +13,7 @@ import frc.robot.Constants.Constants;
 import frc.robot.Enums.IntakeState;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.VisionSystem;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.OneDimensionalLookup;
 /**
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+   private VisionSystem _visionSystem;
 
   @Override
   public void robotInit() {
@@ -41,6 +43,8 @@ public class Robot extends TimedRobot {
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+
+    _visionSystem = VisionSystem.getInstance();
     // loads the auto modes
     AutoUtil.autonmousDropDown(_autoChooser);
     // puts the drop down to select auton modes on shuffleboard
@@ -88,6 +92,12 @@ public class Robot extends TimedRobot {
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
         Constants.RotAxis_outputTable,
         _driverController.getRightX());
+
+    if (_driverController.getRightBumper())
+    {
+        rotation = _visionSystem.getTargetAngle() / 27 ;
+        //target angle range is -27 to 27 degrees
+    }
     
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
