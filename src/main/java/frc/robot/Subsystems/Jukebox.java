@@ -54,7 +54,10 @@ public class Jukebox extends Subsystem{
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
     // private final double kElavatorFeedforwardKg = 0;
-
+    private final double kTrapElevatorPosition = 0; // change this
+    private final double kExtendClimbElevatorPosition = 0; // change this
+    private final double kClimbElevatorPosition = 0; // change this
+    private final double kAmpElevatorPosition = 0;
     // private final double kP = 0.015;
     // private final double kI = 0.0;
     // private final double kD = 0.001;
@@ -66,7 +69,7 @@ public class Jukebox extends Subsystem{
     // private final double kMaxAccel = 5;
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
-    private double manualElevatorSpeed;
+    private double _manualElevatorSpeed;
     
     public Jukebox()
     {
@@ -142,7 +145,7 @@ public class Jukebox extends Subsystem{
 
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
-        manualElevatorSpeed = 0.0;
+        _manualElevatorSpeed = 0.0;
 
         _noteHolder = new DigitalInput(1);
         _noteShooter = new DigitalInput(2);
@@ -208,15 +211,6 @@ public class Jukebox extends Subsystem{
     {
         _feeder.set(-v);
     }
-
-    private void setManualElevatorSpeed(double s)
-    {
-        if (Math.abs(s) <= .10)
-        {
-            s = 0.0;
-        }
-        manualElevatorSpeed = s;
-    }
     
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
@@ -244,7 +238,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
-
+        setElevatorPosition(kAmpElevatorPosition);
     }
 
     private void prepSpeaker() {
@@ -252,7 +246,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepTrap() {
-
+        setElevatorPosition(kTrapElevatorPosition);
     }
 
     private void reset() {
@@ -260,11 +254,11 @@ public class Jukebox extends Subsystem{
     }
 
     private void extendForClimb() {
-
+        setElevatorPosition(kExtendClimbElevatorPosition);
     }
 
     private void climb() {
-
+        setElevatorPosition(kClimbElevatorPosition);
     }
 
     private void idle() {
@@ -274,7 +268,12 @@ public class Jukebox extends Subsystem{
     }
 
     private void manual() {
+        _elevatorL.set(_manualElevatorSpeed);
+    }
 
+    public void setManualElevatorSpeed(double givenSpeed)
+    {
+        _manualElevatorSpeed = givenSpeed;
     }
 
     public void handleCurrentState()
@@ -320,6 +319,8 @@ public class Jukebox extends Subsystem{
 
     public void setState(JukeboxEnum n)
     {
-        noteboxCurrentState = n;
+        if (n != noteboxCurrentState){
+            noteboxCurrentState = n;
+        }
     }
 }
