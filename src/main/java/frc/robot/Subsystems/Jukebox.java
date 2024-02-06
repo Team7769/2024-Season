@@ -240,23 +240,25 @@ public class Jukebox extends Subsystem{
     }
 
     private void score() {
-
+        setShooterSpeed(4.5);
     }
 
     private void prepAmp() {
-
+        setShooterAngle(-0.5);
+        setShooterSpeed(0.0);
     }
 
     private void prepSpeaker() {
-
+        
     }
 
     private void prepTrap() {
-
+        setShooterAngle(-0.5);
+        setShooterSpeed(0.0);
     }
 
     private void reset() {
-
+        setShooterAngle(0);
     }
 
     private void extendForClimb() {
