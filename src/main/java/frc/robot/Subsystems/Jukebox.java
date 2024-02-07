@@ -32,7 +32,8 @@ public class Jukebox extends Subsystem{
     private SparkPIDController _shooterController;
 
     private ElevatorFeedforward _feedForward;
-    private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDLE;
+    private JukeboxEnum jukeboxCurrentState = JukeboxEnum.IDLE;
+    private JukeboxEnum jukeboxPreviousState;
 
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
@@ -242,11 +243,13 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepSpeaker() {
-
+        setElevatorPosition(0);
     }
 
-    private void prepTrap() {
-        setElevatorPosition(kTrapElevatorPosition);
+    private void prepTrap() { 
+        if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
+            setElevatorPosition(kTrapElevatorPosition);
+        }
     }
 
     private void reset() {
@@ -258,7 +261,9 @@ public class Jukebox extends Subsystem{
     }
 
     private void climb() {
-        setElevatorPosition(kClimbElevatorPosition);
+        if (jukeboxPreviousState == JukeboxEnum.EXTEND_FOR_CLIMB) {
+            setElevatorPosition(kClimbElevatorPosition);
+        }
     }
 
     private void idle() {
@@ -278,7 +283,7 @@ public class Jukebox extends Subsystem{
 
     public void handleCurrentState()
     {
-        switch(noteboxCurrentState){
+        switch(jukeboxCurrentState) {
             case MANUAL:
                 manual();
                 break;
@@ -304,11 +309,11 @@ public class Jukebox extends Subsystem{
                 climb();
                 break;
             default:
-               idle();
+                idle();
                 break;
         }
 
-        switch (noteboxCurrentState) {
+        switch (jukeboxCurrentState) {
             case MANUAL:
                 break;
             default:
@@ -319,8 +324,21 @@ public class Jukebox extends Subsystem{
 
     public void setState(JukeboxEnum n)
     {
-        if (n != noteboxCurrentState){
-            noteboxCurrentState = n;
+        // checks to see if the current state is what we are trying to set the state to
+        if (n != jukeboxCurrentState) {
+            switch (jukeboxCurrentState) {
+                case CLIMB: 
+                    if (n == JukeboxEnum.EXTEND_FOR_CLIMB || n == JukeboxEnum.PREP_TRAP)
+                    {
+                        jukeboxPreviousState = jukeboxCurrentState;
+                        jukeboxCurrentState = n;
+                    }
+                    break;
+                default:
+                        jukeboxPreviousState = jukeboxCurrentState;
+                        jukeboxCurrentState = n;
+                    break;            
+            }
         }
     }
 }
