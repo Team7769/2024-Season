@@ -132,15 +132,13 @@ public class Intake extends Subsystem{
     public void logTelemetry()
     {
         SmartDashboard.putString("intakeMotorState", _currentState.name());
-
         SmartDashboard.putNumber("intakeMotorTemperature",
                                  _motor.getMotorTemperature());
-
         SmartDashboard.putNumber("intakeMotorOutputCurrent",
                                  _motor.getOutputCurrent());
-        
-
         SmartDashboard.putNumber("intakeMotorOutput", _motor.get());
+        SmartDashboard.putNumber("intakeMotorPosition", _motor.getEncoder().getPosition());
+        SmartDashboard.putNumber("intakeMotorVelocity", _motor.getEncoder().getVelocity());
     }
 }
 

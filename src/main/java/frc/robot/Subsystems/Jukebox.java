@@ -349,7 +349,7 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
         SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
 
-        SmartDashboard.putString("Current state", jukeboxCurrentState.toString());
-        SmartDashboard.putString("Previous state", jukeboxPreviousState.toString());
+        SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
+        SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
     }
 }
