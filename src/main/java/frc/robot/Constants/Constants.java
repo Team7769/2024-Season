@@ -30,14 +30,16 @@ public final class Constants {
 
     public static final int kPigeonId = 14;
 
-    public static final int kCANdleId = 15;
+    public static final int kIdleCANdleId = 15;
+    public static final int kIntakeMotorId = 16;
     public static final int kLElevatorId = 17;
     public static final int kRElevatorId = 18;
     public static final int kFeederId = 19;
     public static final int kShooterAngleId = 20;
     public static final int kShooterLeftMotorId = 21;
     public static final int kShooterRightMotorId = 22;
-    public static final int kIntakeMotorId = 16;
+    public static final int kState1CANdleId = 23;
+    public static final int kState2CANdleId = 24;
     
     public static final double kFrontLeftEncoderOffset = -Math.toRadians(85.86914);
     public static final double kFrontRightEncoderOffset = -Math.toRadians(348.57421);
