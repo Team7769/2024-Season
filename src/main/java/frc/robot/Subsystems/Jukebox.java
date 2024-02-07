@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
+import frc.robot.Enums.JukeboxEnum;
     
 public class Jukebox extends Subsystem{
     
@@ -31,7 +32,7 @@ public class Jukebox extends Subsystem{
     private SparkPIDController _shooterController;
 
     private ElevatorFeedforward _feedForward;
-    private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDK;
+    private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDLE;
 
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
@@ -179,7 +180,7 @@ public class Jukebox extends Subsystem{
     /**
      * ShooterDeploy ramps up the shooter motors to the max
      */
-    private void ShooterDeploy(double v)
+    private void setShooterSpeed(double v)
     {
         _shooterL.set(v);
     }
@@ -238,56 +239,81 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
     }
 
-    private void IDK(){
+    private void score() {
+
+    }
+
+    private void prepAmp() {
+
+    }
+
+    private void prepSpeaker() {
+
+    }
+
+    private void prepTrap() {
+
+    }
+
+    private void reset() {
+
+    }
+
+    private void extendForClimb() {
+
+    }
+
+    private void climb() {
+
+    }
+
+    private void idle() {
         setElevatorPosition(0);
         setShooterAngle(0);
-        ShooterDeploy(0);
+        setShooterSpeed(0);
     }
 
-    private void HOLD_POSITION(){
-        handleElevatorPosition();
-    }
+    private void manual() {
 
-    private void UP_ELEVATOR(double v){
-        _elevatorL.set(v);
-    }
-
-    private void DOWN_ELEVATOR(double v){
-        _elevatorL.set(-v);
     }
 
     public void handleCurrentState()
     {
         switch(noteboxCurrentState){
-            case ELEVATOR_UP:
-                UP_ELEVATOR(.5);
+            case MANUAL:
+                manual();
                 break;
-            case ELEVATOR_DOWN:
-                DOWN_ELEVATOR(.5);
+            case SCORE:
+                score();
                 break;
-            case TILT_UP:
-                setShooterAngle(1);
+            case PREP_SPEAKER:
+                prepSpeaker();
                 break;
-            case TILT_DOWN:
-                setShooterAngle(0);
+            case PREP_AMP:
+                prepAmp();
                 break;
-            case RAMP_UP_SHOOTER:
-                ShooterDeploy(1);
+            case PREP_TRAP:
+                prepTrap();
                 break;
-            case RAMP_DOWN_SHOOTER:
-                ShooterDeploy(0);
+            case RESET:
+                reset();
                 break;
-            case FEED:
-                feed(.5);
+            case EXTEND_FOR_CLIMB:
+                extendForClimb();
                 break;
-            case SPIT:
-                spit(.5);
-                break;
-            case HOLD_POSITION:
-                HOLD_POSITION();
+            case CLIMB:
+                climb();
                 break;
             default:
-                IDK();
+               idle();
+                break;
+        }
+
+        switch (noteboxCurrentState) {
+            case MANUAL:
+                break;
+            default:
+                handleElevatorPosition();
                 break;
         }
     }
@@ -295,10 +321,5 @@ public class Jukebox extends Subsystem{
     public void setState(JukeboxEnum n)
     {
         noteboxCurrentState = n;
-    }
-
-    private boolean IS_STATE_FINISH()
-    {
-        return false;
     }
 }

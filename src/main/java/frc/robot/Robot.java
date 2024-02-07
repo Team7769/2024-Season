@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.IntakeState;
+import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Jukebox;
-import frc.robot.Subsystems.JukeboxEnum;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.LEDController;
@@ -141,12 +141,12 @@ public class Robot extends TimedRobot {
 
     if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
     {
-        _jukebox.setState(JukeboxEnum.ELEVATOR_UP);
+        _jukebox.setState(JukeboxEnum.MANUAL);
     }
     
     if((_operatorController.getPOV() >= 135) && (_operatorController.getPOV() <= 225))
     {
-        _jukebox.setState(JukeboxEnum.ELEVATOR_DOWN);
+        _jukebox.setState(JukeboxEnum.MANUAL);
     }
   }
 
