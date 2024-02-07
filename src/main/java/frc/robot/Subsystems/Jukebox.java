@@ -212,27 +212,6 @@ public class Jukebox extends Subsystem{
     {
         _feeder.set(-v);
     }
-    
-    public void logTelemetry() {
-        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
-        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
-
-        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
-        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
-
-        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
-        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
-        
-        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
-        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
-
-        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
-        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
-    }
 
     private void score() {
 
@@ -340,5 +319,37 @@ public class Jukebox extends Subsystem{
                     break;            
             }
         }
+    }
+
+    public void logTelemetry() {
+        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
+
+        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
+
+        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
+        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
+        
+        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
+
+        SmartDashboard.putNumber("Shooter motor left enconder position", _shooterL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter motor left enconder velocity", _shooterL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor left speed", _shooterL.get());
+
+        SmartDashboard.putNumber("Shooter motor right enconder position", _shooterR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter motor right enconder velocity", _shooterR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor right speed", _shooterR.get());
+
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
+
+        SmartDashboard.putString("Current state", jukeboxCurrentState.toString());
+        SmartDashboard.putString("Previous state", jukeboxPreviousState.toString());
     }
 }
