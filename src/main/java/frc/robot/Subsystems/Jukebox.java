@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Utilities.OneDimensionalLookup;
     
 public class Jukebox extends Subsystem{
     
@@ -67,6 +68,12 @@ public class Jukebox extends Subsystem{
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
     private double manualElevatorSpeed;
+
+    private VisionSubsystem _visionSubsystem;
+
+    private final double[] kDistanceIDs = {};
+    private final double[] kShooterAngles = {};
+    private final double[] kShooterSpeeds = {};
     
     public Jukebox()
     {
@@ -146,6 +153,8 @@ public class Jukebox extends Subsystem{
 
         _noteHolder = new DigitalInput(1);
         _noteShooter = new DigitalInput(2);
+
+        _visionSubsystem = VisionSubsystem.getInstance();
 
     }
 
@@ -239,9 +248,7 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
     }
 
-    private void score() {
-        setShooterSpeed(4.5);
-    }
+    private void score() {}
 
     private void prepAmp() {
         setShooterAngle(-0.5);
@@ -249,7 +256,22 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepSpeaker() {
-        
+        double targetDistance = _visionSubsystem.getDistanceToTarget();
+
+        double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+            kDistanceIDs,
+            kShooterAngles,
+            targetDistance
+        );
+
+        double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+            kDistanceIDs,
+            kShooterSpeeds,
+            targetDistance
+        );
+
+        setShooterAngle(desiredShooterAngle);
+        setShooterSpeed(desiredShooterSpeed);
     }
 
     private void prepTrap() {
@@ -258,7 +280,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void reset() {
-        setShooterAngle(0);
+        setShooterAngle(0.0);
+        setShooterSpeed(0.0);
     }
 
     private void extendForClimb() {
@@ -271,8 +294,8 @@ public class Jukebox extends Subsystem{
 
     private void idle() {
         setElevatorPosition(0);
-        setShooterAngle(0);
-        setShooterSpeed(0);
+        setShooterAngle(0.0);
+        setShooterSpeed(0.0);
     }
 
     private void manual() {
