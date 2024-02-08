@@ -18,7 +18,7 @@ import frc.robot.Enums.JukeboxEnum;
 public class Jukebox extends Subsystem{
     
     private static Jukebox _instance;
-    private static double _oldPosition;
+    private double _oldPosition;
 
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
