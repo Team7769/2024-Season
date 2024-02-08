@@ -18,7 +18,7 @@ import frc.robot.Enums.JukeboxEnum;
 public class Jukebox extends Subsystem{
     
     private static Jukebox _instance;
-    private static double _oldPosition;
+    private double _oldPosition;
 
     private CANSparkMax _elevatorL;
     private CANSparkMax _elevatorR;
@@ -32,7 +32,8 @@ public class Jukebox extends Subsystem{
     private SparkPIDController _shooterController;
 
     private ElevatorFeedforward _feedForward;
-    private JukeboxEnum noteboxCurrentState = JukeboxEnum.IDLE;
+    private JukeboxEnum jukeboxCurrentState = JukeboxEnum.IDLE;
+    private JukeboxEnum jukeboxPreviousState;
 
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
@@ -54,7 +55,10 @@ public class Jukebox extends Subsystem{
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
     // private final double kElavatorFeedforwardKg = 0;
-
+    private final double kTrapElevatorPosition = 0; // change this
+    private final double kExtendClimbElevatorPosition = 0; // change this
+    private final double kClimbElevatorPosition = 0; // change this
+    private final double kAmpElevatorPosition = 0;
     // private final double kP = 0.015;
     // private final double kI = 0.0;
     // private final double kD = 0.001;
@@ -66,7 +70,7 @@ public class Jukebox extends Subsystem{
     // private final double kMaxAccel = 5;
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
-    private double manualElevatorSpeed;
+    private double _manualElevatorSpeed;
     
     public Jukebox()
     {
@@ -142,7 +146,7 @@ public class Jukebox extends Subsystem{
 
         // used to track the old position of the elevator only used to see if we actually move
         _oldPosition = 0;
-        manualElevatorSpeed = 0.0;
+        _manualElevatorSpeed = 0.0;
 
         _noteHolder = new DigitalInput(1);
         _noteShooter = new DigitalInput(2);
@@ -209,50 +213,22 @@ public class Jukebox extends Subsystem{
         _feeder.set(-v);
     }
 
-    private void setManualElevatorSpeed(double s)
-    {
-        if (Math.abs(s) <= .10)
-        {
-            s = 0.0;
-        }
-        manualElevatorSpeed = s;
-    }
-    
-    public void logTelemetry() {
-        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
-        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
-
-        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
-        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
-
-        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
-        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
-        
-        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
-        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
-
-        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
-        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
-    }
-
     private void score() {
 
     }
 
     private void prepAmp() {
-
+        setElevatorPosition(kAmpElevatorPosition);
     }
 
     private void prepSpeaker() {
-
+        setElevatorPosition(0);
     }
 
-    private void prepTrap() {
-
+    private void prepTrap() { 
+        if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
+            setElevatorPosition(kTrapElevatorPosition);
+        }
     }
 
     private void reset() {
@@ -260,11 +236,13 @@ public class Jukebox extends Subsystem{
     }
 
     private void extendForClimb() {
-
+        setElevatorPosition(kExtendClimbElevatorPosition);
     }
 
     private void climb() {
-
+        if (jukeboxPreviousState == JukeboxEnum.EXTEND_FOR_CLIMB) {
+            setElevatorPosition(kClimbElevatorPosition);
+        }
     }
 
     private void idle() {
@@ -274,12 +252,17 @@ public class Jukebox extends Subsystem{
     }
 
     private void manual() {
+        _elevatorL.set(_manualElevatorSpeed);
+    }
 
+    public void setManualElevatorSpeed(double givenSpeed)
+    {
+        _manualElevatorSpeed = givenSpeed;
     }
 
     public void handleCurrentState()
     {
-        switch(noteboxCurrentState){
+        switch(jukeboxCurrentState) {
             case MANUAL:
                 manual();
                 break;
@@ -305,11 +288,11 @@ public class Jukebox extends Subsystem{
                 climb();
                 break;
             default:
-               idle();
+                idle();
                 break;
         }
 
-        switch (noteboxCurrentState) {
+        switch (jukeboxCurrentState) {
             case MANUAL:
                 break;
             default:
@@ -320,6 +303,53 @@ public class Jukebox extends Subsystem{
 
     public void setState(JukeboxEnum n)
     {
-        noteboxCurrentState = n;
+        // checks to see if the current state is what we are trying to set the state to
+        if (n != jukeboxCurrentState) {
+            switch (jukeboxCurrentState) {
+                case CLIMB: 
+                    if (n == JukeboxEnum.EXTEND_FOR_CLIMB || n == JukeboxEnum.PREP_TRAP)
+                    {
+                        jukeboxPreviousState = jukeboxCurrentState;
+                        jukeboxCurrentState = n;
+                    }
+                    break;
+                default:
+                        jukeboxPreviousState = jukeboxCurrentState;
+                        jukeboxCurrentState = n;
+                    break;            
+            }
+        }
+    }
+
+    public void logTelemetry() {
+        SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
+
+        SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
+
+        SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
+        SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
+        
+        SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
+
+        SmartDashboard.putNumber("Shooter motor left enconder position", _shooterL.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter motor left enconder velocity", _shooterL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor left speed", _shooterL.get());
+
+        SmartDashboard.putNumber("Shooter motor right enconder position", _shooterR.getEncoder().getPosition());
+        SmartDashboard.putNumber("Shooter motor right enconder velocity", _shooterR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor right speed", _shooterR.get());
+
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
+
+        SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
+        SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
     }
 }

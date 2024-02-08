@@ -119,6 +119,8 @@ public class Robot extends TimedRobot {
   }
 
   private void testOperate() {
+    _jukebox.setState(JukeboxEnum.MANUAL);
+
     if (_operatorController.getAButton()) {
       _intake.setWantedState(IntakeState.INTAKE);
     }
@@ -135,14 +137,11 @@ public class Robot extends TimedRobot {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
 
-    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
-    {
-        _jukebox.setState(JukeboxEnum.MANUAL);
+    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45)) {
+      _jukebox.setManualElevatorSpeed(.2);
     }
-    
-    if((_operatorController.getPOV() >= 135) && (_operatorController.getPOV() <= 225))
-    {
-        _jukebox.setState(JukeboxEnum.MANUAL);
+    else {
+      _jukebox.setManualElevatorSpeed(0);
     }
   }
 
