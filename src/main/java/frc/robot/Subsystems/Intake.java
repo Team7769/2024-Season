@@ -16,10 +16,10 @@ public class Intake extends Subsystem{
     private IntakeState _currentState = IntakeState.STOP;
 
     //WILL BE CHANGED TO REFLECT ACTUAL VALUES
-    private final double kIntakeSpeed = 1;
-    private final double kEjectSpeed = -1;
+    private final double kIntakeSpeed = .5;
+    private final double kEjectSpeed = -.5;
     private final double kStopSpeed = 0;
-    private final double kPassiveEjectSpeed = -0.5;
+    private final double kPassiveEjectSpeed = -0.25;
 
     private final int kMotorStallLimit = 20;
     private final int kMotorFreeLimit = 100;
