@@ -4,10 +4,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.LinearFilter;
+import java.lang.Math;
 
 public class VisionSystem extends Subsystem{
 
+    private static final double filterDistanceError = 2;
+    private static final double filterAngleError = 5; 
+
+    private static final double limelightHeight = 0.5;
+    private static final double speakerTagBottomHeight = 1.32;
+
+    private static final double aprilTagHeight = .23;
+
+    private static final double speakerTagHeight = speakerTagBottomHeight + (aprilTagHeight / 2);
+    //height of the middle of the april tag on the speaker
+
+
     private static VisionSystem _instance;
+    private LinearFilter limelightDistanceFilter = LinearFilter.singlePoleIIR(1/(2* Math.PI * filterDistanceError), 0.02);
+	private LinearFilter limelightAngleFilter = LinearFilter.singlePoleIIR(1/(2*Math.PI * filterAngleError), 0.02);
 
     VisionSystem()
     {
@@ -26,9 +43,21 @@ public class VisionSystem extends Subsystem{
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         var tx = table.getEntry("tx").getDouble(0);  
+        tx = limelightAngleFilter.calculate(tx);
         return tx;  
     }
 
+    public double getDistance()
+    {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        var ty = table.getEntry("ty").getDouble(0); 
+        var tx = table.getEntry("tx").getDouble(0); 
+
+
+        double distance = speakerTagHeight / Math.tan(ty) * Math.cos(tx);
+        distance = limelightDistanceFilter.calculate(distance);
+        return distance; 
+    }
 
 
     }
