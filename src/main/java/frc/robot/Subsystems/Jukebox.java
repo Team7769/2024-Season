@@ -291,6 +291,14 @@ public class Jukebox extends Subsystem{
         _manualElevatorSpeed = givenSpeed;
     }
 
+    public void setManualShooterSpeed(double speed) {
+        _shooterL.setVoltage(speed);
+    }
+
+    public void setManualShooterAngle(double angle) {
+        setShooterAngle(angle);
+    }
+
     public void handleCurrentState()
     {
         switch(jukeboxCurrentState) {

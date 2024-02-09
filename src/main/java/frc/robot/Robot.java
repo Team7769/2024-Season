@@ -143,6 +143,18 @@ public class Robot extends TimedRobot {
     else {
       _jukebox.setManualElevatorSpeed(0);
     }
+
+    if (_operatorController.getLeftBumperPressed()) {
+      _jukebox.setManualShooterAngle(-1.0);
+    } else if (_operatorController.getRightBumperPressed()) {
+      _jukebox.setManualShooterAngle(1.0);
+    }
+
+    if (_operatorController.getPOV() == 90) {
+      _jukebox.setManualShooterSpeed(6.0);
+    } else {
+      _jukebox.setManualShooterSpeed(0.0);
+    }
   }
 
   @Override
