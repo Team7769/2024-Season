@@ -76,6 +76,7 @@ public class Jukebox extends Subsystem{
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
+    private double _manualFeederSpeed;
     
     public Jukebox()
     {
@@ -223,18 +224,13 @@ public class Jukebox extends Subsystem{
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
 
 
-        if (jukeboxCurrentState == JukeboxEnum.PREP_AMP || jukeboxCurrentState == JukeboxEnum.PREP_TRAP)
+        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {
             _feeder.set(-.5);
-        } else if (jukeboxCurrentState == JukeboxEnum.PREP_SPEAKER)
+        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER)
         {
             _feeder.set(.5);
         }
-
-
-        /**
-         * TO DO AT HOME!!
-         */
     }
 
     private void prepAmp() {
@@ -258,14 +254,11 @@ public class Jukebox extends Subsystem{
     {
         var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
         var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
-        if(note1 && note2){
-            _feeder.set(0); 
+        if(note2){
+            _feeder.set(.2); 
         } else if(note1){
             _feeder.set(-.2);
-        } else if(note1 && note2){
-            _feeder.set(.5);
-        } else 
-        {
+        } else {
             _feeder.set(0);
         }
     }
@@ -291,7 +284,12 @@ public class Jukebox extends Subsystem{
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
-        _feeder.set(.5);
+        _feeder.set(_manualFeederSpeed);
+    }
+
+    public void setManualFeederSpeed(double givenSpeed)
+    {
+        _manualFeederSpeed = givenSpeed;
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
