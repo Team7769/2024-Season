@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
@@ -51,6 +53,9 @@ public class Jukebox extends Subsystem{
     private double _shooterSpeed = 0;
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
+
+    private Debouncer _noteHolderDebouncer;
+    private Debouncer _noteShooterDebouncer;
 
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
@@ -148,8 +153,17 @@ public class Jukebox extends Subsystem{
         _oldPosition = 0;
         _manualElevatorSpeed = 0.0;
 
-        _noteHolder = new DigitalInput(1);
-        _noteShooter = new DigitalInput(2);
+        _noteHolder = new DigitalInput(0);
+        _noteShooter = new DigitalInput(1);
+
+
+        /**
+         * Rising (default): Debounces rising edges (transitions from false to true) only.
+         * Falling: Debounces falling edges (transitions from true to false) only.
+         * Both: Debounces all transitions.
+         */
+        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
     }
 
@@ -203,22 +217,29 @@ public class Jukebox extends Subsystem{
         }
     }
 
-    private void feed(double v)
-    {
-        _feeder.set(v);
-    }
-
-    private void spit( double v)
-    {
-        _feeder.set(-v);
-    }
-
     private void score() {
 
+        // If previous state is PREP_AMP or PREP_TRAP -> Reverses out the front of the robot.
+        // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
+
+
+        if (jukeboxCurrentState == JukeboxEnum.PREP_AMP || jukeboxCurrentState == JukeboxEnum.PREP_TRAP)
+        {
+            // To do
+        } else if (jukeboxCurrentState == JukeboxEnum.PREP_SPEAKER)
+        {
+            // To do
+        }
+
+
+        /**
+         * TO DO AT HOME!!
+         */
     }
 
     private void prepAmp() {
         setElevatorPosition(kAmpElevatorPosition);
+        feeder();
     }
 
     private void prepSpeaker() {
@@ -229,10 +250,27 @@ public class Jukebox extends Subsystem{
         if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
             setElevatorPosition(kTrapElevatorPosition);
         }
+        feeder();
+    }
+
+
+    private void feeder()
+    {
+        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
+        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
+        if(note1 && note2){
+            _feeder.set(0); 
+        } else if(note1){
+            _feeder.set(-.2);
+        } else if(note1 && note2){
+            _feeder.set(.5);
+        } else 
+        {
+            _feeder.set(0);
+        }
     }
 
     private void reset() {
-
     }
 
     private void extendForClimb() {
@@ -320,6 +358,7 @@ public class Jukebox extends Subsystem{
             }
         }
     }
+
 
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
