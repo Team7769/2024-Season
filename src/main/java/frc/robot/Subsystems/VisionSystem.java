@@ -44,6 +44,7 @@ public class VisionSystem extends Subsystem{
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         var tx = table.getEntry("tx").getDouble(0);  
         tx = limelightAngleFilter.calculate(tx);
+        SmartDashboard.putNumber("VisionSystemGetAngle", tx);
         return tx;  
     }
 
@@ -56,8 +57,8 @@ public class VisionSystem extends Subsystem{
 
         double distance = speakerTagHeight / Math.tan(ty) * Math.cos(tx);
         distance = limelightDistanceFilter.calculate(distance);
+        SmartDashboard.putNumber("VisionSystemGetDistance", distance);
         return distance; 
     }
-
 
     }
