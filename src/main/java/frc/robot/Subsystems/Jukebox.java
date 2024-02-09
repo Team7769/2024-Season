@@ -72,6 +72,8 @@ public class Jukebox extends Subsystem{
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
+    private double _manualShooterSpeed;
+    private double _manualShooterAngleSpeed;
 
     // private VisionSubsystem _visionSubsystem;
 
@@ -284,6 +286,9 @@ public class Jukebox extends Subsystem{
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
+
+        _shooterL.set(_manualShooterSpeed);
+        _shooterAngle.set(_manualShooterAngleSpeed);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
@@ -292,11 +297,11 @@ public class Jukebox extends Subsystem{
     }
 
     public void setManualShooterSpeed(double speed) {
-        _shooterL.setVoltage(speed);
+        _manualShooterSpeed = speed;
     }
 
-    public void setManualShooterAngle(double angle) {
-        setShooterAngle(angle);
+    public void setManualShooterAngleSpeed(double speed) {
+        _manualShooterAngleSpeed = speed;
     }
 
     public void handleCurrentState()
