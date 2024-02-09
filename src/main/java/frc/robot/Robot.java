@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.IntakeState;
+import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Jukebox;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.VisionSystem;
 import frc.robot.Utilities.AutoUtil;
@@ -35,10 +37,12 @@ public class Robot extends TimedRobot {
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
    private VisionSystem _visionSystem;
+   private Jukebox _jukebox;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
+    _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
@@ -125,6 +129,8 @@ public class Robot extends TimedRobot {
   }
 
   private void testOperate() {
+    _jukebox.setState(JukeboxEnum.MANUAL);
+
     if (_operatorController.getAButton()) {
       _intake.setWantedState(IntakeState.INTAKE);
     }
@@ -140,6 +146,27 @@ public class Robot extends TimedRobot {
     if (_operatorController.getYButton()) {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
+
+    if (_driverController.getYButton()) {
+      _jukebox.setManualElevatorSpeed(0.2);
+    }
+    else {
+      _jukebox.setManualElevatorSpeed(0.0);
+    }
+
+    if (_driverController.getXButton()) {
+      _jukebox.setManualShooterAngleSpeed(-0.5);
+    } else if (_driverController.getBButton()) {
+      _jukebox.setManualShooterAngleSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterAngleSpeed(0.0);
+    }
+    
+    if (_driverController.getAButton()) {
+      _jukebox.setManualShooterSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterSpeed(0.0);
+    }
   }
 
   @Override
@@ -147,4 +174,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void simulationPeriodic() {}
+
+
 }
