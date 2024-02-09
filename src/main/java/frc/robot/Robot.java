@@ -137,11 +137,25 @@ public class Robot extends TimedRobot {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
 
-    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45)) {
-      _jukebox.setManualElevatorSpeed(.2);
+    if (_driverController.getYButton()) {
+      _jukebox.setManualElevatorSpeed(0.2);
     }
     else {
-      _jukebox.setManualElevatorSpeed(0);
+      _jukebox.setManualElevatorSpeed(0.0);
+    }
+
+    if (_driverController.getXButton()) {
+      _jukebox.setManualShooterAngleSpeed(-0.5);
+    } else if (_driverController.getBButton()) {
+      _jukebox.setManualShooterAngleSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterAngleSpeed(0.0);
+    }
+    
+    if (_driverController.getAButton()) {
+      _jukebox.setManualShooterSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterSpeed(0.0);
     }
   }
 
