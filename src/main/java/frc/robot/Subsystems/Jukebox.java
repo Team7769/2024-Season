@@ -225,10 +225,10 @@ public class Jukebox extends Subsystem{
 
         if (jukeboxCurrentState == JukeboxEnum.PREP_AMP || jukeboxCurrentState == JukeboxEnum.PREP_TRAP)
         {
-            // To do
+            _feeder.set(-.5);
         } else if (jukeboxCurrentState == JukeboxEnum.PREP_SPEAKER)
         {
-            // To do
+            _feeder.set(.5);
         }
 
 
@@ -291,6 +291,7 @@ public class Jukebox extends Subsystem{
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
+        _feeder.set(.5);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
