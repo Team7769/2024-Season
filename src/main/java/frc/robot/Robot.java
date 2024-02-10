@@ -15,6 +15,7 @@ import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.VisionSystem;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.OneDimensionalLookup;
 /**
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+   private VisionSystem _visionSystem;
    private Jukebox _jukebox;
 
   @Override
@@ -45,6 +47,8 @@ public class Robot extends TimedRobot {
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+
+    _visionSystem = VisionSystem.getInstance();
     // loads the auto modes
     AutoUtil.autonmousDropDown(_autoChooser);
     // puts the drop down to select auton modes on shuffleboard
@@ -92,6 +96,12 @@ public class Robot extends TimedRobot {
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
         Constants.RotAxis_outputTable,
         _driverController.getRightX());
+
+    if (_driverController.getRightBumper())
+    {
+        rotation = _visionSystem.getTargetAngle() / 27 ;
+        //target angle range is -27 to 27 degrees
+    }
     
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
@@ -137,11 +147,25 @@ public class Robot extends TimedRobot {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
 
-    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45)) {
-      _jukebox.setManualElevatorSpeed(.2);
+    if (_driverController.getYButton()) {
+      _jukebox.setManualElevatorSpeed(0.2);
     }
     else {
-      _jukebox.setManualElevatorSpeed(0);
+      _jukebox.setManualElevatorSpeed(0.0);
+    }
+
+    if (_driverController.getXButton()) {
+      _jukebox.setManualShooterAngleSpeed(-0.5);
+    } else if (_driverController.getBButton()) {
+      _jukebox.setManualShooterAngleSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterAngleSpeed(0.0);
+    }
+    
+    if (_driverController.getAButton()) {
+      _jukebox.setManualShooterSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterSpeed(0.0);
     }
   }
 

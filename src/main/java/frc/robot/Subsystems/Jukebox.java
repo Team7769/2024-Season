@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Utilities.OneDimensionalLookup;
     
 public class Jukebox extends Subsystem{
     
@@ -57,6 +58,9 @@ public class Jukebox extends Subsystem{
     private Debouncer _noteHolderDebouncer;
     private Debouncer _noteShooterDebouncer;
 
+
+    private double _manualShooterSpeed;
+
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
     // private final double kElavatorFeedforwardKg = 0;
@@ -77,6 +81,7 @@ public class Jukebox extends Subsystem{
     // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
+    private double _manualShooterAngleSpeed;
     
     public Jukebox()
     {
@@ -166,6 +171,8 @@ public class Jukebox extends Subsystem{
         _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
         _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
+        // _visionSubsystem = VisionSubsystem.getInstance();
+
     }
 
     public static Jukebox getInstance()
@@ -235,35 +242,41 @@ public class Jukebox extends Subsystem{
 
     private void prepAmp() {
         setElevatorPosition(kAmpElevatorPosition);
-        feeder();
     }
 
     private void prepSpeaker() {
         setElevatorPosition(0);
+
+        // double targetDistance = _visionSubsystem.getDistanceToTarget();
+
+        // double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+        //     kDistanceIDs,
+        //     kShooterAngles,
+        //     targetDistance
+        // );
+
+        // double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+        //     kDistanceIDs,
+        //     kShooterSpeeds,
+        //     targetDistance
+        // );
+
+        // setShooterAngle(desiredShooterAngle);
+        // setShooterSpeed(desiredShooterSpeed);
     }
 
-    private void prepTrap() { 
+    private void prepTrap() {
         if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
             setElevatorPosition(kTrapElevatorPosition);
         }
-        feeder();
-    }
 
-
-    private void feeder()
-    {
-        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
-        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
-        if(note2){
-            _feeder.set(.2); 
-        } else if(note1){
-            _feeder.set(-.2);
-        } else {
-            _feeder.set(0);
-        }
+        setShooterAngle(-0.5);
+        setShooterSpeed(0.0);
     }
 
     private void reset() {
+        setShooterAngle(0.0);
+        setShooterSpeed(0.0);
     }
 
     private void extendForClimb() {
@@ -278,23 +291,28 @@ public class Jukebox extends Subsystem{
 
     private void idle() {
         setElevatorPosition(0);
-        setShooterAngle(0);
-        setShooterSpeed(0);
+        setShooterAngle(0.0);
+        setShooterSpeed(0.0);
     }
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
-        _feeder.set(_manualFeederSpeed);
-    }
 
-    public void setManualFeederSpeed(double givenSpeed)
-    {
-        _manualFeederSpeed = givenSpeed;
+        _shooterL.set(_manualShooterSpeed);
+        _shooterAngle.set(_manualShooterAngleSpeed);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
     {
         _manualElevatorSpeed = givenSpeed;
+    }
+
+    public void setManualShooterSpeed(double speed) {
+        _manualShooterSpeed = speed;
+    }
+
+    public void setManualShooterAngleSpeed(double speed) {
+        _manualShooterAngleSpeed = speed;
     }
 
     public void handleCurrentState()
