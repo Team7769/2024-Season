@@ -82,7 +82,9 @@ public class Jukebox extends Subsystem{
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
     private double _manualShooterAngleSpeed;
-    
+
+    private VisionSystem _visionSystem;
+
     private final double[] kDistanceIDs = {};
     private final double[] kShooterAngles = {};
     private final double[] kShooterSpeeds = {};
@@ -175,7 +177,7 @@ public class Jukebox extends Subsystem{
         _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
         _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
-        // _visionSubsystem = VisionSubsystem.getInstance();
+        _visionSystem = VisionSystem.getInstance();
 
     }
 
@@ -250,22 +252,22 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        // double targetDistance = _visionSubsystem.getDistanceToTarget();
+        double targetDistance = _visionSystem.getDistance();
 
-        // double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-        //     kDistanceIDs,
-        //     kShooterAngles,
-        //     targetDistance
-        // );
+        double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+            kDistanceIDs,
+            kShooterAngles,
+            targetDistance
+        );
 
-        // double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-        //     kDistanceIDs,
-        //     kShooterSpeeds,
-        //     targetDistance
-        // );
+        double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+            kDistanceIDs,
+            kShooterSpeeds,
+            targetDistance
+        );
 
-        // setShooterAngle(desiredShooterAngle);
-        // setShooterSpeed(desiredShooterSpeed);
+        setShooterAngle(desiredShooterAngle);
+        setShooterSpeed(desiredShooterSpeed);
     }
 
     private void prepTrap() {
