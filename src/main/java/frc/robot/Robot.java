@@ -129,21 +129,30 @@ public class Robot extends TimedRobot {
   }
 
   private void testOperate() {
+
+    
+
     _jukebox.setState(JukeboxEnum.MANUAL);
+
+
+    if (_operatorController.getLeftBumper())
+    {
+      _jukebox.setManualFeederSpeed(.5);
+    } else if (_operatorController.getRightBumper())
+    {
+      _jukebox.setManualFeederSpeed(-.5);
+    } else 
+    {
+      _jukebox.setManualFeederSpeed(0);
+    }
 
     if (_operatorController.getAButton()) {
       _intake.setWantedState(IntakeState.INTAKE);
-    }
-
-    if (_operatorController.getBButton()) {
+    } else if (_operatorController.getBButton()) {
       _intake.setWantedState(IntakeState.STOP);
-    }
-
-    if (_operatorController.getXButton()) {
+    } else if (_operatorController.getXButton()) {
       _intake.setWantedState(IntakeState.EJECT);
-    }
-
-    if (_operatorController.getYButton()) {
+    } else if (_operatorController.getYButton()) {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
 
