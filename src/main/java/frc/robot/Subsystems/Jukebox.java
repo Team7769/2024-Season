@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
+import frc.robot.Enums.IntakeState;
 import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Utilities.OneDimensionalLookup;
     
@@ -45,8 +46,8 @@ public class Jukebox extends Subsystem{
     private TrapezoidProfile.State _shooterGoal;
     private TrapezoidProfile.State _shooterSetPoint;
 
-    private DigitalInput _noteHolder;
-    private DigitalInput _noteShooter;
+    private DigitalInput _noteHolderPE;
+    private DigitalInput _noteShooterPE;
 
     private Timer _timer;
 
@@ -55,8 +56,8 @@ public class Jukebox extends Subsystem{
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
 
-    private Debouncer _noteHolderDebouncer;
-    private Debouncer _noteShooterDebouncer;
+    private Debouncer _noteHolderPEDebouncer;
+    private Debouncer _noteShooterPEDebouncer;
 
 
     private double _manualShooterSpeed;
@@ -160,8 +161,8 @@ public class Jukebox extends Subsystem{
         _oldPosition = 0;
         _manualElevatorSpeed = 0.0;
 
-        _noteHolder = new DigitalInput(1);
-        _noteShooter = new DigitalInput(2);
+        _noteHolderPE = new DigitalInput(1);
+        _noteShooterPE = new DigitalInput(2);
 
 
         /**
@@ -169,8 +170,8 @@ public class Jukebox extends Subsystem{
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteHolderPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterpEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
@@ -341,6 +342,11 @@ public class Jukebox extends Subsystem{
         _shooterAngle.getEncoder().setPosition(0.0);
     }
 
+    public boolean hasNote() {
+        // get() returns false if blocked/detects note
+        return !_noteHolderPE.get() || !_noteShooterPE.get();
+    }
+
     public void handleCurrentState()
     {
         switch(jukeboxCurrentState) {
@@ -402,6 +408,9 @@ public class Jukebox extends Subsystem{
         }
     }
 
+    public JukeboxEnum getState() {
+        return jukeboxCurrentState;
+    }
 
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());

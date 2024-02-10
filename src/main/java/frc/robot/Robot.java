@@ -112,6 +112,19 @@ public class Robot extends TimedRobot {
     }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+
+    if (_operatorController.getXButtonPressed()) {
+      IntakeState wantedState = _intake.getState() == IntakeState.EJECT ?
+                                IntakeState.PASSIVE_EJECT : IntakeState.EJECT;
+
+      _intake.setWantedState(wantedState);
+    }
+    if(_driverController.getYButtonPressed()) {
+      JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
+                                                  JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
+
+      _jukebox.setState(wantedState);
+    }
   }
 
   @Override

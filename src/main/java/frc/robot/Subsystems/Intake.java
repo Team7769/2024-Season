@@ -25,6 +25,8 @@ public class Intake extends Subsystem{
     private final int kMotorFreeLimit = 100;
     private final boolean kInverted = false;
 
+    private Jukebox _jukebox;
+
     Intake() {
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
                                  MotorType.kBrushless);
@@ -33,6 +35,8 @@ public class Intake extends Subsystem{
         _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
         _motor.setInverted(kInverted);
         _motor.burnFlash();
+
+        _jukebox = Jukebox.getInstance();
     }
     
 
@@ -68,18 +72,23 @@ public class Intake extends Subsystem{
                 break;
             
             case INTAKE:
+                if (_jukebox.hasNote()) {
+                    setWantedState(IntakeState.PASSIVE_EJECT);
+
+                    break;
+                }
+
                 intake();
-
-                // pseudocode if we have to interpret the jukebox data vs the
-                // jukebox sending us states 
-
-                // if (Jukebox.getInstance().hasNote()) {
-                //     setWantedState(IntakeState.PASSIVE_EJECT);
-                // }
 
                 break;
 
             case PASSIVE_EJECT:
+                if (!_jukebox.hasNote()) {
+                    setWantedState(IntakeState.INTAKE);
+
+                    break;
+                }
+
                 passiveEject();
 
                 break;
@@ -126,6 +135,10 @@ public class Intake extends Subsystem{
 
         // may want to move this before function calls
         _currentState = state;
+    }
+
+    public IntakeState getState() {
+        return _currentState;
     }
 
     @Override
