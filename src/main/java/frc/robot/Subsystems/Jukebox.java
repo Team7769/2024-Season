@@ -83,6 +83,10 @@ public class Jukebox extends Subsystem{
     private double _manualFeederSpeed;
     private double _manualShooterAngleSpeed;
     
+    private final double[] kDistanceIDs = {};
+    private final double[] kShooterAngles = {};
+    private final double[] kShooterSpeeds = {};
+
     public Jukebox()
     {
         // motor setup
@@ -226,11 +230,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void score() {
-
         // If previous state is PREP_AMP or PREP_TRAP -> Reverses out the front of the robot.
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
-
-
         if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {
             _feeder.set(-.5);
@@ -241,6 +242,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
+        setShooterAngle(-0.5);
+        setShooterSpeed(0.0);
         setElevatorPosition(kAmpElevatorPosition);
     }
 
@@ -268,10 +271,9 @@ public class Jukebox extends Subsystem{
     private void prepTrap() {
         if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
             setElevatorPosition(kTrapElevatorPosition);
+            setShooterAngle(-0.5);
+            setShooterSpeed(0.0);
         }
-
-        setShooterAngle(-0.5);
-        setShooterSpeed(0.0);
     }
 
     private void reset() {
@@ -289,17 +291,38 @@ public class Jukebox extends Subsystem{
         }
     }
 
+
+    private void feeder()
+    {
+        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
+        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
+        if(note2){
+            _feeder.set(-.2); 
+        } else if(note1){
+            _feeder.set(0);
+        } else {
+            _feeder.set(.2);
+        }
+    }
+
+
+    public void setManualFeederSpeed(double givenSpeed)
+    {
+        _manualFeederSpeed = givenSpeed;
+    }
+
     private void idle() {
         setElevatorPosition(0);
         setShooterAngle(0.0);
         setShooterSpeed(0.0);
+        feeder();
     }
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
-
         _shooterL.set(_manualShooterSpeed);
         _shooterAngle.set(_manualShooterAngleSpeed);
+        _feeder.set(_manualFeederSpeed);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
