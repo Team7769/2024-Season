@@ -59,6 +59,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
+    _jukebox.logTelemetry();
+    _intake.logTelemetry();
   }
 
   @Override
@@ -121,6 +123,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     _intake.setWantedState(IntakeState.STOP);
+    _jukebox.resetSensors();
   }
 
   @Override
@@ -156,9 +159,10 @@ public class Robot extends TimedRobot {
     }
 
     if (_driverController.getYButton()) {
-      _jukebox.setManualElevatorSpeed(0.5);
-    }
-    else {
+      _jukebox.setManualElevatorSpeed(1);
+    } else if (_driverController.getRightBumper()) {
+      _jukebox.setManualElevatorSpeed(-.5);
+    } else {
       _jukebox.setManualElevatorSpeed(0.0);
     }
 
@@ -171,7 +175,7 @@ public class Robot extends TimedRobot {
     }
     
     if (_driverController.getAButton()) {
-      _jukebox.setManualShooterSpeed(0.5);
+      _jukebox.setManualShooterSpeed(1.0);
     } else {
       _jukebox.setManualShooterSpeed(0.0);
     }
