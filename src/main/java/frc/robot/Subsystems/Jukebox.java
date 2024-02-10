@@ -92,38 +92,33 @@ public class Jukebox extends Subsystem{
     public Jukebox()
     {
         // motor setup
-        // right elevator motor setup
-        _elevatorR = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
-        _elevatorR.setIdleMode(IdleMode.kBrake);
-        _elevatorR.setSmartCurrentLimit(20, 100);
-        _elevatorR.setInverted(true);
-        _elevatorR.burnFlash();
-
         // left elevator motor setup
         _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(20, 100);
+        _elevatorL.setInverted(true);
         _elevatorL.burnFlash();
+
+        // right elevator motor setup
+        _elevatorR = new CANSparkMax(Constants.kRElevatorId, MotorType.kBrushless);
+        _elevatorR.setIdleMode(IdleMode.kBrake);
+        _elevatorR.setSmartCurrentLimit(20, 100);
+        _elevatorR.setInverted(false);
+        _elevatorR.burnFlash();
 
         // left shooter motor setup
         _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
         _shooterL.setIdleMode(IdleMode.kCoast);
-        _shooterL.setSmartCurrentLimit(20, 100);
         _shooterL.setInverted(true);
         _shooterL.burnFlash();
 
         // right shooter motor setup
         _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
         _shooterR.setIdleMode(IdleMode.kCoast);
-        _shooterR.setSmartCurrentLimit(20, 100);
         _shooterR.setInverted(false);
         _shooterR.burnFlash();
 
-        // make the left shooter moter follow the right
-        _shooterR.follow(_shooterL);
-
-        // makes the right motor follow the left motor
-        _elevatorR.follow(_elevatorL);
+        
 
         // shooter angle motor setup
         _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
@@ -140,7 +135,7 @@ public class Jukebox extends Subsystem{
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
         _feeder.setIdleMode(IdleMode.kBrake);
         _feeder.setSmartCurrentLimit(20, 100);
-        _feeder.setInverted(false);
+        _feeder.setInverted(true);
         _feeder.burnFlash();
 
         // the timer is needed for handleElevatorPosistion
@@ -165,8 +160,8 @@ public class Jukebox extends Subsystem{
         _oldPosition = 0;
         _manualElevatorSpeed = 0.0;
 
-        _noteHolder = new DigitalInput(0);
-        _noteShooter = new DigitalInput(1);
+        _noteHolder = new DigitalInput(1);
+        _noteShooter = new DigitalInput(2);
 
 
         /**
@@ -178,7 +173,8 @@ public class Jukebox extends Subsystem{
         _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
-
+        
+        jukeboxPreviousState = JukeboxEnum.IDLE;
     }
 
     public static Jukebox getInstance()
@@ -340,6 +336,11 @@ public class Jukebox extends Subsystem{
         _manualShooterAngleSpeed = speed;
     }
 
+    public void resetSensors()  {
+        _elevatorL.getEncoder().setPosition(0.0);
+        _shooterAngle.getEncoder().setPosition(0.0);
+    }
+
     public void handleCurrentState()
     {
         switch(jukeboxCurrentState) {
@@ -405,30 +406,36 @@ public class Jukebox extends Subsystem{
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());
         SmartDashboard.putNumber("Elevator motor left speed", _elevatorL.get());
 
         SmartDashboard.putNumber("Elevator motor right enconder position", _elevatorR.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor right enconder velocity", _elevatorR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Elevator motor right temp", _elevatorR.getMotorTemperature());
         SmartDashboard.putNumber("Elevator motor right speed", _elevatorR.get());
 
         SmartDashboard.putNumber("Feeder motor enconder position", _feeder.getEncoder().getPosition());
         SmartDashboard.putNumber("Feeder motor enconder velocity", _feeder.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feeder motor temp", _feeder.getMotorTemperature());
         SmartDashboard.putNumber("Feeder motor speed", _feeder.get());
         
         SmartDashboard.putNumber("Shooter angle motor enconder position", _shooterAngle.getEncoder().getPosition());
         SmartDashboard.putNumber("Shooter angle motor enconder velocity", _shooterAngle.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter angle motor temp", _shooterAngle.getMotorTemperature());
         SmartDashboard.putNumber("Shooter angle motor speed", _shooterAngle.get());
 
         SmartDashboard.putNumber("Shooter motor left enconder position", _shooterL.getEncoder().getPosition());
         SmartDashboard.putNumber("Shooter motor left enconder velocity", _shooterL.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor left temp", _shooterL.getMotorTemperature());
         SmartDashboard.putNumber("Shooter motor left speed", _shooterL.get());
 
         SmartDashboard.putNumber("Shooter motor right enconder position", _shooterR.getEncoder().getPosition());
         SmartDashboard.putNumber("Shooter motor right enconder velocity", _shooterR.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter motor right  temp", _shooterR.getMotorTemperature());
         SmartDashboard.putNumber("Shooter motor right speed", _shooterR.get());
 
-        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteHolder.get());
-        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteShooter.get());
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteShooter.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteHolder.get());
 
         SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
