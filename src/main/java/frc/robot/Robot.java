@@ -110,8 +110,6 @@ public class Robot extends TimedRobot {
     }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
-
-    _operatorController.getPOV();
   }
 
   @Override
@@ -121,19 +119,20 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void testInit() {}
+  public void testInit() {
+    _intake.setWantedState(IntakeState.STOP);
+  }
 
   @Override
   public void testPeriodic() {
     testOperate();
+
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
-  private void testOperate() {
-
-    
-
+  private void testOperate() {   
     _jukebox.setState(JukeboxEnum.MANUAL);
-
 
     if (_operatorController.getLeftBumper())
     {
@@ -157,7 +156,7 @@ public class Robot extends TimedRobot {
     }
 
     if (_driverController.getYButton()) {
-      _jukebox.setManualElevatorSpeed(0.2);
+      _jukebox.setManualElevatorSpeed(0.5);
     }
     else {
       _jukebox.setManualElevatorSpeed(0.0);
