@@ -105,6 +105,13 @@ public class Robot extends TimedRobot {
         //target angle range is -27 to 27 degrees
     }
     
+    if (_operatorController.getLeftBumper()) {
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+    }
+
+    if (_operatorController.getRightBumper()) {
+      _jukebox.setState(JukeboxEnum.PREP_AMP);
+    }
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
     {

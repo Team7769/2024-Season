@@ -60,7 +60,11 @@ public final class Constants {
     public static final double kAllowedError = 3;
 
     public static final double speedToHoldElevator = 0.0;
-    
+    public static final double kMaxElevatorHeight = 82.0;
+    public static final double kMaxShooterSpeed = 4600;
+    public static final double KMinShooterAngle = .4;
+    public static final double KMaxShooterAngle = 15.0;
+
     public static final double MAX_VOLTAGE = 12.0;
 
     // possibly change per this years gearbox

@@ -67,7 +67,8 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 0; // change this
     private final double kExtendClimbElevatorPosition = 0; // change this
     private final double kClimbElevatorPosition = 0; // change this
-    private final double kAmpElevatorPosition = 0;
+    private final double kAmpElevatorPosition = 9.3;
+    private final double kAmpShooterAngle = 5;
     // private final double kP = 0.015;
     // private final double kI = 0.0;
     // private final double kD = 0.001;
@@ -240,8 +241,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
-        setShooterAngle(-0.5);
-        setShooterSpeed(0.0);
+        setShooterAngle(kAmpShooterAngle);
         setElevatorPosition(kAmpElevatorPosition);
     }
 
@@ -249,21 +249,24 @@ public class Jukebox extends Subsystem{
         setElevatorPosition(0);
 
         double targetDistance = _visionSystem.getDistance();
+        if (targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterAngles,
+                targetDistance
+            );
+            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterSpeeds,
+                targetDistance
+            );
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(desiredShooterSpeed);
 
-        double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-            kDistanceIDs,
-            kShooterAngles,
-            targetDistance
-        );
-
-        double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-            kDistanceIDs,
-            kShooterSpeeds,
-            targetDistance
-        );
-
-        setShooterAngle(desiredShooterAngle);
-        setShooterSpeed(desiredShooterSpeed);
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
     }
 
     private void prepTrap() {

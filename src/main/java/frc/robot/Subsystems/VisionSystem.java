@@ -55,12 +55,17 @@ public class VisionSystem extends Subsystem{
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         var ty = table.getEntry("ty").getDouble(0); 
         var tx = table.getEntry("tx").getDouble(0); 
-
-
-        double distance = (speakerTagHeight - limelightHeight) / Math.tan(ty) * Math.cos(tx);
-        distance = limelightDistanceFilter.calculate(distance);
-        SmartDashboard.putNumber("VisionSystemGetDistance", distance);
-        return distance; 
+        var tv = table.getEntry("tv").getDouble(0);
+        
+        if (tv != 0.0) {
+            double distance = (speakerTagHeight - limelightHeight) / Math.tan(ty) * Math.cos(tx);
+            distance = limelightDistanceFilter.calculate(distance);
+            SmartDashboard.putNumber("VisionSystemGetDistance", distance);
+            return distance; 
+        }
+        else {
+            return 0.0;
+        }
     }
 
     }
