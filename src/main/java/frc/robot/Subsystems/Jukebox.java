@@ -171,7 +171,7 @@ public class Jukebox extends Subsystem{
          * Both: Debounces all transitions.
          */
         _noteHolderPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterpEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
@@ -293,8 +293,8 @@ public class Jukebox extends Subsystem{
 
     private void feeder()
     {
-        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
-        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
+        var note1 = _noteHolderPEDebouncer.calculate(_noteHolderPE.get());
+        var note2 = _noteShooterPEDebouncer.calculate(_noteShooterPE.get());
         if(note2){
             _feeder.set(-.2); 
         } else if(note1){
@@ -443,8 +443,8 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putNumber("Shooter motor right  temp", _shooterR.getMotorTemperature());
         SmartDashboard.putNumber("Shooter motor right speed", _shooterR.get());
 
-        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteShooter.get());
-        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteHolder.get());
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteShooterPE.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteHolderPE.get());
 
         SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
