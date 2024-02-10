@@ -96,7 +96,7 @@ public class Jukebox extends Subsystem{
         _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(20, 100);
-        _elevatorL.setInverted(false);
+        _elevatorL.setInverted(true);
         _elevatorL.burnFlash();
 
         // right elevator motor setup
