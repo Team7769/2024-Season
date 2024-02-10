@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
@@ -53,6 +55,12 @@ public class Jukebox extends Subsystem{
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
 
+    private Debouncer _noteHolderDebouncer;
+    private Debouncer _noteShooterDebouncer;
+
+
+    private double _manualShooterSpeed;
+
     // private final double kElavatorFeedforwardKs = 0;
     // private final double kElavatorFeedforwardKv = 0;
     // private final double kElavatorFeedforwardKg = 0;
@@ -72,15 +80,13 @@ public class Jukebox extends Subsystem{
     // private final double kAllowedError = 3;
     // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
-    private double _manualShooterSpeed;
+    private double _manualFeederSpeed;
     private double _manualShooterAngleSpeed;
-
-    // private VisionSubsystem _visionSubsystem;
-
+    
     private final double[] kDistanceIDs = {};
     private final double[] kShooterAngles = {};
     private final double[] kShooterSpeeds = {};
-    
+
     public Jukebox()
     {
         // motor setup
@@ -157,8 +163,17 @@ public class Jukebox extends Subsystem{
         _oldPosition = 0;
         _manualElevatorSpeed = 0.0;
 
-        _noteHolder = new DigitalInput(1);
-        _noteShooter = new DigitalInput(2);
+        _noteHolder = new DigitalInput(0);
+        _noteShooter = new DigitalInput(1);
+
+
+        /**
+         * Rising (default): Debounces rising edges (transitions from false to true) only.
+         * Falling: Debounces falling edges (transitions from true to false) only.
+         * Both: Debounces all transitions.
+         */
+        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         // _visionSubsystem = VisionSubsystem.getInstance();
 
@@ -214,17 +229,23 @@ public class Jukebox extends Subsystem{
         }
     }
 
-    private void feed(double v)
-    {
-        _feeder.set(v);
+    private void score() {
+        // If previous state is PREP_AMP or PREP_TRAP -> Reverses out the front of the robot.
+        // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
+        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
+        {
+            _feeder.set(-.5);
+        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER)
+        {
+            _feeder.set(.5);
+        }
     }
 
-    private void spit( double v)
-    {
-        _feeder.set(-v);
+    private void prepAmp() {
+        setShooterAngle(-0.5);
+        setShooterSpeed(0.0);
+        setElevatorPosition(kAmpElevatorPosition);
     }
-
-    private void score() {}
 
     private void prepSpeaker() {
         setElevatorPosition(0);
@@ -250,17 +271,9 @@ public class Jukebox extends Subsystem{
     private void prepTrap() {
         if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
             setElevatorPosition(kTrapElevatorPosition);
+            setShooterAngle(-0.5);
+            setShooterSpeed(0.0);
         }
-
-        setShooterAngle(-0.5);
-        setShooterSpeed(0.0);
-    }
-
-    private void prepAmp() {
-        setShooterAngle(-0.5);
-        setShooterSpeed(0.0);
-
-        setElevatorPosition(kAmpElevatorPosition);
     }
 
     private void reset() {
@@ -278,17 +291,38 @@ public class Jukebox extends Subsystem{
         }
     }
 
+
+    private void feeder()
+    {
+        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
+        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
+        if(note2){
+            _feeder.set(-.2); 
+        } else if(note1){
+            _feeder.set(0);
+        } else {
+            _feeder.set(.2);
+        }
+    }
+
+
+    public void setManualFeederSpeed(double givenSpeed)
+    {
+        _manualFeederSpeed = givenSpeed;
+    }
+
     private void idle() {
         setElevatorPosition(0);
         setShooterAngle(0.0);
         setShooterSpeed(0.0);
+        feeder();
     }
 
     private void manual() {
         _elevatorL.set(_manualElevatorSpeed);
-
         _shooterL.set(_manualShooterSpeed);
         _shooterAngle.set(_manualShooterAngleSpeed);
+        _feeder.set(_manualFeederSpeed);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
@@ -364,6 +398,7 @@ public class Jukebox extends Subsystem{
             }
         }
     }
+
 
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
