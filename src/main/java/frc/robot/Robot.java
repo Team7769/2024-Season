@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     teleopDrive();
+    teleopJukebox();
     _drivetrain.updateOdometry();
   }
 
@@ -104,18 +105,6 @@ public class Robot extends TimedRobot {
         rotation = _visionSystem.getTargetAngle() / 27 ;
         //target angle range is -27 to 27 degrees
     }
-    
-    if (_operatorController.getLeftBumper()) {
-      // _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-    }
-
-    if (_operatorController.getRightBumper()) {
-      _jukebox.setState(JukeboxEnum.PREP_AMP);
-    }
-    
-    if (_driverController.getRightTriggerAxis() > 0) {
-      _jukebox.setState(JukeboxEnum.SCORE);
-    }
 
     if (_driverController.getBackButton() && _driverController.getStartButton())
     {
@@ -123,6 +112,20 @@ public class Robot extends TimedRobot {
     }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+  }
+
+  public void teleopJukebox() {
+        if (_operatorController.getLeftBumper()) {
+          // _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+        }
+
+        if (_operatorController.getRightBumper()) {
+          _jukebox.setState(JukeboxEnum.PREP_AMP);
+        }
+        
+        if (_driverController.getRightTriggerAxis() > 0) {
+          _jukebox.setState(JukeboxEnum.SCORE);
+        }
   }
 
   @Override
