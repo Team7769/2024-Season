@@ -31,10 +31,10 @@ public class Intake extends Subsystem{
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
                                  MotorType.kBrushless);
 
-        // _motor.setIdleMode(IdleMode.kBrake);
-        // _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
-        // _motor.setInverted(kInverted);
-        // _motor.burnFlash();
+        _motor.setIdleMode(IdleMode.kBrake);
+        _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
+        _motor.setInverted(kInverted);
+        _motor.burnFlash();
 
         _jukebox = Jukebox.getInstance();
     }
