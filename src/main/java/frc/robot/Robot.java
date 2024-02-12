@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
     if (_operatorController.getRightBumper()) {
       _jukebox.setState(JukeboxEnum.PREP_AMP);
     }
-
+    
     if (_driverController.getRightTriggerAxis() > 0) {
       _jukebox.setState(JukeboxEnum.SCORE);
     }

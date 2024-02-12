@@ -297,9 +297,9 @@ public class Jukebox extends Subsystem{
     {
         var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
         var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
-        if(note2){
+        if(note2) {
             _feeder.set(-.2); 
-        } else if(note1){
+        } else if (note1) {
             _feeder.set(0);
         } else {
             _feeder.set(.2);
