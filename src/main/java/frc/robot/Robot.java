@@ -106,24 +106,35 @@ public class Robot extends TimedRobot {
     }
     
 
-    if (_driverController.getBackButton() && _driverController.getStartButton())
-    {
-      _drivetrain.reset();
-    }
+    // if (_driverController.getBackButton() && _driverController.getStartButton())
+    // {
+    //   _drivetrain.reset();
+    // }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
 
-    if (_operatorController.getXButtonPressed()) {
-      IntakeState wantedState = _intake.getState() == IntakeState.EJECT ?
-                                IntakeState.PASSIVE_EJECT : IntakeState.EJECT;
+    if (_operatorController.getXButton()) {
+      // emergency eject
 
-      _intake.setWantedState(wantedState);
+      _intake.setWantedState(IntakeState.EJECT);
+    } else {
+      // passive_eject is a default state and will automatically change to
+      // intake if a note isnt held
+
+      _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
-    if(_driverController.getYButtonPressed()) {
-      JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
-                                                  JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
 
-      _jukebox.setState(wantedState);
+    // if(_driverController.getYButtonPressed()) {
+    //   JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
+    //                             JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
+
+    //   _jukebox.setState(wantedState);
+    // }
+
+    if (_driverController.getBackButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+    } else if (_driverController.getStartButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.CLIMB);
     }
   }
 

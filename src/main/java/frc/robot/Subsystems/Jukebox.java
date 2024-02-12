@@ -95,38 +95,38 @@ public class Jukebox extends Subsystem{
         // motor setup
         // left elevator motor setup
         _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
-        _elevatorL.setIdleMode(IdleMode.kBrake);
-        _elevatorL.setSmartCurrentLimit(20, 100);
-        _elevatorL.setInverted(true);
-        _elevatorL.burnFlash();
+        // _elevatorL.setIdleMode(IdleMode.kBrake);
+        // _elevatorL.setSmartCurrentLimit(20, 100);
+        // _elevatorL.setInverted(true);
+        // _elevatorL.burnFlash();
 
         // right elevator motor setup
         _elevatorR = new CANSparkMax(Constants.kRElevatorId, MotorType.kBrushless);
-        _elevatorR.setIdleMode(IdleMode.kBrake);
-        _elevatorR.setSmartCurrentLimit(20, 100);
-        _elevatorR.setInverted(false);
-        _elevatorR.burnFlash();
+        // _elevatorR.setIdleMode(IdleMode.kBrake);
+        // _elevatorR.setSmartCurrentLimit(20, 100);
+        // _elevatorR.setInverted(false);
+        // _elevatorR.burnFlash();
 
         // left shooter motor setup
         _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
-        _shooterL.setIdleMode(IdleMode.kCoast);
-        _shooterL.setInverted(true);
-        _shooterL.burnFlash();
+        // _shooterL.setIdleMode(IdleMode.kCoast);
+        // _shooterL.setInverted(true);
+        // _shooterL.burnFlash();
 
         // right shooter motor setup
         _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
-        _shooterR.setIdleMode(IdleMode.kCoast);
-        _shooterR.setInverted(false);
-        _shooterR.burnFlash();
+        // _shooterR.setIdleMode(IdleMode.kCoast);
+        // _shooterR.setInverted(false);
+        // _shooterR.burnFlash();
 
         
 
         // shooter angle motor setup
         _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
-        _shooterAngle.setIdleMode(IdleMode.kBrake);
-        _shooterAngle.setSmartCurrentLimit(20, 100);
-        _shooterAngle.setInverted(false);
-        _shooterAngle.burnFlash();
+        // _shooterAngle.setIdleMode(IdleMode.kBrake);
+        // _shooterAngle.setSmartCurrentLimit(20, 100);
+        // _shooterAngle.setInverted(false);
+        // _shooterAngle.burnFlash();
         _shooterAngleController = _shooterAngle.getPIDController();
 
         _shooterController = _shooterL.getPIDController();
@@ -134,9 +134,9 @@ public class Jukebox extends Subsystem{
 
         // feeder motor setup
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
-        _feeder.setIdleMode(IdleMode.kBrake);
-        _feeder.setInverted(true);
-        _feeder.burnFlash();
+        // _feeder.setIdleMode(IdleMode.kBrake);
+        // _feeder.setInverted(true);
+        // _feeder.burnFlash();
 
         // the timer is needed for handleElevatorPosistion
         _timer = new Timer();

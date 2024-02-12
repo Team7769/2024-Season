@@ -31,10 +31,10 @@ public class Intake extends Subsystem{
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
                                  MotorType.kBrushless);
 
-        _motor.setIdleMode(IdleMode.kBrake);
-        _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
-        _motor.setInverted(kInverted);
-        _motor.burnFlash();
+        // _motor.setIdleMode(IdleMode.kBrake);
+        // _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
+        // _motor.setInverted(kInverted);
+        // _motor.burnFlash();
 
         _jukebox = Jukebox.getInstance();
     }
@@ -56,10 +56,13 @@ public class Intake extends Subsystem{
         _motor.set(kIntakeSpeed);
     }
 
+    // emergency eject
     public void eject() {
         _motor.set(kEjectSpeed);
     }
 
+    // when we have a note, slowly turn the motor in reverse to avoid sucking
+    // notes in
     public void passiveEject() {
         _motor.set(kPassiveEjectSpeed);
     }
@@ -72,6 +75,7 @@ public class Intake extends Subsystem{
                 break;
             
             case INTAKE:
+                // if we have a note, change to passive eject mode
                 if (_jukebox.hasNote()) {
                     setWantedState(IntakeState.PASSIVE_EJECT);
 
@@ -83,17 +87,21 @@ public class Intake extends Subsystem{
                 break;
 
             case PASSIVE_EJECT:
+                // if we dont have a note, change to intake mode
                 if (!_jukebox.hasNote()) {
                     setWantedState(IntakeState.INTAKE);
 
                     break;
                 }
 
+                // when we have a note, slowly turn the motor in reverse to 
+                // avoid sucking notes in
                 passiveEject();
 
                 break;
 
             case EJECT:
+                // emergency eject
                 eject();
 
                 break;
