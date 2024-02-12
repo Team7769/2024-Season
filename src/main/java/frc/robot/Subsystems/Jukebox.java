@@ -110,14 +110,14 @@ public class Jukebox extends Subsystem{
         // left shooter motor setup
         _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
         _shooterL.setIdleMode(IdleMode.kCoast);
-        _elevatorR.setSmartCurrentLimit(80, 100);
+        _shooterL.setSmartCurrentLimit(80, 100);
         _shooterL.setInverted(true);
         _shooterL.burnFlash();
 
         // right shooter motor setup
         _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
         _shooterR.setIdleMode(IdleMode.kCoast);
-        _elevatorR.setSmartCurrentLimit(80, 100);
+        _shooterR.setSmartCurrentLimit(80, 100);
         _shooterR.setInverted(false);
         _shooterR.burnFlash();
 
