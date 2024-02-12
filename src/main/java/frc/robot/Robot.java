@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     }
     
     if (_operatorController.getLeftBumper()) {
-      _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+      // _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
     }
 
     if (_operatorController.getRightBumper()) {
