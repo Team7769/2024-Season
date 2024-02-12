@@ -83,6 +83,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     teleopDrive();
     _drivetrain.updateOdometry();
+
+    teleopIntake();
+    teleopClimb();
   }
 
   private void teleopDrive() {
@@ -112,19 +115,23 @@ public class Robot extends TimedRobot {
     // }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+  }
 
+  private void teleopIntake() {
     if (_operatorController.getXButton()) {
       // emergency eject
 
       _intake.setWantedState(IntakeState.EJECT);
-    } else {
+    } else if (_operatorController.getXButtonReleased()) {
       // passive_eject is a default state and will automatically change to
       // intake if a note isnt held
 
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
+  }
 
-    // if(_driverController.getYButtonPressed()) {
+  private void teleopClimb() {
+        // if(_driverController.getYButtonPressed()) {
     //   JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
     //                             JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
 
