@@ -135,7 +135,6 @@ public class Jukebox extends Subsystem{
         // feeder motor setup
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
         _feeder.setIdleMode(IdleMode.kBrake);
-        _feeder.setSmartCurrentLimit(20, 100);
         _feeder.setInverted(true);
         _feeder.burnFlash();
 
