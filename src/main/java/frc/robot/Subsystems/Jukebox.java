@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
+import frc.robot.Enums.IntakeState;
 import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Utilities.OneDimensionalLookup;
     
@@ -45,8 +46,8 @@ public class Jukebox extends Subsystem{
     private TrapezoidProfile.State _shooterGoal;
     private TrapezoidProfile.State _shooterSetPoint;
 
-    private DigitalInput _noteHolder;
-    private DigitalInput _noteShooter;
+    private DigitalInput _noteHolderPE;
+    private DigitalInput _noteShooterPE;
 
     private Timer _timer;
 
@@ -55,8 +56,8 @@ public class Jukebox extends Subsystem{
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
 
-    private Debouncer _noteHolderDebouncer;
-    private Debouncer _noteShooterDebouncer;
+    private Debouncer _noteHolderPEDebouncer;
+    private Debouncer _noteShooterPEDebouncer;
 
 
     private double _manualShooterSpeed;
@@ -109,16 +110,16 @@ public class Jukebox extends Subsystem{
         // left shooter motor setup
         _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
         _shooterL.setIdleMode(IdleMode.kCoast);
+        _shooterL.setSmartCurrentLimit(80, 100);
         _shooterL.setInverted(true);
         _shooterL.burnFlash();
 
         // right shooter motor setup
         _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
         _shooterR.setIdleMode(IdleMode.kCoast);
+        _shooterR.setSmartCurrentLimit(80, 100);
         _shooterR.setInverted(false);
         _shooterR.burnFlash();
-
-        
 
         // shooter angle motor setup
         _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
@@ -126,6 +127,7 @@ public class Jukebox extends Subsystem{
         _shooterAngle.setSmartCurrentLimit(20, 100);
         _shooterAngle.setInverted(false);
         _shooterAngle.burnFlash();
+
         _shooterAngleController = _shooterAngle.getPIDController();
 
         _shooterController = _shooterL.getPIDController();
@@ -160,8 +162,8 @@ public class Jukebox extends Subsystem{
         _oldPosition = 0;
         _manualElevatorSpeed = 0.0;
 
-        _noteHolder = new DigitalInput(1);
-        _noteShooter = new DigitalInput(2);
+        _noteHolderPE = new DigitalInput(1);
+        _noteShooterPE = new DigitalInput(2);
 
 
         /**
@@ -169,8 +171,8 @@ public class Jukebox extends Subsystem{
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteHolderPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
@@ -292,8 +294,8 @@ public class Jukebox extends Subsystem{
 
     private void feeder()
     {
-        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
-        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
+        var note1 = _noteHolderPEDebouncer.calculate(_noteHolderPE.get());
+        var note2 = _noteShooterPEDebouncer.calculate(_noteShooterPE.get());
         if(note2){
             _feeder.set(-.2); 
         } else if(note1){
@@ -339,6 +341,11 @@ public class Jukebox extends Subsystem{
     public void resetSensors()  {
         _elevatorL.getEncoder().setPosition(0.0);
         _shooterAngle.getEncoder().setPosition(0.0);
+    }
+
+    public boolean hasNote() {
+        // get() returns false if blocked/detects note
+        return !_noteHolderPE.get() || !_noteShooterPE.get();
     }
 
     public void handleCurrentState()
@@ -402,6 +409,9 @@ public class Jukebox extends Subsystem{
         }
     }
 
+    public JukeboxEnum getState() {
+        return jukeboxCurrentState;
+    }
 
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
@@ -434,8 +444,8 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putNumber("Shooter motor right  temp", _shooterR.getMotorTemperature());
         SmartDashboard.putNumber("Shooter motor right speed", _shooterR.get());
 
-        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteShooter.get());
-        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteHolder.get());
+        SmartDashboard.putBoolean("is the note pass the shooter limit switch", _noteShooterPE.get());
+        SmartDashboard.putBoolean("is the note in the correct position in the holder", _noteHolderPE.get());
 
         SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
