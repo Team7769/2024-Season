@@ -113,6 +113,10 @@ public class Robot extends TimedRobot {
       _jukebox.setState(JukeboxEnum.PREP_AMP);
     }
 
+    if (_driverController.getRightTriggerAxis() > 0) {
+      _jukebox.setState(JukeboxEnum.SCORE);
+    }
+
     if (_driverController.getBackButton() && _driverController.getStartButton())
     {
       _drivetrain.reset();
