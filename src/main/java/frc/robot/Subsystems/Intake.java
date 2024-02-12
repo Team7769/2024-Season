@@ -53,6 +53,13 @@ public class Intake extends Subsystem{
     }
     
     public void intake() {
+        // if we have a note, change to passive eject mode
+        if (_jukebox.hasNote()) {
+            setWantedState(IntakeState.PASSIVE_EJECT);
+
+            break;
+        }
+
         _motor.set(kIntakeSpeed);
     }
 
@@ -64,6 +71,13 @@ public class Intake extends Subsystem{
     // when we have a note, slowly turn the motor in reverse to avoid sucking
     // notes in
     public void passiveEject() {
+        // if we dont have a note, change to intake mode
+        if (!_jukebox.hasNote()) {
+            setWantedState(IntakeState.INTAKE);
+
+            break;
+        }
+
         _motor.set(kPassiveEjectSpeed);
     }
 
@@ -75,25 +89,11 @@ public class Intake extends Subsystem{
                 break;
             
             case INTAKE:
-                // if we have a note, change to passive eject mode
-                if (_jukebox.hasNote()) {
-                    setWantedState(IntakeState.PASSIVE_EJECT);
-
-                    break;
-                }
-
                 intake();
 
                 break;
 
             case PASSIVE_EJECT:
-                // if we dont have a note, change to intake mode
-                if (!_jukebox.hasNote()) {
-                    setWantedState(IntakeState.INTAKE);
-
-                    break;
-                }
-
                 // when we have a note, slowly turn the motor in reverse to 
                 // avoid sucking notes in
                 passiveEject();
