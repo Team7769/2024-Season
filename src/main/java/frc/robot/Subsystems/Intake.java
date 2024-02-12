@@ -57,7 +57,7 @@ public class Intake extends Subsystem{
         if (_jukebox.hasNote()) {
             setWantedState(IntakeState.PASSIVE_EJECT);
 
-            break;
+            return;
         }
 
         _motor.set(kIntakeSpeed);
@@ -75,7 +75,7 @@ public class Intake extends Subsystem{
         if (!_jukebox.hasNote()) {
             setWantedState(IntakeState.INTAKE);
 
-            break;
+            return;
         }
 
         _motor.set(kPassiveEjectSpeed);
