@@ -305,12 +305,12 @@ public class Jukebox extends Subsystem{
 
     private void feeder()
     {
-        if (!_noteHold) {
+        if (!_noteShoot) {
             _feeder.set(-.2); 
-        } else if (!_noteShoot) {
+        } else if (!_noteHold) {
             _feeder.set(0);
         } else {
-            _feeder.set(.2);
+            _feeder.set(1);
         }
     }
 
