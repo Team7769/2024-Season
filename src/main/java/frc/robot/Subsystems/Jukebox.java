@@ -56,9 +56,10 @@ public class Jukebox extends Subsystem{
     private double _elevatorSpeed = 0;
     private double _angleSpeed = 0;
 
-    private Debouncer _noteHolderPEDebouncer;
-    private Debouncer _noteShooterPEDebouncer;
-
+    private Debouncer _noteHolderDebouncer;
+    private Debouncer _noteShooterDebouncer;
+    private Boolean _noteHold;
+    private Boolean _noteShoot;
 
     private double _manualShooterSpeed;
 
@@ -68,12 +69,13 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 0; // change this
     private final double kExtendClimbElevatorPosition = 0; // change this
     private final double kClimbElevatorPosition = 0; // change this
-    private final double kAmpElevatorPosition = 0;
-    // private final double kP = 0.015;
-    // private final double kI = 0.0;
-    // private final double kD = 0.001;
-    // private final double kFF = 0.0;
-    // private final double kIz = 0.0;
+    private final double kAmpElevatorPosition = 9.3;
+    private final double kAmpShooterAngle = 5;
+    private final double ElevatorFeedforwardkS = 0.23312;
+    private final double ElevatorFeedforwardkV = 0.0019839;
+    private final double ElevatorFeedforwardkA = 0.00016223;
+    private final double ElevatorFeedforwardkG = 0.12293;
+    private final double ElevatorFeedforwardkP = 0.001;
     // private final double kMaxOutput = 1.00;
     // private final double kMinOutput = -1.00;
     // private final double kMaxVel = 5;
@@ -136,7 +138,6 @@ public class Jukebox extends Subsystem{
         // feeder motor setup
         _feeder = new CANSparkMax(Constants.kFeederId, MotorType.kBrushless);
         _feeder.setIdleMode(IdleMode.kBrake);
-        _feeder.setSmartCurrentLimit(20, 100);
         _feeder.setInverted(true);
         _feeder.burnFlash();
 
@@ -144,8 +145,8 @@ public class Jukebox extends Subsystem{
         _timer = new Timer();
 
         // creates the feed foward for the elevator
-        _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
-        Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
+        _feedForward = new ElevatorFeedforward(ElevatorFeedforwardkS,
+        ElevatorFeedforwardkG, ElevatorFeedforwardkV);
 
         // the constraints our elevator has
         _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
@@ -171,12 +172,19 @@ public class Jukebox extends Subsystem{
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
         jukeboxPreviousState = JukeboxEnum.IDLE;
+
+        _elevatorController.setP(ElevatorFeedforwardkP);
+        _elevatorController.setI(0);
+        _elevatorController.setD(.001);
+        _elevatorController.setIZone(0);
+        _elevatorController.setFF(0);
+        _elevatorController.setOutputRange(-1.0, 1.0);
     }
 
     public static Jukebox getInstance()
@@ -242,30 +250,33 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
-        setShooterAngle(-0.5);
-        setShooterSpeed(0.0);
-        setElevatorPosition(kAmpElevatorPosition);
+        setShooterSpeed(0);
+        // setShooterAngle(kAmpShooterAngle);
+        setElevatorPosition(5); //TODO: change this back to the kAmpElevatorPosistion
     }
 
     private void prepSpeaker() {
         setElevatorPosition(0);
 
         double targetDistance = _visionSystem.getDistance();
+        if (targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterAngles,
+                targetDistance
+            );
+            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterSpeeds,
+                targetDistance
+            );
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(desiredShooterSpeed);
 
-        double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-            kDistanceIDs,
-            kShooterAngles,
-            targetDistance
-        );
-
-        double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-            kDistanceIDs,
-            kShooterSpeeds,
-            targetDistance
-        );
-
-        setShooterAngle(desiredShooterAngle);
-        setShooterSpeed(desiredShooterSpeed);
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
     }
 
     private void prepTrap() {
@@ -294,14 +305,12 @@ public class Jukebox extends Subsystem{
 
     private void feeder()
     {
-        var note1 = _noteHolderPEDebouncer.calculate(_noteHolderPE.get());
-        var note2 = _noteShooterPEDebouncer.calculate(_noteShooterPE.get());
-        if(note2){
+        if (!_noteShoot) {
             _feeder.set(-.2); 
-        } else if(note1){
+        } else if (!_noteHold) {
             _feeder.set(0);
         } else {
-            _feeder.set(.2);
+            _feeder.set(.8);
         }
     }
 
@@ -312,8 +321,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void idle() {
-        setElevatorPosition(0);
-        setShooterAngle(0.0);
+        setElevatorPosition(.5);
+        setShooterAngle(0);
         setShooterSpeed(0.0);
         feeder();
     }
@@ -449,5 +458,9 @@ public class Jukebox extends Subsystem{
 
         SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
+
+
+        _noteHold = _noteHolderDebouncer.calculate(_noteHolderPE.get());
+        _noteShoot = _noteShooterDebouncer.calculate(_noteShooterPE.get());
     }
 }

@@ -44,10 +44,6 @@ public final class Constants {
     public static final double kBackLeftEncoderOffset = -Math.toRadians(219.55078);
     public static final double kBackRightEncoderOffset = -Math.toRadians(295.40039);
 
-    public static final double kElavatorFeedforwardKs = 0;
-    public static final double kElavatorFeedforwardKv = 0;
-    public static final double kElavatorFeedforwardKg = 0;
-
     public static final double kP = 0.015;
     public static final double kI = 0.0;
     public static final double kD = 0.001;
@@ -55,12 +51,16 @@ public final class Constants {
     public static final double kIz = 0.0;
     public static final double kMaxOutput = 1.00;
     public static final double kMinOutput = -1.00;
-    public static final double kMaxVel = 5;
-    public static final double kMaxAccel = 5;
+    public static final double kMaxVel = 100;
+    public static final double kMaxAccel = 100;
     public static final double kAllowedError = 3;
 
     public static final double speedToHoldElevator = 0.0;
-    
+    public static final double kMaxElevatorHeight = 82.0;
+    public static final double kMaxShooterSpeed = 4600;
+    public static final double KMinShooterAngle = .4;
+    public static final double KMaxShooterAngle = 15.0;
+
     public static final double MAX_VOLTAGE = 12.0;
 
     // possibly change per this years gearbox
