@@ -84,6 +84,9 @@ public class Robot extends TimedRobot {
     teleopDrive();
     teleopJukebox();
     _drivetrain.updateOdometry();
+
+    teleopIntake();
+    teleopClimb();
   }
 
   private void teleopDrive() {
@@ -106,10 +109,10 @@ public class Robot extends TimedRobot {
         //target angle range is -27 to 27 degrees
     }
 
-    if (_driverController.getBackButton() && _driverController.getStartButton())
-    {
-      _drivetrain.reset();
-    }
+    // if (_driverController.getBackButton() && _driverController.getStartButton())
+    // {
+    //   _drivetrain.reset();
+    // }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
@@ -128,6 +131,33 @@ public class Robot extends TimedRobot {
         } else if (_driverController.getLeftBumperReleased()) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
+      }
+  private void teleopIntake() {
+    if (_operatorController.getXButton()) {
+      // emergency eject
+
+      _intake.setWantedState(IntakeState.EJECT);
+    } else if (_operatorController.getXButtonReleased()) {
+      // passive_eject is a default state and will automatically change to
+      // intake if a note isnt held
+
+      _intake.setWantedState(IntakeState.PASSIVE_EJECT);
+    }
+  }
+
+  private void teleopClimb() {
+        // if(_driverController.getYButtonPressed()) {
+    //   JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
+    //                             JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
+
+    //   _jukebox.setState(wantedState);
+    // }
+
+    if (_driverController.getBackButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+    } else if (_driverController.getStartButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.CLIMB);
+    }
   }
 
   @Override

@@ -25,6 +25,8 @@ public class Intake extends Subsystem{
     private final int kMotorFreeLimit = 100;
     private final boolean kInverted = false;
 
+    private Jukebox _jukebox;
+
     Intake() {
         _motor = new CANSparkMax(Constants.kIntakeMotorId,
                                  MotorType.kBrushless);
@@ -33,6 +35,8 @@ public class Intake extends Subsystem{
         _motor.setSmartCurrentLimit(kMotorStallLimit, kMotorFreeLimit);
         _motor.setInverted(kInverted);
         _motor.burnFlash();
+
+        _jukebox = Jukebox.getInstance();
     }
     
 
@@ -49,14 +53,31 @@ public class Intake extends Subsystem{
     }
     
     public void intake() {
+        // if we have a note, change to passive eject mode
+        if (_jukebox.hasNote()) {
+            setWantedState(IntakeState.PASSIVE_EJECT);
+
+            return;
+        }
+
         _motor.set(kIntakeSpeed);
     }
 
+    // emergency eject
     public void eject() {
         _motor.set(kEjectSpeed);
     }
 
+    // when we have a note, slowly turn the motor in reverse to avoid sucking
+    // notes in
     public void passiveEject() {
+        // if we dont have a note, change to intake mode
+        if (!_jukebox.hasNote()) {
+            setWantedState(IntakeState.INTAKE);
+
+            return;
+        }
+
         _motor.set(kPassiveEjectSpeed);
     }
 
@@ -70,21 +91,17 @@ public class Intake extends Subsystem{
             case INTAKE:
                 intake();
 
-                // pseudocode if we have to interpret the jukebox data vs the
-                // jukebox sending us states 
-
-                // if (Jukebox.getInstance().hasNote()) {
-                //     setWantedState(IntakeState.PASSIVE_EJECT);
-                // }
-
                 break;
 
             case PASSIVE_EJECT:
+                // when we have a note, slowly turn the motor in reverse to 
+                // avoid sucking notes in
                 passiveEject();
 
                 break;
 
             case EJECT:
+                // emergency eject
                 eject();
 
                 break;
@@ -126,6 +143,10 @@ public class Intake extends Subsystem{
 
         // may want to move this before function calls
         _currentState = state;
+    }
+
+    public IntakeState getState() {
+        return _currentState;
     }
 
     @Override
