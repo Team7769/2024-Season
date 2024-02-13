@@ -51,8 +51,8 @@ public final class Constants {
     public static final double kIz = 0.0;
     public static final double kMaxOutput = 1.00;
     public static final double kMinOutput = -1.00;
-    public static final double kMaxVel = 100;
-    public static final double kMaxAccel = 100;
+    public static final double kMaxVel = 10;
+    public static final double kMaxAccel = 10;
     public static final double kAllowedError = 3;
 
     public static final double speedToHoldElevator = 0.0;
