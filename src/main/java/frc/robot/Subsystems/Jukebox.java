@@ -57,6 +57,8 @@ public class Jukebox extends Subsystem{
 
     private Debouncer _noteHolderDebouncer;
     private Debouncer _noteShooterDebouncer;
+    private Boolean _noteHold;
+    private Boolean _noteShoot;
 
 
     private double _manualShooterSpeed;
@@ -295,11 +297,9 @@ public class Jukebox extends Subsystem{
 
     private void feeder()
     {
-        var note1 = _noteHolderDebouncer.calculate(_noteHolder.get());
-        var note2 = _noteShooterDebouncer.calculate(_noteShooter.get());
-        if(note2) {
+        if(_noteHold) {
             _feeder.set(-.2); 
-        } else if (note1) {
+        } else if (_noteShoot) {
             _feeder.set(0);
         } else {
             _feeder.set(.2);
@@ -442,5 +442,9 @@ public class Jukebox extends Subsystem{
 
         SmartDashboard.putString("Jukebox current state", jukeboxCurrentState.toString());
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
+
+
+        _noteHold = _noteHolderDebouncer.calculate(_noteHolder.get());
+        _noteShoot = _noteShooterDebouncer.calculate(_noteShooter.get());
     }
 }
