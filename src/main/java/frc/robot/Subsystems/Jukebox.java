@@ -142,8 +142,8 @@ public class Jukebox extends Subsystem{
         _timer = new Timer();
 
         // creates the feed foward for the elevator
-        _feedForward = new ElevatorFeedforward(Constants.kElavatorFeedforwardKs,
-        Constants.kElavatorFeedforwardKg, Constants.kElavatorFeedforwardKv);
+        _feedForward = new ElevatorFeedforward(ElevatorFeedforwardkS,
+        ElevatorFeedforwardkG, ElevatorFeedforwardkV);
 
         // the constraints our elevator has
         _constraints = new TrapezoidProfile.Constraints(Constants.kMaxVel, Constants.kMaxAccel);
@@ -240,7 +240,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
-        setShooterAngle(kAmpShooterAngle);
+        setShooterSpeed(0);
+        // setShooterAngle(kAmpShooterAngle);
         setElevatorPosition(kAmpElevatorPosition);
     }
 
