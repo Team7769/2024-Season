@@ -310,7 +310,7 @@ public class Jukebox extends Subsystem{
         } else if (!_noteHold) {
             _feeder.set(0);
         } else {
-            _feeder.set(1);
+            _feeder.set(.8);
         }
     }
 
@@ -321,8 +321,8 @@ public class Jukebox extends Subsystem{
     }
 
     private void idle() {
-        setElevatorPosition(0);
-        setShooterAngle(3.0);
+        setElevatorPosition(.5);
+        setShooterAngle(0);
         setShooterSpeed(0.0);
         feeder();
     }
