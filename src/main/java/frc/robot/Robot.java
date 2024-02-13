@@ -77,7 +77,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    _intake.setWantedState(IntakeState.INTAKE);
+  }
 
   @Override
   public void teleopPeriodic() {
@@ -87,6 +89,8 @@ public class Robot extends TimedRobot {
 
     teleopIntake();
     teleopClimb();
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
   private void teleopDrive() {
@@ -130,6 +134,7 @@ public class Robot extends TimedRobot {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
       }
+
   private void teleopIntake() {
     if (_operatorController.getXButton()) {
       // emergency eject

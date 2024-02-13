@@ -39,6 +39,7 @@ public class Jukebox extends Subsystem{
     private JukeboxEnum jukeboxCurrentState = JukeboxEnum.IDLE;
     private JukeboxEnum jukeboxPreviousState;
 
+    private TrapezoidProfile _elevatorProfile;
     private TrapezoidProfile.Constraints _constraints;
     private TrapezoidProfile.State _goal;
     private TrapezoidProfile.State _profileSetpoint;
@@ -72,6 +73,8 @@ public class Jukebox extends Subsystem{
     private final double kAmpElevatorPosition = 9.3;
     private final double kAmpShooterAngle = 5;
     private final double ElevatorFeedforwardkS = 0.23312;
+    
+    //private final double ElevatorFeedforwardkV = 0.029839;
     private final double ElevatorFeedforwardkV = 0.0019839;
     private final double ElevatorFeedforwardkA = 0.00016223;
     private final double ElevatorFeedforwardkG = 0.12293;
@@ -172,12 +175,14 @@ public class Jukebox extends Subsystem{
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteHolderDebouncer = new Debouncer(0.04, DebounceType.kBoth);
+        _noteShooterDebouncer = new Debouncer(0.04, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
         jukeboxPreviousState = JukeboxEnum.IDLE;
+
+        _elevatorController = _elevatorL.getPIDController();
 
         _elevatorController.setP(ElevatorFeedforwardkP);
         _elevatorController.setI(0);
@@ -185,6 +190,7 @@ public class Jukebox extends Subsystem{
         _elevatorController.setIZone(0);
         _elevatorController.setFF(0);
         _elevatorController.setOutputRange(-1.0, 1.0);
+        _elevatorProfile = new TrapezoidProfile(_constraints);
     }
 
     public static Jukebox getInstance()
@@ -198,10 +204,16 @@ public class Jukebox extends Subsystem{
     }
     
     private void handleElevatorPosition() {
-        var profile = new TrapezoidProfile(_constraints);
-        _profileSetpoint = profile.calculate(_timer.get(), _profileSetpoint, _goal);
+        _profileSetpoint = _elevatorProfile.calculate(_timer.get(), _profileSetpoint, _goal);
+
+        var ff = _feedForward.calculate(_profileSetpoint.velocity);
         _elevatorController.setReference(_profileSetpoint.position, com.revrobotics.CANSparkBase.ControlType.kPosition, 0,
-        _feedForward.calculate(_profileSetpoint.velocity));
+        ff);
+
+        SmartDashboard.putNumber("elevatorFeedforward", ff);
+        SmartDashboard.putNumber("profileSetpointPosition", _profileSetpoint.position);
+        SmartDashboard.putNumber("profileSetpointVelocity", _profileSetpoint.velocity);
+        SmartDashboard.putNumber("goalP", _goal.position);
     }
 
     /**
@@ -231,6 +243,7 @@ public class Jukebox extends Subsystem{
     {
         if (_oldPosition != position)
         {
+            _elevatorProfile = new TrapezoidProfile(_constraints);
             _goal = new TrapezoidProfile.State(position, 0);
             _timer.reset();
             _oldPosition = position;
