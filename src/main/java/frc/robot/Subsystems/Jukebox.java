@@ -69,11 +69,11 @@ public class Jukebox extends Subsystem{
     private final double kClimbElevatorPosition = 0; // change this
     private final double kAmpElevatorPosition = 9.3;
     private final double kAmpShooterAngle = 5;
-    // private final double kP = 0.015;
-    // private final double kI = 0.0;
-    // private final double kD = 0.001;
-    // private final double kFF = 0.0;
-    // private final double kIz = 0.0;
+    private final double ElevatorFeedforwardkS = 0.23312;
+    private final double ElevatorFeedforwardkV = 0.0019839;
+    private final double ElevatorFeedforwardkA = 0.00016223;
+    private final double ElevatorFeedforwardkG = 0.12293;
+    private final double ElevatorFeedforwardkP = 0.001;
     // private final double kMaxOutput = 1.00;
     // private final double kMinOutput = -1.00;
     // private final double kMaxVel = 5;
