@@ -405,7 +405,7 @@ public class Jukebox extends Subsystem{
         }
     }
 
-
+    @Override
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
