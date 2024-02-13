@@ -60,9 +60,6 @@ public class Jukebox extends Subsystem{
     private Debouncer _noteShooterDebouncer;
     private Boolean _noteHold;
     private Boolean _noteShoot;
-    private Debouncer _noteHolderPEDebouncer;
-    private Debouncer _noteShooterPEDebouncer;
-
 
     private double _manualShooterSpeed;
 
@@ -175,8 +172,8 @@ public class Jukebox extends Subsystem{
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-        _noteShooterPEDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteHolderDebouncer = new Debouncer(0.1, DebounceType.kBoth);
+        _noteShooterDebouncer = new Debouncer(0.1, DebounceType.kBoth);
 
         _visionSystem = VisionSystem.getInstance();
         
@@ -255,7 +252,7 @@ public class Jukebox extends Subsystem{
     private void prepAmp() {
         setShooterSpeed(0);
         // setShooterAngle(kAmpShooterAngle);
-        setElevatorPosition(kAmpElevatorPosition);
+        setElevatorPosition(5); //TODO: change this back to the kAmpElevatorPosistion
     }
 
     private void prepSpeaker() {
@@ -325,7 +322,7 @@ public class Jukebox extends Subsystem{
 
     private void idle() {
         setElevatorPosition(0);
-        setShooterAngle(0.0);
+        setShooterAngle(3.0);
         setShooterSpeed(0.0);
         feeder();
     }
