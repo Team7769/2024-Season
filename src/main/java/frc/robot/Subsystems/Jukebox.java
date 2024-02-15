@@ -75,21 +75,21 @@ public class Jukebox extends Subsystem{
     private final double kAmpShooterAngle = 5;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 40; // change
-    private final double kElevatorMaxAcceleration = 40; // change
+    private final double kElevatorMaxVelocity = 85; // change
+    private final double kElevatorMaxAcceleration = 85; // change
     private final double ElevatorFeedforwardkS = 0.23312;
     private final double ElevatorFeedforwardkV = 0.11903;
     private final double ElevatorFeedforwardkG = 0.12293;
     private final double ElevatorFeedforwardkP = 0.001;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 0; // change
-    private final double kShooterAngleMaxAcceleration = 0; // change
-    private final double ShooterAngleFeedforwardkS = 0.0; // change
-    private final double ShooterAngleFeedforwardkV = 0.0; // change
-    private final double ShooterAngleFeedforwardkG = 0.0; // change
-    private final double ShooterAngleFeedforwardkP = 0.0; // change
-    private final double ShooterAngleFeedforwardAngle = 0.0; // change
+    private final double kShooterAngleMaxVelocity = 20; // change
+    private final double kShooterAngleMaxAcceleration = 20; // change
+    private final double ShooterAngleFeedforwardkS = 0.31777; // change
+    private final double ShooterAngleFeedforwardkV = 0.090231; // change
+    private final double ShooterAngleFeedforwardkG = 0.035019; // change
+    private final double ShooterAngleFeedforwardkP = 0.001; // change
+    private final double ShooterAngleFeedforwardAngle = 45.0; // change
     
     // Shooter Control Constants
     private final double kShooterMaxVelocity = 0; // change
@@ -385,8 +385,8 @@ public class Jukebox extends Subsystem{
 
     private void prepAmp() {
         // setShooterSpeed(0);
-        // setShooterAngle(kAmpShooterAngle);
-        setElevatorPosition(kAmpElevatorPosition); //TODO: change this back to the kAmpElevatorPosistion 
+        // setShooterAngle(30.0);
+        setElevatorPosition(kAmpElevatorPosition); 
     }
 
     private void prepSpeaker() {
@@ -526,7 +526,7 @@ public class Jukebox extends Subsystem{
                 break;
             default:
                 //handleShooterSpeed();
-                //handleShooterAnglePosition();
+                // handleShooterAnglePosition();
                 handleElevatorPosition();
                 break;
         }
