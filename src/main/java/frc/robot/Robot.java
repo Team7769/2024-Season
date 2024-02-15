@@ -104,8 +104,12 @@ public class Robot extends TimedRobot {
 
     // The rotation will be the horizontal value of the right driver joystick
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
-        Constants.RotAxis_outputTable,
+        Constants.RotAxis_outputTable, 
         _driverController.getRightX());
+
+    if (_driverController.getBButton() && _driverController.getAButton()) {
+      _drivetrain.reset();
+    }
 
     if (_driverController.getRightBumper())
     {
@@ -131,6 +135,10 @@ public class Robot extends TimedRobot {
         if (_driverController.getLeftBumper()) {
           _jukebox.setState(JukeboxEnum.SCORE);
         } else if (_driverController.getLeftBumperReleased()) {
+          _jukebox.setState(JukeboxEnum.IDLE);
+        }
+
+        if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
       }

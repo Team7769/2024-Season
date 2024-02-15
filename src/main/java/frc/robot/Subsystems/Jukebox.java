@@ -71,16 +71,16 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 0; // change this
     private final double kExtendClimbElevatorPosition = 0; // change this
     private final double kClimbElevatorPosition = 0; // change this
-    private final double kAmpElevatorPosition = 9.3;
+    private final double kAmpElevatorPosition = 60;
     private final double kAmpShooterAngle = 5;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 0; // change
-    private final double kElevatorMaxAcceleration = 0; // change
+    private final double kElevatorMaxVelocity = 40; // change
+    private final double kElevatorMaxAcceleration = 40; // change
     private final double ElevatorFeedforwardkS = 0.23312;
-    private final double ElevatorFeedforwardkV = 0.0019839;
+    private final double ElevatorFeedforwardkV = 0.11903;
     private final double ElevatorFeedforwardkG = 0.12293;
-    private final double ElevatorFeedforwardkP = 0.015;
+    private final double ElevatorFeedforwardkP = 0.001;
     
     // Shooter Angle Control Constants
     private final double kShooterAngleMaxVelocity = 0; // change
@@ -376,17 +376,17 @@ public class Jukebox extends Subsystem{
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
         if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {
-            _feeder.set(-.8);
+            _feeder.set(-.6);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER)
         {
-            _feeder.set(.8);
+            _feeder.set(.6);
         }
     }
 
     private void prepAmp() {
         // setShooterSpeed(0);
-        // setShooterAngle(kAmpShooterAngle);
-        setElevatorPosition(5); //TODO: change this back to the kAmpElevatorPosistion
+        setShooterAngle(30);
+        setElevatorPosition(kAmpElevatorPosition); //TODO: change this back to the kAmpElevatorPosistion 
     }
 
     private void prepSpeaker() {
@@ -443,7 +443,7 @@ public class Jukebox extends Subsystem{
         } else if (!_noteHold) {
             _feeder.set(0);
         } else {
-            _feeder.set(.8);
+            _feeder.set(.7);
         }
     }
 
