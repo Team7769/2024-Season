@@ -385,7 +385,7 @@ public class Jukebox extends Subsystem{
 
     private void prepAmp() {
         // setShooterSpeed(0);
-        setShooterAngle(30);
+        // setShooterAngle(kAmpShooterAngle);
         setElevatorPosition(kAmpElevatorPosition); //TODO: change this back to the kAmpElevatorPosistion 
     }
 
