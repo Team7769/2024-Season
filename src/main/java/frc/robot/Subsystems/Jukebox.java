@@ -322,6 +322,8 @@ public class Jukebox extends Subsystem{
 
         _shooterAngleController.setReference(_shooterAngleProfileSetpoint.position, CANSparkBase.ControlType.kPosition, 0, ff);
 
+        SmartDashboard.putNumber("angleProfileSetpointPosition", _shooterAngleProfileSetpoint.position);
+        SmartDashboard.putNumber("angleProfileSetpointVelocity", _shooterAngleProfileSetpoint.velocity);
         SmartDashboard.putNumber("shooterAngleFeedforward", ff);
     }
     
@@ -350,7 +352,8 @@ public class Jukebox extends Subsystem{
      * -1 means it set it counterclockwise
      */
     private void setShooterAngle(double desiredPosition) {
-        _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
+        // _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
+        _shooterProfileGoal = new TrapezoidProfile.State(desiredPosition, 0);
     }
 
     /**
@@ -526,7 +529,7 @@ public class Jukebox extends Subsystem{
                 break;
             default:
                 //handleShooterSpeed();
-                // handleShooterAnglePosition();
+                handleShooterAnglePosition();
                 handleElevatorPosition();
                 break;
         }
