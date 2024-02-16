@@ -75,8 +75,8 @@ public class Jukebox extends Subsystem{
     private final double kAmpShooterAngle = 5;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 85; // change
-    private final double kElevatorMaxAcceleration = 85; // change
+    private final double kElevatorMaxVelocity = 230; // change
+    private final double kElevatorMaxAcceleration = 230; // change
     private final double ElevatorFeedforwardkS = 0.23312;
     private final double ElevatorFeedforwardkV = 0.11903;
     private final double ElevatorFeedforwardkG = 0.12293;
