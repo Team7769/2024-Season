@@ -83,8 +83,8 @@ public class Jukebox extends Subsystem{
     private final double ElevatorFeedforwardkP = 0.001;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 20; // change
-    private final double kShooterAngleMaxAcceleration = 20; // change
+    private final double kShooterAngleMaxVelocity = 50; // change
+    private final double kShooterAngleMaxAcceleration = 50; // change
     private final double ShooterAngleFeedforwardkS = 0.31777; // change
     private final double ShooterAngleFeedforwardkV = 0.090231; // change
     private final double ShooterAngleFeedforwardkG = 0.035019; // change
