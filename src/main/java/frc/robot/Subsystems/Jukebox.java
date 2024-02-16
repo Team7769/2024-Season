@@ -89,7 +89,7 @@ public class Jukebox extends Subsystem{
     private final double ShooterAngleFeedforwardkV = 0.090231; // change
     private final double ShooterAngleFeedforwardkG = 0.035019; // change
     private final double ShooterAngleFeedforwardkP = 0.001; // change
-    private final double ShooterAngleFeedforwardAngle = 45.0; // change
+    private final double ShooterAngleFeedforwardAngle = .1785; // change
     
     // Shooter Control Constants
     private final double kShooterMaxVelocity = 0; // change
@@ -318,7 +318,7 @@ public class Jukebox extends Subsystem{
         // t = time since last update, _shooterAngleProfileSetpoint is last state, _goal is the target state
         _shooterAngleProfileSetpoint = _shooterAngleProfile.calculate(0.02, _shooterAngleProfileSetpoint, _shooterAngleProfileGoal);
 
-        var ff = _shooterAngleFeedForward.calculate(ShooterAngleFeedforwardAngle, _shooterAngleProfileSetpoint.velocity);
+        var ff = _shooterAngleFeedForward.calculate(ShooterAngleFeedforwardAngle + _shooterAngleProfileSetpoint.position, _shooterAngleProfileSetpoint.velocity);
 
         _shooterAngleController.setReference(_shooterAngleProfileSetpoint.position, CANSparkBase.ControlType.kPosition, 0, ff);
 
