@@ -71,8 +71,8 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 0; // change this
     private final double kExtendClimbElevatorPosition = 0; // change this
     private final double kClimbElevatorPosition = 0; // change this
-    private final double kAmpElevatorPosition = 60;
-    private final double kAmpShooterAngle = 5;
+    private final double kAmpElevatorPosition = 70;
+    private final double kAmpShooterAngle = 7;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230; // change
@@ -80,7 +80,7 @@ public class Jukebox extends Subsystem{
     private final double ElevatorFeedforwardkS = 0.23312;
     private final double ElevatorFeedforwardkV = 0.11903;
     private final double ElevatorFeedforwardkG = 0.12293;
-    private final double ElevatorFeedforwardkP = 0.001;
+    private final double ElevatorFeedforwardkP = 0.01;
     
     // Shooter Angle Control Constants
     private final double kShooterAngleMaxVelocity = 50; // change
@@ -88,7 +88,7 @@ public class Jukebox extends Subsystem{
     private final double ShooterAngleFeedforwardkS = 0.31777; // change
     private final double ShooterAngleFeedforwardkV = 0.090231; // change
     private final double ShooterAngleFeedforwardkG = 0.035019; // change
-    private final double ShooterAngleFeedforwardkP = 0.001; // change
+    private final double ShooterAngleFeedforwardkP = 0.05; // change
     private final double ShooterAngleFeedforwardAngle = .1785; // change
     
     // Shooter Control Constants
@@ -353,7 +353,7 @@ public class Jukebox extends Subsystem{
      */
     private void setShooterAngle(double desiredPosition) {
         // _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
-        _shooterProfileGoal = new TrapezoidProfile.State(desiredPosition, 0);
+        _shooterAngleProfileGoal = new TrapezoidProfile.State(desiredPosition, 0);
     }
 
     /**
@@ -379,16 +379,16 @@ public class Jukebox extends Subsystem{
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
         if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {
-            _feeder.set(-.6);
+            _feeder.set(-.5);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER)
         {
-            _feeder.set(.6);
+            _feeder.set(.5);
         }
     }
 
     private void prepAmp() {
         // setShooterSpeed(0);
-        setShooterAngle(30.0);
+        setShooterAngle(kAmpShooterAngle);
         setElevatorPosition(kAmpElevatorPosition); 
     }
 
