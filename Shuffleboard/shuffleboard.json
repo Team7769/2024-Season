@@ -212,6 +212,19 @@
               "imageHeight": -1
             }
           },
+          "6,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/tanRadiansY",
+              "_title": "SmartDashboard/tanRadiansY",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
           "6,1": {
             "size": [
               2,
@@ -232,21 +245,21 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/dashboardShooterRPercent",
-              "_title": "SmartDashboard/dashboardShooterRPercent",
+              "_source0": "network_table:///SmartDashboard/Shooter motor left enconder velocity",
+              "_title": "/SmartDashboard/Shooter motor left enconder velocity",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "5,2": {
+          "9,0": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/Selected Auto Mode",
-              "_title": "SmartDashboard/Selected Auto Mode",
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/dashboardShooterRPercent",
+              "_title": "/SmartDashboard/dashboardShooterRPercent",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -256,9 +269,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.0,
-    "y": 0.0,
-    "width": 1386.0,
-    "height": 788.0
+    "x": -4.0,
+    "y": 4.800000190734863,
+    "width": 1548.800048828125,
+    "height": 713.5999755859375
   }
 }
