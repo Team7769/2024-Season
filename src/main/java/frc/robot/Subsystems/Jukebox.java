@@ -55,9 +55,7 @@ public class Jukebox extends Subsystem{
     
     // Shooter Profile
     private SimpleMotorFeedforward _shooterFeedForward;
-    private TrapezoidProfile _shooterProfile;
-    private TrapezoidProfile.State _shooterProfileGoal;
-    private TrapezoidProfile.State _shooterProfileSetpoint;
+    private double _shooterSetpoint;
 
     // Feeder Note Control
     private DigitalInput _noteHolderPE;
@@ -92,12 +90,12 @@ public class Jukebox extends Subsystem{
     private final double ShooterAngleFeedforwardAngle = .1785; // change
     
     // Shooter Control Constants
-    private final double kShooterMaxVelocity = 0; // change
-    private final double kShooterMaxAcceleration = 0; // change
-    private final double ShooterFeedforwardkS = 0.0; // change
-    private final double ShooterFeedforwardkV = 0.0; // change
-    private final double ShooterFeedforwardkG = 0.0; // change
-    private final double ShooterFeedforwardkP = 0.0; // change
+    private final double ShooterFeedforwardkS = 0.37431; // change
+    private final double ShooterFeedforwardkV = 0.14253; // change
+    
+    private final double ShooterFeedforwardkP = .001; // change
+    //private final double ShooterFeedforwardkP = .047489; // change
+
 
     // private final double kMaxOutput = 1.00;
     // private final double kMinOutput = -1.00;
@@ -115,6 +113,9 @@ public class Jukebox extends Subsystem{
     private final double[] kDistanceIDs = {};
     private final double[] kShooterAngles = {};
     private final double[] kShooterSpeeds = {};
+
+    private double _dashboardShooterTargetSpeed = 0.0;
+    private double _dashboardShooterTargetAngle = 0.0;
 
     public Jukebox()
     {
@@ -184,17 +185,10 @@ public class Jukebox extends Subsystem{
         _shooterController.setOutputRange(0, 1.0);
 
         // creates the feed foward for the shooter
-        _shooterFeedForward = new SimpleMotorFeedforward(ShooterFeedforwardkS, ShooterFeedforwardkG, ShooterFeedforwardkV);
-
-        // the constraints our shooter has
-        var shooterProfileConstraints = new TrapezoidProfile.Constraints(kShooterMaxVelocity, kShooterMaxAcceleration);
-        _shooterProfile = new TrapezoidProfile(shooterProfileConstraints);
-
-        // our desired state and current state
-        _shooterProfileGoal = new TrapezoidProfile.State();
-        _shooterProfileSetpoint = new TrapezoidProfile.State();
+        _shooterFeedForward = new SimpleMotorFeedforward(ShooterFeedforwardkS, ShooterFeedforwardkV);
         
         _manualShooterSpeed = 0.0;
+        _shooterSetpoint = 0.0;
     }
 
     /**
@@ -333,13 +327,10 @@ public class Jukebox extends Subsystem{
      * This method should be called during handleCurrentState()
      */
     private void handleShooterSpeed() {
-        // t = time since last update, _shooterProfileSetpoint is last state, _goal is the target state
-        _shooterProfileSetpoint = _shooterProfile.calculate(0.02, _shooterProfileSetpoint, _shooterProfileGoal);
+        var ff = _shooterFeedForward.calculate(_shooterSetpoint);
 
-        // Multiply FF by 12 for voltage - Test this
-        var ff = _shooterFeedForward.calculate(_shooterProfileSetpoint.velocity);
-
-        _shooterAngleController.setReference(_shooterProfileSetpoint.velocity, CANSparkBase.ControlType.kVelocity, 0, ff);
+        var rpm = _shooterSetpoint * 60;
+        _shooterAngleController.setReference(rpm, CANSparkBase.ControlType.kVelocity, 0, ff);
 
         SmartDashboard.putNumber("shooterFeedforward", ff);
     }
@@ -361,7 +352,7 @@ public class Jukebox extends Subsystem{
      */
     private void setShooterSpeed(double v)
     {
-        _shooterL.set(v);
+        _shooterSetpoint = v;
     }
     
     /**
@@ -387,7 +378,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
-        // setShooterSpeed(0);
+        setShooterSpeed(0);
         setShooterAngle(kAmpShooterAngle);
         setElevatorPosition(kAmpElevatorPosition); 
     }
@@ -395,25 +386,28 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        double targetDistance = _visionSystem.getDistance();
-        if (targetDistance != 0.0) {
-            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-                kDistanceIDs,
-                kShooterAngles,
-                targetDistance
-            );
-            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-                kDistanceIDs,
-                kShooterSpeeds,
-                targetDistance
-            );
-            setShooterAngle(desiredShooterAngle);
-            setShooterSpeed(desiredShooterSpeed);
+        // double targetDistance = _visionSystem.getDistance();
+        // if (targetDistance != 0.0) {
+        //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+        //         kDistanceIDs,
+        //         kShooterAngles,
+        //         targetDistance
+        //     );
+        //     double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+        //         kDistanceIDs,
+        //         kShooterSpeeds,
+        //         targetDistance
+        //     );
+        //     setShooterAngle(desiredShooterAngle);
+        //     setShooterSpeed(desiredShooterSpeed);
 
-        } else {
-            setShooterAngle(Constants.KMinShooterAngle);
-            setShooterSpeed(Constants.kMaxShooterSpeed);
-        }
+        // } else {
+        //     setShooterAngle(Constants.KMinShooterAngle);
+        //     setShooterSpeed(Constants.kMaxShooterSpeed);
+        // }
+
+        setShooterAngle(_dashboardShooterTargetAngle);
+        setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
     private void prepTrap() {
@@ -528,7 +522,7 @@ public class Jukebox extends Subsystem{
             case MANUAL:
                 break;
             default:
-                //handleShooterSpeed();
+                handleShooterSpeed();
                 handleShooterAnglePosition();
                 handleElevatorPosition();
                 break;
@@ -560,6 +554,9 @@ public class Jukebox extends Subsystem{
     }
 
     public void logTelemetry() {
+        _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
+        _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
+
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());
@@ -599,5 +596,8 @@ public class Jukebox extends Subsystem{
 
         _noteHold = _noteHolderDebouncer.calculate(_noteHolderPE.get());
         _noteShoot = _noteShooterDebouncer.calculate(_noteShooterPE.get());
+
+        SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
+        SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
     }
 }
