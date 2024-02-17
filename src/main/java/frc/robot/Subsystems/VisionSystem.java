@@ -53,18 +53,12 @@ public class VisionSystem extends Subsystem{
     public double getDistance()
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        var ty = table.getEntry("ty").getDouble(0) * 0.8375; 
-        var tx = table.getEntry("tx").getDouble(0); 
+        var ty = table.getEntry("ty").getDouble(0) * 1.2; // constant
+        var tx = table.getEntry("tx").getDouble(0);
         var tv = table.getEntry("tv").getDouble(0);
         
         if (tv != 0.0) {
-            //double distance = (speakerTagHeight - limelightHeight) / (Math.tan(Math.toRadians(ty)) * Math.cos(Math.toRadians(tx)));
-            //double distance = (speakerTagHeight - limelightHeight) / Math.tan(Math.toRadians(ty));
-            double distance = .905 / Math.tan(Math.toRadians(ty));
-            SmartDashboard.putNumber("radiansY", Math.toRadians(ty));
-            SmartDashboard.putNumber("tanRadiansY", Math.tan(Math.toRadians(ty)));
-            double tyRadians = Math.tan(Math.toRadians(ty));
-            double txRadians = Math.cos(Math.toRadians(tx));
+            double distance = .905 / Math.tan(Math.toRadians(ty)); // constant
             double filterDistance = limelightDistanceFilter.calculate(distance);
             SmartDashboard.putNumber("VisionSystemGetDistance", distance);
             return filterDistance; 

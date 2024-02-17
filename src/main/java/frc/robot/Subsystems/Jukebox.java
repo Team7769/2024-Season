@@ -117,9 +117,9 @@ public class Jukebox extends Subsystem{
     private final double kFeederReverse = -0.2;
     private final double kFeederIntake = 0.35;
 
-    private final double[] kDistanceIDs = {};
-    private final double[] kShooterAngles = {};
-    private final double[] kShooterSpeeds = {};
+    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
+    private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
+    private final double[] kShooterSpeeds = {35, 37, 38, 41, 44};
 
 
     // private final double kMaxOutput = 1.00;
@@ -507,27 +507,27 @@ public class Jukebox extends Subsystem{
 
         feeder();
 
-        // if (targetDistance != 0.0) {
-        //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-        //         kDistanceIDs,
-        //         kShooterAngles,
-        //         targetDistance
-        //     );
-        //     double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-        //         kDistanceIDs,
-        //         kShooterSpeeds,
-        //         targetDistance
-        //     );
-        //     setShooterAngle(desiredShooterAngle);
-        //     setShooterSpeed(desiredShooterSpeed);
+        if (_targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterAngles,
+                _targetDistance
+            );
+            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterSpeeds,
+                _targetDistance
+            );
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(desiredShooterSpeed);
 
-        // } else {
-        //     setShooterAngle(Constants.KMinShooterAngle);
-        //     setShooterSpeed(Constants.kMaxShooterSpeed);
-        // }
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
 
-        setShooterAngle(_dashboardShooterTargetAngle);
-        setShooterSpeed(_dashboardShooterTargetSpeed);
+        // setShooterAngle(_dashboardShooterTargetAngle);
+        // setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
     private void reset() {
