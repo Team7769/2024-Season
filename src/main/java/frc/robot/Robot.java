@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
 
   public void teleopJukebox() {
         if (_operatorController.getLeftBumper()) {
-          // _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+          _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
         } else if (_operatorController.getRightBumper()) {
           _jukebox.setState(JukeboxEnum.PREP_AMP);
         }

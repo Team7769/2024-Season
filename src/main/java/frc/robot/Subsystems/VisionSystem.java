@@ -13,7 +13,7 @@ public class VisionSystem extends Subsystem{
     private static final double filterDistanceError = 2;
     private static final double filterAngleError = 5; 
 
-    private static final double limelightHeight = 0.5;
+    private static final double limelightHeight = 0.559;
     //TODO: measure the actual limelightheight
 
     private static final double speakerTagBottomHeight = 1.32;
@@ -58,10 +58,12 @@ public class VisionSystem extends Subsystem{
         var tv = table.getEntry("tv").getDouble(0);
         
         if (tv != 0.0) {
-            double distance = (speakerTagHeight - limelightHeight) / Math.tan(ty) * Math.cos(tx);
-            distance = limelightDistanceFilter.calculate(distance);
+            double distance = (speakerTagHeight - limelightHeight) / (Math.tan(Math.toRadians(ty)) * Math.cos(Math.toRadians(tx)));
+            double tyRadians = Math.tan(Math.toRadians(ty));
+            double txRadians = Math.cos(Math.toRadians(tx));
+            double filterDistance = limelightDistanceFilter.calculate(distance);
             SmartDashboard.putNumber("VisionSystemGetDistance", distance);
-            return distance; 
+            return filterDistance; 
         }
         else {
             return 0.0;

@@ -330,7 +330,7 @@ public class Jukebox extends Subsystem{
         var ff = _shooterFeedForward.calculate(_shooterSetpoint);
 
         var rpm = _shooterSetpoint * 60;
-        _shooterAngleController.setReference(rpm, CANSparkBase.ControlType.kVelocity, 0, ff);
+        _shooterController.setReference(rpm, CANSparkBase.ControlType.kVelocity, 0, ff);
 
         SmartDashboard.putNumber("shooterFeedforward", ff);
     }
@@ -386,7 +386,7 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        // double targetDistance = _visionSystem.getDistance();
+        double targetDistance = _visionSystem.getDistance();
         // if (targetDistance != 0.0) {
         //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
         //         kDistanceIDs,
