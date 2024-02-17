@@ -39,6 +39,7 @@ public class Jukebox extends Subsystem{
     private SparkPIDController _shooterAngleController;
     private SparkPIDController _elevatorController;
     private SparkPIDController _shooterController;
+    private SparkPIDController _shooterRController;
 
     // Jukebox State Control
     private JukeboxEnum jukeboxCurrentState = JukeboxEnum.IDLE;
@@ -114,7 +115,7 @@ public class Jukebox extends Subsystem{
 
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
-    private final double kFeederIntake = 0.5;
+    private final double kFeederIntake = 0.35;
 
     private final double[] kDistanceIDs = {};
     private final double[] kShooterAngles = {};
@@ -136,6 +137,7 @@ public class Jukebox extends Subsystem{
 
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
+    private double _dashboardShooterRPercent =  1.0;
 
     public Jukebox()
     {
@@ -210,6 +212,14 @@ public class Jukebox extends Subsystem{
         _shooterController.setIZone(0);
         _shooterController.setFF(0);
         _shooterController.setOutputRange(0, 1.0);
+
+        _shooterRController = _shooterR.getPIDController();
+        _shooterRController.setP(kShooterFeedForwardKp);
+        _shooterRController.setI(0);
+        _shooterRController.setD(kCommonKd);
+        _shooterRController.setIZone(0);
+        _shooterRController.setFF(0);
+        _shooterRController.setOutputRange(0, 1.0);
 
         // creates the feed foward for the shooter
         _shooterFeedForward = new SimpleMotorFeedforward(
@@ -415,6 +425,7 @@ public class Jukebox extends Subsystem{
         double calculatedFeedForward = _shooterFeedForward.calculate(
             _shooterSetpoint
         );
+        double calculatedFeedForwardR = _shooterFeedForward.calculate(_shooterSetpoint * _dashboardShooterRPercent);
 
         var rpm = _shooterSetpoint * 60;
 
@@ -422,7 +433,10 @@ public class Jukebox extends Subsystem{
                                         CANSparkBase.ControlType.kVelocity,
                                         0,
                                         calculatedFeedForward);
-
+        _shooterRController.setReference(rpm * _dashboardShooterRPercent,
+                                        CANSparkBase.ControlType.kVelocity,
+                                        0,
+                                        calculatedFeedForwardR);
         SmartDashboard.putNumber("shooterFeedforward", calculatedFeedForward);
     }
 
@@ -658,7 +672,7 @@ public class Jukebox extends Subsystem{
     public void logTelemetry() {
         _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
         _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
-
+        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.0);
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());
@@ -706,5 +720,6 @@ public class Jukebox extends Subsystem{
 
         SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
+        SmartDashboard.putNumber("dashboardShooterRPercent", _dashboardShooterRPercent);
     }
 }

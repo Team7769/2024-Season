@@ -13,14 +13,14 @@ public class VisionSystem extends Subsystem{
     private static final double filterDistanceError = 2;
     private static final double filterAngleError = 5; 
 
-    private static final double limelightHeight = 0.559;
+    private static final double limelightHeight = 0.55;
     //TODO: measure the actual limelightheight
 
-    private static final double speakerTagBottomHeight = 1.32;
+    // private static final double speakerTagBottomHeight = 1.32;
 
-    private static final double aprilTagHeight = .23;
+    // private static final double aprilTagHeight = .23;
 
-    private static final double speakerTagHeight = speakerTagBottomHeight + (aprilTagHeight / 2);
+    private static final double speakerTagHeight = 1.455;
     //height of the middle of the april tag on the speaker
 
 
@@ -45,7 +45,7 @@ public class VisionSystem extends Subsystem{
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         var tx = table.getEntry("tx").getDouble(0);  
-        tx = limelightAngleFilter.calculate(tx);
+        //tx = limelightAngleFilter.calculate(tx);
         SmartDashboard.putNumber("VisionSystemGetAngle", tx);
         return tx;  
     }
@@ -53,12 +53,16 @@ public class VisionSystem extends Subsystem{
     public double getDistance()
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        var ty = table.getEntry("ty").getDouble(0); 
+        var ty = table.getEntry("ty").getDouble(0) * 0.8375; 
         var tx = table.getEntry("tx").getDouble(0); 
         var tv = table.getEntry("tv").getDouble(0);
         
         if (tv != 0.0) {
-            double distance = (speakerTagHeight - limelightHeight) / (Math.tan(Math.toRadians(ty)) * Math.cos(Math.toRadians(tx)));
+            //double distance = (speakerTagHeight - limelightHeight) / (Math.tan(Math.toRadians(ty)) * Math.cos(Math.toRadians(tx)));
+            //double distance = (speakerTagHeight - limelightHeight) / Math.tan(Math.toRadians(ty));
+            double distance = .905 / Math.tan(Math.toRadians(ty));
+            SmartDashboard.putNumber("radiansY", Math.toRadians(ty));
+            SmartDashboard.putNumber("tanRadiansY", Math.tan(Math.toRadians(ty)));
             double tyRadians = Math.tan(Math.toRadians(ty));
             double txRadians = Math.cos(Math.toRadians(tx));
             double filterDistance = limelightDistanceFilter.calculate(distance);
