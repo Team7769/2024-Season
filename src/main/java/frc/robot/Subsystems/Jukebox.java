@@ -9,6 +9,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,6 +32,8 @@ public class Jukebox extends Subsystem{
     private CANSparkMax _shooterAngle;
     private CANSparkMax _shooterL;
     private CANSparkMax _shooterR;
+
+    private double _targetDistance;
 
     // Motor Controller PIDs
     private SparkPIDController _shooterAngleController;
@@ -58,43 +61,64 @@ public class Jukebox extends Subsystem{
     private double _shooterSetpoint;
 
     // Feeder Note Control
+    private final int kNoteHolderPEChannel = 1;
+    private final int kNoteShooterPEChannel = 2;
+
     private DigitalInput _noteHolderPE;
     private DigitalInput _noteShooterPE;
-    private Debouncer _noteHolderDebouncer;
-    private Debouncer _noteShooterDebouncer;
-    private Boolean _noteHold;
-    private Boolean _noteShoot;
-;
+    private Debouncer _noteHolderPEDebouncer;
+    private Debouncer _noteShooterPEDebouncer;
+    private Boolean _inNoteHolder;
+    private Boolean _inNoteShooter;
+
+    private final double kPhotoEyeDebounceTime = 0.04;
+
     // Set Points
     private final double kTrapElevatorPosition = 0; // change this
     private final double kExtendClimbElevatorPosition = 0; // change this
     private final double kClimbElevatorPosition = 0; // change this
     private final double kAmpElevatorPosition = 70;
-    private final double kAmpShooterAngle = 7;
+    private final double kFeedShooterAngle = 7;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230; // change
     private final double kElevatorMaxAcceleration = 230; // change
-    private final double ElevatorFeedforwardkS = 0.23312;
-    private final double ElevatorFeedforwardkV = 0.11903;
-    private final double ElevatorFeedforwardkG = 0.12293;
-    private final double ElevatorFeedforwardkP = 0.01;
+    private final double kElevatorFeedForwardKs = 0.23312;
+    private final double kElevatorFeedForwardKv = 0.11903;
+    private final double kElevatorFeedForwardKg = 0.12293;
+    private final double kElevatorFeedForwardKp = 0.01;
     
     // Shooter Angle Control Constants
     private final double kShooterAngleMaxVelocity = 50; // change
     private final double kShooterAngleMaxAcceleration = 50; // change
-    private final double ShooterAngleFeedforwardkS = 0.31777; // change
-    private final double ShooterAngleFeedforwardkV = 0.090231; // change
-    private final double ShooterAngleFeedforwardkG = 0.035019; // change
-    private final double ShooterAngleFeedforwardkP = 0.05; // change
-    private final double ShooterAngleFeedforwardAngle = .1785; // change
+    private final double kShooterAngleFeedForwardKs = 0.31777; // change
+    private final double kShooterAngleFeedForwardKv = 0.090231; // change
+    private final double kShooterAngleFeedForwardkG = 0.035019; // change
+    private final double kShooterAngleFeedForwardKp = 0.05; // change
+    private final double kShooterAngleFeedForwardAngle = .1785; // change
+    // im confused on what a feed forward angle is
     
     // Shooter Control Constants
-    private final double ShooterFeedforwardkS = 0.37431; // change
-    private final double ShooterFeedforwardkV = 0.14253; // change
+    private final double kShooterFeedForwardKs = 0.37431; // change
+    private final double kShooterFeedForwardKv = 0.14253; // change
     
-    private final double ShooterFeedforwardkP = .001; // change
-    //private final double ShooterFeedforwardkP = .047489; // change
+    private final double kShooterFeedForwardKp = .001; // change
+    //private final double kShooterFeedForwardKp = .047489; // change
+
+    private final int kLowStallLimit = 20;
+    private final int kHighStallLimit = 80;
+    private final int kFreeLimit = 100;
+
+    private final double kCommonKd = 0.001;
+    private final double kTInterval = 0.02;
+
+    private final double kFeederShootSpeed = 0.5;
+    private final double kFeederReverse = -0.2;
+    private final double kFeederIntake = 0.7;
+
+    private final double[] kDistanceIDs = {};
+    private final double[] kShooterAngles = {};
+    private final double[] kShooterSpeeds = {};
 
 
     // private final double kMaxOutput = 1.00;
@@ -109,10 +133,6 @@ public class Jukebox extends Subsystem{
     private double _manualShooterSpeed;
 
     private VisionSystem _visionSystem;
-
-    private final double[] kDistanceIDs = {};
-    private final double[] kShooterAngles = {};
-    private final double[] kShooterSpeeds = {};
 
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
@@ -146,16 +166,19 @@ public class Jukebox extends Subsystem{
         _feeder.setInverted(true);
         _feeder.burnFlash();
 
-        _noteHolderPE = new DigitalInput(1);
-        _noteShooterPE = new DigitalInput(2);
+        _noteHolderPE = new DigitalInput(kNoteHolderPEChannel);
+        _noteShooterPE = new DigitalInput(kNoteShooterPEChannel);
 
         /**
          * Rising (default): Debounces rising edges (transitions from false to true) only.
          * Falling: Debounces falling edges (transitions from true to false) only.
          * Both: Debounces all transitions.
          */
-        _noteHolderDebouncer = new Debouncer(0.04, DebounceType.kRising);
-        _noteShooterDebouncer = new Debouncer(0.04, DebounceType.kRising);
+        _noteHolderPEDebouncer = new Debouncer(kPhotoEyeDebounceTime,
+                                               DebounceType.kRising);
+
+        _noteShooterPEDebouncer = new Debouncer(kPhotoEyeDebounceTime,
+                                                DebounceType.kRising);
     }
 
     /**
@@ -163,29 +186,36 @@ public class Jukebox extends Subsystem{
      */
     private void configShooter() {
         // left shooter motor setup
-        _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId, MotorType.kBrushless);
+        _shooterL = new CANSparkMax(Constants.kShooterLeftMotorId,
+                                    MotorType.kBrushless);
+
         _shooterL.setIdleMode(IdleMode.kCoast);
-        _shooterL.setSmartCurrentLimit(80, 100);
+        _shooterL.setSmartCurrentLimit(kHighStallLimit, kFreeLimit);
         _shooterL.setInverted(true);
         _shooterL.burnFlash();
 
         // right shooter motor setup
-        _shooterR = new CANSparkMax(Constants.kShooterRightMotorId, MotorType.kBrushless);
+        _shooterR = new CANSparkMax(Constants.kShooterRightMotorId,
+                                    MotorType.kBrushless);
+
         _shooterR.setIdleMode(IdleMode.kCoast);
-        _shooterR.setSmartCurrentLimit(80, 100);
+        _shooterR.setSmartCurrentLimit(kHighStallLimit, kFreeLimit);
         _shooterR.setInverted(false);
         _shooterR.burnFlash();
 
         _shooterController = _shooterL.getPIDController();
-        _shooterController.setP(ShooterFeedforwardkP);
+        _shooterController.setP(kShooterFeedForwardKp);
         _shooterController.setI(0);
-        _shooterController.setD(.001);
+        _shooterController.setD(kCommonKd);
         _shooterController.setIZone(0);
         _shooterController.setFF(0);
         _shooterController.setOutputRange(0, 1.0);
 
         // creates the feed foward for the shooter
-        _shooterFeedForward = new SimpleMotorFeedforward(ShooterFeedforwardkS, ShooterFeedforwardkV);
+        _shooterFeedForward = new SimpleMotorFeedforward(
+            kShooterFeedForwardKs,
+            kShooterFeedForwardKv
+        );
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
@@ -196,32 +226,46 @@ public class Jukebox extends Subsystem{
      */
     private void configElevator() {
         // left elevator motor setup
-        _elevatorL = new CANSparkMax(Constants.kLElevatorId, MotorType.kBrushless);
+        _elevatorL = new CANSparkMax(Constants.kLElevatorId,
+                                     MotorType.kBrushless);
+
         _elevatorL.setIdleMode(IdleMode.kBrake);
-        _elevatorL.setSmartCurrentLimit(20, 100);
+        _elevatorL.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _elevatorL.setInverted(true);
         _elevatorL.burnFlash();
         
         // right elevator motor setup
-        _elevatorR = new CANSparkMax(Constants.kRElevatorId, MotorType.kBrushless);
+        _elevatorR = new CANSparkMax(Constants.kRElevatorId,
+                                     MotorType.kBrushless);
+
         _elevatorR.setIdleMode(IdleMode.kBrake);
-        _elevatorR.setSmartCurrentLimit(20, 100);
+        _elevatorR.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _elevatorR.setInverted(false);
         _elevatorR.burnFlash();
         
         _elevatorController = _elevatorL.getPIDController();
-        _elevatorController.setP(ElevatorFeedforwardkP);
+        _elevatorController.setP(kElevatorFeedForwardKp);
         _elevatorController.setI(0);
-        _elevatorController.setD(.001);
+        _elevatorController.setD(kCommonKd);
         _elevatorController.setIZone(0);
         _elevatorController.setFF(0);
         _elevatorController.setOutputRange(-1.0, 1.0);
 
         // creates the feed foward for the elevator
-        _elevatorFeedForward = new ElevatorFeedforward(ElevatorFeedforwardkS, ElevatorFeedforwardkG, ElevatorFeedforwardkV);
+        _elevatorFeedForward = new ElevatorFeedforward(
+            kElevatorFeedForwardKs,
+            kElevatorFeedForwardKg,
+            kElevatorFeedForwardKv
+        );
+
+        Constraints elevatorProfileConstraints;
 
         // the constraints our elevator has
-        var elevatorProfileConstraints = new TrapezoidProfile.Constraints(kElevatorMaxVelocity, kElevatorMaxAcceleration);
+        elevatorProfileConstraints = new TrapezoidProfile.Constraints(
+            kElevatorMaxVelocity,
+            kElevatorMaxAcceleration
+        );
+
         _elevatorProfile = new TrapezoidProfile(elevatorProfileConstraints);
 
         // our desired state and current state
@@ -236,26 +280,40 @@ public class Jukebox extends Subsystem{
      */
     private void configShooterAngle() {
         // shooter angle motor setup
-        _shooterAngle = new CANSparkMax(Constants.kShooterAngleId, MotorType.kBrushless);
+        _shooterAngle = new CANSparkMax(Constants.kShooterAngleId,
+                                        MotorType.kBrushless);
+
         _shooterAngle.setIdleMode(IdleMode.kBrake);
-        _shooterAngle.setSmartCurrentLimit(20, 100);
+        _shooterAngle.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _shooterAngle.setInverted(false);
         _shooterAngle.burnFlash();
 
         _shooterAngleController = _shooterAngle.getPIDController();
-        _shooterAngleController.setP(ShooterAngleFeedforwardkP);
+        _shooterAngleController.setP(kShooterAngleFeedForwardKp);
         _shooterAngleController.setI(0);
-        _shooterAngleController.setD(.001);
+        _shooterAngleController.setD(kCommonKd);
         _shooterAngleController.setIZone(0);
         _shooterAngleController.setFF(0);
         _shooterAngleController.setOutputRange(-1.0, 1.0);
         
         // creates the feed foward for the shooter angle
-        _shooterAngleFeedForward = new ArmFeedforward(ShooterAngleFeedforwardkS, ShooterAngleFeedforwardkG, ShooterAngleFeedforwardkV);
+        _shooterAngleFeedForward = new ArmFeedforward(
+            kShooterAngleFeedForwardKs,
+            kShooterAngleFeedForwardkG,
+            kShooterAngleFeedForwardKv
+        );
+
+        Constraints shooterAngleProfileConstraints;
 
         // the constraints our shooter angle has
-        var shooterAngleProfileConstraints = new TrapezoidProfile.Constraints(kShooterAngleMaxVelocity, kShooterAngleMaxAcceleration);
-        _shooterAngleProfile = new TrapezoidProfile(shooterAngleProfileConstraints);
+        shooterAngleProfileConstraints = new TrapezoidProfile.Constraints(
+            kShooterAngleMaxVelocity,
+            kShooterAngleMaxAcceleration
+        );
+
+        _shooterAngleProfile = new TrapezoidProfile(
+            shooterAngleProfileConstraints
+        );
 
         // our desired state and current state
         _shooterAngleProfileGoal = new TrapezoidProfile.State();
@@ -282,14 +340,23 @@ public class Jukebox extends Subsystem{
     private void handleElevatorPosition() {
         // This is the correct logic per the example at https://github.com/wpilibsuite/allwpilib/blob/main/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/elevatortrapezoidprofile/Robot.java
         // t = time since last update, _elevatorProfileSetpoint is last state, _goal is the target state
-        _elevatorProfileSetpoint = _elevatorProfile.calculate(0.02, _elevatorProfileSetpoint, _elevatorProfileGoal);
+        _elevatorProfileSetpoint = _elevatorProfile.calculate(
+            kTInterval,
+            _elevatorProfileSetpoint,
+            _elevatorProfileGoal
+        );
 
         // Check that this value is high enough for it to move.
-        var ff = _elevatorFeedForward.calculate(_elevatorProfileSetpoint.velocity);
+        double calculatedFeedForward = _elevatorFeedForward.calculate(
+            _elevatorProfileSetpoint.velocity
+        );
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        _elevatorController.setReference(_elevatorProfileSetpoint.position, CANSparkBase.ControlType.kPosition, 0, ff);
+        _elevatorController.setReference(_elevatorProfileSetpoint.position,
+                                         CANSparkBase.ControlType.kPosition,
+                                         0,
+                                         calculatedFeedForward);
 
         // This is being printed to Shuffleboard
         // Check that these position/velocity values are changing toward the setpoint, 5 in our test case.
@@ -300,7 +367,7 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putNumber("profileSetpointVelocity", _elevatorProfileSetpoint.velocity);
         
         // You can display these 3 values as a graph to see how they are proceeding.
-        SmartDashboard.putNumber("elevatorFeedforward", ff);
+        SmartDashboard.putNumber("elevatorFeedforward", calculatedFeedForward);
     }
     
     /**
@@ -310,15 +377,33 @@ public class Jukebox extends Subsystem{
      */
     private void handleShooterAnglePosition() {
         // t = time since last update, _shooterAngleProfileSetpoint is last state, _goal is the target state
-        _shooterAngleProfileSetpoint = _shooterAngleProfile.calculate(0.02, _shooterAngleProfileSetpoint, _shooterAngleProfileGoal);
+        _shooterAngleProfileSetpoint = _shooterAngleProfile.calculate(
+            kTInterval,
+            _shooterAngleProfileSetpoint,
+            _shooterAngleProfileGoal
+        );
 
-        var ff = _shooterAngleFeedForward.calculate(ShooterAngleFeedforwardAngle + _shooterAngleProfileSetpoint.position, _shooterAngleProfileSetpoint.velocity);
+        double calculatedFeedForward = _shooterAngleFeedForward.calculate(
+            kShooterAngleFeedForwardAngle +
+            _shooterAngleProfileSetpoint.position,
+            _shooterAngleProfileSetpoint.velocity
+        );
 
-        _shooterAngleController.setReference(_shooterAngleProfileSetpoint.position, CANSparkBase.ControlType.kPosition, 0, ff);
+        _shooterAngleController.setReference(
+            _shooterAngleProfileSetpoint.position,
+            CANSparkBase.ControlType.kPosition,
+            0,
+            calculatedFeedForward);
 
-        SmartDashboard.putNumber("angleProfileSetpointPosition", _shooterAngleProfileSetpoint.position);
-        SmartDashboard.putNumber("angleProfileSetpointVelocity", _shooterAngleProfileSetpoint.velocity);
-        SmartDashboard.putNumber("shooterAngleFeedforward", ff);
+        SmartDashboard.putNumber("angleProfileSetpointPosition",
+                                 _shooterAngleProfileSetpoint.position);
+
+        SmartDashboard.putNumber("angleProfileSetpointVelocity",
+                                 _shooterAngleProfileSetpoint.velocity);
+
+        SmartDashboard.putNumber("shooterAngleFeedforward",
+                                 calculatedFeedForward);
+
     }
     
     /**
@@ -327,12 +412,18 @@ public class Jukebox extends Subsystem{
      * This method should be called during handleCurrentState()
      */
     private void handleShooterSpeed() {
-        var ff = _shooterFeedForward.calculate(_shooterSetpoint);
+        double calculatedFeedForward = _shooterFeedForward.calculate(
+            _shooterSetpoint
+        );
 
         var rpm = _shooterSetpoint * 60;
-        _shooterController.setReference(rpm, CANSparkBase.ControlType.kVelocity, 0, ff);
 
-        SmartDashboard.putNumber("shooterFeedforward", ff);
+        _shooterController.setReference(rpm,
+                                        CANSparkBase.ControlType.kVelocity,
+                                        0,
+                                        calculatedFeedForward);
+
+        SmartDashboard.putNumber("shooterFeedforward", calculatedFeedForward);
     }
 
     /**
@@ -344,7 +435,18 @@ public class Jukebox extends Subsystem{
      */
     private void setShooterAngle(double desiredPosition) {
         // _shooterAngleController.setReference(desiredPosition, com.revrobotics.CANSparkBase.ControlType.kPosition, 0);
-        _shooterAngleProfileGoal = new TrapezoidProfile.State(desiredPosition, 0);
+        _shooterAngleProfileGoal = new TrapezoidProfile.State(desiredPosition,
+                                                              0);
+    }
+
+    /**
+     * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
+     * @param position takes a double and makes the goal state.
+     */
+    private void setElevatorPosition(double desiredPosition)
+    {
+        // Set the profile goal
+        _elevatorProfileGoal = new TrapezoidProfile.State(desiredPosition, 0);
     }
 
     /**
@@ -354,39 +456,37 @@ public class Jukebox extends Subsystem{
     {
         _shooterSetpoint = v;
     }
-    
-    /**
-     * Sets the elevator to where it needs to be and if the position changes we reset the timer and update the old position to the new position
-     * @param position takes a double and makes the goal state.
-     */
-    private void setElevatorPosition(double position)
-    {
-        // Set the profile goal
-        _elevatorProfileGoal = new TrapezoidProfile.State(position, 0);
-    }
 
     private void score() {
         // If previous state is PREP_AMP or PREP_TRAP -> Reverses out the front of the robot.
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
-        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP || jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
-        {
-            _feeder.set(-.5);
-        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER)
-        {
-            _feeder.set(.5);
+        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP ||
+            jukeboxPreviousState == JukeboxEnum.PREP_TRAP) {
+
+            _feeder.set(-kFeederShootSpeed);
+        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER) {
+            _feeder.set(kFeederShootSpeed);
         }
     }
 
     private void prepAmp() {
         setShooterSpeed(0);
-        setShooterAngle(kAmpShooterAngle);
+        setShooterAngle(kFeedShooterAngle);
         setElevatorPosition(kAmpElevatorPosition); 
+    }
+
+    private void prepTrap() {
+        if (jukeboxPreviousState != JukeboxEnum.CLIMB) return;
+
+        setShooterSpeed(0.0);
+        setElevatorPosition(kTrapElevatorPosition);
+        setShooterAngle(kFeedShooterAngle);
     }
 
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        double targetDistance = _visionSystem.getDistance();
+        _targetDistance = _visionSystem.getDistance();
         // if (targetDistance != 0.0) {
         //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
         //         kDistanceIDs,
@@ -410,14 +510,6 @@ public class Jukebox extends Subsystem{
         setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
-    private void prepTrap() {
-        if (jukeboxPreviousState == JukeboxEnum.CLIMB) {
-            setElevatorPosition(kTrapElevatorPosition);
-            setShooterAngle(-0.5);
-            setShooterSpeed(0.0);
-        }
-    }
-
     private void reset() {
         setShooterAngle(0.0);
         setShooterSpeed(0.0);
@@ -428,19 +520,19 @@ public class Jukebox extends Subsystem{
     }
 
     private void climb() {
-        if (jukeboxPreviousState == JukeboxEnum.EXTEND_FOR_CLIMB) {
-            setElevatorPosition(kClimbElevatorPosition);
-        }
+        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) return;
+
+        setElevatorPosition(kClimbElevatorPosition);
     }
 
     private void feeder()
     {
-        if (!_noteShoot) {
-            _feeder.set(-.2); 
-        } else if (!_noteHold) {
+        if (_inNoteShooter) {
+            _feeder.set(kFeederReverse); 
+        } else if (_inNoteHolder) {
             _feeder.set(0);
         } else {
-            _feeder.set(.7);
+            _feeder.set(kFeederIntake);
         }
     }
 
@@ -450,9 +542,10 @@ public class Jukebox extends Subsystem{
     }
 
     private void idle() {
-        setElevatorPosition(.5);
+        setElevatorPosition(0.5); // dont understand why .5
         setShooterAngle(0);
         setShooterSpeed(0.0);
+
         feeder();
     }
 
@@ -483,7 +576,7 @@ public class Jukebox extends Subsystem{
 
     public boolean hasNote() {
         // get() returns false if blocked/detects note
-        return !_noteHolderPE.get() || !_noteShooterPE.get();
+        return _inNoteHolder || _inNoteShooter;
     }
 
     public void handleCurrentState()
@@ -535,15 +628,18 @@ public class Jukebox extends Subsystem{
         if (n != jukeboxCurrentState) {
             switch (jukeboxCurrentState) {
                 case CLIMB: 
-                    if (n == JukeboxEnum.EXTEND_FOR_CLIMB || n == JukeboxEnum.PREP_TRAP)
-                    {
+                    if (n == JukeboxEnum.EXTEND_FOR_CLIMB ||
+                        n == JukeboxEnum.PREP_TRAP) {
+
                         jukeboxPreviousState = jukeboxCurrentState;
                         jukeboxCurrentState = n;
                     }
+
                     break;
                 default:
-                        jukeboxPreviousState = jukeboxCurrentState;
-                        jukeboxCurrentState = n;
+                    jukeboxPreviousState = jukeboxCurrentState;
+                    jukeboxCurrentState = n;
+
                     break;            
             }
         }
@@ -594,8 +690,13 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putString("Jukebox previous state", jukeboxPreviousState.toString());
 
 
-        _noteHold = _noteHolderDebouncer.calculate(_noteHolderPE.get());
-        _noteShoot = _noteShooterDebouncer.calculate(_noteShooterPE.get());
+        _inNoteHolder = !_noteHolderPEDebouncer.calculate(
+            _noteHolderPE.get()
+        );
+
+        _inNoteShooter = !_noteShooterPEDebouncer.calculate(
+            _noteShooterPE.get()
+        );
 
         SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
