@@ -114,7 +114,7 @@ public class Jukebox extends Subsystem{
 
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
-    private final double kFeederIntake = 0.7;
+    private final double kFeederIntake = 0.5;
 
     private final double[] kDistanceIDs = {};
     private final double[] kShooterAngles = {};
@@ -470,6 +470,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepAmp() {
+        feeder();
         setShooterSpeed(0);
         setShooterAngle(kFeedShooterAngle);
         setElevatorPosition(kAmpElevatorPosition); 
@@ -477,6 +478,8 @@ public class Jukebox extends Subsystem{
 
     private void prepTrap() {
         if (jukeboxPreviousState != JukeboxEnum.CLIMB) return;
+
+        feeder();
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
@@ -487,6 +490,9 @@ public class Jukebox extends Subsystem{
         setElevatorPosition(0);
 
         _targetDistance = _visionSystem.getDistance();
+
+        feeder();
+
         // if (targetDistance != 0.0) {
         //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
         //         kDistanceIDs,
