@@ -4,8 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.geometry.Pose2d;
+
 import java.lang.Math;
 
 public class VisionSystem extends Subsystem{
@@ -39,6 +42,25 @@ public class VisionSystem extends Subsystem{
         }
 
         return _instance;
+    }
+
+    public double[] getBotPose() {
+        // would much rather assemble the pose2d in here but not very easy
+        return NetworkTableInstance
+            .getDefault()
+            .getTable("limelight")
+            .getEntry("botpose")
+            .getDoubleArray(new double[6]);
+
+        // limelight docs give us absolutely no info
+        // double x = botPose[0];
+        // double y = botPose[1];
+        // double rotation = botPose[3];
+        // double latency = botPose[4] + botPose[5];
+
+        // double[] result = {x, y, rotation, latency};
+
+        // return result;
     }
 
     public double getTargetAngle()

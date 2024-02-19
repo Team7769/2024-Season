@@ -24,6 +24,8 @@ import frc.robot.Constants.Constants;
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
 
+    private VisionSystem _visionSystem;
+
     private final SwerveModule _frontLeftModule;
     private final SwerveModule _frontRightModule;
     private final SwerveModule _backLeftModule;
@@ -34,8 +36,7 @@ public class Drivetrain extends Subsystem{
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
     SwerveModulePosition[] _modulePositions = new SwerveModulePosition[4];
-    // needs device id constant or port value
-    // are we using pigeon2? example uses pigeon2
+
     private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
     private double _gyroOffset = 0.0;
 
@@ -45,6 +46,8 @@ public class Drivetrain extends Subsystem{
 
     private Drivetrain()
     {
+        _visionSystem = VisionSystem.getInstance();
+
         ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
         _frontLeftModule = new MkSwerveModuleBuilder()
@@ -106,7 +109,8 @@ public class Drivetrain extends Subsystem{
             },
             new Pose2d()
         );
-        SmartDashboard.putData("Field",m_field);
+
+        SmartDashboard.putData("Field", m_field);
     }
 
     public static Drivetrain getInstance()
@@ -155,7 +159,6 @@ public class Drivetrain extends Subsystem{
     
     public void updateOdometry()
     {
-
         _drivePoseEstimator.updateWithTime(
             Timer.getFPGATimestamp(),
             getGyroRotation(),
@@ -166,6 +169,18 @@ public class Drivetrain extends Subsystem{
                 _backRightModule.getPosition()
             }
         );
+
+        double[] botPose = _visionSystem.getBotPose();
+
+        // TODO: find values from testing, limelight docs suck
+        double x = botPose[0];
+        double y = botPose[0];
+        Rotation2d rotation = new Rotation2d(botPose[0]);
+        double latency = botPose[0] + botPose[0];
+
+        Pose2d pose = new Pose2d(x, y, rotation);
+
+        _drivePoseEstimator.addVisionMeasurement(pose, latency);
     }
 
     // public void resetOdometry()
