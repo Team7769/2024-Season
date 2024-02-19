@@ -82,29 +82,27 @@ public class Jukebox extends Subsystem{
     private final double kFeedShooterAngle = 7;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 230; // change
-    private final double kElevatorMaxAcceleration = 230; // change
+    private final double kElevatorMaxVelocity = 230;
+    private final double kElevatorMaxAcceleration = 230;
     private final double kElevatorFeedForwardKs = 0.23312;
     private final double kElevatorFeedForwardKv = 0.11903;
     private final double kElevatorFeedForwardKg = 0.12293;
     private final double kElevatorFeedForwardKp = 0.01;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 50; // change
-    private final double kShooterAngleMaxAcceleration = 50; // change
-    private final double kShooterAngleFeedForwardKs = 0.31777; // change
-    private final double kShooterAngleFeedForwardKv = 0.090231; // change
-    private final double kShooterAngleFeedForwardkG = 0.035019; // change
-    private final double kShooterAngleFeedForwardKp = 0.05; // change
-    private final double kShooterAngleFeedForwardAngle = .1785; // change
-    // im confused on what a feed forward angle is
+    private final double kShooterAngleMaxVelocity = 50;
+    private final double kShooterAngleMaxAcceleration = 50;
+    private final double kShooterAngleFeedForwardKs = 0.31777;
+    private final double kShooterAngleFeedForwardKv = 0.090231;
+    private final double kShooterAngleFeedForwardkG = 0.035019;
+    private final double kShooterAngleFeedForwardKp = 0.05;
+    private final double kShooterAngleFeedForwardAngle = .1785;
     
     // Shooter Control Constants
-    private final double kShooterFeedForwardKs = 0.37431; // change
-    private final double kShooterFeedForwardKv = 0.14253; // change
+    private final double kShooterFeedForwardKs = 0.37431;
+    private final double kShooterFeedForwardKv = 0.14253;
     
-    private final double kShooterFeedForwardKp = .001; // change
-    //private final double kShooterFeedForwardKp = .047489; // change
+    private final double kShooterFeedForwardKp = .001;
 
     private final int kLowStallLimit = 20;
     private final int kHighStallLimit = 80;
@@ -121,13 +119,6 @@ public class Jukebox extends Subsystem{
     private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
     private final double[] kShooterSpeeds = {35, 37, 38, 41, 44};
 
-
-    // private final double kMaxOutput = 1.00;
-    // private final double kMinOutput = -1.00;
-    // private final double kMaxVel = 5;
-    // private final double kMaxAccel = 5;
-    // private final double kAllowedError = 3;
-    // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
     private double _manualShooterAngleSpeed;
@@ -682,7 +673,8 @@ public class Jukebox extends Subsystem{
                 var shooterError = Math.abs(_shooterSetpointRpm - _shooterL.getEncoder().getVelocity());
                 var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
 
-                // These error numbers need to tuned/configured
+                // TODO: These error numbers need to tuned/configured. 
+                // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
                 return (shooterError <= 200 && angleError <= .5);
             default:
                 return true;

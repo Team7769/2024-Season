@@ -8,6 +8,11 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
+/**
+ * Five Note Autonomous Mode.
+ * Starts Mid in front of the speaker and scores the following notes:
+ * Initial -> C -> B -> A -> 1
+ */
 public class FiveNote extends AutonomousMode{
     private PathFollower _pathFollower;
     private Intake _intake;
