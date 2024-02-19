@@ -422,6 +422,21 @@ public class Jukebox extends Subsystem{
         return jukeboxCurrentState;
     }
 
+    public boolean isReadyToScore() {
+        switch (jukeboxCurrentState) {
+            case PREP_AMP:
+            case PREP_TRAP:
+            // Logic if Prep Amp/Trap is ready to score
+                break;
+            case PREP_SPEAKER:
+                break;
+            default:
+                return true;
+        }
+
+        return true;
+    }
+
     public void logTelemetry() {
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
