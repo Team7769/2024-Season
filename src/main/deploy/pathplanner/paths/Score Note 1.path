@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.890235494756704,
-        "y": 7.007220871584601
+        "x": 2.699662542182228,
+        "y": 6.992561413694256
       },
       "prevControl": {
-        "x": 4.106970499655286,
-        "y": 7.256431655720455
+        "x": 3.9163975470808094,
+        "y": 7.24177219783011
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "5 Note - Note A"
     }
   ],
   "rotationTargets": [],

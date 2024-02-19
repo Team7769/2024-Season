@@ -138,6 +138,7 @@ public class Jukebox extends Subsystem{
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
     private double _dashboardShooterRPercent =  1.0;
+    private double _shooterSetpointRpm = 0.0;
 
     public Jukebox()
     {
@@ -427,16 +428,17 @@ public class Jukebox extends Subsystem{
         );
         double calculatedFeedForwardR = _shooterFeedForward.calculate(_shooterSetpoint * _dashboardShooterRPercent);
 
-        var rpm = _shooterSetpoint * 60;
+        _shooterSetpointRpm = _shooterSetpoint * 60;
 
-        _shooterController.setReference(rpm,
+        _shooterController.setReference(_shooterSetpointRpm,
                                         CANSparkBase.ControlType.kVelocity,
                                         0,
                                         calculatedFeedForward);
-        _shooterRController.setReference(rpm * _dashboardShooterRPercent,
+        _shooterRController.setReference(_shooterSetpointRpm * _dashboardShooterRPercent,
                                         CANSparkBase.ControlType.kVelocity,
                                         0,
                                         calculatedFeedForwardR);
+        SmartDashboard.putNumber("shooterSetpointRpm", _shooterSetpointRpm);
         SmartDashboard.putNumber("shooterFeedforward", calculatedFeedForward);
     }
 
@@ -673,10 +675,15 @@ public class Jukebox extends Subsystem{
         switch (jukeboxCurrentState) {
             case PREP_AMP:
             case PREP_TRAP:
-            // Logic if Prep Amp/Trap is ready to score
+                // Logic if Prep Amp/Trap is ready to score
                 break;
             case PREP_SPEAKER:
-                break;
+                // Error is the absolute value of the difference between Target and Actual 
+                var shooterError = Math.abs(_shooterSetpointRpm - _shooterL.getEncoder().getVelocity());
+                var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
+
+                // These error numbers need to tuned/configured
+                return (shooterError <= 200 && angleError <= .5);
             default:
                 return true;
         }
@@ -687,7 +694,7 @@ public class Jukebox extends Subsystem{
     public void logTelemetry() {
         _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
         _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
-        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.0);
+        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 1.0);
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());
