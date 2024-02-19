@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.38,
-      "y": 5.53
+      "x": 1.3,
+      "y": 5.5040931765173085
     },
     "rotation": 0
   },
@@ -14,31 +14,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note - Note C"
+            "pathName": "start mid to b"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note - Note B"
+            "pathName": "start b to 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note - Note A"
+            "pathName": "start 3 to b"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note - Note 1"
+            "pathName": "start b to 4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note - Score Note 1"
+            "pathName": "start 4 to b"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 5 to b"
           }
         }
       ]
