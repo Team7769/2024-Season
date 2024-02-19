@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.38,
+      "y": 5.53
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Note 1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
