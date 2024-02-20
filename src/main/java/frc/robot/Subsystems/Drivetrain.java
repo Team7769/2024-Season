@@ -48,7 +48,7 @@ public class Drivetrain extends Subsystem{
 
     private final String limelightName = "";
 
-    // x, y, targetHeight
+    // x, y, height for aiming (unused)
     private final double[][] kTargets = {{2.0, 7.0, 10.0}};
 
     private Drivetrain()
@@ -317,7 +317,7 @@ public class Drivetrain extends Subsystem{
         return _drivePoseEstimator.getEstimatedPosition();
     }
 
-    public double getAngleToTarget(int targetIndex) {
+    public double getDistanceToTarget(int targetIndex) {
         double[] target = kTargets[targetIndex];
 
         double targetX = target[0];
@@ -328,14 +328,19 @@ public class Drivetrain extends Subsystem{
         double relativeX = currentPose.getX() - targetX;
         double relativeY = currentPose.getY() - targetY;
 
-        // double height = target[2];
+        return Math.hypot(relativeX, relativeY);
+    }
 
-        // if (color == "blue") {
-        //     // idk how the coords system works so just a placeholder
+    public double getAngleToTarget(int targetIndex) {
+        double[] target = kTargets[targetIndex];
 
-        //     x = -x;
-        //     y = -y;
-        // }
+        double targetX = target[0];
+        double targetY = target[1];
+
+        Pose2d currentPose = getPose();
+
+        double relativeX = currentPose.getX() - targetX;
+        double relativeY = currentPose.getY() - targetY;
 
         double relativeDistance = Math.hypot(relativeX, relativeY);
 

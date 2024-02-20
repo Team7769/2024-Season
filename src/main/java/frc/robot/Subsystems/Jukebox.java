@@ -134,6 +134,7 @@ public class Jukebox extends Subsystem{
     private double _manualShooterSpeed;
 
     private VisionSystem _visionSystem;
+    private Drivetrain _drivetrain;
 
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
@@ -154,6 +155,7 @@ public class Jukebox extends Subsystem{
         configFeeder();
 
         _visionSystem = VisionSystem.getInstance();
+        _drivetrain = Drivetrain.getInstance();
         
         jukeboxPreviousState = JukeboxEnum.IDLE;
     }
@@ -503,7 +505,7 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        _targetDistance = _visionSystem.getDistance();
+        _targetDistance = _drivetrain.getDistanceToTarget(0);
 
         feeder();
 
