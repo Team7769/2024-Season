@@ -94,33 +94,39 @@ public class Robot extends TimedRobot {
   }
 
   private void teleopDrive() {
-    // The X translation will be the vertical value of the left driver joystick
-    var translationX = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
-        Constants.XY_Axis_outputTable, _driverController.getLeftY());
-
-    // The Y translation will be the horizontal value of the left driver joystick
-    var translationY = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints,
-        Constants.XY_Axis_outputTable, _driverController.getLeftX());
-
-    // The rotation will be the horizontal value of the right driver joystick
-    var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
-        Constants.RotAxis_outputTable, 
-        _driverController.getRightX());
-
     if (_driverController.getBButton() && _driverController.getAButton()) {
       _drivetrain.reset();
     }
+  
+    // The X translation will be the vertical value of the left driver joystick
+    var translationX = -OneDimensionalLookup.interpLinear(
+      Constants.XY_Axis_inputBreakpoints,
+      Constants.XY_Axis_outputTable,
+      _driverController.getLeftY()
+    );
 
-    if (_driverController.getRightBumper())
-    {
-        rotation = -(_visionSystem.getTargetAngle() / 95) ;
-        //target angle range is -27 to 27 degrees
+    // The Y translation will be the horizontal value of the left driver joystick
+    var translationY = -OneDimensionalLookup.interpLinear(
+      Constants.XY_Axis_inputBreakpoints,
+      Constants.XY_Axis_outputTable,
+      _driverController.getLeftX()
+    );
+
+    // The rotation will be the horizontal value of the right driver joystick
+    var rotation = -OneDimensionalLookup.interpLinear(
+      Constants.RotAxis_inputBreakpoints,
+      Constants.RotAxis_outputTable, 
+      _driverController.getRightX()
+    );
+
+    if (_driverController.getRightBumper()) {
+      double relativeAngle =_drivetrain.getAngleToTarget(0);
+
+      double relativeRadians = Math.toRadians(relativeAngle);
+
+      // maybe use some sort of pid here?
+      rotation = relativeRadians / Constants.MAX_ANGULAR_VELOCITY_PER_SECOND;
     }
-
-    // if (_driverController.getBackButton() && _driverController.getStartButton())
-    // {
-    //   _drivetrain.reset();
-    // }
 
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }

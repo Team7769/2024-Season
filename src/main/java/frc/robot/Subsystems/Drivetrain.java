@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
+import frc.robot.Utilities.LimelightHelpers;
 
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
@@ -31,11 +32,12 @@ public class Drivetrain extends Subsystem{
     private final SwerveModule _backLeftModule;
     private final SwerveModule _backRightModule;
 
-    private final SwerveDrivePoseEstimator _drivePoseEstimator;
+    private SwerveDrivePoseEstimator _drivePoseEstimator;
 
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
-    SwerveModulePosition[] _modulePositions = new SwerveModulePosition[4];
+    private SwerveModulePosition[] _modulePositions =
+        new SwerveModulePosition[4];
 
     private final Pigeon2 _gyro = new Pigeon2(Constants.kPigeonId);
     private double _gyroOffset = 0.0;
@@ -43,6 +45,11 @@ public class Drivetrain extends Subsystem{
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final Field2d m_field = new Field2d();
+
+    private final String limelightName = "";
+
+    // x, y, targetHeight
+    private final double[][] kTargets = {{2.0, 7.0, 10.0}};
 
     private Drivetrain()
     {
@@ -170,15 +177,12 @@ public class Drivetrain extends Subsystem{
             }
         );
 
-        double[] botPose = _visionSystem.getBotPose();
+        Pose2d pose = LimelightHelpers.getBotPose2d(limelightName);
 
-        // TODO: find values from testing, limelight docs suck
-        double x = botPose[0];
-        double y = botPose[0];
-        Rotation2d rotation = new Rotation2d(botPose[0]);
-        double latency = botPose[0] + botPose[0];
+        double cLatency = LimelightHelpers.getLatency_Capture(limelightName);
+        double pLatency = LimelightHelpers.getLatency_Pipeline(limelightName);
 
-        Pose2d pose = new Pose2d(x, y, rotation);
+        double latency = cLatency + pLatency;
 
         _drivePoseEstimator.addVisionMeasurement(pose, latency);
     }
@@ -200,6 +204,7 @@ public class Drivetrain extends Subsystem{
         return Rotation2d.fromDegrees(_gyro.getRotation2d().getDegrees() +
                                       _gyroOffset);
     }
+
     /** Takes a list of SwerveModuleStates for each swerve modual and sets each swerve modual to that state (the angle and speed of the wheel).
      * 
      * @param moduleStates A list that contains the necessary state for each swerve modual from front left and right to back left and back right in that order.
@@ -239,8 +244,10 @@ public class Drivetrain extends Subsystem{
         _modulePositions[1] = _frontRightModule.getPosition();
         _modulePositions[2] = _backLeftModule.getPosition();
         _modulePositions[3] = _backRightModule.getPosition();
+
         return _modulePositions;
     }
+
     /** Method that takes translations from the drive controller creates a chassisSpeed object and feeds it into the drive method
         Drive and fieldOrientedDrive are seperate due to autonomus getting chassis speed directly with no need to translate
 
@@ -253,8 +260,8 @@ public class Drivetrain extends Subsystem{
      */ 
     public void fieldOrientedDrive(double translationX,
                                    double translationY,
-                                   double rotationZ)
-    {
+                                   double rotationZ) {
+
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
             translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
@@ -306,7 +313,57 @@ public class Drivetrain extends Subsystem{
         _drivePoseEstimator.resetPosition(_gyro.getRotation2d(), getModulePositions(), startingPose);
     }
 
-    public Pose2d getPose(){
+    public Pose2d getPose() {
         return _drivePoseEstimator.getEstimatedPosition();
+    }
+
+    public double getAngleToTarget(int targetIndex) {
+        double[] target = kTargets[targetIndex];
+
+        double targetX = target[0];
+        double targetY = target[1];
+
+        Pose2d currentPose = getPose();
+
+        double relativeX = currentPose.getX() - targetX;
+        double relativeY = currentPose.getY() - targetY;
+
+        // double height = target[2];
+
+        // if (color == "blue") {
+        //     // idk how the coords system works so just a placeholder
+
+        //     x = -x;
+        //     y = -y;
+        // }
+
+        double relativeDistance = Math.hypot(relativeX, relativeY);
+
+        double angle = Math.toDegrees(
+            Math.asin(relativeX / relativeDistance)
+        );
+
+        double absoluteAngle;
+        if (relativeY < 0) {
+            absoluteAngle = 270 - angle;
+        } else {
+            absoluteAngle = 90 - angle;
+        }
+
+        absoluteAngle %= 360;
+
+        double currentAngle = getGyroRotation().getDegrees();
+
+        double leftRelativeAngle = (currentAngle - absoluteAngle + 360) % 360;
+
+        double rightRelativeAngle = (absoluteAngle - currentAngle + 360)
+            % 360;
+
+        double relativeAngle = Math.min(leftRelativeAngle,
+                                        rightRelativeAngle);
+
+        int scale = relativeAngle == leftRelativeAngle ? -1 : 1;
+
+        return relativeAngle * scale;
     }
 }
