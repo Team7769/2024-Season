@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.223413194329954,
-        "y": 3.665491838829612
+        "x": 1.9060784275414722,
+        "y": 4.084914323674802
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.124945171650467,
-        "y": 3.663422736699529
+        "x": 3.5158724906355188,
+        "y": 4.084914323674802
       },
       "isLocked": false,
-      "linkedName": "Center Point 3"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5553683061717036,
-        "y": 5.4806715034257465
+        "x": 2.8927727086223416,
+        "y": 4.084914323674802
       },
       "prevControl": {
-        "x": 3.855271162753451,
-        "y": 4.4149853777596295
+        "x": 2.6263652527305075,
+        "y": 4.084914323674802
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -2.0095538130212276,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Test paths",
-  "previewStartingState": null,
+  "folder": "C paths",
+  "previewStartingState": {
+    "rotation": 1.397181027296375,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

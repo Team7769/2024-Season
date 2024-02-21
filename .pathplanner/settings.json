@@ -4,9 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "B paths",
-    "Test paths"
+    "New Folder",
+    "C paths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "New Folder"
+  ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,
   "defaultMaxAngVel": 540.0,

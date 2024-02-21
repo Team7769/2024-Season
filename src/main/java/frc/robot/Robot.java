@@ -44,10 +44,8 @@ public class Robot extends TimedRobot {
     _drivetrain = Drivetrain.getInstance();
     _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
-
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
-
     _visionSystem = VisionSystem.getInstance();
     // loads the auto modes
     AutoUtil.autonmousDropDown(_autoChooser);
