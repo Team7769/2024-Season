@@ -77,7 +77,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    _intake.setWantedState(IntakeState.INTAKE);
+  }
 
   @Override
   public void teleopPeriodic() {
@@ -87,6 +89,8 @@ public class Robot extends TimedRobot {
 
     teleopIntake();
     teleopClimb();
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
   private void teleopDrive() {
@@ -100,12 +104,16 @@ public class Robot extends TimedRobot {
 
     // The rotation will be the horizontal value of the right driver joystick
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
-        Constants.RotAxis_outputTable,
+        Constants.RotAxis_outputTable, 
         _driverController.getRightX());
+
+    if (_driverController.getBButton() && _driverController.getAButton()) {
+      _drivetrain.reset();
+    }
 
     if (_driverController.getRightBumper())
     {
-        rotation = _visionSystem.getTargetAngle() / 27 ;
+        rotation = -(_visionSystem.getTargetAngle() / 95) ;
         //target angle range is -27 to 27 degrees
     }
 
@@ -118,10 +126,12 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopJukebox() {
-        if (_operatorController.getLeftBumper()) {
-          // _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-        } else if (_operatorController.getRightBumper()) {
-          _jukebox.setState(JukeboxEnum.PREP_AMP);
+        if (_jukebox.hasNote()) {
+          if (_operatorController.getLeftBumper()) {
+            _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+          } else if (_operatorController.getRightBumper()) {
+            _jukebox.setState(JukeboxEnum.PREP_AMP);
+          }
         }
         
         if (_driverController.getLeftBumper()) {
@@ -129,7 +139,12 @@ public class Robot extends TimedRobot {
         } else if (_driverController.getLeftBumperReleased()) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
+
+        if (_operatorController.getBackButton()) {
+          _jukebox.setState(JukeboxEnum.IDLE);
+        }
       }
+
   private void teleopIntake() {
     if (_operatorController.getXButton()) {
       // emergency eject
