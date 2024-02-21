@@ -35,15 +35,16 @@ public class FiveNote extends AutonomousMode{
             case 0:
                 // Initial Position - Prep for Speaker Shot
                 _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-
+                nextStep();
+                break;
+            case 1:
                 if (_jukebox.isReadyToScore()) {
                     // Once ready to score, set score state.
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
-
                 break;
-            case 1:
+            case 2:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -54,7 +55,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 2:
+            case 3:
                 // Follow Path to Note C (1)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -65,20 +66,21 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 3:
+            case 4:
                 // Once the note is detected, we can set prep speaker.
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-
-                    // Once ready for the shot, set score.
-                    if (_jukebox.isReadyToScore()) {
-                        _jukebox.setState(JukeboxEnum.SCORE);
-                        nextStep();
-                    }
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    nextStep();
                 }
-
                 break;
-            case 4:
+            case 5:
+                // Once ready for the shot, set score.
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 6:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -89,7 +91,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 5:
+            case 7:
                 // Follow Path to Note B (2)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -100,20 +102,22 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 6:
+            case 8:
                 // Once the note is detected, we can set prep speaker.
                 if (_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    nextStep();
+                }
 
+                break;
+            case 9:            
                     // Once ready for the shot, set score.
                     if (_jukebox.isReadyToScore()) {
                         _jukebox.setState(JukeboxEnum.SCORE);
                         nextStep();
                     }
-                }
-
                 break;
-            case 7:
+            case 10:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -124,7 +128,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 8:
+            case 11:
                 // Follow Path to Note A (3)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -135,20 +139,22 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 9:
+            case 12:
                 // Once the note is detected, we can set prep speaker.
                 if (_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    nextStep();
+                }
 
+                break;
+            case 13:
                     // Once ready for the shot, set score.
                     if (_jukebox.isReadyToScore()) {
                         _jukebox.setState(JukeboxEnum.SCORE);
                         nextStep();
                     }
-                }
-
                 break;
-            case 10:
+            case 14:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -159,7 +165,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 11:
+            case 15:
                 // Follow Path to Note 1 (4)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -173,7 +179,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 12:
+            case 16:
                 // Follow Path back to Note A (4)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -188,7 +194,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 13:
+            case 17:
                 // Once ready for the shot, set score.
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
@@ -196,7 +202,7 @@ public class FiveNote extends AutonomousMode{
                 }
 
                 break;
-            case 14:
+            case 18:
                 // After the note has left the robot, transition to idle.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);

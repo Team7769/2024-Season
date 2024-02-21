@@ -675,12 +675,12 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return (shooterError <= 200 && angleError <= .5);
+                return (shooterError <= 350 && angleError <= 1);
             default:
-                return true;
+                return false;
         }
 
-        return true;
+        return false;
     }
 
     public void logTelemetry() {
