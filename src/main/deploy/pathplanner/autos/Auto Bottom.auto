@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.91,
-      "y": 4.08
+      "x": 2,
+      "y": 2
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - Note C to C"
+            "pathName": "Auto - Bottom to 5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - Note C to 5"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Auto - Note 5 to CB"
+            "pathName": "Auto - 5 to Bottom"
           }
         }
       ]
