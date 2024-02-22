@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9060784275414722,
+        "x": 2.6559660811629335,
         "y": 4.084914323674802
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5158724906355188,
-        "y": 4.084914323674802
+        "x": 2.8927727086223425,
+        "y": 2.762743987026436
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note C to C"
     },
     {
       "anchor": {
-        "x": 2.8927727086223416,
-        "y": 4.084914323674802
+        "x": 8.28012348332389,
+        "y": 0.7498876536214618
       },
       "prevControl": {
-        "x": 2.6263652527305075,
-        "y": 4.084914323674802
+        "x": 7.668373029053751,
+        "y": 1.5096422500537328
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "Note C to 5"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -2.0095538130212276,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "C paths",
   "previewStartingState": {
-    "rotation": 1.397181027296375,
+    "rotation": -1.6365770416167182,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

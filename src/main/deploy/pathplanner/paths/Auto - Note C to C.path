@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.014614798460368,
-        "y": 4.075047380863993
+        "x": 1.9060784275414722,
+        "y": 4.084914323674802
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1561907739200112,
-        "y": 2.1213927043238705
+        "x": 3.5158724906355188,
+        "y": 4.084914323674802
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note C to C startpoint"
     },
     {
       "anchor": {
-        "x": 8.289990426134699,
-        "y": 0.7400207108106523
+        "x": 2.6559660811629335,
+        "y": 4.084914323674802
       },
       "prevControl": {
-        "x": 7.934780484945588,
-        "y": 0.95215998124304
+        "x": 2.3895586252710994,
+        "y": 4.084914323674802
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note C to C"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.808739322492079,
+    "rotation": -2.0095538130212276,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "C paths",
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }
