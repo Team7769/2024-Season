@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": -0.2251812195932067,
-        "y": 1.0162951095132966
+        "x": -0.22521152769567843,
+        "y": 1.0163025537529586
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Auto - Bottom to 5 Start"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Auto - Bottom to 5"
+      "linkedName": "Auto - Bottom to 5 End"
     }
   ],
   "rotationTargets": [],
