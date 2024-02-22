@@ -12,7 +12,7 @@
         "y": 3.9451738324786314
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note 3"
     },
     {
       "anchor": {
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 2.6,
-        "y": 5.5
+        "y": 5.5040931765173085
       },
       "prevControl": {
         "x": 3.4169287814713263,
-        "y": 5.481642049854576
+        "y": 5.485735226371885
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note B"
     }
   ],
   "rotationTargets": [],
