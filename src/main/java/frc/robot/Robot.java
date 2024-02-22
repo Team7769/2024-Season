@@ -72,6 +72,8 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     _drivetrain.updateOdometry();
     _currentAuto.execute();
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
   @Override
