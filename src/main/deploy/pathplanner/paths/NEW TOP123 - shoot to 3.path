@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5007709452038624,
+        "y": 6.330408153774054
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.683171929724142,
+        "y": 6.89407463321969
+      },
+      "isLocked": false,
+      "linkedName": "NEW TOP123 - shoot"
+    },
+    {
+      "anchor": {
+        "x": 7.995649794116489,
+        "y": 4.3792549556930105
+      },
+      "prevControl": {
+        "x": 6.709333982048246,
+        "y": 6.662826846780455
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 16.99,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -44.99999999999996,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "previewStartingState": {
+    "rotation": 17.927919762007285,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

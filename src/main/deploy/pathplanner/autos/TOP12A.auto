@@ -14,31 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TOP123 - top to 1"
+            "pathName": "TOP12A - top to 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TOP123 - 1 to shoot"
+            "pathName": "TOP12A - 1 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TOP123 - shoot to 2"
+            "pathName": "TOP12A - shoot to 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TOP123 - 2 to shoot"
+            "pathName": "TOP12A - 2 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TOP123 - shoot to a"
+            "pathName": "TOP12A - shoot to a"
           }
         }
       ]
