@@ -126,6 +126,7 @@ public class midB23 extends AutonomousMode{
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
+                break;
             // shoots at b
             case 13:
                 if (_jukebox.isReadyToScore()) {
