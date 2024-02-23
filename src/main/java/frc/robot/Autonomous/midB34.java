@@ -4,12 +4,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.PathFollower;
 
-public class midB345 extends AutonomousMode{
+public class midB34 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
     private int _count;    
 
-    public midB345(){
+    public midB34(){
         _drivetrain = Drivetrain.getInstance();
         _pathFollower = new PathFollower("MID B 3 4 5");
     }

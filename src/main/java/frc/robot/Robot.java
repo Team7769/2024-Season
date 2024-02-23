@@ -15,6 +15,7 @@ import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.VisionSystem;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
@@ -36,7 +37,11 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
+<<<<<<< HEAD
    private LEDController _ledController;
+=======
+   private VisionSystem _visionSystem;
+>>>>>>> 00feac24ac0d64704a5ddeeebd83a84b38935aa4
    private Jukebox _jukebox;
 
   @Override
@@ -47,6 +52,8 @@ public class Robot extends TimedRobot {
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+
+    _visionSystem = VisionSystem.getInstance();
     // loads the auto modes
     AutoUtil.autonmousDropDown(_autoChooser);
     // puts the drop down to select auton modes on shuffleboard
@@ -58,7 +65,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
+<<<<<<< HEAD
     _ledController.idleLights();  
+=======
+    _jukebox.logTelemetry();
+    _intake.logTelemetry();
+>>>>>>> 00feac24ac0d64704a5ddeeebd83a84b38935aa4
   }
 
   @Override
@@ -72,15 +84,25 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     _drivetrain.updateOdometry();
     _currentAuto.execute();
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    _intake.setWantedState(IntakeState.INTAKE);
+  }
 
   @Override
   public void teleopPeriodic() {
     teleopDrive();
+    teleopJukebox();
     _drivetrain.updateOdometry();
+
+    teleopIntake();
+    teleopClimb();
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
   private void teleopDrive() {
@@ -94,18 +116,73 @@ public class Robot extends TimedRobot {
 
     // The rotation will be the horizontal value of the right driver joystick
     var rotation = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints,
-        Constants.RotAxis_outputTable,
+        Constants.RotAxis_outputTable, 
         _driverController.getRightX());
-    
 
-    if (_driverController.getBackButton() && _driverController.getStartButton())
-    {
+    if (_driverController.getBButton() && _driverController.getAButton()) {
       _drivetrain.reset();
     }
 
-    _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+    if (_driverController.getRightBumper())
+    {
+        rotation = -(_visionSystem.getTargetAngle() / 95) ;
+        //target angle range is -27 to 27 degrees
+    }
 
-    _operatorController.getPOV();
+    // if (_driverController.getBackButton() && _driverController.getStartButton())
+    // {
+    //   _drivetrain.reset();
+    // }
+
+    _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
+  }
+
+  public void teleopJukebox() {
+        if (_jukebox.hasNote()) {
+          if (_operatorController.getLeftBumper()) {
+            _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+          } else if (_operatorController.getRightBumper()) {
+            _jukebox.setState(JukeboxEnum.PREP_AMP);
+          }
+        }
+        
+        if (_driverController.getLeftBumper()) {
+          _jukebox.setState(JukeboxEnum.SCORE);
+        } else if (_driverController.getLeftBumperReleased()) {
+          _jukebox.setState(JukeboxEnum.IDLE);
+        }
+
+        if (_operatorController.getBackButton()) {
+          _jukebox.setState(JukeboxEnum.IDLE);
+        }
+      }
+
+  private void teleopIntake() {
+    if (_operatorController.getXButton()) {
+      // emergency eject
+
+      _intake.setWantedState(IntakeState.EJECT);
+    } else if (_operatorController.getXButtonReleased()) {
+      // passive_eject is a default state and will automatically change to
+      // intake if a note isnt held
+
+      _intake.setWantedState(IntakeState.PASSIVE_EJECT);
+    }
+  }
+
+  private void teleopClimb() {
+        // if(_driverController.getYButtonPressed()) {
+    //   JukeboxEnum wantedState = _jukebox.getState() == JukeboxEnum.EXTEND_FOR_CLIMB ? 
+    //                             JukeboxEnum.CLIMB : JukeboxEnum.EXTEND_FOR_CLIMB;
+
+    //   _jukebox.setState(wantedState);
+    // }
+
+    if (_driverController.getBackButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+    } else if (_driverController.getStartButtonPressed()) {
+      _jukebox.setState(JukeboxEnum.CLIMB);
+    }
   }
 
   @Override
@@ -115,38 +192,63 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void testInit() {}
+  public void testInit() {
+    _intake.setWantedState(IntakeState.STOP);
+    _jukebox.resetSensors();
+  }
 
   @Override
   public void testPeriodic() {
     testOperate();
+
+    _intake.handleCurrentState();
+    _jukebox.handleCurrentState();
   }
 
-  private void testOperate() {
+  private void testOperate() {   
+    _jukebox.setState(JukeboxEnum.MANUAL);
+
+    if (_operatorController.getLeftBumper())
+    {
+      _jukebox.setManualFeederSpeed(.5);
+    } else if (_operatorController.getRightBumper())
+    {
+      _jukebox.setManualFeederSpeed(-.5);
+    } else 
+    {
+      _jukebox.setManualFeederSpeed(0);
+    }
+
     if (_operatorController.getAButton()) {
       _intake.setWantedState(IntakeState.INTAKE);
-    }
-
-    if (_operatorController.getBButton()) {
+    } else if (_operatorController.getBButton()) {
       _intake.setWantedState(IntakeState.STOP);
-    }
-
-    if (_operatorController.getXButton()) {
+    } else if (_operatorController.getXButton()) {
       _intake.setWantedState(IntakeState.EJECT);
-    }
-
-    if (_operatorController.getYButton()) {
+    } else if (_operatorController.getYButton()) {
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
 
-    if((_operatorController.getPOV() >= 315) && (_operatorController.getPOV() <= 45))
-    {
-        _jukebox.setState(JukeboxEnum.MANUAL);
+    if (_driverController.getYButton()) {
+      _jukebox.setManualElevatorSpeed(1);
+    } else if (_driverController.getRightBumper()) {
+      _jukebox.setManualElevatorSpeed(-.5);
+    } else {
+      _jukebox.setManualElevatorSpeed(0.0);
+    }
+
+    if (_driverController.getXButton()) {
+      _jukebox.setManualShooterAngleSpeed(-0.5);
+    } else if (_driverController.getBButton()) {
+      _jukebox.setManualShooterAngleSpeed(0.5);
+    } else {
+      _jukebox.setManualShooterAngleSpeed(0.0);
     }
     
-    if((_operatorController.getPOV() >= 135) && (_operatorController.getPOV() <= 225))
-    {
-        _jukebox.setState(JukeboxEnum.MANUAL);
+    if (_driverController.getAButton()) {
+      _jukebox.setManualShooterSpeed(1.0);
+    } else {
+      _jukebox.setManualShooterSpeed(0.0);
     }
   }
 

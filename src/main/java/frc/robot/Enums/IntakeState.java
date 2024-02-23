@@ -10,6 +10,6 @@ public enum IntakeState {
     // run in reverse (of intake) when we have a note to avoid intake
     PASSIVE_EJECT,
 
-    // eject anything we have at full speed
+    // eject anything we have at full speed, for emergencies
     EJECT
 }

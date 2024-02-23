@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.5040931765173085
+        "x": 3.6796086145667286,
+        "y": 7.003080254377342
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0729152120215795,
-        "y": 5.515804013063089
+        "x": 4.691111209000488,
+        "y": 7.2376315806228515
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "5 Note - Note A"
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5040931765173085
+        "x": 8.539605781066053,
+        "y": 7.436381206571257
       },
       "prevControl": {
-        "x": 2.0400914981573175,
-        "y": 5.492382339971527
+        "x": 6.841534481927734,
+        "y": 7.37782702384235
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "5 Note - Note 1"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B paths",
+  "folder": "5 Note",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 30.256437163529416,
     "velocity": 0
   },
   "useDefaultConstraints": true
