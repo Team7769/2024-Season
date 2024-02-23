@@ -79,6 +79,12 @@ public class LEDController {
         jukeboxCandle1.animate(packingHeat);
     }
 
+    
+    public void climbingLights()
+    {}
+
+
+
     public void fireAwayLights()
     {
         jukeboxCandle1.animate(fire);
