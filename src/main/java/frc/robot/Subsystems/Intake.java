@@ -21,7 +21,7 @@ public class Intake extends Subsystem{
     private final double kStopSpeed = 0;
     private final double kPassiveEjectSpeed = -0.25;
 
-    private final int kMotorStallLimit = 80;
+    private final int kMotorStallLimit = 40;
     private final int kMotorFreeLimit = 100;
     private final boolean kInverted = false;
 

@@ -76,7 +76,7 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     private final double kTrapShooterAngle = 5;
-    private final double kTrapElevatorPosition = 50; // change this
+    private final double kTrapElevatorPosition = 70; // change this
     private final double kExtendClimbElevatorPosition = 90; // change this
     private final double kClimbElevatorPosition = 0; 
     private final double kAmpElevatorPosition = 70;
@@ -531,12 +531,19 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         setElevatorPosition(kExtendClimbElevatorPosition);
+        setShooterAngle(7);
     }
 
     private void climb() {
-        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) return;
-
-        setElevatorPosition(kClimbElevatorPosition);
+        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
+            return;
+        }
+        setElevatorPosition(1);
+        if (_elevatorL.getEncoder().getPosition() > 1) {
+            _elevatorL.set(-.5);
+        } else {
+            _elevatorL.set(0);
+        }
     }
 
     private void feeder()
@@ -627,6 +634,7 @@ public class Jukebox extends Subsystem{
 
         switch (jukeboxCurrentState) {
             case MANUAL:
+            case CLIMB:
                 break;
             default:
                 handleShooterSpeed();
