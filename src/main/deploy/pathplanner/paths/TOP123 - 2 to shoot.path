@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.5040931765173085
+        "x": 8.082367714031202,
+        "y": 5.8679125808955845
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0729152120215795,
-        "y": 5.515804013063089
+        "x": 6.058949582687898,
+        "y": 7.024151513091758
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TOP123 - shoot to 2"
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5040931765173085
+        "x": 0.7836094545428531,
+        "y": 6.749544766695167
       },
       "prevControl": {
-        "x": 2.0400914981573175,
-        "y": 5.492382339971527
+        "x": 2.214455133135619,
+        "y": 7.125322419658925
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TOP123 - shoot position"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 37.56859202882752,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TOP123",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
