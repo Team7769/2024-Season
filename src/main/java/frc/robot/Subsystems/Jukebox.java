@@ -80,6 +80,11 @@ public class Jukebox extends Subsystem{
     private final double kClimbElevatorPosition = 0; // change this
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
+    private final double kPodiumSpeakerShotAngle = 6.3;
+    private final double kPodiumSpeakerShotSpeed = 38;
+    private final double kLineSpeakerShotAngle = 5.2;
+    private final double kLineSpeakerShotSpeed = 35;
+    private final double kHumanElementIntakeAngle = 9;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230;
@@ -114,8 +119,6 @@ public class Jukebox extends Subsystem{
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
     private final double kFeederIntake = 0.35;
-    private final double kPodiumSpeakerShotAngle = 6.3;
-    private final double kPodiumSpeakerShotSpeed = 38;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
@@ -473,7 +476,9 @@ public class Jukebox extends Subsystem{
             jukeboxPreviousState == JukeboxEnum.PREP_TRAP) {
 
             _feeder.set(-kFeederShootSpeed);
-        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_DEFAULT) {
+        } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
+                    jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
+                    jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE) {
             _feeder.set(kFeederShootSpeed);
         }
     }
@@ -526,9 +531,20 @@ public class Jukebox extends Subsystem{
     }
 
     /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
-    private void prepSpeakerDefault() {
+    private void prepSpeakerPodium() {
         setShooterAngle(kPodiumSpeakerShotAngle);
         setShooterSpeed(kPodiumSpeakerShotSpeed);
+        setElevatorPosition(0);
+    }
+
+    private void prepSpeakerLine() {
+        setShooterAngle(kLineSpeakerShotAngle);
+        setShooterSpeed(kLineSpeakerShotSpeed);
+        setElevatorPosition(0);
+    }
+
+    private void prepHumanIntake() {
+        setShooterAngle(kHumanElementIntakeAngle);
         setElevatorPosition(0);
     }
 
@@ -613,9 +629,14 @@ public class Jukebox extends Subsystem{
             case PREP_SPEAKER:
                 prepSpeaker();
                 break;
-            case PREP_SPEAKER_DEFAULT:
-                prepSpeakerDefault();
+            case PREP_SPEAKER_PODIUM:
+                prepSpeakerPodium();
                 break;
+            case PREP_SPEAKER_LINE:
+                prepSpeakerLine();
+                break;
+            case PREP_HUMAN_INTAKE:
+                prepHumanIntake();
             case PREP_AMP:
                 prepAmp();
                 break;
