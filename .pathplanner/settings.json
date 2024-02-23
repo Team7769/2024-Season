@@ -7,7 +7,9 @@
     "B paths",
     "Test paths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Mid Autons"
+  ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,
   "defaultMaxAngVel": 540.0,
