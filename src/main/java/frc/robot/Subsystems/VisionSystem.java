@@ -23,15 +23,15 @@ public class VisionSystem extends Subsystem{
     private static final double speakerTagHeight = 1.455;
     //height of the middle of the april tag on the speaker
 
+    private double _targetDistance = 0.0;
+    private double _targetAngle = 0.0;
+
 
     private static VisionSystem _instance;
     private LinearFilter limelightDistanceFilter = LinearFilter.singlePoleIIR(1/(2* Math.PI * filterDistanceError), 0.02);
 	private LinearFilter limelightAngleFilter = LinearFilter.singlePoleIIR(1/(2*Math.PI * filterAngleError), 0.02);
 
-    VisionSystem()
-    {
-
-    }
+    VisionSystem() {}
 
     public static VisionSystem getInstance() {
         if (_instance == null) {
@@ -41,31 +41,47 @@ public class VisionSystem extends Subsystem{
         return _instance;
     }
 
-    public double getTargetAngle()
-    {
+    public double getTargetAngle() {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        var tx = table.getEntry("tx").getDouble(0);  
+
+        double validTargets = table.getEntry("tv").getDouble(0);
+
+        // read targetangle regardless for smartdashboard data
+        double targetAngle = table.getEntry("tx").getDouble(0);
+
+        if (validTargets > 0) {
+            _targetAngle = targetAngle;
+        }
+ 
         //tx = limelightAngleFilter.calculate(tx);
-        SmartDashboard.putNumber("VisionSystemGetAngle", tx);
-        return tx;  
+
+        SmartDashboard.putNumber("VisionSystemGetAngle", targetAngle);
+
+        return _targetAngle;  
     }
 
-    public double getDistance()
-    {
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    public double getDistance() {
+        NetworkTable table = NetworkTableInstance
+            .getDefault()
+            .getTable("limelight");
+
+        // what is ty?
         var ty = table.getEntry("ty").getDouble(0) * 1.2; // constant
-        var tx = table.getEntry("tx").getDouble(0);
-        var tv = table.getEntry("tv").getDouble(0);
-        
-        if (tv != 0.0) {
-            double distance = .905 / Math.tan(Math.toRadians(ty)); // constant
-            double filterDistance = limelightDistanceFilter.calculate(distance);
-            SmartDashboard.putNumber("VisionSystemGetDistance", distance);
-            return filterDistance; 
-        }
-        else {
-            return 0.0;
-        }
-    }
 
+        double validTargets = table.getEntry("tv").getDouble(0);
+        
+        if (validTargets > 0) {
+            double distance = .905 / Math.tan(Math.toRadians(ty)); // constant
+
+            double filteredDistance = limelightDistanceFilter.calculate(
+                distance
+            );
+
+            SmartDashboard.putNumber("VisionSystemGetDistance", distance);
+
+            _targetDistance = filteredDistance;
+        }
+
+        return _targetDistance;
     }
+}
