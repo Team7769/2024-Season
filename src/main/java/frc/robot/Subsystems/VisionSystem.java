@@ -24,7 +24,7 @@ public class VisionSystem extends Subsystem{
     //height of the middle of the april tag on the speaker
 
     private double _targetDistance = 0.0;
-    private double _targetAngle = 0.0;
+    private double _targetAngle = 0.0; // dont need
 
 
     private static VisionSystem _instance;
@@ -49,13 +49,16 @@ public class VisionSystem extends Subsystem{
         // read targetangle regardless for smartdashboard data
         double targetAngle = table.getEntry("tx").getDouble(0);
 
+        SmartDashboard.putNumber("VisionSystemGetAngle", targetAngle);
+
         if (validTargets > 0) {
             _targetAngle = targetAngle;
+        } else {
+            // very hacky way 
+            return 7769.0;
         }
  
         //tx = limelightAngleFilter.calculate(tx);
-
-        SmartDashboard.putNumber("VisionSystemGetAngle", targetAngle);
 
         return _targetAngle;  
     }
@@ -83,5 +86,35 @@ public class VisionSystem extends Subsystem{
         }
 
         return _targetDistance;
+    }
+
+    public double[] getTargetingInfo() {
+        NetworkTable table = NetworkTableInstance
+            .getDefault()
+            .getTable("limelight");
+
+        double validTargets = table.getEntry("tv").getDouble(0);
+
+        double ty = table.getEntry("ty").getDouble(0.0) * 1.2; // constant
+
+        // read targetangle regardless for smartdashboard data
+        double targetAngle = table.getEntry("tx").getDouble(0.0);
+
+        double targetDistance = .905 / Math.tan(Math.toRadians(ty));
+
+        SmartDashboard.putNumber("VisionSystemGetAngle", targetAngle);
+        SmartDashboard.putNumber("VisionSystemGetDistance", targetDistance);
+
+        if (validTargets > 0.0) {
+            double filteredDistance = limelightDistanceFilter.calculate(
+                targetDistance
+            );
+
+            _targetDistance = filteredDistance;
+        }
+
+        double[] returnArray = {validTargets, _targetDistance, targetAngle};
+
+        return returnArray;
     }
 }

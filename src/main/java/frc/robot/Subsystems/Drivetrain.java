@@ -291,7 +291,13 @@ public class Drivetrain extends Subsystem{
         _drivePoseEstimator.resetPosition(_gyro.getRotation2d(), getModulePositions(), startingPose);
     }
 
-    public Pose2d getPose(){
+    public Pose2d getPose() {
         return _drivePoseEstimator.getEstimatedPosition();
+    }
+
+    public double getTargetAngleDifference(double targetAngle) {
+        double currentAngle = getGyroRotation().getDegrees();
+
+        return (currentAngle - targetAngle + 360) % 360;
     }
 }

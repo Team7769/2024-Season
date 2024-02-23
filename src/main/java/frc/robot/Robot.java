@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
 
+   private double _targetAngle;
+
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
@@ -115,7 +117,16 @@ public class Robot extends TimedRobot {
 
     if (_driverController.getRightBumper())
     {
-        rotation = -(_visionSystem.getTargetAngle() / 95) ;
+        double[] targetInfo = _visionSystem.getTargetingInfo();
+
+        double validTargets = targetInfo[0];
+        double targetAngle = targetInfo[2];
+
+        if (validTargets > 0.0) {
+          _targetAngle = targetAngle;
+        }
+
+        rotation = _drivetrain.getTargetAngleDifference(_targetAngle);
         //target angle range is -27 to 27 degrees
     }
 
