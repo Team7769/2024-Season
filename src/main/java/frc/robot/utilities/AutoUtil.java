@@ -21,10 +21,12 @@ public class AutoUtil {
                 return new TestAutonomous();
             case(MID_B_2_3):
                 return new midB23();
-            case(MID_B_4_5):
-                return new midB45();
             case(MID_B_3_4):
                 return new midB34();
+            case(MID_B_4_5):
+                return new midB45();
+            case(MID_B_3_4_5):
+                return new midB345();
             case(FIVE_NOTE):
                 return new FiveNote();            
         }
@@ -43,8 +45,9 @@ public class AutoUtil {
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
         _autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
-        _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
         _autoChooser.addOption("Mid B 3 4 (4)", MID_B_3_4);
+        _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
+        _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
         _autoChooser.addOption("Five Note", FIVE_NOTE);
     }
 
@@ -53,7 +56,8 @@ public class AutoUtil {
     public static final int DO_NOTHING = 0;
     public static final int TEST_AUTONOMOUS = 1;
     public static final int MID_B_2_3 = 2;
-    public static final int MID_B_4_5 = 3;
-    public static final int MID_B_3_4 = 4;
-    public static final int FIVE_NOTE = 5;
+    public static final int MID_B_3_4 = 3;
+    public static final int MID_B_4_5 = 4;
+    public static final int MID_B_3_4_5 = 5;
+    public static final int FIVE_NOTE = 6;
 }

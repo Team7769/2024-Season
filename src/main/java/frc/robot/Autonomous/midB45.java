@@ -66,7 +66,7 @@ public class midB45 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // resets and starts path to 3
+            // resets and starts path to 4
             case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -109,7 +109,7 @@ public class midB45 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // drives to 4
+            // drives to 5
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
