@@ -114,6 +114,8 @@ public class Jukebox extends Subsystem{
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
     private final double kFeederIntake = 0.35;
+    private final double kPodiumSpeakerShotAngle = 6.3;
+    private final double kPodiumSpeakerShotSpeed = 38;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
@@ -523,6 +525,13 @@ public class Jukebox extends Subsystem{
         // setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
+    /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
+    private void prepSpeakerDefault() {
+        setShooterAngle(kPodiumSpeakerShotAngle);
+        setShooterSpeed(kPodiumSpeakerShotSpeed);
+        setElevatorPosition(0);
+    }
+
     private void reset() {
         setShooterAngle(0.0);
         setShooterSpeed(0.0);
@@ -603,6 +612,9 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER:
                 prepSpeaker();
+                break;
+            case PREP_SPEAKER_DEFAULT:
+                prepSpeakerDefault();
                 break;
             case PREP_AMP:
                 prepAmp();

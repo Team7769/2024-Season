@@ -11,6 +11,9 @@ package frc.robot.Enums;
         /**Spins up the shooter for a speaker shot. */
         PREP_SPEAKER,
 
+        /**Spins up the shooter for a speaker shot from the podium (Doesn't use auto aim) */
+        PREP_SPEAKER_DEFAULT,
+
         /**Brings the jukebox to the amp scoring position. */
         PREP_AMP,
 
