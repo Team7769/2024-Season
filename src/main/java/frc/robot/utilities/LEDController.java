@@ -110,6 +110,12 @@ public class LEDController {
 
     public void handleLights(JukeboxEnum jukeboxCurrentState)
     {
+        _alliance = DriverStation.getAlliance();
+        if (_alliance.get() == DriverStation.Alliance.Blue) {
+            lowerCandle.setLEDs(0, 0, 255);   
+        } else {
+            lowerCandle.setLEDs(255, 0, 0);
+        }
         switch (jukeboxCurrentState) {
             case IDLE:
                 break;
@@ -128,14 +134,6 @@ public class LEDController {
             case CLIMB:
                 break;
             case MANUAL:
-                break;
-            default:
-                _alliance = DriverStation.getAlliance();
-                if (_alliance.get() == DriverStation.Alliance.Blue) {
-                    upperCandle.setLEDs(0, 0, 255);   
-                } else {
-                    upperCandle.setLEDs(255, 0, 0);
-                }
                 break;
         }
     }
