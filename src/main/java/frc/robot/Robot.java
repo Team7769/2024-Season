@@ -128,12 +128,23 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopJukebox() {
-        if (_jukebox.hasNote()) {
-          if (_operatorController.getLeftBumper()) {
+        if (_operatorController.getLeftBumper()) {
+          if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-          } else if (_operatorController.getRightBumper()) {
+        }  else if (_operatorController.getRightBumper()) {
+          if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_AMP);
-          }
+        } else if (_operatorController.getXButton()) {
+          if (_jukebox.hasNote())
+            _jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+        } else if (_operatorController.getYButton()) {
+          if (_jukebox.hasNote())
+            _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+        } else if (_operatorController.getBButton()) {
+          if (_jukebox.hasNote())
+            _jukebox.setState(JukeboxEnum.PREP_TRAP);
+        } else if (_operatorController.getAButton()) {
+          _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
         }
         
         if (_driverController.getLeftBumper()) {
@@ -148,11 +159,11 @@ public class Robot extends TimedRobot {
       }
 
   private void teleopIntake() {
-    if (_operatorController.getXButton()) {
+    if (_operatorController.getStartButton()) {
       // emergency eject
 
       _intake.setWantedState(IntakeState.EJECT);
-    } else if (_operatorController.getXButtonReleased()) {
+    } else if (_operatorController.getStartButtonReleased()) {
       // passive_eject is a default state and will automatically change to
       // intake if a note isnt held
 
