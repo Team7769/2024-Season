@@ -3,6 +3,8 @@
   "robotLength": 0.77,
   "holonomicMode": true,
   "pathFolders": [
+    "New Folder",
+    "TOP123",
     "5 Note",
     "B paths",
     "Test paths"

@@ -4,6 +4,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
+import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Jukebox;
 
 public class midB23 extends AutonomousMode{
     private PathFollower _pathFollower;    
@@ -17,6 +19,8 @@ public class midB23 extends AutonomousMode{
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
         _pathFollower = new PathFollower("MID B 2 3");
+        _intake = Intake.getInstance();
+        _jukebox = Jukebox.getInstance();
     }
 
     @Override

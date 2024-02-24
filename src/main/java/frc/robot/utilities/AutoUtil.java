@@ -28,7 +28,9 @@ public class AutoUtil {
             case(MID_B_3_4_5):
                 return new midB345();
             case(FIVE_NOTE):
-                return new FiveNote();            
+                return new FiveNote();     
+            case(TOP_1_2_3):
+                return new TOP123();       
         }
         
         return null;
@@ -49,6 +51,7 @@ public class AutoUtil {
         _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
         _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
         _autoChooser.addOption("Five Note", FIVE_NOTE);
+        _autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
     }
 
     // list of all auto modes 
@@ -60,4 +63,6 @@ public class AutoUtil {
     public static final int MID_B_4_5 = 4;
     public static final int MID_B_3_4_5 = 5;
     public static final int FIVE_NOTE = 6;
+    public static final int TOP_1_2_3 = 7;
+    
 }
