@@ -75,9 +75,10 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapElevatorPosition = 0; // change this
-    private final double kExtendClimbElevatorPosition = 0; // change this
-    private final double kClimbElevatorPosition = 0; // change this
+    private final double kTrapShooterAngle = 12;
+    private final double kTrapElevatorPosition = 70; // change this
+    private final double kExtendClimbElevatorPosition = 100; // change this
+    private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 6.3;
@@ -118,7 +119,7 @@ public class Jukebox extends Subsystem{
 
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
-    private final double kFeederIntake = 0.35;
+    private final double kFeederIntake = 0.2;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
@@ -497,7 +498,9 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        setShooterAngle(kFeedShooterAngle);
+        if (_elevatorL.getEncoder().getPosition() > 60) {
+            setShooterAngle(kTrapShooterAngle);
+        }
     }
 
     private void prepSpeaker() {
@@ -555,12 +558,20 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         setElevatorPosition(kExtendClimbElevatorPosition);
+        setShooterAngle(kExtendClimbShooterAngle);
     }
 
     private void climb() {
-        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) return;
-
-        setElevatorPosition(kClimbElevatorPosition);
+        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
+            return;
+        }
+        setElevatorPosition(.1);
+        _elevatorProfileSetpoint = new TrapezoidProfile.State();
+        if (_elevatorL.getEncoder().getPosition() > .1) {
+            _elevatorL.set(-.5);
+        } else {
+            _elevatorL.set(0);
+        }
     }
 
     private void feeder()
@@ -659,6 +670,7 @@ public class Jukebox extends Subsystem{
 
         switch (jukeboxCurrentState) {
             case MANUAL:
+            case CLIMB:
                 break;
             default:
                 handleShooterSpeed();

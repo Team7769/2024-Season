@@ -20,18 +20,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 5"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "start 5 to b"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "start b to 4"
           }
         },
@@ -40,10 +28,22 @@
           "data": {
             "pathName": "start 4 to b"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 5 to b"
+          }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Mid Autons",
   "choreoAuto": false
 }
