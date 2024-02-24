@@ -111,6 +111,32 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Jukebox current state",
+              "_title": "/SmartDashboard/Jukebox current state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Jukebox previous state",
+              "_title": "/SmartDashboard/Jukebox previous state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -269,9 +295,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -4.0,
+    "x": -4.800000190734863,
     "y": 4.800000190734863,
-    "width": 1548.800048828125,
+    "width": 1549.5999755859375,
     "height": 713.5999755859375
   }
 }
