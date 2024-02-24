@@ -21,7 +21,7 @@ public class bottomAutoMode extends AutonomousMode{
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("Auto Bottom 5");
+        _pathFollower = new PathFollower("Bottom Path1");
         resetLoopTimer();
     }
 
@@ -36,9 +36,10 @@ public class bottomAutoMode extends AutonomousMode{
                 nextStep();
                 break;
             case 1:
-                if (_jukebox.isReadyToScore())
+                if (_jukebox.isReadyToScore()){
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
+                }
                 break;
             case 2:
                 if (!_jukebox.hasNote())
@@ -60,29 +61,7 @@ public class bottomAutoMode extends AutonomousMode{
                 }
                 break;
             case 4:
-                if (_jukebox.hasNote())
-                {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                    nextStep();
-                }
-                break;
-            case 5:
-                if (_jukebox.isReadyToScore()){
-                    _jukebox.setState(JukeboxEnum.SCORE);
-                    nextStep();
-                }
-                break;
-            case 6:
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-
-                    // Start Path to Note 4 mid
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
-                    nextStep();
-                }
-                break;
-            case 7:
-                // Follow Path to Note 4 mid
+                // Follow Path back to note 5
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished())
                 {
@@ -90,25 +69,60 @@ public class bottomAutoMode extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            case 8:
-                if (_jukebox.hasNote()){
+            case 5:
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    nextStep();
+                }
+                break;
+            case 6:
+                if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 7:
+                if (!_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    nextStep();
+                }
+                break;
+            case 8:
+                // Follow Path to Note 4
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished())
+                {
+                    _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
                 break;
             case 9:
-                if (_jukebox.isReadyToScore()){
-                    _jukebox.setState(JukeboxEnum.SCORE);
+                // Follow Path back to Goal
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished())
+                {
+                    _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
                 break;
             case 10:
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    nextStep();
+                }
+            case 11:
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 12:
                 if (!_jukebox.hasNote()){
                     _jukebox.setState(JukeboxEnum.IDLE);
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
-                break;
             default:
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
@@ -122,7 +136,7 @@ public class bottomAutoMode extends AutonomousMode{
 
     @Override
     public boolean isComplete(){
-        return _count >= 11;
+        return _count >= 13;
     }
     @Override
     public void initialize(){
