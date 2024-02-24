@@ -39,12 +39,14 @@ public class Robot extends TimedRobot {
    private AutonomousMode _currentAuto;
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
+   private LEDController _ledController;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
     _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
+    _ledController = LEDController.getInstance();
 
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
@@ -172,6 +174,7 @@ public class Robot extends TimedRobot {
 
     if (_driverController.getBackButtonPressed()) {
       _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+
     }
     if (_driverController.getStartButtonPressed()) {
       _jukebox.setState(JukeboxEnum.CLIMB);
