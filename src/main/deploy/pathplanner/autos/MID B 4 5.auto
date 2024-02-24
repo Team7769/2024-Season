@@ -20,18 +20,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "start 3 to b"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "start b to 4"
           }
         },
@@ -39,6 +27,18 @@
           "type": "path",
           "data": {
             "pathName": "start 4 to b"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 5 to b"
           }
         }
       ]

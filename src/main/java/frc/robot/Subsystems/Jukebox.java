@@ -75,36 +75,35 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapElevatorPosition = 0; // change this
-    private final double kExtendClimbElevatorPosition = 0; // change this
-    private final double kClimbElevatorPosition = 0; // change this
+    private final double kTrapShooterAngle = 12;
+    private final double kTrapElevatorPosition = 70; // change this
+    private final double kExtendClimbElevatorPosition = 100; // change this
+    private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 230; // change
-    private final double kElevatorMaxAcceleration = 230; // change
+    private final double kElevatorMaxVelocity = 230;
+    private final double kElevatorMaxAcceleration = 230;
     private final double kElevatorFeedForwardKs = 0.23312;
     private final double kElevatorFeedForwardKv = 0.11903;
     private final double kElevatorFeedForwardKg = 0.12293;
     private final double kElevatorFeedForwardKp = 0.01;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 50; // change
-    private final double kShooterAngleMaxAcceleration = 50; // change
-    private final double kShooterAngleFeedForwardKs = 0.31777; // change
-    private final double kShooterAngleFeedForwardKv = 0.090231; // change
-    private final double kShooterAngleFeedForwardkG = 0.035019; // change
-    private final double kShooterAngleFeedForwardKp = 0.05; // change
-    private final double kShooterAngleFeedForwardAngle = .1785; // change
-    // im confused on what a feed forward angle is
+    private final double kShooterAngleMaxVelocity = 50;
+    private final double kShooterAngleMaxAcceleration = 50;
+    private final double kShooterAngleFeedForwardKs = 0.31777;
+    private final double kShooterAngleFeedForwardKv = 0.090231;
+    private final double kShooterAngleFeedForwardkG = 0.035019;
+    private final double kShooterAngleFeedForwardKp = 0.05;
+    private final double kShooterAngleFeedForwardAngle = .1785;
     
     // Shooter Control Constants
-    private final double kShooterFeedForwardKs = 0.37431; // change
-    private final double kShooterFeedForwardKv = 0.14253; // change
+    private final double kShooterFeedForwardKs = 0.37431;
+    private final double kShooterFeedForwardKv = 0.14253;
     
-    private final double kShooterFeedForwardKp = .001; // change
-    //private final double kShooterFeedForwardKp = .047489; // change
+    private final double kShooterFeedForwardKp = .001;
 
     private final int kLowStallLimit = 20;
     private final int kHighStallLimit = 80;
@@ -115,19 +114,12 @@ public class Jukebox extends Subsystem{
 
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
-    private final double kFeederIntake = 0.35;
+    private final double kFeederIntake = 0.2;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
     private final double[] kShooterSpeeds = {35, 37, 38, 41, 44};
 
-
-    // private final double kMaxOutput = 1.00;
-    // private final double kMinOutput = -1.00;
-    // private final double kMaxVel = 5;
-    // private final double kMaxAccel = 5;
-    // private final double kAllowedError = 3;
-    // private final double speedToHoldElevator = 0.0;
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
     private double _manualShooterAngleSpeed;
@@ -138,6 +130,7 @@ public class Jukebox extends Subsystem{
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
     private double _dashboardShooterRPercent =  1.0;
+    private double _shooterSetpointRpm = 0.0;
 
     public Jukebox()
     {
@@ -427,16 +420,17 @@ public class Jukebox extends Subsystem{
         );
         double calculatedFeedForwardR = _shooterFeedForward.calculate(_shooterSetpoint * _dashboardShooterRPercent);
 
-        var rpm = _shooterSetpoint * 60;
+        _shooterSetpointRpm = _shooterSetpoint * 60;
 
-        _shooterController.setReference(rpm,
+        _shooterController.setReference(_shooterSetpointRpm,
                                         CANSparkBase.ControlType.kVelocity,
                                         0,
                                         calculatedFeedForward);
-        _shooterRController.setReference(rpm * _dashboardShooterRPercent,
+        _shooterRController.setReference(_shooterSetpointRpm * _dashboardShooterRPercent,
                                         CANSparkBase.ControlType.kVelocity,
                                         0,
                                         calculatedFeedForwardR);
+        SmartDashboard.putNumber("shooterSetpointRpm", _shooterSetpointRpm);
         SmartDashboard.putNumber("shooterFeedforward", calculatedFeedForward);
     }
 
@@ -497,7 +491,9 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        setShooterAngle(kFeedShooterAngle);
+        if (_elevatorL.getEncoder().getPosition() > 60) {
+            setShooterAngle(kTrapShooterAngle);
+        }
     }
 
     private void prepSpeaker() {
@@ -537,12 +533,20 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         setElevatorPosition(kExtendClimbElevatorPosition);
+        setShooterAngle(kExtendClimbShooterAngle);
     }
 
     private void climb() {
-        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) return;
-
-        setElevatorPosition(kClimbElevatorPosition);
+        if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
+            return;
+        }
+        setElevatorPosition(.1);
+        _elevatorProfileSetpoint = new TrapezoidProfile.State();
+        if (_elevatorL.getEncoder().getPosition() > .1) {
+            _elevatorL.set(-.5);
+        } else {
+            _elevatorL.set(0);
+        }
     }
 
     private void feeder()
@@ -633,6 +637,7 @@ public class Jukebox extends Subsystem{
 
         switch (jukeboxCurrentState) {
             case MANUAL:
+            case CLIMB:
                 break;
             default:
                 handleShooterSpeed();
@@ -669,10 +674,31 @@ public class Jukebox extends Subsystem{
         return jukeboxCurrentState;
     }
 
+    public boolean isReadyToScore() {
+        switch (jukeboxCurrentState) {
+            case PREP_AMP:
+            case PREP_TRAP:
+                // Logic if Prep Amp/Trap is ready to score
+                break;
+            case PREP_SPEAKER:
+                // Error is the absolute value of the difference between Target and Actual 
+                var shooterError = Math.abs(_shooterSetpointRpm - _shooterL.getEncoder().getVelocity());
+                var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
+
+                // TODO: These error numbers need to tuned/configured. 
+                // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
+                return (shooterError <= 350 && angleError <= 1);
+            default:
+                return false;
+        }
+
+        return false;
+    }
+
     public void logTelemetry() {
         _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
         _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
-        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.0);
+        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 1.0);
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());

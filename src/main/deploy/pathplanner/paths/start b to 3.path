@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 2.6,
-        "y": 5.5
+        "y": 5.5040931765173085
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.086894100958014,
-        "y": 5.3391139159858785
+        "y": 5.343207092503187
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note B"
     },
     {
       "anchor": {
@@ -20,12 +20,12 @@
         "y": 4.403274541213847
       },
       "prevControl": {
-        "x": 4.690847991767847,
-        "y": 5.229382297757883
+        "x": 4.581343028591905,
+        "y": 4.941973022319797
       },
       "nextControl": {
-        "x": 5.2400010283335146,
-        "y": 3.7757419068487645
+        "x": 5.416364554580992,
+        "y": 3.87500107244485
       },
       "isLocked": false,
       "linkedName": null
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note 3"
     }
   ],
   "rotationTargets": [],
