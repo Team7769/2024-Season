@@ -20,25 +20,29 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "start 3 to b"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "start b to 4"
           }
         },
         {
           "type": "path",
           "data": {
+<<<<<<< HEAD:src/main/deploy/pathplanner/autos/MID B 5 4.auto
+            "pathName": null
+=======
             "pathName": "start 4 to b"
+>>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea:src/main/deploy/pathplanner/autos/MID B 4 5.auto
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start b to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start 5 to b"
           }
         }
       ]

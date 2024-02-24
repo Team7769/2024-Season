@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5040931765173085
+      "x": 0.7218158264581296,
+      "y": 6.740728186286426
     },
-    "rotation": 0
+    "rotation": 59.81427759857552
   },
   "command": {
     "type": "sequential",
@@ -14,31 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start mid to b"
+            "pathName": "TOP12A - top to 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 5"
+            "pathName": "TOP12A - 1 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "TOP12A - shoot to 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 4"
+            "pathName": "TOP12A - 2 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 4 to b"
+            "pathName": "TOP12A - shoot to a"
           }
         }
       ]

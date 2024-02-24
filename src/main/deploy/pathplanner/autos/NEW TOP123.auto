@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5040931765173085
+      "x": 0.7547034812379487,
+      "y": 6.677279833432906
     },
-    "rotation": 0
+    "rotation": 57.52880770915153
   },
   "command": {
     "type": "sequential",
@@ -14,36 +14,36 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start mid to b"
+            "pathName": "NEW TOP123 - top to 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
+            "pathName": "NEW TOP123 - 1 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 3 to b"
+            "pathName": "NEW TOP123 - shoot to 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 4"
+            "pathName": "NEW TOP123 - 2 to shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 4 to b"
+            "pathName": "NEW TOP123 - shoot to 3"
           }
         }
       ]
     }
   },
-  "folder": "Mid Autons",
+  "folder": null,
   "choreoAuto": false
 }

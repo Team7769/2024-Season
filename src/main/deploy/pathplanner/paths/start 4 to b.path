@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 2.4
+        "x": 8.082883155780575,
+        "y": 2.5529623669803687
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.168530605249513,
-        "y": 3.1846260485673614
+        "x": 7.181148741755401,
+        "y": 3.290745069364603
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note 4"
     },
     {
       "anchor": {
-        "x": 4.897535615328005,
-        "y": 4.286166175756032
+        "x": 5.049776490423166,
+        "y": 4.344720358484939
       },
       "prevControl": {
-        "x": 5.951510904448341,
-        "y": 3.6654918388296123
+        "x": 5.764137519715837,
+        "y": 3.911419406291023
       },
       "nextControl": {
-        "x": 4.262438150532745,
-        "y": 4.660168016135462
+        "x": 4.461738397602841,
+        "y": 4.701399201671038
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5
+        "x": 2.894982565999367,
+        "y": 5.550936522700434
       },
       "prevControl": {
-        "x": 3.4169287814713263,
-        "y": 5.481642049854576
+        "x": 3.7119113474706933,
+        "y": 5.5325785725550105
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note B"
     }
   ],
   "rotationTargets": [],
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B paths",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": true
 }

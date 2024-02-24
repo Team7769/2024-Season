@@ -21,14 +21,22 @@ public class AutoUtil {
                 return new TestAutonomous();
             case(MID_B_2_3):
                 return new midB23();
-            case(MID_B_5_4):
-                return new midB54();
-            case(MID_B_4_5):
+            case(MID_B_3_4):
                 return new midB34();
+            case(MID_B_4_5):
+                return new midB45();
+            case(MID_B_3_4_5):
+                return new midB345();
             case(FIVE_NOTE):
+<<<<<<< HEAD
                 return new FiveNote();  
             case (BOTTOM_NOTE):
                 return new bottomAutoMode();          
+=======
+                return new FiveNote();     
+            case(TOP_1_2_3):
+                return new TOP123();       
+>>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea
         }
         
         return null;
@@ -45,10 +53,15 @@ public class AutoUtil {
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
         _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
         _autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
-        _autoChooser.addOption("Mid B 5 4 (4)", MID_B_5_4);
-        _autoChooser.addOption("Mid B 3 4 (4)", MID_B_4_5);
+        _autoChooser.addOption("Mid B 3 4 (4)", MID_B_3_4);
+        _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
+        _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
         _autoChooser.addOption("Five Note", FIVE_NOTE);
+<<<<<<< HEAD
         _autoChooser.addOption("Bottom Note", BOTTOM_NOTE);
+=======
+        _autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
+>>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea
     }
 
     // list of all auto modes 
@@ -56,8 +69,15 @@ public class AutoUtil {
     public static final int DO_NOTHING = 0;
     public static final int TEST_AUTONOMOUS = 1;
     public static final int MID_B_2_3 = 2;
-    public static final int MID_B_5_4 = 3;
+    public static final int MID_B_3_4 = 3;
     public static final int MID_B_4_5 = 4;
+<<<<<<< HEAD
     public static final int FIVE_NOTE = 5;
     public static final int BOTTOM_NOTE = 10;
+=======
+    public static final int MID_B_3_4_5 = 5;
+    public static final int FIVE_NOTE = 6;
+    public static final int TOP_1_2_3 = 7;
+    
+>>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea
 }

@@ -1,19 +1,20 @@
 package frc.robot.Autonomous;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import frc.robot.Enums.IntakeState;
-import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
 
-public class midB34 extends AutonomousMode{
+public class midB345 extends AutonomousMode{
+
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
-    private Intake _intake;
     private Jukebox _jukebox;
-    private int _count;    
+    private Intake _intake;
+    private int _count;
 
-    public midB34(){
+    public midB345()
+    {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
@@ -140,6 +141,38 @@ public class midB34 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
                 }
                 break;
+            // drives to 5
+            case 15:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // drives back to B
+            case 16:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                }
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // shoots at b
+            case 17:
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 18:
+                if (!_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                }
+                break;
         }
     }
 
@@ -148,7 +181,7 @@ public class midB34 extends AutonomousMode{
 
     @Override
     public boolean isComplete(){
-        return _count >= 15;
+        return _count >= 19;
     }
     @Override
     public void initialize(){

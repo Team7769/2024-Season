@@ -3,6 +3,8 @@
   "robotLength": 0.77,
   "holonomicMode": true,
   "pathFolders": [
+    "New Folder",
+    "TOP123",
     "5 Note",
     "B paths",
     "New Folder",
@@ -11,6 +13,12 @@
   "autoFolders": [
     "New Folder"
   ],
+<<<<<<< HEAD
+=======
+  "autoFolders": [
+    "Mid Autons"
+  ],
+>>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,
   "defaultMaxAngVel": 540.0,
