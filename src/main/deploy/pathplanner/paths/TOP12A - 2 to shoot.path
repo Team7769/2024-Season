@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.38,
-        "y": 5.53
+        "x": 8.082367714031202,
+        "y": 5.8679125808955845
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9517188577234295,
-        "y": 5.060897347508982
+        "x": 6.058949582687898,
+        "y": 7.024151513091758
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TOP123 - shoot to 2"
     },
     {
       "anchor": {
-        "x": 2.53840850538844,
-        "y": 4.30988061976124
+        "x": 0.7836094545428531,
+        "y": 6.749544766695167
       },
       "prevControl": {
-        "x": 2.0253274792263873,
-        "y": 4.632388693348815
+        "x": 2.214455133135619,
+        "y": 7.125322419658925
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5 Note - Note C"
+      "linkedName": "TOP123 - shoot position"
     }
   ],
   "rotationTargets": [],
@@ -33,17 +33,17 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -26.56505117707802,
+    "rotation": 37.56859202882752,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5 Note",
+  "folder": "TOP123",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
