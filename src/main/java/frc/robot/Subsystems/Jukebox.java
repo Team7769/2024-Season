@@ -628,6 +628,10 @@ public class Jukebox extends Subsystem{
         return _inNoteHolder || _inNoteShooter;
     }
 
+    public double getElevatorPosition() {
+        return _elevatorL.getEncoder().getPosition();
+    }
+
     public void handleCurrentState()
     {
         switch(jukeboxCurrentState) {

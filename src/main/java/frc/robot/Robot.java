@@ -184,6 +184,10 @@ public class Robot extends TimedRobot {
     }
     if (_driverController.getStartButtonPressed()) {
       _jukebox.setState(JukeboxEnum.CLIMB);
+    } else if (_driverController.getBackButtonReleased()) {
+      if (_jukebox.getElevatorPosition() > .1) {
+        _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+      }
     }
 
     if (_operatorController.getBButton()) {
