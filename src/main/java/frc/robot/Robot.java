@@ -38,6 +38,8 @@ public class Robot extends TimedRobot {
    private AutonomousMode _currentAuto;
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
+   private boolean _eject;
+   private boolean _ejectHeld;
 
   @Override
   public void robotInit() {
@@ -109,11 +111,13 @@ public class Robot extends TimedRobot {
         Constants.RotAxis_outputTable, 
         _driverController.getRightX());
 
+    _eject = Math.abs(_driverController.getRightTriggerAxis()) > 0.25;
+
     if (_driverController.getBButton() && _driverController.getAButton()) {
       _drivetrain.reset();
     }
 
-    if (_driverController.getRightBumper())
+    if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
         rotation = -(_visionSystem.getTargetAngle() / 95) ;
         //target angle range is -27 to 27 degrees
@@ -128,10 +132,10 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopJukebox() {
-        if (_operatorController.getLeftBumper()) {
+        if (Math.abs(_operatorController.getLeftTriggerAxis()) > 0.25) {
           if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-        }  else if (_operatorController.getRightBumper()) {
+        }  else if (Math.abs(_operatorController.getRightTriggerAxis()) > 0.25) {
           if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_AMP);
         } else if (_operatorController.getXButton()) {
@@ -146,12 +150,13 @@ public class Robot extends TimedRobot {
         } else if (_operatorController.getAButton()) {
           _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
         }
-        
-        if (_driverController.getLeftBumper()) {
+
+        if (_eject) {
           _jukebox.setState(JukeboxEnum.SCORE);
-        } else if (_driverController.getLeftBumperReleased()) {
+        } else if (_ejectHeld) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
+        _ejectHeld = _eject;
 
         if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
@@ -161,12 +166,11 @@ public class Robot extends TimedRobot {
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {
       // emergency eject
-
+      _jukebox.setState(JukeboxEnum.EJECT);
       _intake.setWantedState(IntakeState.EJECT);
     } else if (_operatorController.getStartButtonReleased()) {
       // passive_eject is a default state and will automatically change to
       // intake if a note isnt held
-
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
   }

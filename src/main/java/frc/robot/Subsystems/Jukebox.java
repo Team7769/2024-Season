@@ -86,6 +86,7 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
+    private final double kEmergancyEjectElevatorPosition = 10;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230;
@@ -574,6 +575,10 @@ public class Jukebox extends Subsystem{
         }
     }
 
+    private void emergancyEject() {
+        setElevatorPosition(kEmergancyEjectElevatorPosition);
+    }
+
     private void feeder()
     {
         if (_inNoteShooter) {
@@ -660,6 +665,8 @@ public class Jukebox extends Subsystem{
                 break;
             case RESET:
                 reset();
+            case EJECT:
+                emergancyEject();
                 break;
             case EXTEND_FOR_CLIMB:
                 extendForClimb();

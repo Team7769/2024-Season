@@ -7,6 +7,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.path.PathPlannerTrajectory.State;
+import com.pathplanner.lib.util.GeometryUtil;
 import com.pathplanner.lib.util.PIDConstants;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -76,7 +77,12 @@ public class PathFollower {
     }
 
     public Pose2d getStartingPose() {
-        return _startingPose;
+        var alliance = DriverStation.getAlliance();
+        var shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
+
+        var startingPose = shouldFlipPath ? _startingPose : GeometryUtil.flipFieldPose(_startingPose);
+
+        return startingPose;
     }
 
     public boolean isPathFinished() {
