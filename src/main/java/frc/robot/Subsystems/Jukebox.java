@@ -76,7 +76,7 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     private final double kTrapShooterAngle = 12;
-    private final double kTrapElevatorPosition = 70; // change this
+    private final double kTrapElevatorPosition = 90; // change this
     private final double kExtendClimbElevatorPosition = 100; // change this
     private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
@@ -498,7 +498,7 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        if (_elevatorL.getEncoder().getPosition() > 60) {
+        if (_elevatorL.getEncoder().getPosition() > 85) {
             setShooterAngle(kTrapShooterAngle);
         }
     }
