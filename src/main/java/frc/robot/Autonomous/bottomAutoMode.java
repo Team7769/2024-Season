@@ -84,6 +84,7 @@ public class bottomAutoMode extends AutonomousMode{
             case 7:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
+                    // start bottom to note 4 center
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
@@ -131,8 +132,7 @@ public class bottomAutoMode extends AutonomousMode{
     }
 
     @Override
-    public void abort()
-    {}
+    public void abort(){}
 
     @Override
     public boolean isComplete(){
