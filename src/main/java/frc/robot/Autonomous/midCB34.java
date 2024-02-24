@@ -47,11 +47,11 @@ public class midCB34 extends AutonomousMode {
 
                 break;
             case 3:
-                // Follow Path to Note C (1)
+                // Follow Path to Note C 
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
-                    // At Note C (1)
+                    // At Note C 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -76,18 +76,18 @@ public class midCB34 extends AutonomousMode {
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
-                    // Start Path to Note B (2)
+                    // Start Path to Note B 
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
 
                 break;
             case 7:
-                // Follow Path to Note B (2)
+                // Follow Path to Note B
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
-                    // At Note B (2)
+                    // At Note B
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -153,7 +153,7 @@ public class midCB34 extends AutonomousMode {
                     nextStep();
                 }
                 break;
-            // drives to 5
+            // drives to 4
             case 15:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
