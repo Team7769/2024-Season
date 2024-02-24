@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7547034812379487,
+      "y": 6.677279833432906
+    },
+    "rotation": 57.52880770915153
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW TOP123 - top to 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW TOP123 - 1 to shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW TOP123 - shoot to 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW TOP123 - 2 to shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW TOP123 - shoot to 3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

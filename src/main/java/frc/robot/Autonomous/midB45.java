@@ -1,23 +1,24 @@
 package frc.robot.Autonomous;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import frc.robot.Enums.IntakeState;
-import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
 
-public class midB34 extends AutonomousMode{
+public class midB45 extends AutonomousMode{
+
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
-    private Intake _intake;
     private Jukebox _jukebox;
-    private int _count;    
+    private Intake _intake;
+    private int _count;
 
-    public midB34(){
+    public midB45()
+    {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("MID B 3 4 5");
+        _pathFollower = new PathFollower("MID B 4 5");
     }
 
     @Override
@@ -65,7 +66,7 @@ public class midB34 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // resets and starts path to 3
+            // resets and starts path to 4
             case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -108,7 +109,7 @@ public class midB34 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // drives to 4
+            // drives to 5
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){

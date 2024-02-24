@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5
+        "x": 2.894982565999367,
+        "y": 5.550936522700434
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.086894100958014,
-        "y": 5.3391139159858785
+        "x": 3.381876666957381,
+        "y": 5.390050438686313
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note B"
     },
     {
       "anchor": {
-        "x": 5.002933144240039,
-        "y": 4.403274541213847
+        "x": 5.120041509697854,
+        "y": 4.333009521939157
       },
       "prevControl": {
-        "x": 4.690847991767847,
-        "y": 5.229382297757883
+        "x": 4.355617823752595,
+        "y": 4.5936085057841325
       },
       "nextControl": {
-        "x": 5.2400010283335146,
-        "y": 3.7757419068487645
+        "x": 5.63531831771224,
+        "y": 4.157346973752435
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.1,
-        "y": 3.95
+        "x": 8.27025654051308,
+        "y": 4.087081954477746
       },
       "prevControl": {
-        "x": 7.631872271291712,
-        "y": 3.95
+        "x": 7.802128811804792,
+        "y": 4.087081954477746
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note 3"
     }
   ],
   "rotationTargets": [],
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B paths",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": true
 }

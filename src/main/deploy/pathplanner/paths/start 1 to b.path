@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5
+        "x": 2.894982565999367,
+        "y": 5.550936522700434
       },
       "prevControl": {
-        "x": 4.3097821356841,
-        "y": 5.617108365457815
+        "x": 4.604764701683466,
+        "y": 5.668044888158249
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid - note B"
     }
   ],
   "rotationTargets": [],
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B paths",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": true
 }
