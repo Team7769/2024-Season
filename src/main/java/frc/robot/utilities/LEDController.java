@@ -14,6 +14,7 @@ public class LEDController {
     private SingleFadeAnimation idleAnimation;
     private Animation packingHeat;
     private Animation fire;
+    private Animation climb;
     private int underNumLeds;
     private int jukeboxNumLeds;
 
@@ -21,8 +22,8 @@ public class LEDController {
     {
         underNumLeds = 100;
         jukeboxNumLeds = 100;
-        underCandle = new CANdle(Constants.kUnderCANdleId);
-        jukeboxCandle1 = new CANdle(Constants.kJukeboxCANdleId);
+        underCandle = new CANdle(0);
+        jukeboxCandle1 = new CANdle(1);
         config = new CANdleConfiguration();
         // not holding note
         idleAnimation = new SingleFadeAnimation(0, 0, 255, 0, .5, underNumLeds);
@@ -30,6 +31,8 @@ public class LEDController {
         packingHeat = new FireAnimation(.5, .5, underNumLeds, 1, .5, false, 0);
         // shooter animation
         fire = new ColorFlowAnimation(0, 255, 0, 0, .1, jukeboxNumLeds, Direction.Forward);
+        // climbing animation
+        climb = new ColorFlowAnimation(8, 255, 255, 0, .1, jukeboxNumLeds, Direction.Forward);
     }
 
     public static LEDController getInstance()

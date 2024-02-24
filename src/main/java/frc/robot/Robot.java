@@ -37,11 +37,7 @@ public class Robot extends TimedRobot {
    private XboxController _operatorController;
    private SendableChooser<Integer> _autoChooser = new SendableChooser<>();
    private AutonomousMode _currentAuto;
-<<<<<<< HEAD
-   private LEDController _ledController;
-=======
    private VisionSystem _visionSystem;
->>>>>>> 00feac24ac0d64704a5ddeeebd83a84b38935aa4
    private Jukebox _jukebox;
 
   @Override
@@ -65,12 +61,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     _drivetrain.logTelemetry();
-<<<<<<< HEAD
-    _ledController.idleLights();  
-=======
     _jukebox.logTelemetry();
     _intake.logTelemetry();
->>>>>>> 00feac24ac0d64704a5ddeeebd83a84b38935aa4
   }
 
   @Override
