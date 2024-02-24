@@ -158,7 +158,7 @@ public class Drivetrain extends Subsystem{
 
         _drivePoseEstimator.updateWithTime(
             Timer.getFPGATimestamp(),
-            getGyroRotation(),
+            getGyroRotationWithOffset(),
             new SwerveModulePosition[] {
                 _frontLeftModule.getPosition(),
                 _frontRightModule.getPosition(),
@@ -288,7 +288,7 @@ public class Drivetrain extends Subsystem{
     public void setStartingPose(Pose2d startingPose) {
         _gyroOffset = startingPose.getRotation().getDegrees();
         SmartDashboard.putNumber("startingPoseRotation", startingPose.getRotation().getDegrees());
-        _drivePoseEstimator.resetPosition(_gyro.getRotation2d(), getModulePositions(), startingPose);
+        _drivePoseEstimator.resetPosition(getGyroRotationWithOffset(), getModulePositions(), startingPose);
     }
 
     public Pose2d getPose(){

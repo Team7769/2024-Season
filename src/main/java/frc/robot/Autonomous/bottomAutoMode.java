@@ -46,7 +46,7 @@ public class bottomAutoMode extends AutonomousMode{
                 {
                     _jukebox.setState(JukeboxEnum.IDLE);
                     // Start Path to Note 5 mid
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
                     nextStep();
 
                 }
@@ -56,6 +56,7 @@ public class bottomAutoMode extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished())
                 {
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -94,6 +95,7 @@ public class bottomAutoMode extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished())
                 {
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
