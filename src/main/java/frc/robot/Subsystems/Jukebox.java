@@ -76,8 +76,8 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     private final double kTrapShooterAngle = 12;
-    private final double kTrapElevatorPosition = 90; // change this
-    private final double kExtendClimbElevatorPosition = 100; // change this
+    private final double kTrapElevatorPosition = 80; // change this
+    private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
@@ -498,7 +498,7 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        if (_elevatorL.getEncoder().getPosition() > 85) {
+        if (_elevatorL.getEncoder().getPosition() > 75) {
             setShooterAngle(kTrapShooterAngle);
         }
     }
@@ -715,12 +715,12 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER:
                 // Error is the absolute value of the difference between Target and Actual 
-                var shooterError = Math.abs(_shooterSetpointRpm - _shooterL.getEncoder().getVelocity());
+                var shooterError = Math.abs((_shooterSetpointRpm + 300) - _shooterL.getEncoder().getVelocity());
                 var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return (shooterError <= 350 && angleError <= 1);
+                return (shooterError <= 75 && angleError <= .75);
             default:
                 return false;
         }
@@ -780,5 +780,6 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
         SmartDashboard.putNumber("dashboardShooterRPercent", _dashboardShooterRPercent);
+        SmartDashboard.putBoolean("shooterReady", isReadyToScore());
     }
 }
