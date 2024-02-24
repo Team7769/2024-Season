@@ -8,40 +8,68 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
 
     private static LEDController _instance;
 
     private CANdle upperCandle;
-    private CANdle lowerCandle;
+    // private CANdle lowerCandle;
 
     private CANdleConfiguration config;
     private SingleFadeAnimation idleAnimation;
 
     private Optional<Alliance> _alliance;
 
-    private Animation packingHeat;
-    private Animation fire;
-    private Animation climbLights;
+    // Animation for Jukebox state
+    private Animation IDLE_LIGHTS;
+    private Animation SCORE_LIGHTS;
+    private Animation PREP_SPEAKER_LIGHTS;
+    private Animation PREP_AMP_LIGHTS;
+    private Animation PREP_TRAP_LIGHTS;
+    private Animation RESET_LIGHTS;
+    private Animation EXTEND_FOR_CLIMB_LIGHTS;    
+    private Animation CLIMB_LIGHTS;
+    private Animation MANUAL_LIGHTS;
+
 
     private int underNumLeds;
     private int jukeboxNumLeds;
+
+    private Jukebox jukebox;
 
     public LEDController()
     {
         underNumLeds = 100;
         jukeboxNumLeds = 100;
         upperCandle = new CANdle(15);
-        lowerCandle = new CANdle(0); // TBD
+        // lowerCandle = new CANdle(0); // TBD
         config = new CANdleConfiguration();
 
-        // holding note
-        packingHeat = new FireAnimation(.5, .5, underNumLeds, 1, .5, false, 0);
-        // shooter animation
-        fire = new ColorFlowAnimation(0, 255, 0, 0, .1, jukeboxNumLeds, Direction.Forward);
-        // climbing animation
-        climbLights = new ColorFlowAnimation(8, 255, 255, 0, .1, jukeboxNumLeds, Direction.Forward);
+
+        // animation for IDLE --color is Pure White
+        IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for SCORE --color is Green
+        SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for PREP_SPEAKER --color is Turquoise
+        PREP_SPEAKER_LIGHTS = new ColorFlowAnimation(0, 255, 255, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for PREP_AMP --color is Indigo
+        PREP_AMP_LIGHTS = new ColorFlowAnimation(75, 0, 130, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for PREP_TRAP --color is Sunset Orange
+        PREP_TRAP_LIGHTS = new ColorFlowAnimation(255, 165, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for RESET --color is Magenta
+        RESET_LIGHTS = new ColorFlowAnimation(255, 0, 255, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for EXTEND_FOR_CLIMB --color is Lavender
+        EXTEND_FOR_CLIMB_LIGHTS = new ColorFlowAnimation(230, 230, 250, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for CLIMB --color is Gold
+        CLIMB_LIGHTS = new ColorFlowAnimation(255, 215, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        // animation for MANUAL --color is Purple
+        MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+
+        jukebox = Jukebox.getInstance();
+
+        setBrightness(1);
     }
 
 
@@ -57,83 +85,54 @@ public class LEDController {
      * sets the brightness of the strip
      * @param brightness a number from 0 to 1 enter a precentage
      */
-    public void setBrightness(double brightness)
+    private void setBrightness(double brightness)
     {
         config.brightnessScalar = brightness;
     }
 
-    /**
-     * Method that sets the color of the leds with a value from 0 - 255
-     * @param red red value
-     * @param green green value
-     * @param blue blue value
-     */
     
-    public void setUpperLEDs(int red, int green, int blue)
-    {
-        upperCandle.setLEDs(red, green, blue);
-    }
-    public void setLowerLEDs(int red, int green, int blue)
-    {
-        lowerCandle.setLEDs(red, green, blue);
-    }
     /**
      * Turns the brightness of the candle to 0 basically off.
      */
-    public void off()
+    private void off()
     {
         config.brightnessScalar = 0;
     }
 
-    public void holdingPieceLights()
+    public void handleLights()
     {
-        upperCandle.animate(packingHeat);
-    }
-
-    
-    public void climbingLights()
-    {
-        upperCandle.animate(climbLights);
-    }
-
-    public void climbIsFinishedLights()
-    {
-        upperCandle.animate(null);
-    }
-
-
-
-    public void fireAwayLights()
-    {
-        upperCandle.animate(fire);
-    }
-
-    public void handleLights(JukeboxEnum jukeboxCurrentState)
-    {
-        _alliance = DriverStation.getAlliance();
-        if (_alliance.get() == DriverStation.Alliance.Blue) {
-            lowerCandle.setLEDs(0, 0, 255);   
-        } else {
-            lowerCandle.setLEDs(255, 0, 0);
-        }
-        switch (jukeboxCurrentState) {
+        // _alliance = DriverStation.getAlliance();
+        // if (_alliance.get() == DriverStation.Alliance.Blue) {
+        //     lowerCandle.setLEDs(0, 0, 255);   
+        // } else {
+        //     lowerCandle.setLEDs(255, 0, 0);
+        switch (jukebox.getState()) {
             case IDLE:
+                upperCandle.animate(idleAnimation);
                 break;
             case SCORE:
+                upperCandle.animate(SCORE_LIGHTS);
                 break;
             case PREP_SPEAKER:
+                upperCandle.animate(PREP_AMP_LIGHTS);
                 break;
             case PREP_AMP:
+                upperCandle.animate(PREP_AMP_LIGHTS);
                 break;
             case PREP_TRAP:
+                upperCandle.animate(PREP_TRAP_LIGHTS);
                 break;
             case RESET:
+                upperCandle.animate(RESET_LIGHTS);
                 break;
             case EXTEND_FOR_CLIMB:
+                upperCandle.animate(EXTEND_FOR_CLIMB_LIGHTS);
                 break;
             case CLIMB:
+                upperCandle.animate(CLIMB_LIGHTS);
                 break;
             case MANUAL:
+                upperCandle.animate(MANUAL_LIGHTS);
                 break;
         }
     }

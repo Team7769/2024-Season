@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    _ledController.handleLights();
     _drivetrain.updateOdometry();
     _currentAuto.execute();
     _intake.handleCurrentState();
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    _ledController.handleLights();
     teleopDrive();
     teleopJukebox();
     _drivetrain.updateOdometry();
