@@ -75,10 +75,10 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapShooterAngle = 5;
+    private final double kTrapShooterAngle = 9;
     private final double kTrapElevatorPosition = 70; // change this
     private final double kExtendClimbElevatorPosition = 90; // change this
-    private final double kClimbElevatorPosition = 0; 
+    private final double kExtendClimbShooterAngle = 9;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
 
@@ -531,7 +531,7 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         setElevatorPosition(kExtendClimbElevatorPosition);
-        setShooterAngle(7);
+        setShooterAngle(kExtendClimbShooterAngle);
     }
 
     private void climb() {
