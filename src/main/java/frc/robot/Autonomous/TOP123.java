@@ -50,7 +50,7 @@ public class TOP123 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note 1 (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
                     nextStep();
                 }
 
@@ -62,13 +62,17 @@ public class TOP123 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     // At Note 1 (1)
                     _drivetrain.drive(new ChassisSpeeds());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
 
                 break;
             case 4:
-            // Follow Path to Shooting Position (1)
+            // Follow Path to Shooting Position and prep for speaker shot(1)
             _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+            if (_jukebox.hasNote()) {
+                _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+            }
 
             if (_pathFollower.isPathFinished()){
                 // At Note 1 (1)
@@ -78,20 +82,13 @@ public class TOP123 extends AutonomousMode{
 
             break;
             case 5:
-                // Once the robot is at the shooting position, we can set prep speaker.
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
-                    nextStep();
-                }
-                break;
-            case 6:
                 // Once ready for the shot, set score.
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
                 break;
-            case 7:
+            case 6:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -102,40 +99,43 @@ public class TOP123 extends AutonomousMode{
                 }
 
                 break;
-            case 8:
+            case 7:
                 // Follow Path to Note 2 (2)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
                     // At Note 2 (2)
                     _drivetrain.drive(new ChassisSpeeds());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
                     nextStep();
                 }
 
                 break;
-            case 9:
-            // Once the robot is at the shooting position, we can set prep speaker.
+            case 8:
+            //drive back to shot position while prep speaker
+            _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
             if (_jukebox.hasNote()) {
                 _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                
+            }
+
+            if (_pathFollower.isPathFinished()){
+                // At Note 2 (2)
+                _drivetrain.drive(new ChassisSpeeds());
                 nextStep();
             }
+
             break;
-            case 10:
-                // Once the note is detected, we can set prep speaker.
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+            
+            case 9:
+                // Once ready for the shot, set score.
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
-
                 break;
-            case 11:            
-                    // Once ready for the shot, set score.
-                    if (_jukebox.isReadyToScore()) {
-                        _jukebox.setState(JukeboxEnum.SCORE);
-                        nextStep();
-                    }
-                break;
-            case 12:
+                
+            case 10:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -146,7 +146,8 @@ public class TOP123 extends AutonomousMode{
                 }
 
                 break;
-            case 13:
+            
+            case 11:
                 // Follow Path to Note 3 (3)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
@@ -155,7 +156,7 @@ public class TOP123 extends AutonomousMode{
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
-                break;
+                break;   
             default:
                 _drivetrain.drive(new ChassisSpeeds());
                 break;

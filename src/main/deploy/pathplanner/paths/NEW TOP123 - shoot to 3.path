@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5007709452038624,
-        "y": 6.330408153774054
+        "x": 3.8204947966246565,
+        "y": 6.006444070133222
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.683171929724142,
-        "y": 6.89407463321969
+        "x": 5.8471189572075035,
+        "y": 6.828842280224811
       },
       "isLocked": false,
       "linkedName": "NEW TOP123 - shoot"
     },
     {
       "anchor": {
-        "x": 7.995649794116489,
-        "y": 4.3792549556930105
+        "x": 8.270256540513081,
+        "y": 3.8035917216736044
       },
       "prevControl": {
-        "x": 6.709333982048246,
-        "y": 6.662826846780455
+        "x": 6.983940728444838,
+        "y": 6.087163612761051
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "New Folder",
+  "folder": null,
   "previewStartingState": {
     "rotation": 17.927919762007285,
     "velocity": 0
