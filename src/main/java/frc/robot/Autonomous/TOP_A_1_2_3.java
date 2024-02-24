@@ -46,7 +46,7 @@ public class TOP_A_1_2_3 extends AutonomousMode {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note A (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
                     nextStep();
                 }
 
