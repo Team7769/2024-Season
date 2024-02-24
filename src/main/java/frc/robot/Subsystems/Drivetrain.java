@@ -295,9 +295,15 @@ public class Drivetrain extends Subsystem{
         return _drivePoseEstimator.getEstimatedPosition();
     }
 
-    public double getTargetAngleDifference(double targetAngle) {
+    public double getAbsoluteTargetAngle(double targetAngle) {
         double currentAngle = getGyroRotation().getDegrees();
 
-        return (currentAngle - targetAngle + 360) % 360;
+        return (currentAngle + targetAngle + 360) % 360;
+    }
+
+    public double getAngleToTarget(double targetAngle) {
+        double currentAngle = getGyroRotation().getDegrees();
+
+        return (currentAngle - targetAngle + 540) % 360 - 180;
     }
 }
