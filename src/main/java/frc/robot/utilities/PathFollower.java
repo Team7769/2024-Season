@@ -40,7 +40,9 @@ public class PathFollower {
 
     private PPHolonomicDriveController _controller;
 
+    // This Field2d will display the path targets as a ghost
     private final Field2d _pathField = new Field2d();
+    
     public PathFollower(String autoName) {
         _pathGroup = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
         _startingPose = PathPlannerAuto.getStaringPoseFromAutoFile(autoName);
@@ -72,7 +74,6 @@ public class PathFollower {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == Alliance.Red) {
             path = path.flipPath();
-            //startingRotation = GeometryUtil.flipFieldRotation(startingRotation);
         }
 
         _currentTrajectory = path.getTrajectory(startingSpeeds,
