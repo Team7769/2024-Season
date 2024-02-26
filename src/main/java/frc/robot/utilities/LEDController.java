@@ -18,7 +18,6 @@ public class LEDController {
     // private CANdle lowerCandle;
 
     private CANdleConfiguration config;
-    private SingleFadeAnimation idleAnimation;
 
     private Optional<Alliance> _alliance;
 
@@ -108,13 +107,13 @@ public class LEDController {
         //     lowerCandle.setLEDs(255, 0, 0);
         switch (jukebox.getState()) {
             case IDLE:
-                upperCandle.animate(idleAnimation);
+                upperCandle.animate(IDLE_LIGHTS);
                 break;
             case SCORE:
                 upperCandle.animate(SCORE_LIGHTS);
                 break;
             case PREP_SPEAKER:
-                upperCandle.animate(PREP_AMP_LIGHTS);
+                upperCandle.animate(PREP_SPEAKER_LIGHTS);
                 break;
             case PREP_AMP:
                 upperCandle.animate(PREP_AMP_LIGHTS);
