@@ -13,6 +13,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -239,10 +241,12 @@ public class Drivetrain extends Subsystem{
     public void fieldOrientedDrive(double translationX,
                                    double translationY,
                                    double rotationZ)
-    {
+    {   
+        var alliance = DriverStation.getAlliance();
+        var invert = alliance.isPresent() && alliance.get() == Alliance.Red ? -1 : 1; 
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-            translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
-            translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
+            invert * translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
+            invert * translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
             rotationZ * Constants.MAX_ANGULAR_VELOCITY_PER_SECOND, 
             getGyroRotationWithOffset()
         );
