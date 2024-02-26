@@ -7,11 +7,16 @@
     "TOP123",
     "5 Note",
     "B paths",
+<<<<<<< HEAD
     "New Folder",
     "C paths"
   ],
   "autoFolders": [
     "New Folder"
+=======
+    "TOP_A_1_2_3",
+    "Test paths"
+>>>>>>> cb6e76c34205b5411deac38c79d8e3b31b59a2d9
   ],
 <<<<<<< HEAD
 =======

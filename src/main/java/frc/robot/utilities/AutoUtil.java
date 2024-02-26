@@ -28,9 +28,15 @@ public class AutoUtil {
             case(MID_B_3_4_5):
                 return new midB345();
             case(FIVE_NOTE):
+<<<<<<< HEAD
                 return new FiveNote();  
             case (BOTTOM_NOTE):
                 return new bottomAutoMode();        
+=======
+                return new FiveNote(); 
+            case (TOP_A_1_2_3_INDEX):
+                return new TOP_A_1_2_3();            
+>>>>>>> cb6e76c34205b5411deac38c79d8e3b31b59a2d9
             case(TOP_1_2_3):
                 return new TOP123();       
         }
@@ -53,7 +59,11 @@ public class AutoUtil {
         _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
         _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
         _autoChooser.addOption("Five Note", FIVE_NOTE);
+<<<<<<< HEAD
         _autoChooser.addOption("Bottom Note", BOTTOM_NOTE);
+=======
+        _autoChooser.addOption("Top A 1 2 3", TOP_A_1_2_3_INDEX);
+>>>>>>> cb6e76c34205b5411deac38c79d8e3b31b59a2d9
         _autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
     }
 
@@ -64,9 +74,16 @@ public class AutoUtil {
     public static final int MID_B_2_3 = 2;
     public static final int MID_B_3_4 = 3;
     public static final int MID_B_4_5 = 4;
+<<<<<<< HEAD
     public static final int BOTTOM_NOTE = 6;
     public static final int MID_B_3_4_5 = 7;
     public static final int FIVE_NOTE = 8;
     public static final int TOP_1_2_3 = 9;
+=======
+    public static final int MID_B_3_4_5 = 5;
+    public static final int FIVE_NOTE = 6;
+    public static final int TOP_A_1_2_3_INDEX = 7;
+    public static final int TOP_1_2_3 = 8;
+>>>>>>> cb6e76c34205b5411deac38c79d8e3b31b59a2d9
     
 }
