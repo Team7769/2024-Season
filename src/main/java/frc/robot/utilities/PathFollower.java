@@ -44,6 +44,7 @@ public class PathFollower {
 
     // This Field2d will display the path targets as a ghost
     private final Field2d _pathField = new Field2d();
+    private boolean _shouldFlipPath = false;
     
     public PathFollower(String autoName) {
         _pathGroup = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
@@ -73,8 +74,7 @@ public class PathFollower {
         SmartDashboard.putNumber("pathIndex", _pathIndex);
         var path = _pathGroup.get(_pathIndex);
 
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+        if (_shouldFlipPath) {
             path = path.flipPath();
         }
 
@@ -87,11 +87,38 @@ public class PathFollower {
         _timer.start();
     }
 
+    // should be used to start first path
+    public void startNextPath(ChassisSpeeds startingSpeeds,
+                              Pose2d currentPose) {
+
+        if (_pathIndex + 1 > _pathGroup.size()) {
+            return; // if this is reached, we are doing something wrong
+        }
+
+        _pathIndex += 1;
+
+        _controller.reset(currentPose, new ChassisSpeeds());
+        SmartDashboard.putNumber("pathIndex", _pathIndex);
+        var path = _pathGroup.get(_pathIndex);
+
+        if (_shouldFlipPath) {
+            path = path.flipPath();
+        }
+
+        _currentTrajectory = path.getTrajectory(startingSpeeds,
+                                                currentPose.getRotation());
+        PPLibTelemetry.setCurrentPath(path);
+
+        _pathField.setRobotPose(_currentTrajectory.getInitialTargetHolonomicPose());
+        _timer.reset();
+        _timer.start();
+    }
+
     public Pose2d getStartingPose() {
         var alliance = DriverStation.getAlliance();
-        var shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
+        _shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
 
-        var startingPose = shouldFlipPath ? GeometryUtil.flipFieldPose(_startingPose) : _startingPose;
+        var startingPose = _shouldFlipPath ? GeometryUtil.flipFieldPose(_startingPose) : _startingPose;
 
         PPLibTelemetry.setCurrentPose(startingPose);
         return startingPose;
@@ -102,6 +129,12 @@ public class PathFollower {
     }
 
     public ChassisSpeeds getPathTarget(Pose2d currentPose) {
+        Rotation2d rotation;
+        if (_shouldFlipPath) {
+            rotation = GeometryUtil.flipFieldRotation(currentPose.getRotation());
+            SmartDashboard.putNumber("flippedFieldRotation", rotation.getDegrees());
+        }
+
         State desiredState = _currentTrajectory.sample(_timer.get());
         _pathField.setRobotPose(desiredState.getTargetHolonomicPose());
 
