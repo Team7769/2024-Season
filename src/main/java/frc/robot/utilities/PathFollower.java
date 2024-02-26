@@ -9,6 +9,8 @@ import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.path.PathPlannerTrajectory.State;
 import com.pathplanner.lib.util.GeometryUtil;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PPLibTelemetry;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -78,6 +80,7 @@ public class PathFollower {
 
         _currentTrajectory = path.getTrajectory(startingSpeeds,
                                                 startingRotation);
+        PPLibTelemetry.setCurrentPath(path);
 
         _pathField.setRobotPose(_currentTrajectory.getInitialTargetHolonomicPose());
         _timer.reset();
@@ -90,6 +93,7 @@ public class PathFollower {
 
         var startingPose = shouldFlipPath ? GeometryUtil.flipFieldPose(_startingPose) : _startingPose;
 
+        PPLibTelemetry.setCurrentPose(startingPose);
         return startingPose;
     }
 
@@ -100,6 +104,9 @@ public class PathFollower {
     public ChassisSpeeds getPathTarget(Pose2d currentPose) {
         State desiredState = _currentTrajectory.sample(_timer.get());
         _pathField.setRobotPose(desiredState.getTargetHolonomicPose());
+
+        PPLibTelemetry.setCurrentPose(currentPose);
+        PPLibTelemetry.setTargetPose(desiredState.getTargetHolonomicPose());
 
         return _controller.calculateRobotRelativeSpeeds(currentPose,
                                                         desiredState);
