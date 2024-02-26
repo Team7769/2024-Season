@@ -123,8 +123,8 @@ public class Jukebox extends Subsystem{
     private final double kFeederIntake = 0.2;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
-    private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
-    private final double[] kShooterSpeeds = {35, 37, 38, 41, 44};
+    private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
+    private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
@@ -511,27 +511,27 @@ public class Jukebox extends Subsystem{
 
         feeder();
 
-        if (_targetDistance != 0.0) {
-            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-                kDistanceIDs,
-                kShooterAngles,
-                _targetDistance
-            );
-            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-                kDistanceIDs,
-                kShooterSpeeds,
-                _targetDistance
-            );
-            setShooterAngle(desiredShooterAngle);
-            setShooterSpeed(desiredShooterSpeed);
+        // if (_targetDistance != 0.0) {
+        //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+        //         kDistanceIDs,
+        //         kShooterAngles,
+        //         _targetDistance
+        //     );
+        //     double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+        //         kDistanceIDs,
+        //         kShooterSpeeds,
+        //         _targetDistance
+        //     );
+        //     setShooterAngle(desiredShooterAngle);
+        //     setShooterSpeed(desiredShooterSpeed);
 
-        } else {
-            setShooterAngle(Constants.KMinShooterAngle);
-            setShooterSpeed(Constants.kMaxShooterSpeed);
-        }
+        // } else {
+        //     setShooterAngle(Constants.KMinShooterAngle);
+        //     setShooterSpeed(Constants.kMaxShooterSpeed);
+        // }
 
-        // setShooterAngle(_dashboardShooterTargetAngle);
-        // setShooterSpeed(_dashboardShooterTargetSpeed);
+        setShooterAngle(_dashboardShooterTargetAngle);
+        setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
     /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
