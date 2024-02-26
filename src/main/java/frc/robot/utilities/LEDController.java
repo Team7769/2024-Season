@@ -6,6 +6,7 @@ import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Jukebox;
@@ -15,7 +16,7 @@ public class LEDController {
     private static LEDController _instance;
 
     private CANdle upperCandle;
-    // private CANdle lowerCandle;
+    private CANdle lowerCandle;
 
     private CANdleConfiguration config;
 
@@ -43,7 +44,7 @@ public class LEDController {
         underNumLeds = 100;
         jukeboxNumLeds = 100;
         upperCandle = new CANdle(15);
-        // lowerCandle = new CANdle(0); // TBD
+        lowerCandle = new CANdle(0); // TBD
         config = new CANdleConfiguration();
 
 
@@ -93,18 +94,32 @@ public class LEDController {
     /**
      * Turns the brightness of the candle to 0 basically off.
      */
-    private void off()
+    public void off()
     {
         config.brightnessScalar = 0;
     }
 
+    /**
+     * Handles the bottom lights.
+     * If _alliance is blue then make the lights blue
+     * If _alliance is red then make the lights red
+     */
+    public void handleBottomLights()
+    {
+        _alliance = DriverStation.getAlliance();
+        if (_alliance.get() == DriverStation.Alliance.Blue) {
+            lowerCandle.setLEDs(0, 0, 255);   
+        } else {
+            lowerCandle.setLEDs(255, 0, 0);
+        }
+    }
+
+    /**
+     * For each state in JukeBox a light will come on
+     */
     public void handleLights()
     {
-        // _alliance = DriverStation.getAlliance();
-        // if (_alliance.get() == DriverStation.Alliance.Blue) {
-        //     lowerCandle.setLEDs(0, 0, 255);   
-        // } else {
-        //     lowerCandle.setLEDs(255, 0, 0);
+
         switch (jukebox.getState()) {
             case IDLE:
                 upperCandle.animate(IDLE_LIGHTS);

@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     _ledController.handleLights();
+    // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     _drivetrain.updateOdometry();
     _currentAuto.execute();
     _intake.handleCurrentState();
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     _ledController.handleLights();
+    // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();
     _drivetrain.updateOdometry();
@@ -203,11 +205,14 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     testOperate();
 
+    _ledController.off(); // turn off the lights so it doesn't bother people during testing
+
     _intake.handleCurrentState();
     _jukebox.handleCurrentState();
   }
 
   private void testOperate() {   
+
     _jukebox.setState(JukeboxEnum.MANUAL);
 
     if (_operatorController.getLeftBumper())
