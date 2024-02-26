@@ -50,7 +50,7 @@ public class FiveNote extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note C (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
                     nextStep();
                 }
 

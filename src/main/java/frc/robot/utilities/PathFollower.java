@@ -80,7 +80,7 @@ public class PathFollower {
         var alliance = DriverStation.getAlliance();
         var shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
 
-        var startingPose = shouldFlipPath ? _startingPose : GeometryUtil.flipFieldPose(_startingPose);
+        var startingPose = shouldFlipPath ? GeometryUtil.flipFieldPose(_startingPose) : _startingPose;
 
         return startingPose;
     }
