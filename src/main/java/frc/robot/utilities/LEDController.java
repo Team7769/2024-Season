@@ -56,6 +56,8 @@ public class LEDController {
         upperCandle.configAllSettings(config, 100);
 
 
+        upperCandle.configAllSettings(config);
+        config.brightnessScalar = 0;
         // animation for IDLE --color is Pure White
         IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for SCORE --color is Green
