@@ -44,20 +44,22 @@ public class LEDController {
 
     LEDController()
     {
-        underNumLeds = 100;
-        jukeboxNumLeds = 100;
+        underNumLeds = 40;
+        jukeboxNumLeds = 40;
         upperCandle = new CANdle(15);
         lowerCandle = new CANdle(25); // TBD
         config = new CANdleConfiguration();
         
         setBrightness(.1);
         config.stripType = LEDStripType.RGB;
-        config.vBatOutputMode = VBatOutputMode.Modulated;
+        config.vBatOutputMode = VBatOutputMode.On;
+        config.brightnessScalar = 0.5;
+        config.disableWhenLOS = false;
+        config.statusLedOffWhenActive = false;
         upperCandle.configAllSettings(config, 100);
 
-
-        upperCandle.configAllSettings(config);
-        config.brightnessScalar = 0;
+        // lowerCandle.configAllSettings(config);
+        
         // animation for IDLE --color is Pure White
         IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for SCORE --color is Green
@@ -157,6 +159,9 @@ public class LEDController {
                 break;
             case MANUAL:
                 upperCandle.animate(MANUAL_LIGHTS);
+                break;
+            default:
+                upperCandle.animate(IDLE_LIGHTS);
                 break;
         }
         _lastState = currentState;
