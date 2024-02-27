@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.082367714031202,
-        "y": 5.8679125808955845
+        "x": 0.7646141006587875,
+        "y": 4.485794114450316
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.058949582687898,
-        "y": 7.024151513091758
+        "x": 2.764281667425061,
+        "y": 1.8442544705677795
       },
       "isLocked": false,
-      "linkedName": "TOP123 - shoot to 2"
+      "linkedName": "Bottom 4-5 Start"
     },
     {
       "anchor": {
-        "x": 0.7836094545428531,
-        "y": 6.749544766695167
+        "x": 8.226278166842048,
+        "y": 2.3601727203454415
       },
       "prevControl": {
-        "x": 2.214455133135619,
-        "y": 7.125322419658925
+        "x": 5.5289379150186875,
+        "y": 0.7769512681882514
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TOP123 - shoot position"
+      "linkedName": "Bottom 4-5 Note 4 Pickup"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 37.56859202882752,
+    "rotation": 25.463345061871653,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TOP123",
+  "folder": "Bottom 4-5",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -59.620873988631736,
     "velocity": 0
   },
   "useDefaultConstraints": true

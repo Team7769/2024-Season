@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5
+      "x": 0.8,
+      "y": 6.6
     },
-    "rotation": 0
+    "rotation": 58.3
   },
   "command": {
     "type": "sequential",
@@ -14,36 +14,42 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start mid to b"
+            "pathName": "TOP_A"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 2"
+            "pathName": "A_1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 2 to b"
+            "pathName": "1_A"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
+            "pathName": "A_2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 3 to b"
+            "pathName": "2_A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "A_3"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Top Autos",
   "choreoAuto": false
 }

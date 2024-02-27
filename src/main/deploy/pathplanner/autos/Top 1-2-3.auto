@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.67,
-      "y": 4.44
+      "x": 0.7547034812379487,
+      "y": 6.677279833432906
     },
-    "rotation": -60.55000000000001
+    "rotation": 57.52880770915153
   },
   "command": {
     "type": "sequential",
@@ -14,30 +14,30 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - Bottom to 5"
+            "pathName": "Top 1-2-3 - Start to 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - 5 shoot"
+            "pathName": "Top 1-2-3 - 1 to Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - Bottom to 4"
+            "pathName": "Top 1-2-3 - 2 to Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Auto - 4 shoot"
+            "pathName": "Top 1-2-3 - Shoot to 2"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Top Autos",
   "choreoAuto": false
 }

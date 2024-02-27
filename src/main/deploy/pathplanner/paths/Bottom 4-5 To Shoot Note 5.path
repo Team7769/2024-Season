@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8204947966246565,
-        "y": 6.006444070133222
+        "x": 8.123661961609638,
+        "y": 0.8355890997496291
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8471189572075035,
-        "y": 6.828842280224811
+        "x": 5.778148699154542,
+        "y": 0.9821836786530717
       },
       "isLocked": false,
-      "linkedName": "NEW TOP123 - shoot"
+      "linkedName": "Bottom 4-5 Note 5 Pickup"
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 3.8035917216736044
+        "x": 0.7646141006587875,
+        "y": 4.485794114450316
       },
       "prevControl": {
-        "x": 6.983940728444838,
-        "y": 6.087163612761051
+        "x": 1.7907761529828925,
+        "y": 2.9318915780738153
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Bottom 4-5 Start"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0,
-      "rotationDegrees": 16.99,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,14 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -44.99999999999996,
+    "rotation": -59.74356283647074,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": {
-    "rotation": 17.927919762007285,
-    "velocity": 0
-  },
+  "folder": "Bottom 4-5",
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

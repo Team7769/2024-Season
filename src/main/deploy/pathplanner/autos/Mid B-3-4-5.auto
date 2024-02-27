@@ -14,48 +14,42 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start mid to b"
+            "pathName": "Mid - Start to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
+            "pathName": "Mid - B to 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 3 to b"
+            "pathName": "Mid - 3 to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 4"
+            "pathName": "Mid - B to 4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 4 to b"
+            "pathName": "Mid - 4 to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 5"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "start 5 to b"
+            "pathName": "Mid - B to 5"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Mid Autos",
   "choreoAuto": false
 }

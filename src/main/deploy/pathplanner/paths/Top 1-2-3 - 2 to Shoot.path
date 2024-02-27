@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8601824895957499,
-        "y": 4.351321779566637
+        "x": 3.8204947966246565,
+        "y": 6.006444070133222
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8598500563620233,
-        "y": 1.7097821356840999
+        "x": 5.8471189572075035,
+        "y": 7.137241609009157
       },
       "isLocked": false,
-      "linkedName": "Auto - 5s end"
+      "linkedName": "NEW TOP123 - shoot"
     },
     {
       "anchor": {
-        "x": 7.872088097956508,
-        "y": 2.4007214918852084
+        "x": 8.284942222836145,
+        "y": 5.3602740479184
       },
       "prevControl": {
-        "x": 5.180636643507454,
-        "y": 1.5137523032645077
+        "x": 7.154144683960209,
+        "y": 5.389645412564528
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Auto -bto4 end"
+      "linkedName": "NEW TOP123 - 2"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 16.99,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -43,9 +49,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "C paths",
+  "folder": "Top 1-2-3",
   "previewStartingState": {
-    "rotation": -59.620873988631736,
+    "rotation": 15.018360631150701,
     "velocity": 0
   },
   "useDefaultConstraints": true

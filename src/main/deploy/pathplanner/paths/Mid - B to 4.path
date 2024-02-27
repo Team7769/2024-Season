@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.106304828872139,
-        "y": 0.9368669236625209
+        "x": 2.9195544105373927,
+        "y": 5.5040931765173085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.229815166620346,
-        "y": 2.7781184540971076
+        "x": 3.9117896403716177,
+        "y": 5.267656314485239
       },
       "isLocked": false,
-      "linkedName": "Mid - note 5"
+      "linkedName": "Mid - note B"
     },
     {
       "anchor": {
-        "x": 3.7967169800245437,
-        "y": 1.545830424043158
+        "x": 5.166884855880981,
+        "y": 4.19247948338978
       },
       "prevControl": {
-        "x": 4.389102270023042,
-        "y": 1.4228825336661122
+        "x": 3.379423016597113,
+        "y": 5.163287515502218
       },
       "nextControl": {
-        "x": 3.1760426430981235,
-        "y": 1.6746496260467543
+        "x": 6.370004599553435,
+        "y": 3.5390399049436048
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.894982565999367,
-        "y": 5.550936522700434
+        "x": 8.082883155780575,
+        "y": 2.5529623669803687
       },
       "prevControl": {
-        "x": 3.763796122742029,
-        "y": 5.344234641393675
+        "x": 7.110883722480711,
+        "y": 3.2321908866356956
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid - note B"
+      "linkedName": "Mid - note 4"
     }
   ],
   "rotationTargets": [],
@@ -55,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.74356283647074,
+    "rotation": -17.592424562181538,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Mid B Variants",
   "previewStartingState": null,
   "useDefaultConstraints": true
 }

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5040931765173085
+      "x": 1.38,
+      "y": 5.53
     },
     "rotation": 0
   },
@@ -14,36 +14,36 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start mid to b"
+            "pathName": "5 Note - Note C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 3"
+            "pathName": "5 Note - Note B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 3 to b"
+            "pathName": "5 Note - Note A"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start b to 4"
+            "pathName": "5 Note - Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "start 4 to b"
+            "pathName": "5 Note - Score Note 1"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Mid Autos",
   "choreoAuto": false
 }
