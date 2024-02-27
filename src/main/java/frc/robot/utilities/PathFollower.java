@@ -7,7 +7,10 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.path.PathPlannerTrajectory.State;
+import com.pathplanner.lib.util.GeometryUtil;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PPLibTelemetry;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -15,6 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.Constants;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PathFollower {
@@ -38,6 +42,10 @@ public class PathFollower {
 
     private PPHolonomicDriveController _controller;
 
+    // This Field2d will display the path targets as a ghost
+    private final Field2d _pathField = new Field2d();
+    private boolean _shouldFlipPath = false;
+    
     public PathFollower(String autoName) {
         _pathGroup = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
         _startingPose = PathPlannerAuto.getStaringPoseFromAutoFile(autoName);
@@ -49,6 +57,8 @@ public class PathFollower {
             Constants.MAX_VELOCITY_METERS_PER_SECOND,
             Constants.DRIVE_BASE_RADIUS
         );
+
+        SmartDashboard.putData("Path Field", _pathField);
     }
 
     // should be used to start first path
@@ -64,19 +74,54 @@ public class PathFollower {
         SmartDashboard.putNumber("pathIndex", _pathIndex);
         var path = _pathGroup.get(_pathIndex);
 
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+        if (_shouldFlipPath) {
             path = path.flipPath();
         }
 
         _currentTrajectory = path.getTrajectory(startingSpeeds,
                                                 startingRotation);
+        PPLibTelemetry.setCurrentPath(path);
+
+        _pathField.setRobotPose(_currentTrajectory.getInitialTargetHolonomicPose());
+        _timer.reset();
+        _timer.start();
+    }
+
+    // should be used to start first path
+    public void startNextPath(ChassisSpeeds startingSpeeds,
+                              Pose2d currentPose) {
+
+        if (_pathIndex + 1 > _pathGroup.size()) {
+            return; // if this is reached, we are doing something wrong
+        }
+
+        _pathIndex += 1;
+
+        _controller.reset(currentPose, new ChassisSpeeds());
+        SmartDashboard.putNumber("pathIndex", _pathIndex);
+        var path = _pathGroup.get(_pathIndex);
+
+        if (_shouldFlipPath) {
+            path = path.flipPath();
+        }
+
+        _currentTrajectory = path.getTrajectory(startingSpeeds,
+                                                currentPose.getRotation());
+        PPLibTelemetry.setCurrentPath(path);
+
+        _pathField.setRobotPose(_currentTrajectory.getInitialTargetHolonomicPose());
         _timer.reset();
         _timer.start();
     }
 
     public Pose2d getStartingPose() {
-        return _startingPose;
+        var alliance = DriverStation.getAlliance();
+        _shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
+
+        var startingPose = _shouldFlipPath ? GeometryUtil.flipFieldPose(_startingPose) : _startingPose;
+
+        PPLibTelemetry.setCurrentPose(startingPose);
+        return startingPose;
     }
 
     public boolean isPathFinished() {
@@ -84,7 +129,17 @@ public class PathFollower {
     }
 
     public ChassisSpeeds getPathTarget(Pose2d currentPose) {
+        Rotation2d rotation;
+        if (_shouldFlipPath) {
+            rotation = GeometryUtil.flipFieldRotation(currentPose.getRotation());
+            SmartDashboard.putNumber("flippedFieldRotation", rotation.getDegrees());
+        }
+
         State desiredState = _currentTrajectory.sample(_timer.get());
+        _pathField.setRobotPose(desiredState.getTargetHolonomicPose());
+
+        PPLibTelemetry.setCurrentPose(currentPose);
+        PPLibTelemetry.setTargetPose(desiredState.getTargetHolonomicPose());
 
         return _controller.calculateRobotRelativeSpeeds(currentPose,
                                                         desiredState);

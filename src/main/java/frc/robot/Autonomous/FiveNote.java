@@ -47,10 +47,10 @@ public class FiveNote extends AutonomousMode{
             case 2:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
+                   _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note C (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -86,7 +86,7 @@ public class FiveNote extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note B (2)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -123,7 +123,7 @@ public class FiveNote extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note A (3)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -160,7 +160,7 @@ public class FiveNote extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note 1 (4)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -174,7 +174,7 @@ public class FiveNote extends AutonomousMode{
                     _drivetrain.drive(new ChassisSpeeds());
 
                     // Start Path back to Note A (4)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
