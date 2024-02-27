@@ -8,7 +8,7 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
-public class TOP_A_1_2_3 extends AutonomousMode {
+public class Top_A_1_2_3 extends AutonomousMode {
     private int _step = 0;
 
     private Drivetrain _drivetrain;
@@ -17,7 +17,7 @@ public class TOP_A_1_2_3 extends AutonomousMode {
 
     private PathFollower _pathFollower;
 
-    public TOP_A_1_2_3() {
+    public Top_A_1_2_3() {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();

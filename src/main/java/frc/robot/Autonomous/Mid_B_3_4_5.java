@@ -5,7 +5,7 @@ import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
 
-public class midB45 extends AutonomousMode{
+public class Mid_B_3_4_5 extends AutonomousMode{
 
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
@@ -13,12 +13,12 @@ public class midB45 extends AutonomousMode{
     private Intake _intake;
     private int _count;
 
-    public midB45()
+    public Mid_B_3_4_5()
     {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("MID B 4 5");
+        _pathFollower = new PathFollower("MID B 3 4 5");
     }
 
     @Override
@@ -66,7 +66,7 @@ public class midB45 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // resets and starts path to 4
+            // resets and starts path to 3
             case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
@@ -109,7 +109,7 @@ public class midB45 extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // drives to 5
+            // drives to 4
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
@@ -141,6 +141,38 @@ public class midB45 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
                 }
                 break;
+            // drives to 5
+            case 15:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // drives back to B
+            case 16:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                }
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // shoots at b
+            case 17:
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 18:
+                if (!_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                }
+                break;
         }
     }
 
@@ -149,7 +181,7 @@ public class midB45 extends AutonomousMode{
 
     @Override
     public boolean isComplete(){
-        return _count >= 15;
+        return _count >= 19;
     }
     @Override
     public void initialize(){

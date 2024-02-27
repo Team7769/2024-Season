@@ -6,14 +6,14 @@ import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
 
-public class midB34 extends AutonomousMode{
+public class Mid_B_3_4 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
     private Intake _intake;
     private Jukebox _jukebox;
     private int _count;    
 
-    public midB34(){
+    public Mid_B_3_4(){
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
