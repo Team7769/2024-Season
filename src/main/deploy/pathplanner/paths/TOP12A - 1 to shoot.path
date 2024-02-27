@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0589342776403092,
-        "y": 5.597779868883561
+        "x": 8.053461740726299,
+        "y": 7.4288351393604195
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4311279977766793,
-        "y": 6.382405917450922
+        "x": 6.9116757951825765,
+        "y": 7.833518765629082
       },
       "isLocked": false,
-      "linkedName": "5 Note - Note B"
+      "linkedName": "TOP123 - top to 1"
     },
     {
       "anchor": {
-        "x": 3.6796086145667286,
-        "y": 7.003080254377342
+        "x": 0.7836094545428531,
+        "y": 6.749544766695167
       },
       "prevControl": {
-        "x": 2.578789979263267,
-        "y": 6.885971888919526
+        "x": 1.4628998272081055,
+        "y": 7.342117219445706
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5 Note - Note A"
+      "linkedName": "TOP123 - shoot position"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 45.00000000000007,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,11 +45,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 28.3007557660065,
+    "rotation": 45.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5 Note",
+  "folder": "TOP123",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
