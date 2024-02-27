@@ -6,9 +6,7 @@ import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
@@ -34,6 +32,7 @@ public class LEDController {
     private Animation MANUAL_LIGHTS;
 
 
+
     private int underNumLeds;
     private int jukeboxNumLeds;
 
@@ -46,6 +45,7 @@ public class LEDController {
         upperCandle = new CANdle(15);
         lowerCandle = new CANdle(0); // TBD
         config = new CANdleConfiguration();
+        
 
 
         // animation for IDLE --color is Pure White
