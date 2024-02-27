@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.5040931765173085
+        "x": 2.894982565999367,
+        "y": 5.550936522700434
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5625002491089135,
-        "y": 5.215415439390079
+        "x": 3.8574828151082805,
+        "y": 5.262258785573205
       },
       "isLocked": false,
       "linkedName": "Mid - note B"
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B paths",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": true
 }
