@@ -3,10 +3,13 @@ package frc.robot.Utilities;
 import java.util.Optional;
 
 import com.ctre.phoenix.led.*;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
@@ -37,15 +40,20 @@ public class LEDController {
     private int jukeboxNumLeds;
 
     private Jukebox jukebox;
+    private JukeboxEnum _lastState;
 
-    public LEDController()
+    LEDController()
     {
         underNumLeds = 100;
         jukeboxNumLeds = 100;
         upperCandle = new CANdle(15);
-        lowerCandle = new CANdle(0); // TBD
+        lowerCandle = new CANdle(25); // TBD
         config = new CANdleConfiguration();
         
+        setBrightness(.1);
+        config.stripType = LEDStripType.RGB;
+        config.vBatOutputMode = VBatOutputMode.Modulated;
+        upperCandle.configAllSettings(config, 100);
 
 
         // animation for IDLE --color is Pure White
@@ -68,14 +76,12 @@ public class LEDController {
         MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
 
         jukebox = Jukebox.getInstance();
-
-        setBrightness(1);
     }
 
 
     public static LEDController getInstance()
     {
-        if (_instance != null)
+        if (_instance == null)
         {
             _instance = new LEDController();
         }
@@ -119,9 +125,11 @@ public class LEDController {
      */
     public void handleLights()
     {
-
-        switch (jukebox.getState()) {
+        var currentState = jukebox.getState();
+        if (_lastState != currentState) {
+            switch (currentState) {
             case IDLE:
+                //upperCandle.setLEDs(100, 100, 100, 100, 0, 25);
                 upperCandle.animate(IDLE_LIGHTS);
                 break;
             case SCORE:
@@ -149,5 +157,8 @@ public class LEDController {
                 upperCandle.animate(MANUAL_LIGHTS);
                 break;
         }
+        _lastState = currentState;
+        }
+        
     }
 }
