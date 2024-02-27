@@ -9,9 +9,9 @@ import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
 /**
- * Five Note Autonomous Mode.
- * Starts Mid in front of the speaker and scores the following notes:
- * Initial -> C -> B -> A -> 1
+ * Three Note Autonomous Mode.
+ * Starts Top in front of the speaker and scores the following notes:
+ * Initial -> 1 -> 2 -> (3)
  */
 public class Top_1_2_3 extends AutonomousMode{
     private PathFollower _pathFollower;
@@ -26,7 +26,7 @@ public class Top_1_2_3 extends AutonomousMode{
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
         
-        _pathFollower = new PathFollower("NEW TOP123");
+        _pathFollower = new PathFollower("Top 1-2-3");
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Top_1_2_3 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note 1 (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotation());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -62,7 +62,7 @@ public class Top_1_2_3 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     // At Note 1 (1)
                     _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -94,7 +94,7 @@ public class Top_1_2_3 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note 2 (2)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -106,7 +106,7 @@ public class Top_1_2_3 extends AutonomousMode{
                 if (_pathFollower.isPathFinished()){
                     // At Note 2 (2)
                     _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -141,7 +141,7 @@ public class Top_1_2_3 extends AutonomousMode{
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note A (3)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 

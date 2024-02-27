@@ -4,9 +4,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.PathFollower;
-import frc.robot.Subsystems.Intake;
-import frc.robot.Subsystems.Jukebox;
 
+/**
+ * Four Note Autonomous Mode.
+ * Starts Mid in front of the speaker and scores the following notes:
+ * Initial -> B -> 2 -> 3
+ */
 public class Mid_B_2_3 extends AutonomousMode{
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
@@ -18,7 +21,7 @@ public class Mid_B_2_3 extends AutonomousMode{
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("MID B 2 3");
+        _pathFollower = new PathFollower("Mid B-2-3");
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
     }
@@ -42,7 +45,7 @@ public class Mid_B_2_3 extends AutonomousMode{
             case 2:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -72,7 +75,7 @@ public class Mid_B_2_3 extends AutonomousMode{
             case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -80,7 +83,7 @@ public class Mid_B_2_3 extends AutonomousMode{
             case 7:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -107,7 +110,7 @@ public class Mid_B_2_3 extends AutonomousMode{
             case 10:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -115,7 +118,7 @@ public class Mid_B_2_3 extends AutonomousMode{
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }

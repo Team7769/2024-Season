@@ -8,6 +8,11 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
+/**
+ * Four Note Autonomous Mode.
+ * Starts Top in front of the speaker and scores the following notes:
+ * Initial -> A -> 1 -> 2 -> (3)
+ */
 public class Top_A_1_2_3 extends AutonomousMode {
     private int _step = 0;
 
@@ -22,7 +27,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
 
-        _pathFollower = new PathFollower("TOP_A_1_2_3");
+        _pathFollower = new PathFollower("Top A-1-2-3");
     }
 
     @Override
