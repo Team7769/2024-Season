@@ -26,11 +26,7 @@
         {
           "type": "path",
           "data": {
-<<<<<<< HEAD:src/main/deploy/pathplanner/autos/MID B 5 4.auto
-            "pathName": null
-=======
             "pathName": "start 4 to b"
->>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea:src/main/deploy/pathplanner/autos/MID B 4 5.auto
           }
         },
         {

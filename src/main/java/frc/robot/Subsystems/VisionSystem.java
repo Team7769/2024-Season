@@ -28,7 +28,7 @@ public class VisionSystem extends Subsystem{
     private LinearFilter limelightDistanceFilter = LinearFilter.singlePoleIIR(1/(2* Math.PI * filterDistanceError), 0.02);
 	private LinearFilter limelightAngleFilter = LinearFilter.singlePoleIIR(1/(2*Math.PI * filterAngleError), 0.02);
 
-    public VisionSystem()
+    VisionSystem()
     {
 
     }

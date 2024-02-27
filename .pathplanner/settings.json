@@ -7,23 +7,14 @@
     "TOP123",
     "5 Note",
     "B paths",
-<<<<<<< HEAD
-    "New Folder",
     "C paths"
   ],
   "autoFolders": [
-    "New Folder"
-=======
+    "New Folder",
     "TOP_A_1_2_3",
+    "Mid Autons",
     "Test paths"
->>>>>>> cb6e76c34205b5411deac38c79d8e3b31b59a2d9
   ],
-<<<<<<< HEAD
-=======
-  "autoFolders": [
-    "Mid Autons"
-  ],
->>>>>>> da8f69931bf4523408eace970337bd38a1f5aeea
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,
   "defaultMaxAngVel": 540.0,
