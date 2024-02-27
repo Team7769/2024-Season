@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Utility class to follow a path based on provided information. Used to move to desired locations in Autonomous.
+ */
 public class PathFollower {
     private Timer _timer;
     
@@ -61,33 +64,10 @@ public class PathFollower {
         SmartDashboard.putData("Path Field", _pathField);
     }
 
-    // should be used to start first path
-    public void startNextPath(ChassisSpeeds startingSpeeds,
-                              Rotation2d startingRotation) {
-
-        if (_pathIndex + 1 > _pathGroup.size()) {
-            return; // if this is reached, we are doing something wrong
-        }
-
-        _pathIndex += 1;
-
-        SmartDashboard.putNumber("pathIndex", _pathIndex);
-        var path = _pathGroup.get(_pathIndex);
-
-        if (_shouldFlipPath) {
-            path = path.flipPath();
-        }
-
-        _currentTrajectory = path.getTrajectory(startingSpeeds,
-                                                startingRotation);
-        PPLibTelemetry.setCurrentPath(path);
-
-        _pathField.setRobotPose(_currentTrajectory.getInitialTargetHolonomicPose());
-        _timer.reset();
-        _timer.start();
-    }
-
-    // should be used to start first path
+    /**Starts the next path in the auto sequence.
+     * @param startingSpeeds - The chassis speeds when starting this path
+     * @param currentPose - The current pose of the robot. This must already be transformed to the proper alliance.
+     */
     public void startNextPath(ChassisSpeeds startingSpeeds,
                               Pose2d currentPose) {
 
@@ -114,6 +94,10 @@ public class PathFollower {
         _timer.start();
     }
 
+    /**
+     * Returns the starting pose of the robot loaded from the auto file. It will automatically handle transformation based on alliance.
+     * @return The starting pose of the robot.
+     */
     public Pose2d getStartingPose() {
         var alliance = DriverStation.getAlliance();
         _shouldFlipPath = alliance.isPresent() && alliance.get() == Alliance.Red;
@@ -124,10 +108,19 @@ public class PathFollower {
         return startingPose;
     }
 
+    /**
+     * Indicates if the path has finished running. 
+     * @return If the path has exceeded its running time.
+     */
     public boolean isPathFinished() {
         return _timer.hasElapsed(_currentTrajectory.getTotalTimeSeconds());
     }
 
+    /**
+     * Calculates and returns the chassis speeds to provided to the drivetrain that will follow the path.
+     * @param currentPose The current pose of the robot.
+     * @return The desired chassis speeds to follow the path.
+     */
     public ChassisSpeeds getPathTarget(Pose2d currentPose) {
         Rotation2d rotation;
         if (_shouldFlipPath) {
