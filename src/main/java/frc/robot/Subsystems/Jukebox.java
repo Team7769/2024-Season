@@ -720,7 +720,7 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return (shooterError <= 75 && angleError <= .75);
+                return (shooterError <= 150 && angleError <= .75);
             default:
                 return false;
         }
