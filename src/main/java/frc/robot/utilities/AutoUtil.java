@@ -41,15 +41,14 @@ public class AutoUtil {
      */
     public static void autonmousDropDown(SendableChooser<Integer> _autoChooser)
     {
-        
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
-        _autoChooser.addOption("Mid - B 3 4 (4)", MID_B_3_4);
-        _autoChooser.addOption("Mid - B 4 5 (4)", MID_B_4_5);
         _autoChooser.addOption("Mid - C B A 1 (5)", MID_C_B_A_1);
+        _autoChooser.addOption("Mid - B 3 4 (4)", MID_B_3_4);
         _autoChooser.addOption("Top - A 1 2 3 (4)", TOP_A_1_2_3);
         _autoChooser.addOption("Bottom - 5 4 (3)", BOTTOM_5_4);
         
         // Disabled for now
+        //_autoChooser.addOption("Mid - B 4 5 (4)", MID_B_4_5);
         //_autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
         //_autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
         //_autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
@@ -67,6 +66,5 @@ public class AutoUtil {
     public static final int MID_C_B_A_1 = 6;
     public static final int TOP_A_1_2_3 = 7;
     public static final int TOP_1_2_3 = 8;
-    public static final int BOTTOM_5_4 = 9;
-    
+    public static final int BOTTOM_5_4 = 9;    
 }
