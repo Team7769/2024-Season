@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
 
     if (_driverController.getRightBumper())
     {
-        rotation = -(_visionSystem.getTargetAngle() / 95) ;
+        rotation = -(_visionSystem.getTargetAngle() / 105) ;
         //target angle range is -27 to 27 degrees
     }
 
