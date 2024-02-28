@@ -34,40 +34,24 @@ public class LEDController {
     private Animation MANUAL_LIGHTS;
     private Animation IDLE_LIGHTS;
 
-
-
     private int underNumLeds;
     private int jukeboxNumLeds;
 
     private Jukebox jukebox;
-    private JukeboxEnum _lastState;
+
+    /**
+     * The are grb lights
+     */
 
     LEDController()
     {
-        underNumLeds = 45;
-        jukeboxNumLeds = 100;
         upperCandle = new CANdle(15);
         // lowerCandle = new CANdle(0); // TBD
-        config = new CANdleConfiguration();
-        config.stripType = LEDStripType.RGB;
-        config.statusLedOffWhenActive = false;
-        config.disableWhenLOS = false;
-        upperCandle.configAllSettings(config);
-        underNumLeds = 40;
-        jukeboxNumLeds = 40;
-        upperCandle = new CANdle(15);
-        config = new CANdleConfiguration();
-        config.stripType = LEDStripType.RGB;
-        config.vBatOutputMode = VBatOutputMode.On;
-        config.brightnessScalar = 0.5;
-        config.disableWhenLOS = false;
-        config.statusLedOffWhenActive = false;
-        upperCandle.configAllSettings(config, 100);
-        
-        // lowerCandle.configAllSettings(config);
-        
+        // underNumLeds = 400;
+        upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
+        jukeboxNumLeds = 50;        
         // animation for IDLE --color is Pure White
-        IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
+        IDLE_LIGHTS = new StrobeAnimation(0, 0, 255, 0, .15, jukeboxNumLeds);
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
@@ -133,50 +117,47 @@ public class LEDController {
      */
     public void handleLights()
     {
-
-        switch (jukebox.getState()) {
-            case IDLE:
-                upperCandle.setLEDs(255, 255, 255);
         var currentState = jukebox.getState();
-        if (_lastState != currentState) {
-            switch (currentState) {
+        switch (currentState) {
             case IDLE:
-                // upperCandle.setLEDs(100, 100, 100, 100, 0, 25);
-                upperCandle.animate(IDLE_LIGHTS);
+                if (jukebox.hasNote())
+                {
+                    upperCandle.clearAnimation(0);
+                    upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
+                } else {
+                    upperCandle.animate(IDLE_LIGHTS);
+                }
                 break;
             case SCORE:
-                upperCandle.animate(SCORE_LIGHTS);
+                upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_SPEAKER:
-                upperCandle.animate(PREP_SPEAKER_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_AMP:
-                upperCandle.animate(PREP_AMP_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_TRAP:
-                upperCandle.animate(PREP_TRAP_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case RESET:
-                upperCandle.animate(RESET_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case EXTEND_FOR_CLIMB:
-                upperCandle.animate(EXTEND_FOR_CLIMB_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case CLIMB:
-                upperCandle.animate(CLIMB_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case MANUAL:
-                upperCandle.animate(MANUAL_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             default:
-                upperCandle.animate(IDLE_LIGHTS);
+                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
-        }
-        _lastState = currentState;
+            }
 
-    }
 
-}
         
     }
 }
