@@ -10,14 +10,9 @@ import frc.robot.Autonomous.AutonomousMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
-import frc.robot.Enums.IntakeState;
-import frc.robot.Enums.JukeboxEnum;
-import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.Jukebox;
-import frc.robot.Subsystems.Intake;
-import frc.robot.Subsystems.VisionSystem;
-import frc.robot.Utilities.AutoUtil;
-import frc.robot.Utilities.OneDimensionalLookup;
+import frc.robot.Enums.*;
+import frc.robot.Subsystems.*;
+import frc.robot.Utilities.*;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
