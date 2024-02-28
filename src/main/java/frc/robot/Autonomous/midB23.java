@@ -42,7 +42,7 @@ public class midB23 extends AutonomousMode{
             case 2:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -72,7 +72,7 @@ public class midB23 extends AutonomousMode{
             case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -80,7 +80,7 @@ public class midB23 extends AutonomousMode{
             case 7:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -107,7 +107,7 @@ public class midB23 extends AutonomousMode{
             case 10:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -115,7 +115,7 @@ public class midB23 extends AutonomousMode{
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }

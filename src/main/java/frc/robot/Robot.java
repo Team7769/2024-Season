@@ -10,13 +10,10 @@ import frc.robot.Autonomous.AutonomousMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
-import frc.robot.Enums.IntakeState;
-import frc.robot.Enums.JukeboxEnum;
-import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.Jukebox;
-import frc.robot.Subsystems.Intake;
-import frc.robot.Subsystems.VisionSystem;
+import frc.robot.Enums.*;
+import frc.robot.Subsystems.*;
 import frc.robot.Utilities.AutoUtil;
+import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -38,12 +35,17 @@ public class Robot extends TimedRobot {
    private AutonomousMode _currentAuto;
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
+   private LEDController _ledController;
+   private boolean _score;
+   private boolean _scoreReleased;
 
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
     _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
+    _ledController = LEDController.getInstance();
+
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
     _visionSystem = VisionSystem.getInstance();
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
+    
   }
 
   @Override
@@ -70,6 +73,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    _ledController.handleLights();
+    // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     _drivetrain.updateOdometry();
     _currentAuto.execute();
     _intake.handleCurrentState();
@@ -83,6 +88,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    _ledController.handleLights();
+    // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();
     _drivetrain.updateOdometry();
@@ -107,11 +114,13 @@ public class Robot extends TimedRobot {
         Constants.RotAxis_outputTable, 
         _driverController.getRightX());
 
+    _score = Math.abs(_driverController.getRightTriggerAxis()) > 0.25;
+
     if (_driverController.getBButton() && _driverController.getAButton()) {
       _drivetrain.reset();
     }
 
-    if (_driverController.getRightBumper())
+    if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
         rotation = -(_visionSystem.getTargetAngle() / 105) ;
         //target angle range is -27 to 27 degrees
@@ -126,10 +135,10 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopJukebox() {
-        if (_operatorController.getLeftBumper()) {
+        if (Math.abs(_operatorController.getLeftTriggerAxis()) > 0.25) {
           if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-        }  else if (_operatorController.getRightBumper()) {
+        }  else if (Math.abs(_operatorController.getRightTriggerAxis()) > 0.25) {
           if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_AMP);
         } else if (_operatorController.getXButton()) {
@@ -144,12 +153,13 @@ public class Robot extends TimedRobot {
         } else if (_operatorController.getAButton()) {
           _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
         }
-        
-        if (_driverController.getLeftBumper()) {
+
+        if (_score) {
           _jukebox.setState(JukeboxEnum.SCORE);
-        } else if (_driverController.getLeftBumperReleased()) {
+        } else if (_scoreReleased) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
+        _scoreReleased = _score;
 
         if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
@@ -159,12 +169,12 @@ public class Robot extends TimedRobot {
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {
       // emergency eject
-
+      _jukebox.setState(JukeboxEnum.EJECT);
       _intake.setWantedState(IntakeState.EJECT);
     } else if (_operatorController.getStartButtonReleased()) {
       // passive_eject is a default state and will automatically change to
       // intake if a note isnt held
-
+      _jukebox.setState(JukeboxEnum.IDLE);
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
   }
@@ -179,9 +189,14 @@ public class Robot extends TimedRobot {
 
     if (_driverController.getBackButtonPressed()) {
       _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+
     }
     if (_driverController.getStartButtonPressed()) {
       _jukebox.setState(JukeboxEnum.CLIMB);
+    } else if (_driverController.getStartButtonReleased()) {
+      if (_jukebox.getElevatorPosition() > .05) {
+        _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
+      }
     }
 
     if (_operatorController.getBButton()) {
@@ -205,11 +220,14 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     testOperate();
 
+    _ledController.colorTest(); // turn off the lights so it doesn't bother people during testing
+
     _intake.handleCurrentState();
     _jukebox.handleCurrentState();
   }
 
   private void testOperate() {   
+
     _jukebox.setState(JukeboxEnum.MANUAL);
 
     if (_operatorController.getLeftBumper())
