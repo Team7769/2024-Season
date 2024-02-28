@@ -174,6 +174,7 @@ public class Robot extends TimedRobot {
     } else if (_operatorController.getStartButtonReleased()) {
       // passive_eject is a default state and will automatically change to
       // intake if a note isnt held
+      _jukebox.setState(JukeboxEnum.IDLE);
       _intake.setWantedState(IntakeState.PASSIVE_EJECT);
     }
   }
