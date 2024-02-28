@@ -125,36 +125,37 @@ public class Robot extends TimedRobot {
     _drivetrain.fieldOrientedDrive(translationX, translationY, rotation);
   }
 
-  public void teleopJukebox() {
-        if (_operatorController.getLeftBumper()) {
-          if (_jukebox.hasNote())
-            _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-        }  else if (_operatorController.getRightBumper()) {
-          if (_jukebox.hasNote())
-            _jukebox.setState(JukeboxEnum.PREP_AMP);
-        } else if (_operatorController.getXButton()) {
-          if (_jukebox.hasNote())
-            _jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
-        } else if (_operatorController.getYButton()) {
-          if (_jukebox.hasNote())
-            _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
-        } else if (_operatorController.getBButton()) {
-          if (_jukebox.hasNote())
-            _jukebox.setState(JukeboxEnum.PREP_TRAP);
-        } else if (_operatorController.getAButton()) {
-          _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
-        }
-        
-        if (_driverController.getLeftBumper()) {
-          _jukebox.setState(JukeboxEnum.SCORE);
-        } else if (_driverController.getLeftBumperReleased()) {
-          _jukebox.setState(JukeboxEnum.IDLE);
-        }
+  	public void teleopJukebox() {
+		if (_jukebox.hasNote()) {
+			if (_operatorController.getLeftBumper()) {
+				_jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+			} else if (_operatorController.getRightBumper()) {
+				_jukebox.setState(JukeboxEnum.PREP_AMP);
+			} else if (_operatorController.getXButton()) {
+				_jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+			} else if (_operatorController.getYButton()) {
+				_jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+			} else if (_operatorController.getBButton()) {
+				_jukebox.setState(JukeboxEnum.PREP_TRAP);
+			}
+
+			if (_driverController.getLeftBumper()) {
+				_jukebox.setState(JukeboxEnum.SCORE);
+			}
+		} else {
+			if (_operatorController.getAButton()) {
+				_jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
+			}
+		}
+
+		if (_driverController.getLeftBumperReleased()) {
+			_jukebox.setState(JukeboxEnum.IDLE);
+		}
 
         if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
-      }
+    }
 
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {
