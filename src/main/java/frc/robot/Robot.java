@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
 
+   private boolean _ltBefore = false;
+
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
@@ -111,7 +113,7 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
-    if (_driverController.getRightBumper())
+    if (_driverController.getRightTriggerAxis() >= 0.7)
     {
         rotation = -(_visionSystem.getTargetAngle() / 105) ;
         //target angle range is -27 to 27 degrees
@@ -127,9 +129,9 @@ public class Robot extends TimedRobot {
 
   	public void teleopJukebox() {
 		if (_jukebox.hasNote()) {
-			if (_operatorController.getLeftBumper()) {
+			if (_operatorController.getLeftTriggerAxis() >= 0.7) {
 				_jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-			} else if (_operatorController.getRightBumper()) {
+			} else if (_operatorController.getRightTriggerAxis() >= 0.7) {
 				_jukebox.setState(JukeboxEnum.PREP_AMP);
 			} else if (_operatorController.getXButton()) {
 				_jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
@@ -139,8 +141,10 @@ public class Robot extends TimedRobot {
 				_jukebox.setState(JukeboxEnum.PREP_TRAP);
 			}
 
-			if (_driverController.getLeftBumper()) {
+			if (_driverController.getLeftTriggerAxis() >= 0.7) {
 				_jukebox.setState(JukeboxEnum.SCORE);
+
+				_ltBefore = true;
 			}
 		} else {
 			if (_operatorController.getAButton()) {
@@ -148,8 +152,10 @@ public class Robot extends TimedRobot {
 			}
 		}
 
-		if (_driverController.getLeftBumperReleased()) {
+		if (_driverController.getLeftTriggerAxis() < 0.7 && _ltBefore) {
 			_jukebox.setState(JukeboxEnum.IDLE);
+
+			_ltBefore = false;
 		}
 
         if (_operatorController.getBackButton()) {
