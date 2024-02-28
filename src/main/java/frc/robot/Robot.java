@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
    private AutonomousMode _currentAuto;
    private VisionSystem _visionSystem;
    private Jukebox _jukebox;
-   private boolean _eject;
-   private boolean _ejectHeld;
+   private boolean _score;
+   private boolean _scoreReleased;
 
   @Override
   public void robotInit() {
@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
         Constants.RotAxis_outputTable, 
         _driverController.getRightX());
 
-    _eject = Math.abs(_driverController.getRightTriggerAxis()) > 0.25;
+    _score = Math.abs(_driverController.getRightTriggerAxis()) > 0.25;
 
     if (_driverController.getBButton() && _driverController.getAButton()) {
       _drivetrain.reset();
@@ -144,12 +144,12 @@ public class Robot extends TimedRobot {
           _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
         }
 
-        if (_eject) {
+        if (_score) {
           _jukebox.setState(JukeboxEnum.SCORE);
-        } else if (_ejectHeld) {
+        } else if (_scoreReleased) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
-        _ejectHeld = _eject;
+        _scoreReleased = _score;
 
         if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
