@@ -8,30 +8,26 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
-/**
- * Five Note Autonomous Mode.
- * Starts Mid in front of the speaker and scores the following notes:
- * Initial -> C -> B -> A -> 1
- */
-public class FiveNote extends AutonomousMode{
-    private PathFollower _pathFollower;
+public class TOP_A_1_2_3 extends AutonomousMode {
+    private int _step = 0;
+
+    private Drivetrain _drivetrain;
     private Intake _intake;
     private Jukebox _jukebox;
-    private Drivetrain _drivetrain;
-    private int _count;
-    private int _loopCounter;
 
-    public FiveNote(){
+    private PathFollower _pathFollower;
+
+    public TOP_A_1_2_3() {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        
-        _pathFollower = new PathFollower("5 Note");
+
+        _pathFollower = new PathFollower("TOP_A_1_2_3");
     }
 
     @Override
-    public void execute(){
-        switch (_count) {
+    public void execute() {
+        switch (_step) {
             case 0:
                 // Initial Position - Prep for Speaker Shot
                 _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
@@ -47,20 +43,20 @@ public class FiveNote extends AutonomousMode{
             case 2:
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
-                   _jukebox.setState(JukeboxEnum.IDLE);
+                    _jukebox.setState(JukeboxEnum.IDLE);
 
-                    // Start Path to Note C (1)
+                    // Start Path to Note A (1)
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
                 break;
             case 3:
-                // Follow Path to Note C (1)
+                // Follow Path to Note A (1)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
-                    // At Note C (1)
+                    // At Note A (1)
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -85,128 +81,124 @@ public class FiveNote extends AutonomousMode{
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
-                    // Start Path to Note B (2)
+                    // Start Path to Note 1 (2)
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
                 break;
             case 7:
-                // Follow Path to Note B (2)
+                // Follow Path to Note 1 (2)
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_pathFollower.isPathFinished()){
-                    // At Note B (2)
+                    // At Note 1 (2)
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
 
                 break;
             case 8:
-                // Once the note is detected, we can set prep speaker.
+                // Once the note is detected, we can go back.
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    // Start Path to Note A (2)
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
                 break;
             case 9:            
-                    // Once ready for the shot, set score.
-                    if (_jukebox.isReadyToScore()) {
-                        _jukebox.setState(JukeboxEnum.SCORE);
-                        nextStep();
-                    }
+                // Follow Path to Note A (2)
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                }
+
+                if (_pathFollower.isPathFinished()){
+                    // At Note A (2)
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+
                 break;
             case 10:
-                // After the note has left the robot, transition to idle and start the next path.
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-
-                    // Start Path to Note A (3)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
-                    nextStep();
-                }
-
-                break;
-            case 11:
-                // Follow Path to Note A (3)
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-
-                if (_pathFollower.isPathFinished()){
-                    // At Note A (3)
-                    _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-
-                break;
-            case 12:
-                // Once the note is detected, we can set prep speaker.
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                    nextStep();
-                }
-
-                break;
-            case 13:
-                    // Once ready for the shot, set score.
-                    if (_jukebox.isReadyToScore()) {
-                        _jukebox.setState(JukeboxEnum.SCORE);
-                        nextStep();
-                    }
-                break;
-            case 14:
-                // After the note has left the robot, transition to idle and start the next path.
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-
-                    // Start Path to Note 1 (4)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
-                    nextStep();
-                }
-
-                break;
-            case 15:
-                // Follow Path to Note 1 (4)
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-
-                if (_pathFollower.isPathFinished()){
-                    // At Note 1 (4)
-                    _drivetrain.drive(new ChassisSpeeds());
-
-                    // Start Path back to Note A (4)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
-                    nextStep();
-                }
-
-                break;
-            case 16:
-                // Follow Path back to Note A (4)
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                }
-
-                if (_pathFollower.isPathFinished()){
-                    // At Note A (4)
-                    _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-
-                break;
-            case 17:
                 // Once ready for the shot, set score.
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
-
                 break;
-            case 18:
-                // After the note has left the robot, transition to idle.
+            case 11:
+                // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    
+
+                    // Start Path to Note 1 (2)
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
+                    nextStep();
+                }
+
+                break;
+            case 12:
+                // Follow Path to Note 2 (2)
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
+                if (_pathFollower.isPathFinished()){
+                    // At Note 1 (2)
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+
+                break;
+            case 13:
+                // Once the note is detected, we can go back.
+                if (_jukebox.hasNote()) {
+                    // Start Path to Note A (2)
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
+                    nextStep();
+                }
+
+                break;
+            case 14:            
+                // Follow Path to Note A (2)
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                }
+
+                if (_pathFollower.isPathFinished()){
+                    // At Note A (2)
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+
+                break;
+            case 15:
+                // Once ready for the shot, set score.
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 16:
+                // After the note has left the robot, transition to idle and start the next path.
+                if (!_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+
+                    // Start Path to Note 3 (2)
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
+                    nextStep();
+                }
+
+                break;
+            case 17:
+                // Follow Path to Note 3 (2)
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
+                if (_pathFollower.isPathFinished()){
+                    // At Note 3 (2)
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -216,40 +208,25 @@ public class FiveNote extends AutonomousMode{
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
         }
-
-        _loopCounter++;
-    }
-
-    @Override
-    public void abort(){}
-
-    @Override
-    public boolean isComplete(){
-        return _count >= 15;
-    }
-    @Override
-    public void initialize(){
-        var startingPose = _pathFollower.getStartingPose();
-        _drivetrain.setStartingPose(startingPose);
-        _count = 0;
-        _loopCounter = 0;
-
-        // Set initial subsystem states. We should never need to change the Intake state as it is autonomous.
-        _intake.setWantedState(IntakeState.INTAKE);
-        _jukebox.setState(JukeboxEnum.IDLE);
     }
 
     private void nextStep() {
-        _count++;
+        _step++;
     }
 
-    // Sample code for a timer. This is useful if you need to wait a specific period of time without creating a new timer in memory.
-    private void resetLoopTimer() {
-        _loopCounter = 0;
+    @Override
+    public boolean isComplete(){
+        return _step >= 20;
     }
 
-    private boolean hasElapsed(double seconds) {
-        // There are 50 loops per second (0.02 seconds)
-        return ((double)_loopCounter / 50) >= seconds;
+    @Override
+    public void initialize() {
+        var startingPose = _pathFollower.getStartingPose();
+
+        _intake.setWantedState(IntakeState.INTAKE);
+
+        _drivetrain.setStartingPose(startingPose);
+
+        _step = 0;
     }
 }

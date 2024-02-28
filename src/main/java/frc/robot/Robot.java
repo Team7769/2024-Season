@@ -46,10 +46,8 @@ public class Robot extends TimedRobot {
     _drivetrain = Drivetrain.getInstance();
     _jukebox = Jukebox.getInstance();
     _intake = Intake.getInstance();
-
     _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
-
     _visionSystem = VisionSystem.getInstance();
     // loads the auto modes
     AutoUtil.autonmousDropDown(_autoChooser);
@@ -119,7 +117,7 @@ public class Robot extends TimedRobot {
 
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
-        rotation = -(_visionSystem.getTargetAngle() / 95) ;
+        rotation = -(_visionSystem.getTargetAngle() / 105) ;
         //target angle range is -27 to 27 degrees
     }
 
