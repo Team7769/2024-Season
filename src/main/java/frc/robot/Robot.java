@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
         if (_operatorController.getBackButton()) {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
-    }
+      }
 
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {
