@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.5040931765173085
+        "x": 0.8601824895957499,
+        "y": 4.351321779566637
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0729152120215795,
-        "y": 5.515804013063089
+        "x": 2.8598500563620233,
+        "y": 1.7097821356840999
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Auto - 5s end"
     },
     {
       "anchor": {
-        "x": 2.894982565999367,
-        "y": 5.5040931765173085
+        "x": 7.872088097956508,
+        "y": 2.4007214918852084
       },
       "prevControl": {
-        "x": 2.3350740641566845,
-        "y": 5.492382339971527
+        "x": 5.180636643507454,
+        "y": 1.5137523032645077
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid - note B"
+      "linkedName": "Auto -bto4 end"
     }
   ],
   "rotationTargets": [],
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "C paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -59.620873988631736,
     "velocity": 0
   },
   "useDefaultConstraints": true

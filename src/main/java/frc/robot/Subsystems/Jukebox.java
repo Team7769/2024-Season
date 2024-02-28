@@ -76,16 +76,17 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     private final double kTrapShooterAngle = 12;
-    private final double kTrapElevatorPosition = 80; // change this
+    private final double kTrapElevatorPosition = 90; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
-    private final double kPodiumSpeakerShotAngle = 6.3;
+    private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
+    private final double kEmergancyEjectElevatorPosition = 10;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230;
@@ -122,8 +123,8 @@ public class Jukebox extends Subsystem{
     private final double kFeederIntake = 0.2;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
-    private final double[] kShooterAngles = {5, 5.75, 6.2, 6.55, 6.6};
-    private final double[] kShooterSpeeds = {35, 37, 38, 41, 44};
+    private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
+    private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     private double _manualElevatorSpeed;
     private double _manualFeederSpeed;
@@ -498,7 +499,7 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        if (_elevatorL.getEncoder().getPosition() > 75) {
+        if (_elevatorL.getEncoder().getPosition() > 88) {
             setShooterAngle(kTrapShooterAngle);
         }
     }
@@ -565,13 +566,17 @@ public class Jukebox extends Subsystem{
         if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
             return;
         }
-        setElevatorPosition(.1);
+        setElevatorPosition(.05);
         _elevatorProfileSetpoint = new TrapezoidProfile.State();
-        if (_elevatorL.getEncoder().getPosition() > .1) {
+        if (_elevatorL.getEncoder().getPosition() > .05) {
             _elevatorL.set(-.5);
         } else {
             _elevatorL.set(0);
         }
+    }
+
+    private void emergancyEject() {
+        setElevatorPosition(kEmergancyEjectElevatorPosition);
     }
 
     private void feeder()
@@ -628,6 +633,10 @@ public class Jukebox extends Subsystem{
         return _inNoteHolder || _inNoteShooter;
     }
 
+    public double getElevatorPosition() {
+        return _elevatorL.getEncoder().getPosition();
+    }
+
     public void handleCurrentState()
     {
         switch(jukeboxCurrentState) {
@@ -656,6 +665,8 @@ public class Jukebox extends Subsystem{
                 break;
             case RESET:
                 reset();
+            case EJECT:
+                emergancyEject();
                 break;
             case EXTEND_FOR_CLIMB:
                 extendForClimb();

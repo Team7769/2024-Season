@@ -4,10 +4,12 @@ import java.util.Optional;
 
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
@@ -30,6 +32,7 @@ public class LEDController {
     private Animation EXTEND_FOR_CLIMB_LIGHTS;    
     private Animation CLIMB_LIGHTS;
     private Animation MANUAL_LIGHTS;
+    private Animation IDLE_LIGHTS;
 
 
 
@@ -37,8 +40,9 @@ public class LEDController {
     private int jukeboxNumLeds;
 
     private Jukebox jukebox;
+    private JukeboxEnum _lastState;
 
-    public LEDController()
+    LEDController()
     {
         underNumLeds = 45;
         jukeboxNumLeds = 100;
@@ -49,6 +53,21 @@ public class LEDController {
         config.statusLedOffWhenActive = false;
         config.disableWhenLOS = false;
         upperCandle.configAllSettings(config);
+        underNumLeds = 40;
+        jukeboxNumLeds = 40;
+        upperCandle = new CANdle(15);
+        config = new CANdleConfiguration();
+        config.stripType = LEDStripType.RGB;
+        config.vBatOutputMode = VBatOutputMode.On;
+        config.brightnessScalar = 0.5;
+        config.disableWhenLOS = false;
+        config.statusLedOffWhenActive = false;
+        upperCandle.configAllSettings(config, 100);
+        
+        // lowerCandle.configAllSettings(config);
+        
+        // animation for IDLE --color is Pure White
+        IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
@@ -115,10 +134,15 @@ public class LEDController {
     public void handleLights()
     {
 
-        upperCandle.configBrightnessScalar(1);
         switch (jukebox.getState()) {
             case IDLE:
                 upperCandle.setLEDs(255, 255, 255);
+        var currentState = jukebox.getState();
+        if (_lastState != currentState) {
+            switch (currentState) {
+            case IDLE:
+                // upperCandle.setLEDs(100, 100, 100, 100, 0, 25);
+                upperCandle.animate(IDLE_LIGHTS);
                 break;
             case SCORE:
                 upperCandle.animate(SCORE_LIGHTS);
@@ -144,6 +168,15 @@ public class LEDController {
             case MANUAL:
                 upperCandle.animate(MANUAL_LIGHTS);
                 break;
+            default:
+                upperCandle.animate(IDLE_LIGHTS);
+                break;
         }
+        _lastState = currentState;
+
+    }
+
+}
+        
     }
 }
