@@ -33,7 +33,9 @@ public class AutoUtil {
             case (TOP_A_1_2_3_INDEX):
                 return new TOP_A_1_2_3();            
             case(TOP_1_2_3):
-                return new TOP123();       
+                return new TOP123();     
+            case(Bottom_1):
+                return new bottomAutoMode();
         }
         
         return null;
@@ -56,6 +58,7 @@ public class AutoUtil {
         _autoChooser.addOption("Five Note", FIVE_NOTE);
         _autoChooser.addOption("Top A 1 2 3", TOP_A_1_2_3_INDEX);
         _autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
+        _autoChooser.addOption("Bottom Path", Bottom_1);
     }
 
     // list of all auto modes 
@@ -69,5 +72,6 @@ public class AutoUtil {
     public static final int FIVE_NOTE = 6;
     public static final int TOP_A_1_2_3_INDEX = 7;
     public static final int TOP_1_2_3 = 8;
+    public static final int Bottom_1 = 10;
     
 }
