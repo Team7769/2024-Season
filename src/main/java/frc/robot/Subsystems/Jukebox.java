@@ -76,12 +76,12 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     private final double kTrapShooterAngle = 12;
-    private final double kTrapElevatorPosition = 80; // change this
+    private final double kTrapElevatorPosition = 90; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
-    private final double kPodiumSpeakerShotAngle = 6.2;
+    private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
@@ -499,7 +499,7 @@ public class Jukebox extends Subsystem{
 
         setShooterSpeed(0.0);
         setElevatorPosition(kTrapElevatorPosition);
-        if (_elevatorL.getEncoder().getPosition() > 75) {
+        if (_elevatorL.getEncoder().getPosition() > 88) {
             setShooterAngle(kTrapShooterAngle);
         }
     }
@@ -511,27 +511,27 @@ public class Jukebox extends Subsystem{
 
         feeder();
 
-        // if (_targetDistance != 0.0) {
-        //     double desiredShooterAngle = OneDimensionalLookup.interpLinear(
-        //         kDistanceIDs,
-        //         kShooterAngles,
-        //         _targetDistance
-        //     );
-        //     double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
-        //         kDistanceIDs,
-        //         kShooterSpeeds,
-        //         _targetDistance
-        //     );
-        //     setShooterAngle(desiredShooterAngle);
-        //     setShooterSpeed(desiredShooterSpeed);
+        if (_targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterAngles,
+                _targetDistance
+            );
+            double desiredShooterSpeed = OneDimensionalLookup.interpLinear(
+                kDistanceIDs,
+                kShooterSpeeds,
+                _targetDistance
+            );
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(desiredShooterSpeed);
 
-        // } else {
-        //     setShooterAngle(Constants.KMinShooterAngle);
-        //     setShooterSpeed(Constants.kMaxShooterSpeed);
-        // }
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
 
-        setShooterAngle(_dashboardShooterTargetAngle);
-        setShooterSpeed(_dashboardShooterTargetSpeed);
+        // setShooterAngle(_dashboardShooterTargetAngle);
+        // setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
     /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
@@ -566,9 +566,9 @@ public class Jukebox extends Subsystem{
         if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
             return;
         }
-        setElevatorPosition(.1);
+        setElevatorPosition(.05);
         _elevatorProfileSetpoint = new TrapezoidProfile.State();
-        if (_elevatorL.getEncoder().getPosition() > .1) {
+        if (_elevatorL.getEncoder().getPosition() > .05) {
             _elevatorL.set(-.5);
         } else {
             _elevatorL.set(0);
