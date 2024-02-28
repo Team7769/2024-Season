@@ -25,7 +25,7 @@ public class TestAutonomous extends AutonomousMode {
     {
         switch (_step) {
             case 0:
-                _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                 nextStep();
                 break;
             case 1:
@@ -33,7 +33,7 @@ public class TestAutonomous extends AutonomousMode {
 
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;

@@ -41,7 +41,7 @@ public class midCB34 extends AutonomousMode {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note C (1)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -77,7 +77,7 @@ public class midCB34 extends AutonomousMode {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note B 
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 
@@ -114,7 +114,7 @@ public class midCB34 extends AutonomousMode {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to 3
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -122,7 +122,7 @@ public class midCB34 extends AutonomousMode {
             case 11:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -149,7 +149,7 @@ public class midCB34 extends AutonomousMode {
             case 14:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset());
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
                 break;
@@ -157,7 +157,7 @@ public class midCB34 extends AutonomousMode {
             case 15:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getGyroRotationWithOffset()); 
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
