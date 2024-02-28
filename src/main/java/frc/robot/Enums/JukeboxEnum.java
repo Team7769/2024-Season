@@ -29,6 +29,9 @@ package frc.robot.Enums;
         /**Resets the jukebox to the IDLE configuration. */
         RESET,
 
+        /**Sets the elevator up for emergancy clearing of notes */
+        EJECT,
+
         /**Extends the elevator for climbing in the endgame. */
         EXTEND_FOR_CLIMB,
 
