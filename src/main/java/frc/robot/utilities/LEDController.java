@@ -3,6 +3,7 @@ package frc.robot.Utilities;
 import java.util.Optional;
 
 import com.ctre.phoenix.led.*;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -14,14 +15,13 @@ public class LEDController {
     private static LEDController _instance;
 
     private CANdle upperCandle;
-    private CANdle lowerCandle;
+    // private CANdle lowerCandle;
 
     private CANdleConfiguration config;
 
     private Optional<Alliance> _alliance;
 
     // Animation for Jukebox state
-    private Animation IDLE_LIGHTS;
     private Animation SCORE_LIGHTS;
     private Animation PREP_SPEAKER_LIGHTS;
     private Animation PREP_AMP_LIGHTS;
@@ -40,15 +40,15 @@ public class LEDController {
 
     public LEDController()
     {
-        underNumLeds = 100;
+        underNumLeds = 45;
         jukeboxNumLeds = 100;
         upperCandle = new CANdle(15);
-        lowerCandle = new CANdle(0); // TBD
+        // lowerCandle = new CANdle(0); // TBD
         config = new CANdleConfiguration();
+        config.stripType = LEDStripType.RGB;
+        config.statusLedOffWhenActive = false;
+        config.disableWhenLOS = false;
         upperCandle.configAllSettings(config);
-        config.brightnessScalar = 0;
-        // animation for IDLE --color is Pure White
-        IDLE_LIGHTS = new ColorFlowAnimation(0, 0, 0, 255, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
@@ -67,8 +67,6 @@ public class LEDController {
         MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
 
         jukebox = Jukebox.getInstance();
-
-        setBrightness(1);
     }
 
 
@@ -80,15 +78,13 @@ public class LEDController {
         }
         return _instance;
     }
-    /**
-     * sets the brightness of the strip
-     * @param brightness a number from 0 to 1 enter a precentage
-     */
-    private void setBrightness(double brightness)
-    {
-        config.brightnessScalar = brightness;
-    }
 
+
+    public void colorTest()
+    {
+        upperCandle.configBrightnessScalar(1);
+        upperCandle.setLEDs(255, 255, 255);
+    }
     
     /**
      * Turns the brightness of the candle to 0 basically off.
@@ -103,15 +99,15 @@ public class LEDController {
      * If _alliance is blue then make the lights blue
      * If _alliance is red then make the lights red
      */
-    public void handleBottomLights()
-    {
-        _alliance = DriverStation.getAlliance();
-        if (_alliance.get() == DriverStation.Alliance.Blue) {
-            lowerCandle.setLEDs(0, 0, 255);   
-        } else {
-            lowerCandle.setLEDs(255, 0, 0);
-        }
-    }
+    // public void handleBottomLights()
+    // {
+    //     _alliance = DriverStation.getAlliance();
+    //     if (_alliance.get() == DriverStation.Alliance.Blue) {
+    //         lowerCandle.setLEDs(0, 0, 255);   
+    //     } else {
+    //         lowerCandle.setLEDs(255, 0, 0);
+    //     }
+    // }
 
     /**
      * For each state in JukeBox a light will come on
@@ -119,9 +115,10 @@ public class LEDController {
     public void handleLights()
     {
 
+        upperCandle.configBrightnessScalar(1);
         switch (jukebox.getState()) {
             case IDLE:
-                upperCandle.animate(IDLE_LIGHTS);
+                upperCandle.setLEDs(255, 255, 255);
                 break;
             case SCORE:
                 upperCandle.animate(SCORE_LIGHTS);

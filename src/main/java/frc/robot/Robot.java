@@ -216,7 +216,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     testOperate();
 
-    _ledController.off(); // turn off the lights so it doesn't bother people during testing
+    _ledController.colorTest(); // turn off the lights so it doesn't bother people during testing
 
     _intake.handleCurrentState();
     _jukebox.handleCurrentState();
