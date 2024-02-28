@@ -57,7 +57,7 @@ public class LEDController {
         config.disableWhenLOS = false;
         config.statusLedOffWhenActive = false;
         upperCandle.configAllSettings(config, 100);
-
+        
         // lowerCandle.configAllSettings(config);
         
         // animation for IDLE --color is Pure White
@@ -133,7 +133,7 @@ public class LEDController {
         if (_lastState != currentState) {
             switch (currentState) {
             case IDLE:
-                //upperCandle.setLEDs(100, 100, 100, 100, 0, 25);
+                // upperCandle.setLEDs(100, 100, 100, 100, 0, 25);
                 upperCandle.animate(IDLE_LIGHTS);
                 break;
             case SCORE:
