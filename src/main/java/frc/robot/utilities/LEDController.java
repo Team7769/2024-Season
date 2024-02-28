@@ -49,19 +49,11 @@ public class LEDController {
         upperCandle = new CANdle(15);
         // lowerCandle = new CANdle(0); // TBD
         config = new CANdleConfiguration();
-        config.stripType = LEDStripType.RGB;
-        config.statusLedOffWhenActive = false;
-        config.disableWhenLOS = false;
-        upperCandle.configAllSettings(config);
         underNumLeds = 40;
         jukeboxNumLeds = 40;
-        upperCandle = new CANdle(15);
         config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB;
-        config.vBatOutputMode = VBatOutputMode.On;
         config.brightnessScalar = 0.5;
-        config.disableWhenLOS = false;
-        config.statusLedOffWhenActive = false;
         upperCandle.configAllSettings(config, 100);
         
         // lowerCandle.configAllSettings(config);
