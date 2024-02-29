@@ -75,8 +75,8 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapShooterAngle = 12;
-    private final double kTrapElevatorPosition = 90; // change this
+    private final double kTrapShooterAngle = 9;
+    private final double kTrapElevatorPosition = 80; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 2;
     private final double kAmpElevatorPosition = 70;
@@ -495,12 +495,19 @@ public class Jukebox extends Subsystem{
     private void prepTrap() {
         if (jukeboxPreviousState != JukeboxEnum.CLIMB) return;
 
-        feeder();
+        _feeder.set(kFeederIntake);
 
         setShooterSpeed(0.0);
-        setElevatorPosition(kTrapElevatorPosition);
-        if (_elevatorL.getEncoder().getPosition() > 88) {
+
+        var elevatorPosition = _elevatorL.getEncoder().getPosition();
+        if (elevatorPosition < 5) {
+            setElevatorPosition(5);
+        } else if (elevatorPosition >= 5) {
             setShooterAngle(kTrapShooterAngle);
+            if (_shooterAngle.getEncoder().getPosition() >= 7)
+            {
+                setElevatorPosition(kTrapElevatorPosition);
+            }
         }
     }
 
@@ -699,9 +706,13 @@ public class Jukebox extends Subsystem{
                 case CLIMB: 
                     if (n == JukeboxEnum.EXTEND_FOR_CLIMB ||
                         n == JukeboxEnum.PREP_TRAP) {
-
+                        
                         jukeboxPreviousState = jukeboxCurrentState;
                         jukeboxCurrentState = n;
+                    }
+                    if (n == JukeboxEnum.EXTEND_FOR_CLIMB) {
+                        
+                        _elevatorProfileSetpoint = new TrapezoidProfile.State(getElevatorPosition(), 0);
                     }
 
                     break;
