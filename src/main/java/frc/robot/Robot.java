@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
     _drivetrain.logTelemetry();
     _jukebox.logTelemetry();
     _intake.logTelemetry();
+    _ledController.handleLights();
   }
 
   @Override
@@ -73,7 +74,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    _ledController.handleLights();
+    //_ledController.handleLights();
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     _drivetrain.updateOdometry();
     _currentAuto.execute();
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    _ledController.handleLights();
+    //_ledController.handleLights();
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();

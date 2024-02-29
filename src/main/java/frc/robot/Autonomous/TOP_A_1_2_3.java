@@ -105,11 +105,10 @@ public class Top_A_1_2_3 extends AutonomousMode {
                 break;
             case 8:
                 // Once the note is detected, we can go back.
-                if (_jukebox.hasNote()) {
+                
                     // Start Path to Note A (2)
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
-                }
 
                 break;
             case 9:            
@@ -157,12 +156,10 @@ public class Top_A_1_2_3 extends AutonomousMode {
 
                 break;
             case 13:
-                // Once the note is detected, we can go back.
-                if (_jukebox.hasNote()) {
+            
                     // Start Path to Note A (2)
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
-                }
 
                 break;
             case 14:            
