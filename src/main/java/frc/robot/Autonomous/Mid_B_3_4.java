@@ -22,7 +22,7 @@ public class Mid_B_3_4 extends AutonomousMode{
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("MID B-3-4");
+        _pathFollower = new PathFollower("Mid B-3-4");
     }
 
     @Override
