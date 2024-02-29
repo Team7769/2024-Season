@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.079342670313249,
-        "y": 1.1454832211990011
+        "x": 8.431799046066786,
+        "y": 0.8958266217069119
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.733829407858153,
-        "y": 1.2920778001024438
+        "x": 6.0862857836116895,
+        "y": 1.0424212006103546
       },
       "isLocked": false,
       "linkedName": "Bottom 4-5 Note 5 Pickup"
     },
     {
       "anchor": {
-        "x": 0.7646141006587875,
-        "y": 4.485794114450316
+        "x": 2.7631256693640407,
+        "y": 4.156048097427144
       },
       "prevControl": {
-        "x": 1.7907761529828925,
-        "y": 2.9318915780738153
+        "x": 3.8939232082399773,
+        "y": 2.4525089479517073
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,18 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.74356283647074,
+    "rotation": -52.43140797117255,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Bottom 5-4",
   "previewStartingState": null,
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

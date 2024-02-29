@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.226278166842048,
-        "y": 2.3601727203454415
+        "x": 8.857683833435646,
+        "y": 3.010564876228143
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.971878515185602,
-        "y": 0.4544431946006758
+        "x": 6.610774438006836,
+        "y": 1.938510066644463
       },
       "isLocked": false,
       "linkedName": "Bottom 4-5 Note 4 Pickup"
     },
     {
       "anchor": {
-        "x": 0.7646141006587875,
-        "y": 4.485794114450316
+        "x": 3.100896362794515,
+        "y": 4.126676732781015
       },
       "prevControl": {
-        "x": 2.6117057948401614,
-        "y": 2.4921078413585405
+        "x": 4.921920970854458,
+        "y": 2.4818803125978355
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Start"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.88552705465878,
+    "rotation": -62.44718842328213,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Bottom 5-4",
   "previewStartingState": {
-    "rotation": 38.41805534482202,
+    "rotation": 49.398705354995606,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
