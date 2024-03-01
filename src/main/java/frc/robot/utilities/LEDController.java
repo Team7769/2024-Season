@@ -131,6 +131,9 @@ public class LEDController {
             case SCORE:
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
+            case PREP_LAUNCH:
+            case PREP_SPEAKER_PODIUM:
+            case PREP_SPEAKER_LINE:
             case PREP_SPEAKER:
                 upperCandle.clearAnimation(0);
                 upperCandle.animate(PREP_SPEAKER_LIGHTS);
