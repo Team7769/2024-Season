@@ -132,7 +132,7 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_SPEAKER:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.setLEDs(255, 0, 0, 0, 0, jukebox.getShooterLeds(jukeboxNumLeds));
                 break;
             case PREP_AMP:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);

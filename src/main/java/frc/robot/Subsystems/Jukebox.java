@@ -19,6 +19,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.JukeboxEnum;
+import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
     
 public class Jukebox extends Subsystem{
@@ -653,6 +654,17 @@ public class Jukebox extends Subsystem{
 
     public double getElevatorPosition() {
         return _elevatorL.getEncoder().getPosition();
+    }
+
+    public int getShooterLeds(int numLeds) {
+        var target = _shooterSetpointRpm + 300;
+        if (target > 0) {
+            double shooterProportion = numLeds * (_shooterL.getEncoder().getVelocity() / (target));
+            return (int)Math.ceil(shooterProportion);
+        } else {
+            return 0;
+        }
+
     }
 
     public void handleCurrentState()
