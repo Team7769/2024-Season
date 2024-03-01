@@ -55,7 +55,7 @@ public class LEDController {
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
-        PREP_SPEAKER_LIGHTS = new ColorFlowAnimation(0, 255, 255, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
         // animation for PREP_AMP --color is Indigo
         PREP_AMP_LIGHTS = new ColorFlowAnimation(75, 0, 130, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_TRAP --color is Sunset Orange
@@ -132,7 +132,8 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_SPEAKER:
-                upperCandle.setLEDs(255, 0, 0, 0, 0, jukebox.getShooterLeds(jukeboxNumLeds));
+                upperCandle.clearAnimation(0);
+                upperCandle.animate(PREP_SPEAKER_LIGHTS);
                 break;
             case PREP_AMP:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
