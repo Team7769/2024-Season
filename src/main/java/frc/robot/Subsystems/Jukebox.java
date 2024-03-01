@@ -87,6 +87,8 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
     private final double kEmergancyEjectElevatorPosition = 10;
+    private final double kLaunchAngle = 11;
+    private final double kLaunchSpeed = 48;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 230;
@@ -362,10 +364,14 @@ public class Jukebox extends Subsystem{
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        _elevatorController.setReference(_elevatorProfileSetpoint.position,
+        if (_elevatorL.getEncoder().getPosition() < 100) {
+            _elevatorController.setReference(_elevatorProfileSetpoint.position,
                                          CANSparkBase.ControlType.kPosition,
                                          0,
                                          calculatedFeedForward);
+        } else {
+            _elevatorL.set(0);
+        }
 
         // This is being printed to Shuffleboard
         // Check that these position/velocity values are changing toward the setpoint, 5 in our test case.
@@ -554,6 +560,11 @@ public class Jukebox extends Subsystem{
         setElevatorPosition(0);
     }
 
+    private void prepLaunch() {
+        setShooterAngle(kLaunchAngle);
+        setShooterSpeed(kLaunchSpeed);
+    }
+
     private void prepHumanIntake() {
         setShooterAngle(kHumanElementIntakeAngle);
         setElevatorPosition(0);
@@ -661,6 +672,9 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER_LINE:
                 prepSpeakerLine();
+                break;
+            case PREP_LAUNCH:
+                prepLaunch();
                 break;
             case PREP_HUMAN_INTAKE:
                 prepHumanIntake();

@@ -153,6 +153,8 @@ public class Robot extends TimedRobot {
             _jukebox.setState(JukeboxEnum.PREP_TRAP);
         } else if (_operatorController.getAButton()) {
           _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
+        } else if (_operatorController.getLeftBumper()) {
+          _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
         }
 
         if (_score) {
