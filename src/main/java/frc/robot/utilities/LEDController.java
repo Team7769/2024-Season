@@ -45,6 +45,7 @@ public class LEDController {
 
     LEDController()
     {
+        jukebox = Jukebox.getInstance();
         upperCandle = new CANdle(15);
         // lowerCandle = new CANdle(0); // TBD
         // underNumLeds = 400;
@@ -69,7 +70,6 @@ public class LEDController {
         // animation for MANUAL --color is Purple
         MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
 
-        jukebox = Jukebox.getInstance();
     }
 
 

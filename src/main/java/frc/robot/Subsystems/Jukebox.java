@@ -487,7 +487,8 @@ public class Jukebox extends Subsystem{
             _feeder.set(-kFeederShootSpeed);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
-                    jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE) {
+                    jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
+                    jukeboxPreviousState == JukeboxEnum.PREP_LAUNCH) {
             _feeder.set(kFeederShootSpeed);
         }
     }
