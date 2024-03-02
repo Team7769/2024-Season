@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     _drivetrain.reset();
+    _jukebox.resetSensors();
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
     _currentAuto.initialize();
   }
