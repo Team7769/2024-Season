@@ -365,13 +365,13 @@ public class Jukebox extends Subsystem{
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        if (_elevatorL.getEncoder().getPosition() < 100) {
+        if (_elevatorL.getEncoder().getPosition() >= 100 && _elevatorProfileSetpoint.velocity > 0) {
+           _elevatorL.set(0);
+        } else { 
             _elevatorController.setReference(_elevatorProfileSetpoint.position,
-                                         CANSparkBase.ControlType.kPosition,
-                                         0,
-                                         calculatedFeedForward);
-        } else {
-            _elevatorL.set(0);
+                            CANSparkBase.ControlType.kPosition,
+                            0,
+                            calculatedFeedForward);
         }
 
         // This is being printed to Shuffleboard
