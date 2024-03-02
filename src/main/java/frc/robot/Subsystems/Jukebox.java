@@ -34,7 +34,7 @@ public class Jukebox extends Subsystem{
     private CANSparkMax _shooterL;
     private CANSparkMax _shooterR;
 
-    private double _targetDistance;
+    private double _targetDistance = 0;
 
     // Motor Controller PIDs
     private SparkPIDController _shooterAngleController;
@@ -44,7 +44,7 @@ public class Jukebox extends Subsystem{
 
     // Jukebox State Control
     private JukeboxEnum jukeboxCurrentState = JukeboxEnum.IDLE;
-    private JukeboxEnum jukeboxPreviousState;
+    private JukeboxEnum jukeboxPreviousState = JukeboxEnum.IDLE;
 
     // Elevator Profile
     private ElevatorFeedforward _elevatorFeedForward;
@@ -70,8 +70,8 @@ public class Jukebox extends Subsystem{
     private DigitalInput _noteShooterPE;
     private Debouncer _noteHolderPEDebouncer;
     private Debouncer _noteShooterPEDebouncer;
-    private Boolean _inNoteHolder;
-    private Boolean _inNoteShooter;
+    private Boolean _inNoteHolder = false;
+    private Boolean _inNoteShooter = false;
 
     private final double kPhotoEyeDebounceTime = 0.04;
 
@@ -105,7 +105,7 @@ public class Jukebox extends Subsystem{
     private final double kShooterAngleFeedForwardKs = 0.31777;
     private final double kShooterAngleFeedForwardKv = 0.090231;
     private final double kShooterAngleFeedForwardkG = 0.035019;
-    private final double kShooterAngleFeedForwardKp = 0.05;
+    private final double kShooterAngleFeedForwardKp = 0.075;
     private final double kShooterAngleFeedForwardAngle = .1785;
     
     // Shooter Control Constants
@@ -123,16 +123,16 @@ public class Jukebox extends Subsystem{
 
     private final double kFeederShootSpeed = 0.5;
     private final double kFeederReverse = -0.2;
-    private final double kFeederIntake = 0.2;
+    private final double kFeederIntake = 0.25;
 
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
     private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
-    private double _manualElevatorSpeed;
-    private double _manualFeederSpeed;
-    private double _manualShooterAngleSpeed;
-    private double _manualShooterSpeed;
+    private double _manualElevatorSpeed = 0;
+    private double _manualFeederSpeed = 0;
+    private double _manualShooterAngleSpeed = 0;
+    private double _manualShooterSpeed = 0;
 
     private VisionSystem _visionSystem;
 
@@ -365,7 +365,7 @@ public class Jukebox extends Subsystem{
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        if (_elevatorL.getEncoder().getPosition() >= 100 && _elevatorProfileSetpoint.velocity > 0) {
+        if (_elevatorL.getEncoder().getPosition() >= 85 && _elevatorProfileSetpoint.velocity > 0) {
            _elevatorL.set(0);
         } else { 
             _elevatorController.setReference(_elevatorProfileSetpoint.position,
@@ -508,9 +508,9 @@ public class Jukebox extends Subsystem{
         setShooterSpeed(0.0);
 
         var elevatorPosition = _elevatorL.getEncoder().getPosition();
-        if (elevatorPosition < 5) {
+        if (elevatorPosition < 3) {
             setElevatorPosition(5);
-        } else if (elevatorPosition >= 5) {
+        } else if (elevatorPosition >= 3) {
             setShooterAngle(kTrapShooterAngle);
             if (_shooterAngle.getEncoder().getPosition() >= 7)
             {
