@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.679608614566721,
-        "y": 7.003080254377342
+        "x": 4.691111209000488,
+        "y": 7.2376315806228515
       },
       "isLocked": false,
-      "linkedName": "Mid B-A-1-2 Score"
+      "linkedName": "Mid B-A-1-2 Note A"
     },
     {
       "anchor": {
-        "x": 8.69614132788194,
-        "y": 5.712730423671939
+        "x": 8.652084280912748,
+        "y": 7.4309552554704394
       },
       "prevControl": {
-        "x": 7.961857211728734,
-        "y": 5.844901564579515
+        "x": 6.954012981774429,
+        "y": 7.372401072741533
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid B-A-1-2 Note 2"
+      "linkedName": "Mid B-A-1-2 Note 1"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -13.32453126189084,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Mid B-A-1-2",
   "previewStartingState": {
-    "rotation": 23.446002775170466,
+    "rotation": 30.256437163529416,
     "velocity": 0
   },
   "useDefaultConstraints": true

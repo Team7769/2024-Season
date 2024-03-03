@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.263812470379861,
-        "y": 5.595244965087426
+        "x": 2.1756983764414763,
+        "y": 5.551187918118234
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 5.597779868883561
       },
       "prevControl": {
-        "x": 2.1903840587645407,
-        "y": 5.595244965087426
+        "x": 2.1610126941184125,
+        "y": 5.521816553472107
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5 Note - Note B"
+      "linkedName": "Mid B-A-1-2 Note B"
     }
   ],
   "rotationTargets": [],
