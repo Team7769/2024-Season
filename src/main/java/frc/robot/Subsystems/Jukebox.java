@@ -763,6 +763,8 @@ public class Jukebox extends Subsystem{
                 // Logic if Prep Amp/Trap is ready to score
                 break;
             case PREP_SPEAKER:
+            case PREP_SPEAKER_PODIUM:
+            case PREP_SPEAKER_LINE:
                 // Error is the absolute value of the difference between Target and Actual 
                 var shooterError = Math.abs((_shooterSetpointRpm + 300) - _shooterL.getEncoder().getVelocity());
                 var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
