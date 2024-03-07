@@ -756,6 +756,10 @@ public class Jukebox extends Subsystem{
         return jukeboxCurrentState;
     }
 
+    public JukeboxEnum getPreviousState() {
+        return jukeboxPreviousState;
+    }
+
     public boolean isReadyToScore() {
         switch (jukeboxCurrentState) {
             case PREP_AMP:
