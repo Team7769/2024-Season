@@ -79,7 +79,7 @@ public class Jukebox extends Subsystem{
     private final double kTrapShooterAngle = 9;
     private final double kTrapElevatorPosition = 80; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
-    private final double kExtendClimbShooterAngle = 2;
+    private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
