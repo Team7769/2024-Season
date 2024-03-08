@@ -13,7 +13,7 @@ import frc.robot.Utilities.PathFollower;
  * Starts Top in front of the speaker and scores the following notes:
  * Initial -> A -> 1 -> 2 -> (3)
  */
-public class Top_A_1_2_3 extends AutonomousMode {
+public class TOP_A_1_2_3 extends AutonomousMode {
     private int _step = 0;
 
     private Drivetrain _drivetrain;
@@ -22,7 +22,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
 
     private PathFollower _pathFollower;
 
-    public Top_A_1_2_3() {
+    public TOP_A_1_2_3() {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
