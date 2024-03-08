@@ -41,6 +41,9 @@ package frc.robot.Enums;
         /**Retracts the elevator to climb in the endgame. */
         CLIMB,
 
+        /**Enables change in jukebox variables for shots from the dashboard */
+        JUKEBOX_TEST,
+        
         /**Manual control */
         MANUAL
     }

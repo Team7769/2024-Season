@@ -158,6 +158,10 @@ public class Robot extends TimedRobot {
           _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
         }
 
+        if (_driverController.getXButton()) {
+          _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
+        }
+
         if (_score) {
           _jukebox.setState(JukeboxEnum.SCORE);
         } else if (_scoreReleased) {
