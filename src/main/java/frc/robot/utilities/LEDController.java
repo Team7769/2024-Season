@@ -1,15 +1,11 @@
 package frc.robot.Utilities;
 
-import java.util.Optional;
+// import java.util.Optional;
 
 import com.ctre.phoenix.led.*;
-import com.ctre.phoenix.led.CANdle.LEDStripType;
-import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Enums.JukeboxEnum;
+// import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
@@ -19,9 +15,8 @@ public class LEDController {
     private CANdle upperCandle;
     // private CANdle lowerCandle;
 
-    private CANdleConfiguration config;
 
-    private Optional<Alliance> _alliance;
+    // private Optional<Alliance> _alliance;
 
     // Animation for Jukebox state
     private Animation SCORE_LIGHTS;
@@ -34,21 +29,17 @@ public class LEDController {
     private Animation MANUAL_LIGHTS;
     private Animation IDLE_LIGHTS;
 
-    private int underNumLeds;
+    // private int underNumLeds;
     private int jukeboxNumLeds;
 
     private Jukebox jukebox;
-
-    /**
-     * The are grb lights
-     */
 
     LEDController()
     {
         jukebox = Jukebox.getInstance();
         upperCandle = new CANdle(15);
         // lowerCandle = new CANdle(0); // TBD
-        // underNumLeds = 400;
+        // underNumLeds = 50;
         upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
         jukeboxNumLeds = 50;        
         // animation for IDLE --color is Pure White
@@ -56,7 +47,7 @@ public class LEDController {
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
-        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
+        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukeboxNumLeds, .25, .1);
         // animation for PREP_AMP --color is Indigo
         PREP_AMP_LIGHTS = new RainbowAnimation(.5, .5, jukeboxNumLeds);
         // animation for PREP_TRAP --color is Sunset Orange
@@ -72,7 +63,6 @@ public class LEDController {
 
     }
 
-
     public static LEDController getInstance()
     {
         if (_instance == null)
@@ -81,22 +71,7 @@ public class LEDController {
         }
         return _instance;
     }
-
-
-    public void colorTest()
-    {
-        upperCandle.configBrightnessScalar(1);
-        upperCandle.setLEDs(255, 255, 255);
-    }
     
-    /**
-     * Turns the brightness of the candle to 0 basically off.
-     */
-    public void off()
-    {
-        config.brightnessScalar = 0;
-    }
-
     /**
      * Handles the bottom lights.
      * If _alliance is blue then make the lights blue
@@ -129,20 +104,21 @@ public class LEDController {
                 }
                 break;
             case SCORE:
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_LAUNCH:
             case PREP_SPEAKER_PODIUM:
             case PREP_SPEAKER_LINE:
             case PREP_SPEAKER:
-                // upperCandle.clearAnimation(0);
-                // upperCandle.animate(PREP_SPEAKER_LIGHTS);
-                upperCandle.setLEDs(255, 0, 0, 0, 0, jukebox.getShooterLeds(jukeboxNumLeds));
+                upperCandle.clearAnimation(0);
+                upperCandle.setLEDs(255, 0, 0, 0, 0, jukeboxNumLeds);
+                upperCandle.animate(PREP_SPEAKER_LIGHTS);
                 break;
             case PREP_AMP:
-                // upperCandle.clearAnimation(0);
-                // upperCandle.animate(PREP_AMP_LIGHTS);
-                upperCandle.setLEDs(255, 153, 51, 0, 0, jukeboxNumLeds);
+                upperCandle.clearAnimation(0);
+                upperCandle.setLEDs(255, 0, 0, 0, 0, jukeboxNumLeds);
+                upperCandle.animate(PREP_AMP_LIGHTS);
                 break;
             case PREP_TRAP:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
@@ -151,10 +127,10 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case EXTEND_FOR_CLIMB:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.setLEDs(202, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case CLIMB:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.setLEDs(203, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case MANUAL:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
@@ -166,5 +142,37 @@ public class LEDController {
 
 
         
+    }
+
+
+
+
+
+    /**
+     * This function is used for test only! 
+     * This will not be include in the final product.
+     */
+
+    public void LEDLightsTest(int num)
+    {
+        upperCandle.clearAnimation(0);
+        switch (num) {
+            case 0:
+                upperCandle.animate(IDLE_LIGHTS);
+                break;
+            case 1:
+                upperCandle.animate(SCORE_LIGHTS);
+                break;
+            case 2:
+                upperCandle.setLEDs(255, 0, 0, 0, 0, jukeboxNumLeds);
+                upperCandle.animate(PREP_AMP_LIGHTS);
+                break;
+            case 3:
+                upperCandle.animate(CLIMB_LIGHTS);
+                break;
+            default:
+                upperCandle.setLEDs(255, 255, 255, 0, 0, jukeboxNumLeds);
+                break;
+        }
     }
 }
