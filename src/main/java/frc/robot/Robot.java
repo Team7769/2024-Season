@@ -62,18 +62,20 @@ public class Robot extends TimedRobot {
     _drivetrain.logTelemetry();
     _jukebox.logTelemetry();
     _intake.logTelemetry();
+    _ledController.handleLights();
   }
 
   @Override
   public void autonomousInit() {
     _drivetrain.reset();
+    _jukebox.resetSensors();
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
     _currentAuto.initialize();
   }
 
   @Override
   public void autonomousPeriodic() {
-    _ledController.handleLights();
+    //_ledController.handleLights();
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     _drivetrain.updateOdometry();
     _currentAuto.execute();
@@ -88,7 +90,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    _ledController.handleLights();
+    //_ledController.handleLights();
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();
@@ -152,12 +154,16 @@ public class Robot extends TimedRobot {
             _jukebox.setState(JukeboxEnum.PREP_TRAP);
         } else if (_operatorController.getAButton()) {
           _jukebox.setState(JukeboxEnum.PREP_HUMAN_INTAKE);
+        } else if (_operatorController.getLeftBumper()) {
+          _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
         }
 
         if (_score) {
           _jukebox.setState(JukeboxEnum.SCORE);
         } else if (_scoreReleased) {
-          _jukebox.setState(JukeboxEnum.IDLE);
+          if (_jukebox.getPreviousState() != JukeboxEnum.PREP_TRAP) {
+            _jukebox.setState(JukeboxEnum.IDLE);
+          }
         }
         _scoreReleased = _score;
 
@@ -194,7 +200,7 @@ public class Robot extends TimedRobot {
     if (_driverController.getStartButtonPressed()) {
       _jukebox.setState(JukeboxEnum.CLIMB);
     } else if (_driverController.getStartButtonReleased()) {
-      if (_jukebox.getElevatorPosition() > .05) {
+      if (_jukebox.getElevatorPosition() > 1) {
         _jukebox.setState(JukeboxEnum.EXTEND_FOR_CLIMB);
       }
     }

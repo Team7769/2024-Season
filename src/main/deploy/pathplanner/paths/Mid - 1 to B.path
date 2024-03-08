@@ -1,0 +1,65 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.1,
+        "y": 7.1
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.772096576718118,
+        "y": 5.835229653055596
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.70558333698693,
+        "y": 4.321298685393376
+      },
+      "prevControl": {
+        "x": 6.656354023158847,
+        "y": 4.253386493523954
+      },
+      "nextControl": {
+        "x": 4.230017932218458,
+        "y": 4.42669621430541
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9195544105373927,
+        "y": 5.5040931765173085
+      },
+      "prevControl": {
+        "x": 4.629336546221492,
+        "y": 5.621201541975124
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Mid - note B"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -2.7927023657132626,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Mid B Variant",
+  "previewStartingState": null,
+  "useDefaultConstraints": true
+}

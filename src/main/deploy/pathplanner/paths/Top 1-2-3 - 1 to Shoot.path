@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.93935385724081,
-        "y": 6.990384785778517
+        "x": 8.328999269805339,
+        "y": 7.034441832747708
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.810565385428992,
-        "y": 7.138218203628034
+        "x": 6.782529697992955,
+        "y": 7.265689619186944
       },
       "isLocked": false,
-      "linkedName": "TOP_A_1_2_3-A"
+      "linkedName": "NEW TOP123 - 1"
     },
     {
       "anchor": {
-        "x": 8.25,
-        "y": 4.0
+        "x": 3.8204947966246565,
+        "y": 6.006444070133222
       },
       "prevControl": {
-        "x": 7.3964372737760895,
-        "y": 7.797674253237001
+        "x": 4.9044687955585715,
+        "y": 6.9603411891950655
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NEW TOP123 - shoot"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 14.381394591090569,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -70.0,
+    "rotation": 13.570434385161393,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Top A-1-2-3",
+  "folder": "Top 1-2-3",
   "previewStartingState": {
-    "rotation": 32.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

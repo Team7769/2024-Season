@@ -17,6 +17,9 @@ package frc.robot.Enums;
         /**Spins up the shooter for a speaker shot from the white line (Doesn't use auto aim) */
         PREP_SPEAKER_LINE,
 
+        /**Spins up the shooter to launch across the field  */
+        PREP_LAUNCH,
+
         /**Angles the jukebox to intake from the human element directly */
         PREP_HUMAN_INTAKE,
 

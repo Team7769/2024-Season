@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.76,
+      "y": 4.49
+    },
+    "rotation": -60.55000000000001
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom 5-4 To Note 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom 5-4 To Shoot Note 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom 5-4 To Note 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom 5-4 To Shoot Note 4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Bottom Autos",
+  "choreoAuto": false
+}

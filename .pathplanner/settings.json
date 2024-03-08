@@ -3,17 +3,17 @@
   "robotLength": 0.77,
   "holonomicMode": true,
   "pathFolders": [
-    "New Folder",
-    "TOP123",
-    "5 Note",
-    "B paths",
-    "C paths"
+    "Bottom 5-4",
+    "Mid B Variant",
+    "Mid C-B-A-1",
+    "Mid B-A-1-2",
+    "Top 1-2-3",
+    "Top A-1-2-3"
   ],
   "autoFolders": [
-    "New Folder",
-    "TOP_A_1_2_3",
-    "Mid Autons",
-    "Test paths"
+    "Bottom Autos",
+    "Mid Autos",
+    "Top Autos"
   ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,

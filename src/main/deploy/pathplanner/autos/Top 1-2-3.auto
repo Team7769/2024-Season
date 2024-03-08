@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7547034812379487,
+      "y": 6.677279833432906
+    },
+    "rotation": 57.52880770915153
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-3 - Start to 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-3 - 1 to Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-3 - 2 to Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-3 - Shoot to 2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Top Autos",
+  "choreoAuto": false
+}

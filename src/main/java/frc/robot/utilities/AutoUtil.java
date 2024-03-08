@@ -1,7 +1,5 @@
 package frc.robot.Utilities;
 
-import com.ctre.phoenix.led.CANdle;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Autonomous.*;
 
@@ -17,30 +15,24 @@ public class AutoUtil {
         switch (_selectedAutoInit)
         {
             case(DO_NOTHING):
-                return new TestAutonomous();
-            case(TEST_AUTONOMOUS):
-                return new TestAutonomous();
-            case(MID_B_2_3):
-                return new midB23();
+                return new DoNothing();
             case(MID_B_3_4):
-                return new midB34();
+                return new Mid_B_3_4();
             case(MID_B_4_5):
-                return new midB45();
+                return new Mid_B_4_5();
             case(MID_B_3_4_5):
-                return new midB345();
-            case(MID_C_B_3_4):
-                return new midCB34();
-            case(FIVE_NOTE):
-                return new FiveNote(); 
-            case (TOP_A_1_2_3_INDEX):
-                return new TOP_A_1_2_3();            
-            case(TOP_1_2_3):
-                return new TOP123();     
-            case(Bottom_1):
-                return new bottomAutoMode();
+                return new Mid_B_3_4_5();
+            case(MID_C_B_A_1):
+                return new Mid_C_B_A_1();
+            case(MID_B_A_1_2):
+                return new Mid_B_A_1_2();
+            case (TOP_A_1_2_3):
+                return new Top_A_1_2_3();
+            case(BOTTOM_5_4):
+                return new Bottom_5_4();
         }
         
-        return null;
+        return new DoNothing();
     }
     /**
      * This method is here to clear up the robot.java file 
@@ -50,18 +42,19 @@ public class AutoUtil {
      */
     public static void autonmousDropDown(SendableChooser<Integer> _autoChooser)
     {
-        
         _autoChooser.setDefaultOption("Do Nothing", DO_NOTHING);
-        _autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
-        _autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
-        _autoChooser.addOption("Mid B 3 4 (4)", MID_B_3_4);
-        _autoChooser.addOption("Mid B 4 5 (4)", MID_B_4_5);
-        _autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
-        _autoChooser.addOption("Mid C B 3 4 (5)", MID_C_B_3_4);
-        _autoChooser.addOption("Five Note", FIVE_NOTE);
-        _autoChooser.addOption("Top A 1 2 3", TOP_A_1_2_3_INDEX);
-        _autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
-        _autoChooser.addOption("Bottom Path", Bottom_1);
+        _autoChooser.addOption("Mid - C B A 1 (5)", MID_C_B_A_1);
+        _autoChooser.addOption("Mid - B 3 4 (4)", MID_B_3_4);
+        _autoChooser.addOption("Mid - B A 1 2 (5)", MID_B_A_1_2);
+        _autoChooser.addOption("Top - A 1 2 3 (4)", TOP_A_1_2_3);
+        _autoChooser.addOption("Bottom - 5 4 (3)", BOTTOM_5_4);
+        
+        // Disabled for now
+        //_autoChooser.addOption("Mid - B 4 5 (4)", MID_B_4_5);
+        //_autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
+        //_autoChooser.addOption("TestAutnomous", TEST_AUTONOMOUS);
+        //_autoChooser.addOption("Mid B 2 3 (4)", MID_B_2_3);
+        //_autoChooser.addOption("Mid B 3 4 5 (5)", MID_B_3_4_5);
     }
 
     // list of all auto modes 
@@ -72,10 +65,9 @@ public class AutoUtil {
     public static final int MID_B_3_4 = 3;
     public static final int MID_B_4_5 = 4;
     public static final int MID_B_3_4_5 = 5;
-    public static final int MID_C_B_3_4 = 6;
-    public static final int FIVE_NOTE = 7;
-    public static final int TOP_A_1_2_3_INDEX = 8;
+    public static final int MID_C_B_A_1 = 6;
+    public static final int MID_B_A_1_2 = 7;
+    public static final int TOP_A_1_2_3 = 8;
     public static final int TOP_1_2_3 = 9;
-    public static final int Bottom_1 = 10;
-    
+    public static final int BOTTOM_5_4 = 10;    
 }

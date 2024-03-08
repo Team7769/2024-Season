@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 8.539605781066053,
-        "y": 7.436381206571257
+        "x": 8.652084280912748,
+        "y": 7.4309552554704394
       },
       "prevControl": {
-        "x": 6.841534481927734,
-        "y": 7.37782702384235
+        "x": 6.954012981774429,
+        "y": 7.372401072741533
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5 Note",
+  "folder": "Mid C-B-A-1",
   "previewStartingState": {
     "rotation": 30.256437163529416,
     "velocity": 0

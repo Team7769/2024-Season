@@ -45,19 +45,20 @@ public class LEDController {
 
     LEDController()
     {
+        jukebox = Jukebox.getInstance();
         upperCandle = new CANdle(15);
         // lowerCandle = new CANdle(0); // TBD
         // underNumLeds = 400;
         upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
         jukeboxNumLeds = 50;        
         // animation for IDLE --color is Pure White
-        IDLE_LIGHTS = new StrobeAnimation(0, 0, 255, 0, .15, jukeboxNumLeds);
+        IDLE_LIGHTS = new StrobeAnimation(255, 255, 0, 0, .15, jukeboxNumLeds);
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
-        PREP_SPEAKER_LIGHTS = new ColorFlowAnimation(0, 255, 255, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
         // animation for PREP_AMP --color is Indigo
-        PREP_AMP_LIGHTS = new ColorFlowAnimation(75, 0, 130, 0, 0.5, jukeboxNumLeds, Direction.Forward);
+        PREP_AMP_LIGHTS = new RainbowAnimation(.5, .5, jukeboxNumLeds);
         // animation for PREP_TRAP --color is Sunset Orange
         PREP_TRAP_LIGHTS = new ColorFlowAnimation(255, 165, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for RESET --color is Magenta
@@ -69,7 +70,6 @@ public class LEDController {
         // animation for MANUAL --color is Purple
         MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
 
-        jukebox = Jukebox.getInstance();
     }
 
 
@@ -131,11 +131,18 @@ public class LEDController {
             case SCORE:
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
+            case PREP_LAUNCH:
+            case PREP_SPEAKER_PODIUM:
+            case PREP_SPEAKER_LINE:
             case PREP_SPEAKER:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                // upperCandle.clearAnimation(0);
+                // upperCandle.animate(PREP_SPEAKER_LIGHTS);
+                upperCandle.setLEDs(255, 0, 0, 0, 0, jukebox.getShooterLeds(jukeboxNumLeds));
                 break;
             case PREP_AMP:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                // upperCandle.clearAnimation(0);
+                // upperCandle.animate(PREP_AMP_LIGHTS);
+                upperCandle.setLEDs(255, 153, 51, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_TRAP:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
