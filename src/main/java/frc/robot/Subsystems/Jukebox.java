@@ -110,7 +110,7 @@ public class Jukebox extends Subsystem{
     
     // Shooter Control Constants
     private final double kShooterFeedForwardKs = 0.37431;
-    private final double kShooterFeedForwardKv = 0.0023755;
+    private final double kShooterFeedForwardKv = 0.14253;
     
     private final double kShooterFeedForwardKp = .001;
 
@@ -125,9 +125,12 @@ public class Jukebox extends Subsystem{
     private final double kFeederReverse = -0.2;
     private final double kFeederIntake = 0.25;
 
-    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
-    private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
-    private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
+    //private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
+    //private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
+    //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
+    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5};
+    private final double[] kShooterAngles = {5.5, 6, 6.2, 6.6};
+    private final double[] kShooterSpeeds = {67, 67, 67, 67};
 
     private double _manualElevatorSpeed = 0;
     private double _manualFeederSpeed = 0;
@@ -138,7 +141,7 @@ public class Jukebox extends Subsystem{
 
     private double _dashboardShooterTargetSpeed = 0.0;
     private double _dashboardShooterTargetAngle = 0.0;
-    private double _dashboardShooterRPercent =  1.0;
+    private double _dashboardShooterRPercent =  0.9;
     private double _shooterSetpointRpm = 0.0;
 
     public Jukebox()
@@ -210,7 +213,7 @@ public class Jukebox extends Subsystem{
         _shooterController = _shooterL.getPIDController();
         _shooterController.setP(kShooterFeedForwardKp);
         _shooterController.setI(0);
-        _shooterController.setD(kCommonKd);
+        _shooterController.setD(0);
         _shooterController.setIZone(0);
         _shooterController.setFF(0);
         _shooterController.setOutputRange(0, 1.0);
@@ -218,7 +221,7 @@ public class Jukebox extends Subsystem{
         _shooterRController = _shooterR.getPIDController();
         _shooterRController.setP(kShooterFeedForwardKp);
         _shooterRController.setI(0);
-        _shooterRController.setD(kCommonKd);
+        _shooterRController.setD(0);
         _shooterRController.setIZone(0);
         _shooterRController.setFF(0);
         _shooterRController.setOutputRange(0, 1.0);
@@ -782,7 +785,7 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return (shooterError <= 150 && angleError <= .75);
+                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .75);
             default:
                 return false;
         }
@@ -793,7 +796,7 @@ public class Jukebox extends Subsystem{
     public void logTelemetry() {
         _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
         _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
-        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 1.0);
+        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.9);
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());

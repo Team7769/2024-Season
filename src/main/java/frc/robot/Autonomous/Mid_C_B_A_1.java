@@ -184,7 +184,8 @@ public class Mid_C_B_A_1 extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+                    //_jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
                 }
 
                 if (_pathFollower.isPathFinished()){

@@ -99,7 +99,7 @@ public class Mid_B_A_1_2 extends AutonomousMode {
             case 8:
                 // Once the note is detected, we can set prep speaker.
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
                     nextStep();
                 }
 
@@ -134,7 +134,7 @@ public class Mid_B_A_1_2 extends AutonomousMode {
             case 12:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
                 }
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
