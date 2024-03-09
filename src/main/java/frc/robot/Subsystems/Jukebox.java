@@ -92,20 +92,20 @@ public class Jukebox extends Subsystem{
     private final double kLaunchSpeed = 48;
 
     // Elevator Control Constants
-    private final double kElevatorMaxVelocity = 230;
-    private final double kElevatorMaxAcceleration = 230;
+    private final double kElevatorMaxVelocity = 300;
+    private final double kElevatorMaxAcceleration = 300;
     private final double kElevatorFeedForwardKs = 0.23312;
     private final double kElevatorFeedForwardKv = 0.11903;
     private final double kElevatorFeedForwardKg = 0.12293;
-    private final double kElevatorFeedForwardKp = 0.01;
+    private final double kElevatorFeedForwardKp = .01;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 50;
-    private final double kShooterAngleMaxAcceleration = 50;
+    private final double kShooterAngleMaxVelocity = 100;
+    private final double kShooterAngleMaxAcceleration = 100;
     private final double kShooterAngleFeedForwardKs = 0.31777;
     private final double kShooterAngleFeedForwardKv = 0.090231;
     private final double kShooterAngleFeedForwardkG = 0.035019;
-    private final double kShooterAngleFeedForwardKp = 0.075;
+    private final double kShooterAngleFeedForwardKp = 0.1;
     private final double kShooterAngleFeedForwardAngle = .1785;
     
     // Shooter Control Constants
@@ -488,7 +488,8 @@ public class Jukebox extends Subsystem{
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
-                    jukeboxPreviousState == JukeboxEnum.PREP_LAUNCH) {
+                    jukeboxPreviousState == JukeboxEnum.PREP_LAUNCH ||
+                    jukeboxPreviousState == JukeboxEnum.JUKEBOX_TEST) {
             _feeder.set(kFeederShootSpeed);
         }
     }
