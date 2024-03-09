@@ -151,9 +151,11 @@ public class Mid_B_A_1_2 extends AutonomousMode {
             case 14:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
                     nextStep();
                 }
                 break;
+            // Drives to Note 2
             case 15:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){

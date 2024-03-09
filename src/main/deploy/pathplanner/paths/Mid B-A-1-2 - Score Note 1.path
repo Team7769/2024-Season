@@ -3,6 +3,10 @@
   "waypoints": [
     {
       "anchor": {
+<<<<<<< HEAD
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Mid B-A-1-2 - Score Note 1.path
+=======
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
         "x": 8.652084280912748,
         "y": 7.4309552554704394
       },
@@ -26,26 +30,66 @@
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Mid B-A-1-2 Note A"
+<<<<<<< HEAD
+=======
+        "x": 3.0127822688561303,
+        "y": 6.887585009517068
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.024284863289891,
+        "y": 7.122136335762577
+      },
+      "isLocked": false,
+      "linkedName": "Mid B-A-1-2 Note A"
+    },
+    {
+      "anchor": {
+        "x": 8.652084280912748,
+        "y": 7.4309552554704394
+      },
+      "prevControl": {
+        "x": 6.954012981774429,
+        "y": 7.372401072741533
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Mid B-A-1-2 Note 1"
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f:src/main/deploy/pathplanner/paths/Mid B-A-1-2 - Note 1.path
+=======
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Mid B-A-1-2 - Score Note 1.path
     "rotation": 18.318459806821757,
+=======
+    "rotation": 0,
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f:src/main/deploy/pathplanner/paths/Mid B-A-1-2 - Note 1.path
+=======
+    "rotation": 18.318459806821757,
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Mid B-A-1-2",
   "previewStartingState": {
+<<<<<<< HEAD
+    "rotation": 30.256437163529416,
+=======
     "rotation": 0,
+>>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
     "velocity": 0
   },
   "useDefaultConstraints": true

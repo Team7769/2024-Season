@@ -79,7 +79,7 @@ public class Jukebox extends Subsystem{
     private final double kTrapShooterAngle = 9;
     private final double kTrapElevatorPosition = 80; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
-    private final double kExtendClimbShooterAngle = 2;
+    private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 70;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
@@ -110,7 +110,7 @@ public class Jukebox extends Subsystem{
     
     // Shooter Control Constants
     private final double kShooterFeedForwardKs = 0.37431;
-    private final double kShooterFeedForwardKv = 0.14253;
+    private final double kShooterFeedForwardKv = 0.0023755;
     
     private final double kShooterFeedForwardKp = .001;
 
@@ -544,9 +544,6 @@ public class Jukebox extends Subsystem{
             setShooterAngle(Constants.KMinShooterAngle);
             setShooterSpeed(Constants.kMaxShooterSpeed);
         }
-
-        // setShooterAngle(_dashboardShooterTargetAngle);
-        // setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
     /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
@@ -630,6 +627,12 @@ public class Jukebox extends Subsystem{
         _feeder.set(_manualFeederSpeed);
     }
 
+    private void jukeboxTest() {
+        feeder();
+        setShooterAngle(_dashboardShooterTargetAngle);
+        setShooterSpeed(_dashboardShooterTargetSpeed);
+    }
+
     public void setManualElevatorSpeed(double givenSpeed)
     {
         _manualElevatorSpeed = givenSpeed;
@@ -673,6 +676,9 @@ public class Jukebox extends Subsystem{
         switch(jukeboxCurrentState) {
             case MANUAL:
                 manual();
+                break;
+            case JUKEBOX_TEST:
+                jukeboxTest();
                 break;
             case SCORE:
                 score();
@@ -754,6 +760,10 @@ public class Jukebox extends Subsystem{
 
     public JukeboxEnum getState() {
         return jukeboxCurrentState;
+    }
+
+    public JukeboxEnum getPreviousState() {
+        return jukeboxPreviousState;
     }
 
     public boolean isReadyToScore() {
