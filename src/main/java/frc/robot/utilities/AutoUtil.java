@@ -27,11 +27,7 @@ public class AutoUtil {
             case(MID_B_A_1_2):
                 return new Mid_B_A_1_2();
             case (TOP_A_1_2_3):
-<<<<<<< HEAD
-                return new TOP_A_1_2_3();
-=======
                 return new Top_A_1_2_3();
->>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
             case(BOTTOM_5_4):
                 return new Bottom_5_4();
         }

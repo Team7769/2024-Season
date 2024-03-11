@@ -13,11 +13,7 @@ import frc.robot.Utilities.PathFollower;
  * Starts Top in front of the speaker and scores the following notes:
  * Initial -> A -> 1 -> 2 -> (3)
  */
-<<<<<<< HEAD
-public class TOP_A_1_2_3 extends AutonomousMode {
-=======
 public class Top_A_1_2_3 extends AutonomousMode {
->>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
     private int _step = 0;
 
     private Drivetrain _drivetrain;

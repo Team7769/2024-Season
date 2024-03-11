@@ -246,7 +246,6 @@ public class Robot extends TimedRobot {
     if (_operatorController.getLeftBumper() && _operatorController.getRightBumper())
     {
       _testNumber++;
-      _ledController.LEDLightsTest(_testNumber);
     }
 
     _jukebox.setState(JukeboxEnum.MANUAL);
