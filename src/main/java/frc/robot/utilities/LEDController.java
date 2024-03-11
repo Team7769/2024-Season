@@ -1,15 +1,6 @@
 package frc.robot.Utilities;
-
-import java.util.Optional;
-
 import com.ctre.phoenix.led.*;
-import com.ctre.phoenix.led.CANdle.LEDStripType;
-import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Jukebox;
 
 public class LEDController {
@@ -24,14 +15,11 @@ public class LEDController {
     // private Optional<Alliance> _alliance;
 
     // Animation for Jukebox state
-    private Animation SCORE_LIGHTS;
     private Animation PREP_SPEAKER_LIGHTS;
     private Animation PREP_AMP_LIGHTS;
     private Animation PREP_TRAP_LIGHTS;
-    private Animation RESET_LIGHTS;
     private Animation EXTEND_FOR_CLIMB_LIGHTS;    
     private Animation CLIMB_LIGHTS;
-    private Animation MANUAL_LIGHTS;
     private Animation IDLE_LIGHTS;
 
     // private int underNumLeds;
@@ -50,26 +38,13 @@ public class LEDController {
         // lowerCandle = new CANdle(0); // TBD
         // underNumLeds = 400;
         upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
-        jukeboxNumLeds = 50;        
-        // animation for IDLE --color is Pure White
-        IDLE_LIGHTS = new StrobeAnimation(255, 255, 0, 0, .15, jukeboxNumLeds);
-        // animation for SCORE --color is Green
-        SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-        // animation for PREP_SPEAKER --color is Turquoise
+        jukeboxNumLeds = 50;    
+        IDLE_LIGHTS = new StrobeAnimation(0, 255, 0, 0, .15, jukeboxNumLeds);
         PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
-        // animation for PREP_AMP --color is Indigo
         PREP_AMP_LIGHTS = new RainbowAnimation(.5, .5, jukeboxNumLeds);
-        // animation for PREP_TRAP --color is Sunset Orange
         PREP_TRAP_LIGHTS = new ColorFlowAnimation(255, 165, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-        // animation for RESET --color is Magenta
-        RESET_LIGHTS = new ColorFlowAnimation(255, 0, 255, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-        // animation for EXTEND_FOR_CLIMB --color is Lavender
         EXTEND_FOR_CLIMB_LIGHTS = new ColorFlowAnimation(230, 230, 250, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-        // animation for CLIMB --color is Gold
         CLIMB_LIGHTS = new ColorFlowAnimation(255, 215, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-        // animation for MANUAL --color is Purple
-        MANUAL_LIGHTS = new ColorFlowAnimation(128, 0, 128, 0, 0.5, jukeboxNumLeds, Direction.Forward);
-
     }
 
 
@@ -132,23 +107,23 @@ public class LEDController {
                 upperCandle.animate(PREP_SPEAKER_LIGHTS, 0);
                 break;
             case PREP_AMP:
-                upperCandle.setLEDs(255, 153, 51, 0, 0, jukeboxNumLeds);
+                upperCandle.clearAnimation(0);
+                upperCandle.animate(PREP_AMP_LIGHTS,0);
                 break;
             case PREP_TRAP:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.clearAnimation(0);
+                upperCandle.animate(PREP_TRAP_LIGHTS, 0);
                 break;
             case RESET:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
-                break;
             case EXTEND_FOR_CLIMB:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.clearAnimation(0);
+                upperCandle.animate(EXTEND_FOR_CLIMB_LIGHTS, 0);
                 break;
             case CLIMB:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                upperCandle.clearAnimation(0);
+                upperCandle.animate(CLIMB_LIGHTS, 0);
                 break;
             case MANUAL:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
-                break;
             default:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
