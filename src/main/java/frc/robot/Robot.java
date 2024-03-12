@@ -154,9 +154,13 @@ public class Robot extends TimedRobot {
       _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
     }
   }
-  if (_driverController.getXButton()) {
-    _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
-    //_jukebox.disableAutoSpinup();
+  if (_driverController.getXButtonPressed()) {
+    // _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
+    if (_jukebox.getDisableAutoSpinup()) {
+      _jukebox.enableAutoSpinup();
+    } else {
+      _jukebox.disableAutoSpinup();
+    }
   }
 
   if (_score) {

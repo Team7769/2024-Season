@@ -674,6 +674,10 @@ public class Jukebox extends Subsystem{
         return _elevatorL.getEncoder().getPosition();
     }
 
+    public boolean getDisableAutoSpinup() {
+        return _disableAutoSpinup;
+    }
+
     public void disableAutoSpinup() {
         _disableAutoSpinup = true;
     }
