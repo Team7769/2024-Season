@@ -84,6 +84,7 @@ public class Jukebox extends Subsystem{
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
+    private final double kShooterIdleSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
@@ -125,11 +126,16 @@ public class Jukebox extends Subsystem{
     private final double kFeederReverse = -0.2;
     private final double kFeederIntake = 0.25;
 
+    private boolean _disableAutoSpinup = false;
+
+    // Old Old
     //private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
     //private final double[] kShooterAngles = {5, 5.65, 6.2, 6.55, 6.6};
     //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
+
+    // Old
     private final double[] kDistanceIDs = {2, 2.5, 3, 3.5};
-    private final double[] kShooterAngles = {5.5, 6, 6.2, 6.6};
+    private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2};
     private final double[] kShooterSpeeds = {67, 67, 67, 67};
 
     private double _manualElevatorSpeed = 0;
@@ -610,16 +616,20 @@ public class Jukebox extends Subsystem{
             _feeder.set(kFeederIntake);
         }
     }
-
+ 
     public void setManualFeederSpeed(double givenSpeed)
     {
         _manualFeederSpeed = givenSpeed;
     }
 
     private void idle() {
-        setElevatorPosition(0.5); // dont understand why .5
+        setElevatorPosition(0.5); // .5 so the elevator doesn't keep trying to reach zero even when at the bottom
         setShooterAngle(0);
-        setShooterSpeed(0.0);
+        if (!_disableAutoSpinup) {
+            setShooterSpeed(kShooterIdleSpeed);
+        } else {
+            setShooterSpeed(0);
+        }
 
         feeder();
     }
@@ -662,6 +672,14 @@ public class Jukebox extends Subsystem{
 
     public double getElevatorPosition() {
         return _elevatorL.getEncoder().getPosition();
+    }
+
+    public void disableAutoSpinup() {
+        _disableAutoSpinup = true;
+    }
+
+    public void enableAutoSpinup() {
+        _disableAutoSpinup = false;
     }
 
     public int getShooterLeds(int numLeds) {

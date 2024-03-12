@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
     _jukebox.resetSensors();
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
     _currentAuto.initialize();
+    _jukebox.enableAutoSpinup();
   }
 
   @Override
@@ -86,6 +87,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     _intake.setWantedState(IntakeState.INTAKE);
+    _jukebox.disableAutoSpinup();
   }
 
   @Override
@@ -152,23 +154,24 @@ public class Robot extends TimedRobot {
       _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
     }
   }
-        if (_driverController.getXButton()) {
-          _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
-        }
+  if (_driverController.getXButton()) {
+    _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
+    //_jukebox.disableAutoSpinup();
+  }
 
-        if (_score) {
-          _jukebox.setState(JukeboxEnum.SCORE);
-        } else if (_scoreReleased) {
-          if (_jukebox.getPreviousState() != JukeboxEnum.PREP_TRAP) {
-            _jukebox.setState(JukeboxEnum.IDLE);
-          }
-        }
-        _scoreReleased = _score;
+  if (_score) {
+    _jukebox.setState(JukeboxEnum.SCORE);
+  } else if (_scoreReleased) {
+    if (_jukebox.getPreviousState() != JukeboxEnum.PREP_TRAP) {
+      _jukebox.setState(JukeboxEnum.IDLE);
+    }
+  }
+  _scoreReleased = _score;
 
-        if (_operatorController.getBackButton()) {
-          _jukebox.setState(JukeboxEnum.IDLE);
-        }
-      }
+  if (_operatorController.getBackButton()) {
+    _jukebox.setState(JukeboxEnum.IDLE);
+  }
+}
 
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {
