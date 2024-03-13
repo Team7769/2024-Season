@@ -122,12 +122,12 @@ public class LEDController {
                 {
                     upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
                 } else {
-                    upperCandle.animate(IDLE_LIGHTS,0);
+                    upperCandle.animate(IDLE_LIGHTS);
                     hasAnimation = true;
                 }
                 break;
             case SCORE:
-                upperCandle.animate(SCORE_LIGHTS,0);
+                upperCandle.animate(SCORE_LIGHTS);
                 hasAnimation = true;
                 break;
             case PREP_LAUNCH:
