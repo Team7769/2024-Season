@@ -498,7 +498,8 @@ public class Jukebox extends Subsystem{
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
                     jukeboxPreviousState == JukeboxEnum.PREP_LAUNCH ||
-                    jukeboxPreviousState == JukeboxEnum.JUKEBOX_TEST) {
+                    jukeboxPreviousState == JukeboxEnum.JUKEBOX_TEST ||
+                    jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_SUBWOOFER) {
             _feeder.set(kFeederShootSpeed);
         }
     }
@@ -558,18 +559,28 @@ public class Jukebox extends Subsystem{
 
     /** Preps the speaker for a shot from the podium (Doesn't use auto aim) */
     private void prepSpeakerPodium() {
+        feeder();
         setShooterAngle(kPodiumSpeakerShotAngle);
         setShooterSpeed(kPodiumSpeakerShotSpeed);
         setElevatorPosition(0);
     }
 
     private void prepSpeakerLine() {
+        feeder();
         setShooterAngle(kLineSpeakerShotAngle);
         setShooterSpeed(kLineSpeakerShotSpeed);
         setElevatorPosition(0);
     }
 
+    private void prepSpeakerSubwoofer() {
+        feeder();
+        setShooterAngle(Constants.KMinShooterAngle);
+        setShooterSpeed(Constants.kMaxShooterSpeed);
+        setElevatorPosition(0);
+    }
+
     private void prepLaunch() {
+        feeder();
         setShooterAngle(kLaunchAngle);
         setShooterSpeed(kLaunchSpeed);
     }
@@ -718,6 +729,9 @@ public class Jukebox extends Subsystem{
             case PREP_SPEAKER_LINE:
                 prepSpeakerLine();
                 break;
+            case PREP_SPEAKER_SUBWOOFER:
+                prepSpeakerSubwoofer();
+                break;
             case PREP_LAUNCH:
                 prepLaunch();
                 break;
@@ -773,12 +787,18 @@ public class Jukebox extends Subsystem{
                         
                         _elevatorProfileSetpoint = new TrapezoidProfile.State(getElevatorPosition(), 0);
                     }
-
                     break;
+
+                case PREP_TRAP:
+                    if (n == JukeboxEnum.SCORE) {
+                        jukeboxPreviousState = jukeboxCurrentState;
+                        jukeboxCurrentState = n;
+                    }
+                    break;
+
                 default:
                     jukeboxPreviousState = jukeboxCurrentState;
                     jukeboxCurrentState = n;
-
                     break;            
             }
         }
@@ -800,6 +820,7 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER:
             case PREP_SPEAKER_PODIUM:
+            case PREP_SPEAKER_SUBWOOFER:
             case PREP_SPEAKER_LINE:
                 // Error is the absolute value of the difference between Target and Actual 
                 var shooterError = Math.abs((_shooterSetpointRpm + 300) - _shooterL.getEncoder().getVelocity());
@@ -818,7 +839,7 @@ public class Jukebox extends Subsystem{
     public void logTelemetry() {
         _dashboardShooterTargetAngle = SmartDashboard.getNumber("dashboardShooterTargetAngle", 0.0);
         _dashboardShooterTargetSpeed = SmartDashboard.getNumber("dashboardShooterTargetSpeed", 0.0);
-        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.9);
+        _dashboardShooterRPercent = SmartDashboard.getNumber("dashboardShooterRPercent", 0.85);
         SmartDashboard.putNumber("Elevator motor left enconder position", _elevatorL.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator motor left enconder velocity", _elevatorL.getEncoder().getVelocity());
         SmartDashboard.putNumber("Elevator motor left temp", _elevatorL.getMotorTemperature());

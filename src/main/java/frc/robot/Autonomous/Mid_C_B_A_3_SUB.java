@@ -31,7 +31,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
         switch (_count) {
             // preps first shot
             case 0:
-                _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
                 nextStep();
                 break;
                 // scores first shot
@@ -50,7 +50,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // drives to C
-            case 7:
+            case 3:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
@@ -59,10 +59,10 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // drives back to score C
-            case 8:
+            case 4:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
                 }
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
@@ -70,14 +70,14 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // scores C
-            case 9:
+            case 5:
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
                 break;
             // resets after shot
-            case 10:
+            case 6:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
@@ -85,7 +85,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // drives to B
-            case 11:
+            case 7:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
@@ -94,10 +94,10 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // drives back to score B
-            case 12:
+            case 8:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
                 }
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
@@ -105,6 +105,40 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                 }
                 break;
             // sores B
+            case 9:
+                if (_jukebox.isReadyToScore()) {
+                    _jukebox.setState(JukeboxEnum.SCORE);
+                    nextStep();
+                }
+                break;
+            case 10:
+                if (!_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
+                    nextStep();
+                }
+                break;
+            // drives to A
+            case 11:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // drives back to score A
+            case 12:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_jukebox.hasNote()) {
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
+                }
+                if (_pathFollower.isPathFinished()){
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
+                }
+                break;
+            // scores A
             case 13:
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
@@ -114,9 +148,11 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
             case 14:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
+                    nextStep();
                 }
                 break;
-            // drives to A
+                // drives to 3
             case 15:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
@@ -125,7 +161,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // drives back to score A
+            // drives back to score 3
             case 16:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_jukebox.hasNote()) {
@@ -136,57 +172,22 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // scores A
+            // scores 3
             case 17:
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
                 break;
+            // resets after shot
             case 18:
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-                }
-                break;
-                // drives to 3
-            case 19:
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-                if (_pathFollower.isPathFinished()){
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose()); 
-                    _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
                 break;
-            // drives back to score 3
-            case 20:
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                }
-                if (_pathFollower.isPathFinished()){
-                    _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-                break;
-            // scores 3
-            case 21:
-                if (_jukebox.isReadyToScore()) {
-                    _jukebox.setState(JukeboxEnum.SCORE);
-                    nextStep();
-                }
-                break;
-            // resets after shot
-            case 22:
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
-                    nextStep();
-                }
-                break;
-            case 23:
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-                }
+            default:
+                _drivetrain.drive(new ChassisSpeeds());
                 break;
         }
     }

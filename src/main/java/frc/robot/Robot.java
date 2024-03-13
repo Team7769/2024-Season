@@ -143,9 +143,11 @@ public class Robot extends TimedRobot {
     if (Math.abs(_operatorController.getLeftTriggerAxis()) > 0.25) {
       _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
     }  else if (Math.abs(_operatorController.getRightTriggerAxis()) > 0.25) {
+      _jukebox.setState(JukeboxEnum.PREP_AMP);
       //_jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
     } else if (_operatorController.getXButton()) {
-      _jukebox.setState(JukeboxEnum.PREP_AMP);
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+      //_jukebox.setState(JukeboxEnum.PREP_AMP);
     } else if (_operatorController.getYButton()) {
       _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
     } else if (_operatorController.getBButton()) {

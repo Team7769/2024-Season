@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2671762861357379,
-        "y": 5.527514849608871
+        "x": 1.27,
+        "y": 5.53
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.786737745743677,
-        "y": 5.009752891203357
+        "x": 1.7895614596079397,
+        "y": 5.012238041594486
       },
       "isLocked": false,
       "linkedName": "Mid C-B-A-1 SUB - Score"

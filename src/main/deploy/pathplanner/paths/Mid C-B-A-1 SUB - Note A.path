@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2671762861357379,
-        "y": 5.527514849608871
+        "x": 1.4,
+        "y": 5.53
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2625973925271667,
-        "y": 6.4292492636340475
+        "x": 2.250886555981385,
+        "y": 6.417538427088266
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score"
+      "linkedName": "Mid C-B-A-1 SUB - Score B"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 6.8508393792821805
       },
       "prevControl": {
-        "x": 1.876139786516378,
-        "y": 6.136478349989507
+        "x": 2.0635131712488803,
+        "y": 6.230165042355762
       },
       "nextControl": null,
       "isLocked": false,

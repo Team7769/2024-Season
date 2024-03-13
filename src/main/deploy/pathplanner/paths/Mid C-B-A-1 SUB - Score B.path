@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.2671762861357379,
-        "y": 5.527514849608871
+        "x": 1.4,
+        "y": 5.53
       },
       "prevControl": {
-        "x": 1.7829851302319812,
-        "y": 5.527514849608871
+        "x": 1.9158088440962433,
+        "y": 5.53
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score"
+      "linkedName": "Mid C-B-A-1 SUB - Score B"
     }
   ],
   "rotationTargets": [],
