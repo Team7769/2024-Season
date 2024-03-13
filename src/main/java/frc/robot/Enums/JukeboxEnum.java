@@ -45,5 +45,8 @@ package frc.robot.Enums;
         JUKEBOX_TEST,
         
         /**Manual control */
-        MANUAL
+        MANUAL,
+
+        LIGHTS_ONE,
+        LIGHTS_TWO
     }

@@ -752,7 +752,6 @@ public class Jukebox extends Subsystem{
                 default:
                     jukeboxPreviousState = jukeboxCurrentState;
                     jukeboxCurrentState = n;
-
                     break;            
             }
         }

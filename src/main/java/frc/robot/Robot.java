@@ -39,9 +39,6 @@ public class Robot extends TimedRobot {
    private boolean _score;
    private boolean _scoreReleased;
 
-
-   private int _testNumber;
-
   @Override
   public void robotInit() {
     _drivetrain = Drivetrain.getInstance();
@@ -57,8 +54,6 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
-
-    _testNumber = 0;
     
   }
 
@@ -67,7 +62,7 @@ public class Robot extends TimedRobot {
     _drivetrain.logTelemetry();
     _jukebox.logTelemetry();
     _intake.logTelemetry();
-    _ledController.handleLights();
+    _ledController.handleLights();;
   }
 
   @Override
@@ -234,19 +229,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     testOperate();
-
-
     _intake.handleCurrentState();
     _jukebox.handleCurrentState();
   }
 
-  private void testOperate() {   
-
-
-    if (_operatorController.getLeftBumper() && _operatorController.getRightBumper())
-    {
-      _testNumber++;
-    }
+  private void testOperate() {
 
     _jukebox.setState(JukeboxEnum.MANUAL);
 
@@ -295,10 +282,12 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 
 
 }
