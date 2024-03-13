@@ -30,6 +30,8 @@ public class AutoUtil {
                 return new Top_A_1_2_3();
             case(BOTTOM_5_4):
                 return new Bottom_5_4();
+            case(MID_C_B_A_3_SUB):
+                return new Mid_C_B_A_3_SUB();
         }
         
         return new DoNothing();
@@ -48,6 +50,7 @@ public class AutoUtil {
         _autoChooser.addOption("Mid - B A 1 2 (5)", MID_B_A_1_2);
         _autoChooser.addOption("Top - A 1 2 3 (4)", TOP_A_1_2_3);
         _autoChooser.addOption("Bottom - 5 4 (3)", BOTTOM_5_4);
+        _autoChooser.addOption("Mid - C B A 3 SUB (5)", MID_C_B_A_3_SUB);
         
         // Disabled for now
         //_autoChooser.addOption("Mid - B 4 5 (4)", MID_B_4_5);
@@ -70,4 +73,5 @@ public class AutoUtil {
     public static final int TOP_A_1_2_3 = 8;
     public static final int TOP_1_2_3 = 9;
     public static final int BOTTOM_5_4 = 10;    
+    public static final int MID_C_B_A_3_SUB = 11;
 }
