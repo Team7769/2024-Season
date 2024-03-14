@@ -89,8 +89,8 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
     private final double kEmergancyEjectElevatorPosition = 10;
-    private final double kLaunchAngle = 5;
-    private final double kLaunchSpeed = 40;
+    private final double kLaunchAngle = 4.5;
+    private final double kLaunchSpeed = 45;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 300;
