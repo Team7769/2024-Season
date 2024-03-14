@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9195544105373927,
-        "y": 5.5040931765173085
+        "x": 1.4,
+        "y": 5.53
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8820546596463066,
-        "y": 5.215415439390079
+        "x": 4.362841646082722,
+        "y": 5.272361595992807
       },
       "isLocked": false,
-      "linkedName": "Mid - note B"
+      "linkedName": "Mid C-B-A-1 SUB - Score A"
     },
     {
       "anchor": {
-        "x": 4.956089798056913,
-        "y": 4.333009521939157
+        "x": 4.628186374775031,
+        "y": 4.2978770123018135
       },
       "prevControl": {
-        "x": 3.804458497746552,
-        "y": 5.206660853209087
+        "x": 4.291274013623357,
+        "y": 4.548401588542802
       },
       "nextControl": {
-        "x": 5.974932577539904,
-        "y": 3.560094309917578
+        "x": 5.0849090000605095,
+        "y": 3.958262752474149
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid C-B-A-1 SUB - mid point"
     },
     {
       "anchor": {
-        "x": 8.106304828872139,
-        "y": 0.9368669236625209
+        "x": 8.293678213604645,
+        "y": 3.688913511921175
       },
       "prevControl": {
-        "x": 7.122594559026493,
-        "y": 2.915998299899595
+        "x": 5.8695350486278715,
+        "y": 3.583515983009142
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid - note 5"
+      "linkedName": "Mid C-B-A-1 SUB - Note 3"
     }
   ],
   "rotationTargets": [],
@@ -54,12 +54,15 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -57.99461679191653,
+    "velocity": 0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid B Variant",
-  "previewStartingState": null,
+  "folder": "Mid C-B-A-1 SUB",
+  "previewStartingState": {
+    "rotation": 1.671327587666837e-13,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

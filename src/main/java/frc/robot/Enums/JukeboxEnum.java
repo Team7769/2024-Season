@@ -17,6 +17,9 @@ package frc.robot.Enums;
         /**Spins up the shooter for a speaker shot from the white line (Doesn't use auto aim) */
         PREP_SPEAKER_LINE,
 
+        /**Spins up the shooter for a speaker shot from the subwoofer (Doesn't use auto aim) */
+        PREP_SPEAKER_SUBWOOFER,
+
         /**Spins up the shooter to launch across the field  */
         PREP_LAUNCH,
 
@@ -41,6 +44,9 @@ package frc.robot.Enums;
         /**Retracts the elevator to climb in the endgame. */
         CLIMB,
 
+        /**Enables change in jukebox variables for shots from the dashboard */
+        JUKEBOX_TEST,
+        
         /**Manual control */
         MANUAL
     }

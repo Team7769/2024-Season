@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.69614132788194,
-        "y": 5.712730423671939
+        "x": 8.680135819615433,
+        "y": 5.5040931765173085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.212887413252465,
-        "y": 6.153300893363863
+        "x": 7.196881904985959,
+        "y": 5.944663646209232
       },
       "isLocked": false,
       "linkedName": "Mid B-A-1-2 Note 2"
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
