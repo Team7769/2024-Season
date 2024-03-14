@@ -89,8 +89,8 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
     private final double kEmergancyEjectElevatorPosition = 10;
-    private final double kLaunchAngle = 11;
-    private final double kLaunchSpeed = 48;
+    private final double kLaunchAngle = 5;
+    private final double kLaunchSpeed = 40;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 300;
@@ -134,9 +134,9 @@ public class Jukebox extends Subsystem{
     //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     // Old
-    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5};
-    private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2};
-    private final double[] kShooterSpeeds = {67, 67, 67, 67};
+    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
+    private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
+    private final double[] kShooterSpeeds = {67, 67, 67, 67, 67};
 
     private double _manualElevatorSpeed = 0;
     private double _manualFeederSpeed = 0;
@@ -596,11 +596,13 @@ public class Jukebox extends Subsystem{
     }
 
     private void extendForClimb() {
+        _feeder.set(kFeederIntake);
         setElevatorPosition(kExtendClimbElevatorPosition);
         setShooterAngle(kExtendClimbShooterAngle);
     }
 
     private void climb() {
+        _feeder.set(0);
         if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
             return;
         }
