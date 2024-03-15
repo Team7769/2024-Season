@@ -316,6 +316,32 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "5,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator P",
+              "_title": "/SmartDashboard/Elevator P",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator D",
+              "_title": "/SmartDashboard/Elevator D",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -477,9 +503,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
-    "y": -7.199999809265137,
-    "width": 1550.4000244140625,
-    "height": 926.4000244140625
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 784.0
   }
 }

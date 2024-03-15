@@ -80,7 +80,7 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 80; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 4;
-    private final double kAmpElevatorPosition = 70;
+    private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
@@ -99,7 +99,7 @@ public class Jukebox extends Subsystem{
     private final double kElevatorFeedForwardKs = 0.23312;
     private final double kElevatorFeedForwardKv = 0.11903;
     private final double kElevatorFeedForwardKg = 0.12293;
-    private final double kElevatorFeedForwardKp = .01;
+    private final double kElevatorFeedForwardKp = .15;
     
     // Shooter Angle Control Constants
     private final double kShooterAngleMaxVelocity = 100;
@@ -254,7 +254,6 @@ public class Jukebox extends Subsystem{
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _elevatorL.setInverted(true);
-        _elevatorL.burnFlash();
         
         // right elevator motor setup
         _elevatorR = new CANSparkMax(Constants.kRElevatorId,
@@ -295,6 +294,8 @@ public class Jukebox extends Subsystem{
         _elevatorProfileSetpoint = new TrapezoidProfile.State();
         
         _manualElevatorSpeed = 0.0;
+        
+        _elevatorL.burnFlash();
     }
     
     /**
@@ -599,12 +600,13 @@ public class Jukebox extends Subsystem{
     private void extendForClimb() {
         _feeder.set(kFeederIntake);
         setShooterAngle(kExtendClimbShooterAngle);
-        _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
-        if (_elevatorL.getEncoder().getPosition() < 83) {
-            _elevatorL.set(.6);
-        } else {
-            _elevatorL.set(.02);
-        }
+        setElevatorPosition(83);
+        // _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
+        // if (_elevatorL.getEncoder().getPosition() < 83) {
+        //     _elevatorL.set(.6);
+        // } else {
+        //     _elevatorL.set(.02);
+        // }
     }
 
     private void climb() {
@@ -772,10 +774,10 @@ public class Jukebox extends Subsystem{
             case MANUAL:
             case CLIMB:
                 break;
-            case EXTEND_FOR_CLIMB:
-                handleShooterSpeed();
-                handleShooterAnglePosition();
-                break;
+            // case EXTEND_FOR_CLIMB:
+            //     handleShooterSpeed();
+            //     handleShooterAnglePosition();
+            //     break;
             default:
                 handleShooterSpeed();
                 handleShooterAnglePosition();
