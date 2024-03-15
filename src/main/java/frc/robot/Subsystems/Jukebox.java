@@ -88,7 +88,8 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
-    private final double kEmergancyEjectElevatorPosition = 10;
+    private final double kEmergancyEjectElevatorPosition = 20;
+    private final double kEmergancyEjectShooterAngle = 4;
     private final double kLaunchAngle = 4.5;
     private final double kLaunchSpeed = 45;
 
@@ -374,7 +375,7 @@ public class Jukebox extends Subsystem{
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        if (_elevatorL.getEncoder().getPosition() >= 85 && _elevatorProfileSetpoint.velocity > 0) {
+        if (_elevatorL.getEncoder().getPosition() >= 84 && _elevatorProfileSetpoint.velocity > 0) {
            _elevatorL.set(0);
         } else { 
             _elevatorController.setReference(_elevatorProfileSetpoint.position,
@@ -597,8 +598,13 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         _feeder.set(kFeederIntake);
-        setElevatorPosition(kExtendClimbElevatorPosition);
         setShooterAngle(kExtendClimbShooterAngle);
+        _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
+        if (_elevatorL.getEncoder().getPosition() < 83) {
+            _elevatorL.set(.6);
+        } else {
+            _elevatorL.set(.02);
+        }
     }
 
     private void climb() {
@@ -617,6 +623,7 @@ public class Jukebox extends Subsystem{
 
     private void emergancyEject() {
         setElevatorPosition(kEmergancyEjectElevatorPosition);
+        setShooterAngle(kEmergancyEjectShooterAngle);
     }
 
     private void feeder()
@@ -764,6 +771,10 @@ public class Jukebox extends Subsystem{
         switch (jukeboxCurrentState) {
             case MANUAL:
             case CLIMB:
+                break;
+            case EXTEND_FOR_CLIMB:
+                handleShooterSpeed();
+                handleShooterAnglePosition();
                 break;
             default:
                 handleShooterSpeed();
