@@ -10,7 +10,7 @@ import frc.robot.Utilities.PathFollower;
  * Starts Mid in front of the speaker and scores the following notes:
  * Initial -> C -> B -> A -> 3
  */
-public class Mid_C_B_A_3_SUB extends AutonomousMode{
+public class Mid_C_B_A_1_SUB extends AutonomousMode{
 
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
@@ -18,12 +18,12 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
     private Intake _intake;
     private int _count;
 
-    public Mid_C_B_A_3_SUB()
+    public Mid_C_B_A_1_SUB()
     {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("Mid C-B-A-3 SUB");
+        _pathFollower = new PathFollower("Mid C-B-A-1 SUB");
     }
 
     @Override
@@ -152,7 +152,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                     nextStep();
                 }
                 break;
-                // drives to 3
+                // drives to 1
             case 15:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
@@ -161,7 +161,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // drives back to score 3
+            // drives back to score 1
             case 16:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_jukebox.hasNote()) {
@@ -172,7 +172,7 @@ public class Mid_C_B_A_3_SUB extends AutonomousMode{
                     nextStep();
                 }
                 break;
-            // scores 3
+            // scores 1
             case 17:
                 if (_jukebox.isReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);

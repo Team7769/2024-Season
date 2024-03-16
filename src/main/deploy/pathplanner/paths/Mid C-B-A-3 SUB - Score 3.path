@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.53
+        "x": 8.305389050150424,
+        "y": 3.7826002042874274
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.362841646082722,
-        "y": 5.272361595992807
+        "x": 6.4082335297338195,
+        "y": 3.700624348466957
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score A"
+      "linkedName": "Mid C-B-A-1 SUB - Note 3"
     },
     {
       "anchor": {
@@ -20,28 +20,28 @@
         "y": 4.2978770123018135
       },
       "prevControl": {
-        "x": 4.291274013623357,
-        "y": 4.548401588542802
+        "x": 4.991504045099071,
+        "y": 4.017957375681643
       },
       "nextControl": {
-        "x": 5.0849090000605095,
-        "y": 3.958262752474149
+        "x": 4.27690278809944,
+        "y": 4.5685249382481645
       },
       "isLocked": false,
       "linkedName": "Mid C-B-A-1 SUB - mid point"
     },
     {
       "anchor": {
-        "x": 8.305389050150424,
-        "y": 3.7826002042874274
+        "x": 1.27,
+        "y": 5.53
       },
       "prevControl": {
-        "x": 5.881245885173651,
-        "y": 3.677202675375394
+        "x": 3.799540693888809,
+        "y": 5.424602471087967
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Note 3"
+      "linkedName": "Mid C-B-A-1 SUB - Score"
     }
   ],
   "rotationTargets": [],
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid C-B-A-1 SUB",
+  "folder": "Mid C-B-A-3 SUB",
   "previewStartingState": {
     "rotation": 1.671327587666837e-13,
     "velocity": 0
