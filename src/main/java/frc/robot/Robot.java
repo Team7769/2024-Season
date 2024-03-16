@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Autonomous.AutonomousMode;
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
-    
+    DataLogManager.start();
   }
 
   @Override
