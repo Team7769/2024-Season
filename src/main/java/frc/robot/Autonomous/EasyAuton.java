@@ -4,6 +4,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
+import frc.robot.Subsystems.VisionSystem;
 import frc.robot.Utilities.PathFollower;
 
 public class EasyAuton {
@@ -17,8 +18,11 @@ public class EasyAuton {
     private Drivetrain _drivetrain;
     private Intake _intake;
     private Jukebox _jukebox;
+    private VisionSystem _visionSystem;
 
     private PathFollower _pathFollower;
+
+    private double _targetAbsoluteAngle;
 
     private boolean _pathInitialized;
 
@@ -26,6 +30,7 @@ public class EasyAuton {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
+        _visionSystem = VisionSystem.getInstance();
 
         _pathFollower = new PathFollower(autoName);
     }
@@ -53,11 +58,15 @@ public class EasyAuton {
 
         switch (stepFunction) {
             case FOLLOW:
-                follow();
+                follow(true);
         }
     }
 
     public void follow() {
+        follow(false);
+    }
+
+    public void follow(boolean poseAim) {
         if (!_pathInitialized) {
             _pathFollower.startNextPath(new ChassisSpeeds(),
                                         _drivetrain.getGyroRotation());
@@ -67,8 +76,33 @@ public class EasyAuton {
             return;
         }
 
+        ChassisSpeeds chassisSpeeds = _pathFollower.getPathTarget(
+            _drivetrain.getPose()
+        );
+
+        if (poseAim) {
+            double[] targetInfo = _visionSystem.getTargetingInfo();
+
+            double validTargets = targetInfo[0];
+            double targetAngle = targetInfo[2];
+    
+            if (validTargets > 0.0) {
+                _targetAbsoluteAngle = _drivetrain.getAbsoluteTargetAngle(
+                    targetAngle
+                );
+            }
+    
+            rotation = _drivetrain.getAngleToTarget(_targetAbsoluteAngle);
+
+            chassisSpeeds = new ChassisSpeeds(
+                chassisSpeeds.vxMetersPerSecond,
+                chassisSpeeds.vyMetersPerSecond,
+                chassisSpeeds.omegaRadiansPerSecond
+            );
+        }
+
         // this gives us chassis speeds, we need to modify that rotation though
-        _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+        _drivetrain.drive();
 
         if (_pathFollower.isPathFinished()) {
             _drivetrain.drive(new ChassisSpeeds());
@@ -77,5 +111,26 @@ public class EasyAuton {
 
             _step++;
         }
+    }
+
+    public void getPoseAimRotation(ChassisSpeeds chassisSpeeds) {
+        double[] targetInfo = _visionSystem.getTargetingInfo();
+
+        double validTargets = targetInfo[0];
+        double targetAngle = targetInfo[2];
+
+        if (validTargets > 0.0) {
+            _targetAbsoluteAngle = _drivetrain.getAbsoluteTargetAngle(
+                targetAngle
+            );
+        }
+
+        rotation = _drivetrain.getAngleToTarget(_targetAbsoluteAngle);
+
+        chassisSpeeds = new ChassisSpeeds(
+            chassisSpeeds.vxMetersPerSecond,
+            chassisSpeeds.vyMetersPerSecond,
+            chassisSpeeds.omegaRadiansPerSecond
+        );
     }
 }
