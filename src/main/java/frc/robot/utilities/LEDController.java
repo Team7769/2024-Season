@@ -144,6 +144,7 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case EXTEND_FOR_CLIMB:
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case CLIMB:

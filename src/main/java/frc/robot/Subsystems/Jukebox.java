@@ -80,7 +80,7 @@ public class Jukebox extends Subsystem{
     private final double kTrapElevatorPosition = 80; // change this
     private final double kExtendClimbElevatorPosition = 98; // change this
     private final double kExtendClimbShooterAngle = 4;
-    private final double kAmpElevatorPosition = 70;
+    private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
@@ -88,9 +88,10 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
-    private final double kEmergancyEjectElevatorPosition = 10;
-    private final double kLaunchAngle = 5;
-    private final double kLaunchSpeed = 40;
+    private final double kEmergancyEjectElevatorPosition = 20;
+    private final double kEmergancyEjectShooterAngle = 4;
+    private final double kLaunchAngle = 4.5;
+    private final double kLaunchSpeed = 45;
 
     // Elevator Control Constants
     private final double kElevatorMaxVelocity = 300;
@@ -98,7 +99,7 @@ public class Jukebox extends Subsystem{
     private final double kElevatorFeedForwardKs = 0.23312;
     private final double kElevatorFeedForwardKv = 0.11903;
     private final double kElevatorFeedForwardKg = 0.12293;
-    private final double kElevatorFeedForwardKp = .01;
+    private final double kElevatorFeedForwardKp = .15;
     
     // Shooter Angle Control Constants
     private final double kShooterAngleMaxVelocity = 100;
@@ -253,7 +254,6 @@ public class Jukebox extends Subsystem{
         _elevatorL.setIdleMode(IdleMode.kBrake);
         _elevatorL.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _elevatorL.setInverted(true);
-        _elevatorL.burnFlash();
         
         // right elevator motor setup
         _elevatorR = new CANSparkMax(Constants.kRElevatorId,
@@ -294,6 +294,8 @@ public class Jukebox extends Subsystem{
         _elevatorProfileSetpoint = new TrapezoidProfile.State();
         
         _manualElevatorSpeed = 0.0;
+        
+        _elevatorL.burnFlash();
     }
     
     /**
@@ -374,7 +376,7 @@ public class Jukebox extends Subsystem{
 
         // Test this as is. If this doesn't move, then multiply ff by 12 to get Volts. SetReference is expecting a voltage for the FF value here.
         // Just a note, I think our ElevatorFeedfowardkV value is a little bit low. The elevator for last year was .066 and this one is .001 This could be the cause. We can tune this if needed.
-        if (_elevatorL.getEncoder().getPosition() >= 85 && _elevatorProfileSetpoint.velocity > 0) {
+        if (_elevatorL.getEncoder().getPosition() >= 84 && _elevatorProfileSetpoint.velocity > 0) {
            _elevatorL.set(0);
         } else { 
             _elevatorController.setReference(_elevatorProfileSetpoint.position,
@@ -597,8 +599,14 @@ public class Jukebox extends Subsystem{
 
     private void extendForClimb() {
         _feeder.set(kFeederIntake);
-        setElevatorPosition(kExtendClimbElevatorPosition);
         setShooterAngle(kExtendClimbShooterAngle);
+        setElevatorPosition(83);
+        // _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
+        // if (_elevatorL.getEncoder().getPosition() < 83) {
+        //     _elevatorL.set(.6);
+        // } else {
+        //     _elevatorL.set(.02);
+        // }
     }
 
     private void climb() {
@@ -617,6 +625,7 @@ public class Jukebox extends Subsystem{
 
     private void emergancyEject() {
         setElevatorPosition(kEmergancyEjectElevatorPosition);
+        setShooterAngle(kEmergancyEjectShooterAngle);
     }
 
     private void feeder()
@@ -765,6 +774,10 @@ public class Jukebox extends Subsystem{
             case MANUAL:
             case CLIMB:
                 break;
+            // case EXTEND_FOR_CLIMB:
+            //     handleShooterSpeed();
+            //     handleShooterAnglePosition();
+            //     break;
             default:
                 handleShooterSpeed();
                 handleShooterAnglePosition();

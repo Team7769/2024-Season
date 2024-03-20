@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.53
+        "x": 2.9066934025451485,
+        "y": 5.527514849608872
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.250886555981385,
-        "y": 6.417538427088266
+        "x": 2.438113578122649,
+        "y": 5.527514849608872
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score B"
+      "linkedName": "Mid C-B-A-1 SUB - Note B"
     },
     {
       "anchor": {
-        "x": 2.695898344721083,
-        "y": 6.8508393792821805
+        "x": 1.4,
+        "y": 5.53
       },
       "prevControl": {
-        "x": 2.0635131712488803,
-        "y": 6.230165042355762
+        "x": 1.9158088440962433,
+        "y": 5.53
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Note A"
+      "linkedName": "Mid C-B-A-1 SUB - Score B"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 40.808511750625975,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 39.28940686250044,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid C-B-A-1 SUB",
+  "folder": "Mid C-B-A-3 SUB",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

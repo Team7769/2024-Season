@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.293678213604645,
-        "y": 3.688913511921175
+        "x": 8.305389050150424,
+        "y": 3.7826002042874274
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.39652269318804,
-        "y": 3.6069376561007047
+        "x": 6.4082335297338195,
+        "y": 3.700624348466957
       },
       "isLocked": false,
       "linkedName": "Mid C-B-A-1 SUB - Note 3"
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid C-B-A-1 SUB",
+  "folder": "Mid C-B-A-3 SUB",
   "previewStartingState": {
     "rotation": 1.671327587666837e-13,
     "velocity": 0
