@@ -38,6 +38,10 @@ public class AutoUtil {
                 return new Mid_C_B_A_1_SUB_MILD();
             case(MID_C_B_A_1_SUB_SPICY):
                 return new Mid_C_B_A_1_SUB_SPICY();
+            case(TOP_ANTI_AUTO):
+                return new Top_Anti_Auto();
+            case(TOP_1_2_A_B):
+                return new Top_1_2_A_B();
         }
         
         return new DoNothing();
@@ -61,6 +65,7 @@ public class AutoUtil {
         _autoChooser.addOption("Mid - C B A 1 SUB MILD (AMP) (5)", MID_C_B_A_1_SUB_MILD);
         _autoChooser.addOption("Mid - C B A 1 SUB SPICY (SCORE) (5)", MID_C_B_A_1_SUB_SPICY);
         _autoChooser.addOption("Top - Anti Auto (1)", TOP_ANTI_AUTO);
+        _autoChooser.addOption("Top - 1 2 A B (5)", TOP_1_2_A_B);
         // Disabled for now
         //_autoChooser.addOption("Mid - B 4 5 (4)", MID_B_4_5);
         //_autoChooser.addOption("Top 1 2 3", TOP_1_2_3);
@@ -87,5 +92,6 @@ public class AutoUtil {
     public static final int MID_C_B_A_1_SUB_MILD = 13;
     public static final int MID_C_B_A_1_SUB_SPICY = 14;
     public static final int TOP_ANTI_AUTO = 15;
+    public static final int TOP_1_2_A_B = 16;
 
 }

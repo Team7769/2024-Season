@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 6.59
+    },
+    "rotation": 60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Score 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Note 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Score 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Note A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A-B Note B"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Top Autos",
+  "choreoAuto": false
+}
