@@ -102,12 +102,12 @@ public class Jukebox extends Subsystem{
     private final double kElevatorFeedForwardKp = .15;
     
     // Shooter Angle Control Constants
-    private final double kShooterAngleMaxVelocity = 100;
-    private final double kShooterAngleMaxAcceleration = 100;
+    private final double kShooterAngleMaxVelocity = 200;
+    private final double kShooterAngleMaxAcceleration = 200;
     private final double kShooterAngleFeedForwardKs = 0.31777;
     private final double kShooterAngleFeedForwardKv = 0.090231;
     private final double kShooterAngleFeedForwardkG = 0.035019;
-    private final double kShooterAngleFeedForwardKp = 0.1;
+    private final double kShooterAngleFeedForwardKp = 3;
     private final double kShooterAngleFeedForwardAngle = .1785;
     
     // Shooter Control Constants
@@ -309,12 +309,12 @@ public class Jukebox extends Subsystem{
         _shooterAngle.setIdleMode(IdleMode.kBrake);
         _shooterAngle.setSmartCurrentLimit(kLowStallLimit, kFreeLimit);
         _shooterAngle.setInverted(false);
-        _shooterAngle.burnFlash();
+       
 
         _shooterAngleController = _shooterAngle.getPIDController();
         _shooterAngleController.setP(kShooterAngleFeedForwardKp);
         _shooterAngleController.setI(0);
-        _shooterAngleController.setD(kCommonKd);
+        _shooterAngleController.setD(0.1);
         _shooterAngleController.setIZone(0);
         _shooterAngleController.setFF(0);
         _shooterAngleController.setOutputRange(-1.0, 1.0);
@@ -343,6 +343,7 @@ public class Jukebox extends Subsystem{
         _shooterAngleProfileSetpoint = new TrapezoidProfile.State();
 
         _manualShooterAngleSpeed = 0.0;
+         _shooterAngle.burnFlash();
     }
 
     public static Jukebox getInstance()
