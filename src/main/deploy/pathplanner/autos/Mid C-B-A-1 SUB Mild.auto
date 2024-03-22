@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.27,
+      "y": 5.53
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-1 SUB - Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-1 SUB - Score 1 Mild"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Mid Autos",
+  "choreoAuto": false
+}

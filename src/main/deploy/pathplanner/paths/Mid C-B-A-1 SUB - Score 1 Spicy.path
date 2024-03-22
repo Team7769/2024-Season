@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.53
+        "x": 3.211175152735468,
+        "y": 5.8788399459823175
       },
       "prevControl": {
-        "x": 2.688192020035965,
-        "y": 5.846192586736101
+        "x": 4.499367172771432,
+        "y": 6.195032532718418
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score A"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.1233027140755487,
+    "rotation": 5.3558250428552165,
     "rotateFast": false
   },
   "reversed": false,
