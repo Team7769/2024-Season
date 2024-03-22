@@ -10,7 +10,7 @@ import frc.robot.Utilities.PathFollower;
  * Starts Mid in front of the speaker and scores the following notes:
  * Initial -> C -> B -> A -> 3
  */
-public class Mid_C_B_A_1_SUB extends AutonomousMode{
+public class Mid_C_B_A_1_SUB_MILD extends AutonomousMode{
 
     private PathFollower _pathFollower;    
     private Drivetrain _drivetrain;
@@ -18,12 +18,12 @@ public class Mid_C_B_A_1_SUB extends AutonomousMode{
     private Intake _intake;
     private int _count;
 
-    public Mid_C_B_A_1_SUB()
+    public Mid_C_B_A_1_SUB_MILD()
     {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
-        _pathFollower = new PathFollower("Mid C-B-A-1 SUB");
+        _pathFollower = new PathFollower("Mid C-B-A-1 SUB Mild");
     }
 
     @Override
@@ -164,25 +164,8 @@ public class Mid_C_B_A_1_SUB extends AutonomousMode{
             // drives back to score 1
             case 16:
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                }
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-                break;
-            // scores 1
-            case 17:
-                if (_jukebox.isReadyToScore()) {
-                    _jukebox.setState(JukeboxEnum.SCORE);
-                    nextStep();
-                }
-                break;
-            // resets after shot
-            case 18:
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
                     nextStep();
                 }
                 break;
@@ -197,7 +180,7 @@ public class Mid_C_B_A_1_SUB extends AutonomousMode{
 
     @Override
     public boolean isComplete(){
-        return _count >= 23;
+        return _count >= 17;
     }
     @Override
     public void initialize(){
