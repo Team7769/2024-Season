@@ -6,6 +6,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,6 +14,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -21,7 +23,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.Constants;
+import frc.robot.LimelightHelpers.PoseEstimate;
 
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
@@ -44,6 +48,27 @@ public class Drivetrain extends Subsystem{
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final Field2d m_field = new Field2d();
+
+    private final String kLimelightName = "";
+
+    // in meters
+    private final double kNearTagAreaMin = 0.8;
+    private final double kFarTagAreaMin = 0.1;
+
+    private final double kMidTrustPoseDiffMax = 0.5;
+    private final double kLowTrustPoseDiffMax = 0.3;
+
+    // std = standard deviation
+    // in meters
+    private final double kHighTrustXYStds = 0.5;
+    private final double kMidTrustXYStds = 1.0;
+    private final double kLowTrustXYStds = 2.0;
+
+    // rotation deviation
+    // in degrees
+    private final double kHighTrustDegStds = 6;
+    private final double kMidTrustDegStds = 12;
+    private final double kLowTrustDegStds = 30;
 
     private Drivetrain()
     {
@@ -167,6 +192,49 @@ public class Drivetrain extends Subsystem{
                 _backLeftModule.getPosition(),
                 _backRightModule.getPosition()
             }
+        );
+
+        PoseEstimate poseEstimate = LimelightHelpers
+            .getBotPoseEstimate_wpiBlue(kLimelightName);
+
+        if (poseEstimate.tagCount == 0) return;
+
+        double poseDifference = _drivePoseEstimator
+            .getEstimatedPosition()
+            .getTranslation()
+            .getDistance(poseEstimate.pose.getTranslation());
+
+        double xyStds;
+        double degStds;
+        
+        // note that besides the tag count check, there are no equals checks 
+        // (e.g. <=) just < and >, for var name consistency we use =
+        if (poseEstimate.tagCount >= 2) {
+            xyStds = kHighTrustXYStds;
+            degStds = kHighTrustDegStds;
+
+        } else if (poseEstimate.avgTagArea >= kNearTagAreaMin &&
+                   poseDifference <= kMidTrustPoseDiffMax) {
+
+            xyStds = kMidTrustXYStds;
+            degStds = kMidTrustDegStds;
+
+        } else if (poseEstimate.avgTagArea >= kFarTagAreaMin &&
+                   poseDifference <= kLowTrustPoseDiffMax) {
+
+            xyStds = kLowTrustXYStds;
+            degStds = kLowTrustDegStds;
+        } else {
+            return;
+        }
+
+        _drivePoseEstimator.setVisionMeasurementStdDevs(
+            VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+        );
+
+        _drivePoseEstimator.addVisionMeasurement(
+            poseEstimate.pose,
+            Timer.getFPGATimestamp() - poseEstimate.latency
         );
     }
 
