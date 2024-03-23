@@ -135,9 +135,10 @@ public class Jukebox extends Subsystem{
     //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     // Old
-    private final double[] kDistanceIDs = {2, 2.5, 3, 3.5, 4};
-    private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
-    private final double[] kShooterSpeeds = {67, 67, 67, 67, 67};
+    private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
+    // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
+    private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double[] kShooterSpeeds = {67, 67, 67, 67, 67, 67};
 
     private double _manualElevatorSpeed = 0;
     private double _manualFeederSpeed = 0;
@@ -631,7 +632,7 @@ public class Jukebox extends Subsystem{
     }
 
     private void emergancyEject() {
-        setElevatorPosition(kEmergancyEjectElevatorPosition);
+        // setElevatorPosition(kEmergancyEjectElevatorPosition);
         setShooterAngle(kEmergancyEjectShooterAngle);
     }
 
@@ -917,5 +918,6 @@ public class Jukebox extends Subsystem{
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
         SmartDashboard.putNumber("dashboardShooterRPercent", _dashboardShooterRPercent);
         SmartDashboard.putBoolean("shooterReady", isReadyToScore());
+        SmartDashboard.putNumber("Vision system distance", _visionSystem.getDistance());
     }
 }
