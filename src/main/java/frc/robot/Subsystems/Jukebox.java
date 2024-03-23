@@ -19,8 +19,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.JukeboxEnum;
-import frc.robot.Utilities.LEDController;
-import frc.robot.Utilities.OneDimensionalLookup;
+import frc.robot.Utilities.*;
     
 public class Jukebox extends Subsystem{
     
@@ -88,8 +87,8 @@ public class Jukebox extends Subsystem{
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
-    private final double kEmergancyEjectElevatorPosition = 20;
-    private final double kEmergancyEjectShooterAngle = 4;
+    // private final double kEmergancyEjectElevatorPosition = 20;
+    private final double kEmergancyEjectShooterAngle = 6;
     private final double kLaunchAngle = 4.5;
     private final double kLaunchSpeed = 45;
 
