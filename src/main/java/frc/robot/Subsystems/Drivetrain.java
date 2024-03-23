@@ -36,6 +36,7 @@ public class Drivetrain extends Subsystem{
     private final SwerveModule _backRightModule;
 
     private final SwerveDrivePoseEstimator _drivePoseEstimator;
+    private final SwerveDrivePoseEstimator _visionPoseEstimator;
 
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
@@ -48,6 +49,7 @@ public class Drivetrain extends Subsystem{
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final Field2d m_field = new Field2d();
+    private final Field2d m_vPEField = new Field2d();
 
     private final String kLimelightName = "";
 
@@ -133,7 +135,8 @@ public class Drivetrain extends Subsystem{
             },
             new Pose2d()
         );
-        SmartDashboard.putData("Field",m_field);
+
+        SmartDashboard.putData("Field", m_field);
     }
 
     public static Drivetrain getInstance()
@@ -155,6 +158,8 @@ public class Drivetrain extends Subsystem{
         var pose = _drivePoseEstimator.getEstimatedPosition();
         
         m_field.setRobotPose(pose);
+
+        m_vPEField.setRobotPose(_visionPoseEstimator.getEstimatedPosition());
 
         SmartDashboard.putNumber("drivetrainGyroAngle",
                                  getGyroRotation().getDegrees());
@@ -199,7 +204,7 @@ public class Drivetrain extends Subsystem{
 
         if (poseEstimate.tagCount == 0) return;
 
-        double poseDifference = _drivePoseEstimator
+        double poseDifference = _visionPoseEstimator
             .getEstimatedPosition()
             .getTranslation()
             .getDistance(poseEstimate.pose.getTranslation());
@@ -228,11 +233,11 @@ public class Drivetrain extends Subsystem{
             return;
         }
 
-        _drivePoseEstimator.setVisionMeasurementStdDevs(
+        _visionPoseEstimator.setVisionMeasurementStdDevs(
             VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
         );
 
-        _drivePoseEstimator.addVisionMeasurement(
+        _visionPoseEstimator.addVisionMeasurement(
             poseEstimate.pose,
             Timer.getFPGATimestamp() - poseEstimate.latency
         );
