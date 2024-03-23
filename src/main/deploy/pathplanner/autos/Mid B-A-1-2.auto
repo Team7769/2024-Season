@@ -26,25 +26,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Mid B-A-1-2 - Note 1"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid B-A-1-2 - Score Note 1"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid B-A-1-2 Note 2"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid B-A-1-2 Score"
+            "pathName": null
           }
         }
       ]

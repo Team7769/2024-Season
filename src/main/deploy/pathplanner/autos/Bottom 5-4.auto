@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4 To Note 5"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4 To Shoot Note 5"
+            "pathName": null
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4 To Shoot Note 4"
+            "pathName": null
           }
         }
       ]
