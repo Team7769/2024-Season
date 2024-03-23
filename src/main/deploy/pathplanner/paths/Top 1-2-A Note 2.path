@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.056598699212937,
+        "y": 5.958801173984146
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.837319863318973,
+        "y": 6.087306825002107
+      },
+      "isLocked": false,
+      "linkedName": "Top 1-2-A-B - Score 1"
+    },
+    {
+      "anchor": {
+        "x": 5.902080971753509,
+        "y": 6.0781278499293965
+      },
+      "prevControl": {
+        "x": 5.49737425440136,
+        "y": 6.117653877737075
+      },
+      "nextControl": {
+        "x": 6.306787689105659,
+        "y": 6.038601822121718
+      },
+      "isLocked": false,
+      "linkedName": "Top 1-2-A-B - Avoid Stage"
+    },
+    {
+      "anchor": {
+        "x": 8.279435515585794,
+        "y": 5.61917909629382
+      },
+      "prevControl": {
+        "x": 6.966842080188046,
+        "y": 5.912906298620589
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Top 1-2-A-B - Note 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Top 1-2-A-B",
+  "previewStartingState": {
+    "rotation": 18.824710018239994,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

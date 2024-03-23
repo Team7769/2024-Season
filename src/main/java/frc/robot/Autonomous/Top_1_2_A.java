@@ -8,19 +8,19 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Jukebox;
 import frc.robot.Utilities.PathFollower;
 
-public class Top_1_2_A_B extends AutonomousMode {
+public class Top_1_2_A extends AutonomousMode {
     private PathFollower _pathFollower;
     private Intake _intake;
     private Jukebox _jukebox;
     private Drivetrain _drivetrain;
     private int _count;
 
-    public Top_1_2_A_B(){
+    public Top_1_2_A(){
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
         _jukebox = Jukebox.getInstance();
         
-        _pathFollower = new PathFollower("Top 1-2-A-B");
+        _pathFollower = new PathFollower("Top 1-2-A");
     }
 
     @Override
@@ -143,47 +143,8 @@ public class Top_1_2_A_B extends AutonomousMode {
                 // After the note has left the robot, transition to idle and start the next path.
                 if (!_jukebox.hasNote()) {
                     _jukebox.setState(JukeboxEnum.IDLE);
-
-                    // Start Path to Note A (2)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
-
-                break;
-            case 15:
-                // Follow Path to Note B (2)
-                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
-
-                if (_pathFollower.isPathFinished()){
-                    // At Note B (2)
-                    _drivetrain.drive(new ChassisSpeeds());
-                    nextStep();
-                }
-
-                break;
-            case 16:
-                // Once the note is detected, we can set prep speaker.
-                if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
-                    nextStep();
-                }
-
-                break;
-            case 17:            
-                    // Once ready for the shot, set score.
-                    if (_jukebox.isReadyToScore()) {
-                        _jukebox.setState(JukeboxEnum.SCORE);
-                        nextStep();
-                    }
-                break;
-            case 18:
-                // After the note has left the robot, transition to idle and start the next path.
-                if (!_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.IDLE);
-                    nextStep();
-                }
-                break;
-            // Drives to note 1
             
             default:
                 _drivetrain.drive(new ChassisSpeeds());

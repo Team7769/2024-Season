@@ -14,37 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top 1-2-A-B Note 1"
+            "pathName": "Top 1-2-A Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top 1-2-A-B Score 1"
+            "pathName": "Top 1-2-A Score 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top 1-2-A-B Note 2"
+            "pathName": "Top 1-2-A Note 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top 1-2-A-B Score 2"
+            "pathName": "Top 1-2-A Score 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top 1-2-A-B Note A"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Top 1-2-A-B Note B"
+            "pathName": "Top 1-2-A Note A"
           }
         }
       ]

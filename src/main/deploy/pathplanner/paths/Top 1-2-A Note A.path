@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9066934025451485,
-        "y": 7.026501927468906
+        "x": 1.9918375907784003,
+        "y": 5.784400647602627
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7121880748754352,
-        "y": 7.038212764014687
+        "x": 2.354873523697627,
+        "y": 6.077171561247165
       },
       "isLocked": false,
-      "linkedName": "Top 1-2-A-B - Note A"
+      "linkedName": "Top 1-2-A-B - Score 2"
     },
     {
       "anchor": {
         "x": 2.9066934025451485,
-        "y": 5.527514849608872
+        "y": 7.026501927468906
       },
       "prevControl": {
-        "x": 1.876139786516376,
-        "y": 5.3401414648763685
+        "x": 2.7427416909042077,
+        "y": 6.8157068696448375
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Top 1-2-A-B - Note B"
+      "linkedName": "Top 1-2-A-B - Note A"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 46.84761026599461,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Top 1-2-A-B",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 18.924644416051084,
     "velocity": 0
   },
   "useDefaultConstraints": true
