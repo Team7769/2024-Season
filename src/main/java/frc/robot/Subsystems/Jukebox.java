@@ -621,9 +621,9 @@ public class Jukebox extends Subsystem{
         if (jukeboxPreviousState != JukeboxEnum.EXTEND_FOR_CLIMB) {
             return;
         }
-        setElevatorPosition(.05);
+        setElevatorPosition(0);
         _elevatorProfileSetpoint = new TrapezoidProfile.State();
-        if (_elevatorL.getEncoder().getPosition() > .05) {
+        if (_elevatorL.getEncoder().getPosition() >= 0) {
             _elevatorL.set(-.5);
         } else {
             _elevatorL.set(0);
