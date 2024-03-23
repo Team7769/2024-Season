@@ -169,7 +169,9 @@ public class Robot extends TimedRobot {
   if (_score) {
     _jukebox.setState(JukeboxEnum.SCORE);
   } else if (_scoreReleased) {
-    if (_jukebox.getPreviousState() != JukeboxEnum.PREP_TRAP) {
+    if (_jukebox.getPreviousState() == JukeboxEnum.PREP_TRAP) {
+      _jukebox.setState(JukeboxEnum.PREP_TRAP);
+    } else {
       _jukebox.setState(JukeboxEnum.IDLE);
     }
   }

@@ -38,7 +38,7 @@ public class LEDController {
     private int underNumLeds;
     private int jukeboxNumLeds;
 
-    private Jukebox jukebox;
+    private Jukebox _jukebox;
 
     /**
      * The are grb lights
@@ -46,7 +46,7 @@ public class LEDController {
 
     LEDController()
     {
-        jukebox = Jukebox.getInstance();
+        _jukebox = Jukebox.getInstance();
         upperCandle = new CANdle(Constants.kUpperCandle);
         lowerCandle = new CANdle(Constants.kLowerCandle);
         // underNumLeds = 400;
@@ -57,7 +57,7 @@ public class LEDController {
         // animation for SCORE --color is Green
         SCORE_LIGHTS = new ColorFlowAnimation(0, 255, 0, 0, 0.5, jukeboxNumLeds, Direction.Forward);
         // animation for PREP_SPEAKER --color is Turquoise
-        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
+        PREP_SPEAKER_LIGHTS = new FireAnimation(.5, .5, _jukebox.getShooterLeds(jukeboxNumLeds), .25, .1);
         // animation for PREP_AMP --color is Indigo
         PREP_AMP_LIGHTS = new RainbowAnimation(.5, .5, jukeboxNumLeds);
         // animation for PREP_TRAP --color is Sunset Orange
@@ -110,10 +110,10 @@ public class LEDController {
             lowerCandle.setLEDs(255, 0, 0, 0, 0, jukeboxNumLeds); 
         }
 
-        var currentState = jukebox.getState();
+        var currentState = _jukebox.getState();
         switch (currentState) {
             case IDLE:
-                if (jukebox.hasNote())
+                if (_jukebox.hasNote())
                 {
                     upperCandle.clearAnimation(0);
                     upperCandle.setLEDs(0, 255, 0, 0, 0, jukeboxNumLeds);
@@ -130,7 +130,7 @@ public class LEDController {
             case PREP_SPEAKER:
                 // upperCandle.clearAnimation(0);
                 // upperCandle.animate(PREP_SPEAKER_LIGHTS);
-                upperCandle.setLEDs(255, 0, 0, 0, 0, jukebox.getShooterLeds(jukeboxNumLeds));
+                upperCandle.setLEDs(255, 0, 0, 0, 0, _jukebox.getShooterLeds(jukeboxNumLeds));
                 break;
             case PREP_AMP:
                 // upperCandle.clearAnimation(0);
@@ -138,6 +138,7 @@ public class LEDController {
                 upperCandle.setLEDs(255, 153, 51, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_TRAP:
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case RESET:
@@ -148,7 +149,9 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
                 break;
             case CLIMB:
-                upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
+                if (_jukebox.getElevatorPosition() < .05) {
+                    upperCandle.animate(CLIMB_LIGHTS);
+                }
                 break;
             case MANUAL:
                 upperCandle.setLEDs(0, 255, 62, 0, 0, jukeboxNumLeds);
