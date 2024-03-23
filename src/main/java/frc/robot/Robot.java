@@ -87,6 +87,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    _jukebox.setIdleSpeedSubwoofer();
     _intake.setWantedState(IntakeState.INTAKE);
     _jukebox.disableAutoSpinup();
   }

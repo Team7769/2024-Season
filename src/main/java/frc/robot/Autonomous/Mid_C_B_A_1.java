@@ -38,7 +38,7 @@ public class Mid_C_B_A_1 extends AutonomousMode{
                 nextStep();
                 break;
             case 1:
-                if (_jukebox.isReadyToScore()) {
+                if (_jukebox.getIsReadyToScore()) {
                     // Once ready to score, set score state.
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
@@ -75,7 +75,7 @@ public class Mid_C_B_A_1 extends AutonomousMode{
                 break;
             case 5:
                 // Once ready for the shot, set score.
-                if (_jukebox.isReadyToScore()) {
+                if (_jukebox.getIsReadyToScore()) {
                     _jukebox.setState(JukeboxEnum.SCORE);
                     nextStep();
                 }
@@ -238,6 +238,7 @@ public class Mid_C_B_A_1 extends AutonomousMode{
         // Set initial subsystem states. We should never need to change the Intake state as it is autonomous.
         _intake.setWantedState(IntakeState.INTAKE);
         _jukebox.setState(JukeboxEnum.IDLE);
+        _jukebox.setIdleSpeedMax();
     }
 
     private void nextStep() {

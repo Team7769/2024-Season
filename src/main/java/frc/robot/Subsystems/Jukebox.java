@@ -69,8 +69,10 @@ public class Jukebox extends Subsystem{
     private DigitalInput _noteShooterPE;
     private Debouncer _noteHolderPEDebouncer;
     private Debouncer _noteShooterPEDebouncer;
+    private Debouncer _shootReadyDebouncer;
     private Boolean _inNoteHolder = false;
     private Boolean _inNoteShooter = false;
+    private Boolean _isReadyToShoot = false;
 
     private final double kPhotoEyeDebounceTime = 0.04;
 
@@ -83,7 +85,6 @@ public class Jukebox extends Subsystem{
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
-    private final double kShooterIdleSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
@@ -143,6 +144,7 @@ public class Jukebox extends Subsystem{
     private double _manualFeederSpeed = 0;
     private double _manualShooterAngleSpeed = 0;
     private double _manualShooterSpeed = 0;
+    private double kShooterIdleSpeed = 38;
 
     private VisionSystem _visionSystem;
 
@@ -238,6 +240,8 @@ public class Jukebox extends Subsystem{
             kShooterFeedForwardKs,
             kShooterFeedForwardKv
         );
+
+        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kRising);
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
@@ -703,6 +707,14 @@ public class Jukebox extends Subsystem{
         return _elevatorL.getEncoder().getPosition();
     }
 
+    public void setIdleSpeedSubwoofer() {
+        kShooterIdleSpeed = 38;
+    }
+
+    public void setIdleSpeedMax() {
+        kShooterIdleSpeed = 67;
+    }
+
     public boolean getDisableAutoSpinup() {
         return _disableAutoSpinup;
     }
@@ -840,6 +852,10 @@ public class Jukebox extends Subsystem{
         return jukeboxPreviousState;
     }
 
+    public boolean getIsReadyToScore() {
+        return _isReadyToShoot;
+    }
+
     public boolean isReadyToScore() {
         switch (jukeboxCurrentState) {
             case PREP_AMP:
@@ -856,7 +872,7 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .125);
+                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .025);
             default:
                 return false;
         }
@@ -912,6 +928,8 @@ public class Jukebox extends Subsystem{
         _inNoteShooter = !_noteShooterPEDebouncer.calculate(
             _noteShooterPE.get()
         );
+
+        _isReadyToShoot = _shootReadyDebouncer.calculate(isReadyToScore());
 
         SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);
