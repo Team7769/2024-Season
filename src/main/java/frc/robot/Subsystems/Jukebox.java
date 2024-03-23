@@ -76,9 +76,9 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapShooterAngle = 9;
-    private final double kTrapElevatorPosition = 80; // change this
-    private final double kExtendClimbElevatorPosition = 98; // change this
+    //private final double kTrapShooterAngle = 8.5;
+    private final double kTrapShooterAngle = 15;
+    private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
@@ -314,7 +314,7 @@ public class Jukebox extends Subsystem{
         _shooterAngleController = _shooterAngle.getPIDController();
         _shooterAngleController.setP(kShooterAngleFeedForwardKp);
         _shooterAngleController.setI(0);
-        _shooterAngleController.setD(0.1);
+        _shooterAngleController.setD(0.2);
         _shooterAngleController.setIZone(0);
         _shooterAngleController.setFF(0);
         _shooterAngleController.setOutputRange(-1.0, 1.0);
@@ -493,10 +493,12 @@ public class Jukebox extends Subsystem{
     private void score() {
         // If previous state is PREP_AMP or PREP_TRAP -> Reverses out the front of the robot.
         // If previous state is PREP_SPEAKER -> Forward into the shooter motors in the back.
-        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP ||
-            jukeboxPreviousState == JukeboxEnum.PREP_TRAP) {
+        if (jukeboxPreviousState == JukeboxEnum.PREP_AMP) {
 
             _feeder.set(-kFeederShootSpeed);
+        } else if (jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
+        {            
+            _feeder.set(-0.1);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
@@ -515,22 +517,25 @@ public class Jukebox extends Subsystem{
     }
 
     private void prepTrap() {
-        if (jukeboxPreviousState != JukeboxEnum.CLIMB) return;
+        if (jukeboxPreviousState != JukeboxEnum.CLIMB && jukeboxPreviousState != JukeboxEnum.SCORE) return;
 
-        _feeder.set(kFeederIntake);
+        _feeder.set(0);
 
         setShooterSpeed(0.0);
 
-        var elevatorPosition = _elevatorL.getEncoder().getPosition();
-        if (elevatorPosition < 3) {
-            setElevatorPosition(5);
-        } else if (elevatorPosition >= 3) {
             setShooterAngle(kTrapShooterAngle);
-            if (_shooterAngle.getEncoder().getPosition() >= 7)
-            {
-                setElevatorPosition(kTrapElevatorPosition);
-            }
-        }
+                //setElevatorPosition(83);
+                
+                setElevatorPosition(50);
+
+        // var elevatorPosition = _elevatorL.getEncoder().getPosition();
+        // if (elevatorPosition < 3) {
+        //     setElevatorPosition(5);
+        // } else if (elevatorPosition >= 3) {
+        //     if (_shooterAngle.getEncoder().getPosition() >= 7)
+        //     {
+        //     }
+        // }
     }
 
     private void prepSpeaker() {
@@ -586,6 +591,7 @@ public class Jukebox extends Subsystem{
         feeder();
         setShooterAngle(kLaunchAngle);
         setShooterSpeed(kLaunchSpeed);
+        setElevatorPosition(0);
     }
 
     private void prepHumanIntake() {
@@ -601,7 +607,7 @@ public class Jukebox extends Subsystem{
     private void extendForClimb() {
         _feeder.set(kFeederIntake);
         setShooterAngle(kExtendClimbShooterAngle);
-        setElevatorPosition(83);
+        setElevatorPosition(kExtendClimbElevatorPosition);
         // _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
         // if (_elevatorL.getEncoder().getPosition() < 83) {
         //     _elevatorL.set(.6);
@@ -791,6 +797,12 @@ public class Jukebox extends Subsystem{
     {
         // checks to see if the current state is what we are trying to set the state to
         if (n != jukeboxCurrentState) {
+            switch (n) {
+                case PREP_TRAP:
+                    if (jukeboxCurrentState != JukeboxEnum.CLIMB && jukeboxCurrentState != JukeboxEnum.SCORE) {
+                        return;
+                    }
+        }
             switch (jukeboxCurrentState) {
                 case CLIMB: 
                     if (n == JukeboxEnum.EXTEND_FOR_CLIMB ||
