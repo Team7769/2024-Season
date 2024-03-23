@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Autonomous.AutonomousMode;
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     // puts the drop down to select auton modes on shuffleboard
     SmartDashboard.putData("Selected Auto Mode", _autoChooser);
     // finds the selected autonomous
-    
+    DataLogManager.start();
   }
 
   @Override
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
     _jukebox.resetSensors();
     _currentAuto = AutoUtil.selectedAuto(_autoChooser.getSelected());
     _currentAuto.initialize();
+    _jukebox.enableAutoSpinup();
   }
 
   @Override
@@ -86,6 +88,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     _intake.setWantedState(IntakeState.INTAKE);
+    _jukebox.disableAutoSpinup();
   }
 
   @Override
@@ -137,6 +140,7 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopJukebox() {
+<<<<<<< HEAD
         if (Math.abs(_operatorController.getLeftTriggerAxis()) > 0.25) {
           if (_jukebox.hasNote())
             _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
@@ -175,6 +179,49 @@ public class Robot extends TimedRobot {
           _jukebox.setState(JukeboxEnum.IDLE);
         }
       }
+=======
+  if (_jukebox.hasNote()) {
+    if (Math.abs(_operatorController.getLeftTriggerAxis()) > 0.25) {
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+    }  else if (Math.abs(_operatorController.getRightTriggerAxis()) > 0.25) {
+      _jukebox.setState(JukeboxEnum.PREP_AMP);
+      //_jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+    } else if (_operatorController.getXButton()) {
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+      //_jukebox.setState(JukeboxEnum.PREP_AMP);
+    } else if (_operatorController.getYButton()) {
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
+    } else if (_operatorController.getBButton()) {
+      _jukebox.setState(JukeboxEnum.PREP_TRAP);
+    } else if (_operatorController.getLeftBumper()) {
+      _jukebox.setState(JukeboxEnum.PREP_LAUNCH);
+    }
+  }
+  if (_driverController.getXButtonPressed()) {
+    // _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
+    if (_jukebox.getDisableAutoSpinup()) {
+      _jukebox.enableAutoSpinup();
+    } else {
+      _jukebox.disableAutoSpinup();
+    }
+  }
+
+  if (_score) {
+    _jukebox.setState(JukeboxEnum.SCORE);
+  } else if (_scoreReleased) {
+    if (_jukebox.getPreviousState() == JukeboxEnum.PREP_TRAP) {
+      _jukebox.setState(JukeboxEnum.PREP_TRAP);
+    } else {
+      _jukebox.setState(JukeboxEnum.IDLE);
+    }
+  }
+  _scoreReleased = _score;
+
+  if (_operatorController.getBackButton()) {
+    _jukebox.setState(JukeboxEnum.IDLE);
+  }
+}
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
 
   private void teleopIntake() {
     if (_operatorController.getStartButton()) {

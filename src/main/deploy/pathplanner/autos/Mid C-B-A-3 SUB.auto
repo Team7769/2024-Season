@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.27,
+      "y": 5.53
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score 3 Yeet"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Mid Autos",
+  "choreoAuto": false
+}

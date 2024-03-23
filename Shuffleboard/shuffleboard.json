@@ -220,7 +220,7 @@
           },
           "5,1": {
             "size": [
-              1,
+              2,
               1
             ],
             "content": {
@@ -265,7 +265,7 @@
               "_showGlyph": false
             }
           },
-          "6,1": {
+          "8,2": {
             "size": [
               2,
               1
@@ -300,6 +300,45 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/dashboardShooterRPercent",
               "_title": "/SmartDashboard/dashboardShooterRPercent",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/shooterSetpointRpm",
+              "_title": "SmartDashboard/shooterSetpointRpm",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator P",
+              "_title": "/SmartDashboard/Elevator P",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator D",
+              "_title": "/SmartDashboard/Elevator D",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -408,12 +447,65 @@
           }
         }
       }
+    },
+    {
+      "title": "Tab 5",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator motor left enconder position",
+              "_title": "/SmartDashboard/Elevator motor left enconder position",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/profileSetpointPosition",
+              "_title": "SmartDashboard/profileSetpointPosition",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/profileSetpointVelocity",
+              "_title": "SmartDashboard/profileSetpointVelocity",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
-    "x": -7.0,
-    "y": 0.0,
-    "width": 1380.0,
-    "height": 715.0
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 784.0
   }
 }

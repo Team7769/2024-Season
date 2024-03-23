@@ -3,68 +3,66 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.1,
-        "y": 7.1
+        "x": 8.305389050150424,
+        "y": 3.7826002042874274
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.772096576718118,
-        "y": 5.835229653055596
+        "x": 6.4082335297338195,
+        "y": 3.700624348466957
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid C-B-A-1 SUB - Note 3"
     },
     {
       "anchor": {
-        "x": 5.70558333698693,
-        "y": 4.321298685393376
+        "x": 4.628186374775031,
+        "y": 4.2978770123018135
       },
       "prevControl": {
-        "x": 6.656354023158847,
-        "y": 4.253386493523954
+        "x": 4.991504045099071,
+        "y": 4.017957375681643
       },
       "nextControl": {
-        "x": 4.230017932218458,
-        "y": 4.42669621430541
+        "x": 4.27690278809944,
+        "y": 4.5685249382481645
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid C-B-A-1 SUB - mid point"
     },
     {
       "anchor": {
-        "x": 2.9195544105373927,
-        "y": 5.5040931765173085
+        "x": 3.7264519607498547,
+        "y": 4.883418839590889
       },
       "prevControl": {
-        "x": 4.629336546221492,
-        "y": 5.621201541975124
+        "x": 4.323704624584712,
+        "y": 4.742888801041511
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid - note B"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-<<<<<<< HEAD
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
-=======
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,
->>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -2.7927023657132626,
+    "rotation": -5.648247373735291,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid B Variant",
-  "previewStartingState": null,
+  "folder": "Mid C-B-A-3 SUB",
+  "previewStartingState": {
+    "rotation": 1.671327587666837e-13,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

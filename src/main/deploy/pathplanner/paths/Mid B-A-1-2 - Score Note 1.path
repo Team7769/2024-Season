@@ -64,13 +64,19 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
+<<<<<<< HEAD
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
+=======
+    "maxVelocity": 4.5,
+    "maxAcceleration": 4.0,
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD:src/main/deploy/pathplanner/paths/Mid B-A-1-2 - Score Note 1.path
     "rotation": 18.318459806821757,
@@ -80,6 +86,9 @@
 =======
     "rotation": 18.318459806821757,
 >>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f
+=======
+    "rotation": 27.830440320080925,
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
     "rotateFast": false
   },
   "reversed": false,

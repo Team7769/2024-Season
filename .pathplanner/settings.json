@@ -7,7 +7,12 @@
     "Mid B Variant",
     "Mid B-A-1-2",
     "Mid C-B-A-1",
+<<<<<<< HEAD
     "Testpaths",
+=======
+    "Mid C-B-A-3 SUB",
+    "Mid C-B-A-1 SUB",
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
     "Top 1-2-3",
     "Top A-1-2-3"
   ],
@@ -17,8 +22,13 @@
     "Testpaths Autos",
     "Top Autos"
   ],
+<<<<<<< HEAD
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 3.0,
+=======
+  "defaultMaxVel": 4.5,
+  "defaultMaxAccel": 4.0,
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 5.2

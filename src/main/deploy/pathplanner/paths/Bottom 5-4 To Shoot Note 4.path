@@ -34,11 +34,15 @@
   "globalConstraints": {
 <<<<<<< HEAD:src/main/deploy/pathplanner/paths/Bottom 5-4 To Shoot Note 4.path
     "maxVelocity": 4.5,
+<<<<<<< HEAD
     "maxAcceleration": 3.5,
 =======
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
 >>>>>>> 72aa4804cc7ceb0adb05bf0e342e65bff46dcc9f:src/main/deploy/pathplanner/paths/TOP12A - top to 1.path
+=======
+    "maxAcceleration": 4.0,
+>>>>>>> 120bf681f41c0ad1418646b1cc2d0070a191f300
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -53,5 +57,5 @@
     "rotation": 49.398705354995606,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
