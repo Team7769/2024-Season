@@ -166,6 +166,9 @@ public class Mid_C_B_A_1_SUB_MILD extends AutonomousMode{
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
                 if (_pathFollower.isPathFinished()){
                     _drivetrain.drive(new ChassisSpeeds());
+                    if (_jukebox.hasNote()) {
+                        _jukebox.setState(JukeboxEnum.PREP_AMP);
+                    }
                     nextStep();
                 }
                 break;
