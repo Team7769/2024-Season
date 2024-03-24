@@ -137,6 +137,7 @@ public class Drivetrain extends Subsystem{
         );
 
         SmartDashboard.putData("Field", m_field);
+        SmartDashboard.putData("Vision Estimate Field", m_vPEField);
     }
 
     public static Drivetrain getInstance()
