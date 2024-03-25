@@ -137,7 +137,7 @@ public class Drivetrain extends Subsystem{
         );
 
         SmartDashboard.putData("Field", m_field);
-        SmartDashboard.putData("Vision Estimate Field", m_vPEField);
+        
     }
 
     public static Drivetrain getInstance()
@@ -160,7 +160,7 @@ public class Drivetrain extends Subsystem{
         
         m_field.setRobotPose(pose);
 
-        m_vPEField.setRobotPose(_visionPoseEstimator.getEstimatedPosition());
+        // m_vPEField.setRobotPose(_visionPoseEstimator.getEstimatedPosition());
 
         SmartDashboard.putNumber("drivetrainGyroAngle",
                                  getGyroRotation().getDegrees());
@@ -205,7 +205,9 @@ public class Drivetrain extends Subsystem{
 
         if (poseEstimate.tagCount == 0) return;
 
-        double poseDifference = _visionPoseEstimator
+        SmartDashboard.putNumber("Vision Ambiguity", poseEstimate.rawFiducials[0].ambiguity);
+
+        double poseDifference = _drivePoseEstimator
             .getEstimatedPosition()
             .getTranslation()
             .getDistance(poseEstimate.pose.getTranslation());
@@ -234,11 +236,11 @@ public class Drivetrain extends Subsystem{
             return;
         }
 
-        _visionPoseEstimator.setVisionMeasurementStdDevs(
+        _drivePoseEstimator.setVisionMeasurementStdDevs(
             VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
         );
 
-        _visionPoseEstimator.addVisionMeasurement(
+        _drivePoseEstimator.addVisionMeasurement(
             poseEstimate.pose,
             Timer.getFPGATimestamp() - poseEstimate.latency
         );
