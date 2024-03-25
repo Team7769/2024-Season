@@ -53,7 +53,7 @@ public class VisionSystem extends Subsystem{
     public double getDistance()
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        var ty = table.getEntry("ty").getDouble(0) * 1.2; // constant
+        var ty = table.getEntry("ty").getDouble(0) * 1.18; // constant
         var tx = table.getEntry("tx").getDouble(0);
         var tv = table.getEntry("tv").getDouble(0);
         

@@ -78,7 +78,7 @@ public class Jukebox extends Subsystem{
 
     // Set Points
     //private final double kTrapShooterAngle = 8.5;
-    private final double kTrapShooterAngle = 15;
+    private final double kTrapShooterAngle = 14;
     private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 60;
@@ -872,7 +872,7 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .025);
+                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .02);
             default:
                 return false;
         }
