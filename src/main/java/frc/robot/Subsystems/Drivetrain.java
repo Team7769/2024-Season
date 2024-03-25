@@ -10,6 +10,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -71,6 +72,10 @@ public class Drivetrain extends Subsystem{
     private final double kHighTrustDegStds = 6;
     private final double kMidTrustDegStds = 12;
     private final double kLowTrustDegStds = 30;
+
+    // TODO: get these values
+    private final Translation2d kSpeakerTargetBlue = new Translation2d(0.5, 0.5);
+    private final Translation2d kSpeakerTargetRed = new Translation2d(0.5, 0.5);
 
     private Drivetrain()
     {
@@ -313,10 +318,11 @@ public class Drivetrain extends Subsystem{
      */ 
     public void fieldOrientedDrive(double translationX,
                                    double translationY,
-                                   double rotationZ)
-    {   
+                                   double rotationZ) {   
+
         var alliance = DriverStation.getAlliance();
         var invert = alliance.isPresent() && alliance.get() == Alliance.Red ? -1 : 1; 
+
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             invert * translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
             invert * translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
@@ -352,6 +358,10 @@ public class Drivetrain extends Subsystem{
         setModuleStates(moduleStates);
         _moduleStates = moduleStates;
         _chassisSpeeds = chassisSpeeds;
+    }
+
+    public void getTargetAngle() {
+        Pose2d targetPose
     }
 
     /** 

@@ -550,6 +550,7 @@ public class Jukebox extends Subsystem{
                 kShooterSpeeds,
                 _targetDistance
             );
+
             setShooterAngle(desiredShooterAngle);
             setShooterSpeed(desiredShooterSpeed);
 
