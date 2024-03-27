@@ -48,5 +48,7 @@ package frc.robot.Enums;
         JUKEBOX_TEST,
         
         /**Manual control */
-        MANUAL
+        MANUAL,
+
+        PASSTHROUGH
     }

@@ -676,6 +676,10 @@ public class Jukebox extends Subsystem{
         setShooterSpeed(_dashboardShooterTargetSpeed);
     }
 
+    private void passthrough() {
+        
+    }
+
     public void setManualElevatorSpeed(double givenSpeed)
     {
         _manualElevatorSpeed = givenSpeed;
@@ -772,6 +776,9 @@ public class Jukebox extends Subsystem{
             case CLIMB:
                 climb();
                 break;
+            case PASSTHROUGH:
+                passthrough();
+                break;
             default:
                 idle();
                 break;
@@ -850,18 +857,33 @@ public class Jukebox extends Subsystem{
             case PREP_SPEAKER_PODIUM:
             case PREP_SPEAKER_SUBWOOFER:
             case PREP_SPEAKER_LINE:
-                // Error is the absolute value of the difference between Target and Actual 
-                var shooterError = Math.abs((_shooterSetpointRpm + 300) - _shooterL.getEncoder().getVelocity());
-                var angleError = Math.abs(_shooterAngleProfileSetpoint.position - _shooterAngle.getEncoder().getPosition());
-
-                // TODO: These error numbers need to tuned/configured. 
-                // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .75);
+                return getSpeakerShotReady();
             default:
                 return false;
         }
 
         return false;
+    }
+
+    public boolean getSpeakerShotReady() {
+        // Error is the absolute value of the difference between Target and Actual 
+        double shooterError = Math.abs(
+            (_shooterSetpointRpm + 300) -
+            _shooterL.getEncoder().getVelocity()
+        );
+
+        double angleError = Math.abs(
+            _shooterAngleProfileSetpoint.position -
+            _shooterAngle.getEncoder().getPosition()
+        );
+
+        // TODO: These error numbers need to tuned/configured. 
+        // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
+        return (
+            (shooterError <= 150 ||
+             _shooterL.getEncoder().getVelocity() >= 4200)
+            && angleError <= .75
+        );
     }
 
     public void logTelemetry() {
