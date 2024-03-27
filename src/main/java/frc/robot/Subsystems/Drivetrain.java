@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.Constants;
 import frc.robot.LimelightHelpers.PoseEstimate;
+import frc.robot.LimelightHelpers.RawFiducial;
 
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
@@ -37,7 +38,6 @@ public class Drivetrain extends Subsystem{
     private final SwerveModule _backRightModule;
 
     private final SwerveDrivePoseEstimator _drivePoseEstimator;
-    private final SwerveDrivePoseEstimator _visionPoseEstimator;
 
     private SwerveModuleState[] _moduleStates = new SwerveModuleState[4];
 
@@ -210,12 +210,25 @@ public class Drivetrain extends Subsystem{
 
         if (poseEstimate.tagCount == 0) return;
 
-        SmartDashboard.putNumber("Vision Ambiguity", poseEstimate.rawFiducials[0].ambiguity);
+        if (poseEstimate.tagCount == 1 &&
+            poseEstimate.rawFiducials[0].ambiguity > 0.5) {
+
+            return;
+        }
 
         double poseDifference = _drivePoseEstimator
             .getEstimatedPosition()
             .getTranslation()
             .getDistance(poseEstimate.pose.getTranslation());
+
+        double bestTagArea = 0;
+        for (int i = 0; i < poseEstimate.rawFiducials.length; i++) {
+            RawFiducial rawFiducial = poseEstimate.rawFiducials[i];
+
+            if (rawFiducial.ta > bestTagArea) {
+                bestTagArea = rawFiducial.ta;
+            }
+        }
 
         double xyStds;
         double degStds;
@@ -226,13 +239,13 @@ public class Drivetrain extends Subsystem{
             xyStds = kHighTrustXYStds;
             degStds = kHighTrustDegStds;
 
-        } else if (poseEstimate.avgTagArea >= kNearTagAreaMin &&
+        } else if (bestTagArea >= kNearTagAreaMin &&
                    poseDifference <= kMidTrustPoseDiffMax) {
 
             xyStds = kMidTrustXYStds;
             degStds = kMidTrustDegStds;
 
-        } else if (poseEstimate.avgTagArea >= kFarTagAreaMin &&
+        } else if (bestTagArea >= kFarTagAreaMin &&
                    poseDifference <= kLowTrustPoseDiffMax) {
 
             xyStds = kLowTrustXYStds;
@@ -242,11 +255,18 @@ public class Drivetrain extends Subsystem{
         }
 
         _drivePoseEstimator.setVisionMeasurementStdDevs(
+            // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
             VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
         );
 
+        Pose2d pose = new Pose2d(
+            poseEstimate.pose.getX(),
+            poseEstimate.pose.getY(),
+            getGyroRotation()
+        );
+
         _drivePoseEstimator.addVisionMeasurement(
-            poseEstimate.pose,
+            pose,
             Timer.getFPGATimestamp() - poseEstimate.latency
         );
     }
@@ -363,9 +383,9 @@ public class Drivetrain extends Subsystem{
         _chassisSpeeds = chassisSpeeds;
     }
 
-    public void getTargetAngle() {
-        Pose2d targetPose
-    }
+    // public void getTargetAngle() {
+    //     Pose2d targetPose
+    // }
 
     /** 
      * Method that resets the pigeon current direction the robot is facing will be the front
