@@ -40,6 +40,8 @@ public class AutoUtil {
                 return new Top_Anti_Auto();
             case(TOP_1_2_A):
                 return new Top_1_2_A();
+            case(MID_B_3_C):
+                return new Mid_B_3_C();
         }
         
         return new DoNothing();

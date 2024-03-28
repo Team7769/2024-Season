@@ -16,25 +16,19 @@
     },
     {
       "anchor": {
-        "x": 3.056598699212937,
-        "y": 5.958801173984146
+        "x": 3.433681047105317,
+        "y": 6.066213330714821
       },
       "prevControl": {
-        "x": 5.246525133274079,
-        "y": 6.462367145452751
+        "x": 5.623607481166458,
+        "y": 6.569779302183425
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Top 1-2-A-B - Score 1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.2,
-      "rotationDegrees": 12.95,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {

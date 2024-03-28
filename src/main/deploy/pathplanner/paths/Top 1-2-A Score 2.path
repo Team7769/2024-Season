@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.279435515585794,
-        "y": 5.61917909629382
+        "x": 8.27025654051308,
+        "y": 5.398695647605275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.113705681351431,
-        "y": 5.8394744980388955
+        "x": 7.104526706278716,
+        "y": 5.618991049350351
       },
       "isLocked": false,
       "linkedName": "Top 1-2-A-B - Note 2"
@@ -32,25 +32,19 @@
     },
     {
       "anchor": {
-        "x": 1.9918375907784003,
-        "y": 5.784400647602627
+        "x": 1.9346939692452838,
+        "y": 5.398695647605275
       },
       "prevControl": {
-        "x": 3.579800278357494,
-        "y": 5.967980149056858
+        "x": 3.5226566568243776,
+        "y": 5.582275149059506
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Top 1-2-A-B - Score 2"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.35,
-      "rotationDegrees": 11.54,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
