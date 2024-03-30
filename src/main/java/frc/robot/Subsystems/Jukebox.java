@@ -77,7 +77,7 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    //private final double kTrapShooterAngle = 8.5;
+    private final double kTrapElevatorPosition = 60;
     private final double kTrapShooterAngle = 14;
     private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
@@ -152,6 +152,8 @@ public class Jukebox extends Subsystem{
     private double _dashboardShooterTargetAngle = 0.0;
     private double _dashboardShooterRPercent =  0.9;
     private double _shooterSetpointRpm = 0.0;
+
+    private int _loopCounter = 0;
 
     public Jukebox()
     {
@@ -245,6 +247,7 @@ public class Jukebox extends Subsystem{
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
+        _loopCounter = 0;
     }
 
     /**
@@ -502,7 +505,20 @@ public class Jukebox extends Subsystem{
             _feeder.set(-kFeederShootSpeed);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {            
-            _feeder.set(-0.1);
+            if (hasNote()) {
+                _feeder.set(-.1);
+            } else {
+                _feeder.set(-.075); 
+            }
+            // if (!hasNote()) {
+            //     if (_loopCounter < 10) {
+            //         _feeder.set(-0.1);
+            //     } else {
+            //         _feeder.set(0);
+            //     }
+            // } else {
+            //     _feeder.set(-0.1);
+            // }
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
@@ -511,6 +527,10 @@ public class Jukebox extends Subsystem{
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_SUBWOOFER) {
             _feeder.set(kFeederShootSpeed);
         }
+        if (_loopCounter >= 50) {
+            _loopCounter = 0;
+        }
+        _loopCounter++;
     }
 
     private void prepAmp() {
@@ -522,15 +542,17 @@ public class Jukebox extends Subsystem{
 
     private void prepTrap() {
         if (jukeboxPreviousState != JukeboxEnum.CLIMB && jukeboxPreviousState != JukeboxEnum.SCORE) return;
-
-        _feeder.set(0);
-
+        if (jukeboxPreviousState == JukeboxEnum.SCORE) {
+            _feeder.set(.1);
+        } else {
+            _feeder.set(0);
+        }
         setShooterSpeed(0.0);
 
             setShooterAngle(kTrapShooterAngle);
                 //setElevatorPosition(83);
                 
-                setElevatorPosition(65);
+                setElevatorPosition(kTrapElevatorPosition);
 
         // var elevatorPosition = _elevatorL.getEncoder().getPosition();
         // if (elevatorPosition < 3) {
@@ -609,7 +631,10 @@ public class Jukebox extends Subsystem{
     }
 
     private void extendForClimb() {
-        _feeder.set(kFeederIntake);
+        setShooterSpeed(0);
+        if (_shooterL.getEncoder().getVelocity() < 5) {
+            _feeder.set(kFeederIntake);
+        }
         setShooterAngle(kExtendClimbShooterAngle);
         setElevatorPosition(kExtendClimbElevatorPosition);
         // _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
