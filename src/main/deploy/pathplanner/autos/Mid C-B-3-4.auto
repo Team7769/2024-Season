@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MID_C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C_B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B_3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3_MID"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MID_4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Mid Autos",
+  "choreoAuto": false
+}
