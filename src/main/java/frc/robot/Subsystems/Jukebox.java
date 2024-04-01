@@ -69,21 +69,22 @@ public class Jukebox extends Subsystem{
     private DigitalInput _noteShooterPE;
     private Debouncer _noteHolderPEDebouncer;
     private Debouncer _noteShooterPEDebouncer;
+    private Debouncer _shootReadyDebouncer;
     private Boolean _inNoteHolder = false;
     private Boolean _inNoteShooter = false;
+    private Boolean _isReadyToShoot = false;
 
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    //private final double kTrapShooterAngle = 8.5;
-    private final double kTrapShooterAngle = 15;
+    private final double kTrapElevatorPosition = 60;
+    private final double kTrapShooterAngle = 14;
     private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
     private final double kPodiumSpeakerShotAngle = 5.9;
     private final double kPodiumSpeakerShotSpeed = 38;
-    private final double kShooterIdleSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
     private final double kHumanElementIntakeAngle = 9;
@@ -143,6 +144,7 @@ public class Jukebox extends Subsystem{
     private double _manualFeederSpeed = 0;
     private double _manualShooterAngleSpeed = 0;
     private double _manualShooterSpeed = 0;
+    private double kShooterIdleSpeed = 38;
 
     private VisionSystem _visionSystem;
 
@@ -150,6 +152,8 @@ public class Jukebox extends Subsystem{
     private double _dashboardShooterTargetAngle = 0.0;
     private double _dashboardShooterRPercent =  0.9;
     private double _shooterSetpointRpm = 0.0;
+
+    private int _loopCounter = 0;
 
     public Jukebox()
     {
@@ -238,9 +242,12 @@ public class Jukebox extends Subsystem{
             kShooterFeedForwardKs,
             kShooterFeedForwardKv
         );
+
+        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kRising);
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
+        _loopCounter = 0;
     }
 
     /**
@@ -498,7 +505,20 @@ public class Jukebox extends Subsystem{
             _feeder.set(-kFeederShootSpeed);
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_TRAP)
         {            
-            _feeder.set(-0.1);
+            if (hasNote()) {
+                _feeder.set(-.1);
+            } else {
+                _feeder.set(-.075); 
+            }
+            // if (!hasNote()) {
+            //     if (_loopCounter < 10) {
+            //         _feeder.set(-0.1);
+            //     } else {
+            //         _feeder.set(0);
+            //     }
+            // } else {
+            //     _feeder.set(-0.1);
+            // }
         } else if (jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER || 
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_PODIUM ||
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_LINE ||
@@ -507,6 +527,10 @@ public class Jukebox extends Subsystem{
                     jukeboxPreviousState == JukeboxEnum.PREP_SPEAKER_SUBWOOFER) {
             _feeder.set(kFeederShootSpeed);
         }
+        if (_loopCounter >= 50) {
+            _loopCounter = 0;
+        }
+        _loopCounter++;
     }
 
     private void prepAmp() {
@@ -518,15 +542,17 @@ public class Jukebox extends Subsystem{
 
     private void prepTrap() {
         if (jukeboxPreviousState != JukeboxEnum.CLIMB && jukeboxPreviousState != JukeboxEnum.SCORE) return;
-
-        _feeder.set(0);
-
+        if (jukeboxPreviousState == JukeboxEnum.SCORE) {
+            _feeder.set(.1);
+        } else {
+            _feeder.set(0);
+        }
         setShooterSpeed(0.0);
 
             setShooterAngle(kTrapShooterAngle);
                 //setElevatorPosition(83);
                 
-                setElevatorPosition(50);
+                setElevatorPosition(kTrapElevatorPosition);
 
         // var elevatorPosition = _elevatorL.getEncoder().getPosition();
         // if (elevatorPosition < 3) {
@@ -606,7 +632,10 @@ public class Jukebox extends Subsystem{
     }
 
     private void extendForClimb() {
-        _feeder.set(kFeederIntake);
+        setShooterSpeed(0);
+        if (_shooterL.getEncoder().getVelocity() < 5) {
+            _feeder.set(kFeederIntake);
+        }
         setShooterAngle(kExtendClimbShooterAngle);
         setElevatorPosition(kExtendClimbElevatorPosition);
         // _elevatorProfileSetpoint = new TrapezoidProfile.State(90, 0);
@@ -702,6 +731,14 @@ public class Jukebox extends Subsystem{
 
     public double getElevatorPosition() {
         return _elevatorL.getEncoder().getPosition();
+    }
+
+    public void setIdleSpeedSubwoofer() {
+        kShooterIdleSpeed = 38;
+    }
+
+    public void setIdleSpeedMax() {
+        kShooterIdleSpeed = 67;
     }
 
     public boolean getDisableAutoSpinup() {
@@ -841,6 +878,10 @@ public class Jukebox extends Subsystem{
         return jukeboxPreviousState;
     }
 
+    public boolean getIsReadyToScore() {
+        return _isReadyToShoot;
+    }
+
     public boolean isReadyToScore() {
         switch (jukeboxCurrentState) {
             case PREP_AMP:
@@ -857,7 +898,7 @@ public class Jukebox extends Subsystem{
 
                 // TODO: These error numbers need to tuned/configured. 
                 // We also may want a debouncer for the result of this method so that it must be ready to score for a minimum amount of time first.
-                return ((shooterError <= 150 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .75);
+                return ((shooterError <= 100 || _shooterL.getEncoder().getVelocity() >= 4200) && angleError <= .0175);
             default:
                 return false;
         }
@@ -913,6 +954,8 @@ public class Jukebox extends Subsystem{
         _inNoteShooter = !_noteShooterPEDebouncer.calculate(
             _noteShooterPE.get()
         );
+
+        _isReadyToShoot = _shootReadyDebouncer.calculate(isReadyToScore());
 
         SmartDashboard.putNumber("dashboardShooterTargetAngle", _dashboardShooterTargetAngle);
         SmartDashboard.putNumber("dashboardShooterTargetSpeed", _dashboardShooterTargetSpeed);

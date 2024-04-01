@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.7631256693640407,
-        "y": 4.156048097427144
+        "x": 8.6,
+        "y": 7.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.378550724901093,
-        "y": 1.8650816550291425
+        "x": 8.576578326908438,
+        "y": 4.841640104107596
       },
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Start"
+      "linkedName": "Top anti-auto - Note 1"
     },
     {
       "anchor": {
-        "x": 8.94579792737403,
-        "y": 3.1427360171357197
+        "x": 8.6,
+        "y": 0.8548910678420494
       },
       "prevControl": {
-        "x": 6.669517167299094,
-        "y": 1.909138701998335
+        "x": 8.646843346183125,
+        "y": 2.248480616790049
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Note 4 Pickup"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.15,
+      "rotationDegrees": -134.17854465968333,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 43.78112476486879,
+    "rotation": -130.74616356388086,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Bottom 5-4",
+  "folder": "Top anti-auto",
   "previewStartingState": {
-    "rotation": -59.620873988631736,
+    "rotation": 91.54815769897813,
     "velocity": 0
   },
   "useDefaultConstraints": true

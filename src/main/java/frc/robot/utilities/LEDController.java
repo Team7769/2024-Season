@@ -34,6 +34,7 @@ public class LEDController {
     private Animation CLIMB_LIGHTS;
     private Animation MANUAL_LIGHTS;
     private Animation IDLE_LIGHTS;
+    private Animation FEED_LIGHTS;
 
     private int underNumLeds;
     private int jukeboxNumLeds;
@@ -125,6 +126,8 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_LAUNCH:
+                upperCandle.setLEDs(170, 51, 106, 0, 0, _jukebox.getShooterLeds(jukeboxNumLeds));
+                break;
             case PREP_SPEAKER_PODIUM:
             case PREP_SPEAKER_LINE:
             case PREP_SPEAKER:
