@@ -254,19 +254,19 @@ public class Drivetrain extends Subsystem{
             return;
         }
 
-        _drivePoseEstimator.setVisionMeasurementStdDevs(
-            // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
-            VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
-        );
+        // _drivePoseEstimator.setVisionMeasurementStdDevs(
+        //     // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+        //     VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+        // );
 
-        Pose2d pose = new Pose2d(
-            poseEstimate.pose.getX(),
-            poseEstimate.pose.getY(),
-            getGyroRotation()
-        );
+        // Pose2d pose = new Pose2d(
+        //     poseEstimate.pose.getX(),
+        //     poseEstimate.pose.getY(),
+        //     getGyroRotation()
+        // );
 
         _drivePoseEstimator.addVisionMeasurement(
-            pose,
+            poseEstimate.pose,
             Timer.getFPGATimestamp() - poseEstimate.latency
         );
     }
