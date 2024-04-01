@@ -857,7 +857,7 @@ public class Jukebox extends Subsystem{
             case PREP_SPEAKER_PODIUM:
             case PREP_SPEAKER_SUBWOOFER:
             case PREP_SPEAKER_LINE:
-                return getSpeakerShotReady();
+                return isPivotReady() && isShooterReady();
             default:
                 return false;
         }
@@ -883,6 +883,27 @@ public class Jukebox extends Subsystem{
             (shooterError <= 150 ||
              _shooterL.getEncoder().getVelocity() >= 4200)
             && angleError <= .75
+        );
+    }
+
+    public boolean isPivotReady() {
+        double angleError = Math.abs(
+            _shooterAngleProfileSetpoint.position -
+            _shooterAngle.getEncoder().getPosition()
+        );
+
+        return angleError <= 0.75;
+    }
+
+    public boolean isShooterReady() {
+        double shooterError = Math.abs(
+            (_shooterSetpointRpm + 300) -
+            _shooterL.getEncoder().getVelocity()
+        );
+
+        return (
+            shooterError <= 150 ||
+            _shooterL.getEncoder().getVelocity() >= 4200
         );
     }
 

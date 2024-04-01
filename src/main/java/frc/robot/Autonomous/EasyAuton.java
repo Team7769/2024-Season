@@ -40,6 +40,8 @@ public class EasyAuton extends AutonomousMode {
 
     private boolean _pathFinished;
 
+    private static final double kMaxRotError = 0.25;
+
     EasyAuton(String autoName, AutoCmds[] auton) {
         _drivetrain = Drivetrain.getInstance();
         _intake = Intake.getInstance();
@@ -82,6 +84,23 @@ public class EasyAuton extends AutonomousMode {
         AutoCmds stepFunction = _auton[_step];
 
         switch (stepFunction) {
+            case FOLLOW:
+                if (follow()) {
+                    reset();
+                }
+
+                break;
+
+            case FOLLOW_WITH_ROT_AIM:
+                if (followWithRotAim()) {
+                    reset();
+                }
+
+                break;
+
+            case FOLLOW_WITH_PVT_AIM:
+                break;
+
             case FOLLOW_WITH_POSE_AIM:
                 if (followWithPoseAim()) {
                     reset();
@@ -245,11 +264,11 @@ public class EasyAuton extends AutonomousMode {
         return follow(false);
     }
 
-    private boolean followWithPoseAim() {
+    private boolean followWithRotAim() {
         return follow(true);
     }
 
-    private boolean follow(boolean poseAim) {
+    private boolean follow(boolean rotAim) {
         if (!_pathInitialized) {
             _pathFollower.startNextPath(new ChassisSpeeds(),
                                         _drivetrain.getPose());
@@ -263,7 +282,7 @@ public class EasyAuton extends AutonomousMode {
             _drivetrain.getPose()
         );
 
-        if (poseAim) {
+        if (rotAim) {
             double rotation = -(_visionSystem.getTargetAngle() / 105);
 
             // TODO: double check rotation calc is right
@@ -305,10 +324,10 @@ public class EasyAuton extends AutonomousMode {
         return false;
     }
 
-    private boolean poseAim() {
+    private boolean rotAim() {
         double rotation = -(_visionSystem.getTargetAngle() / 105);
 
-        if (rotation == 0) return true;
+        if (rotation < kMaxRotError) return true;
 
         // TODO: double check rotation calc is right
         ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
