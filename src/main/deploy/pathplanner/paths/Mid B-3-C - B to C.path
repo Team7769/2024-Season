@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.490541775359043,
-        "y": 1.0720548095836802
+        "x": 2.9195544105373927,
+        "y": 5.5040931765173085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.145028512903947,
-        "y": 1.2186493884871228
+        "x": 1.8058747672416873,
+        "y": 5.550936522700434
       },
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Note 5 Pickup"
+      "linkedName": "Mid - note B"
     },
     {
       "anchor": {
-        "x": 2.7631256693640407,
-        "y": 4.156048097427144
+        "x": 2.9195544105373927,
+        "y": 4.414985377759629
       },
       "prevControl": {
-        "x": 3.8939232082399773,
-        "y": 2.4525089479517073
+        "x": 1.912422467600183,
+        "y": 4.766310474133073
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Start"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.43140797117255,
+    "rotation": -29.981639368849468,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Bottom 5-4",
-  "previewStartingState": null,
+  "folder": "Mid B-3-C",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

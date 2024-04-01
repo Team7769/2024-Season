@@ -3,14 +3,17 @@
   "robotLength": 0.77,
   "holonomicMode": true,
   "pathFolders": [
-    "Bottom 5-4",
+    "Bottom 5-4-C",
     "Mid B Variant",
+    "Mid B-3-C",
     "Mid B-A-1-2",
     "Mid C-B-A-1",
-    "Mid C-B-A-3 SUB",
     "Mid C-B-A-1 SUB",
+    "Mid C-B-A-3 SUB",
     "Top 1-2-3",
-    "Top A-1-2-3"
+    "Top 1-2-A",
+    "Top A-1-2-3",
+    "Top anti-auto"
   ],
   "autoFolders": [
     "Bottom Autos",

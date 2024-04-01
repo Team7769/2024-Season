@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
-      "y": 4.49
+      "x": 0.75,
+      "y": 6.59
     },
-    "rotation": -60.55000000000001
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,30 +14,36 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Note 5"
+            "pathName": "Top 1-2-A Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Shoot Note 5"
+            "pathName": "Top 1-2-A Score 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Note 4"
+            "pathName": "Top 1-2-A Note 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Shoot Note 4"
+            "pathName": "Top 1-2-A Score 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top 1-2-A Note A"
           }
         }
       ]
     }
   },
-  "folder": "Bottom Autos",
+  "folder": "Top Autos",
   "choreoAuto": false
 }

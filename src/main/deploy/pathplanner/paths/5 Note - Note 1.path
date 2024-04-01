@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6796086145667286,
-        "y": 7.003080254377342
+        "x": 3.1994643161896867,
+        "y": 6.75715268691593
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.691111209000488,
-        "y": 7.2376315806228515
+        "x": 4.210966910623444,
+        "y": 6.991704013161439
       },
       "isLocked": false,
       "linkedName": "5 Note - Note A"
     },
     {
       "anchor": {
-        "x": 8.8909308774395,
-        "y": 7.3426945142050055
+        "x": 8.598159963794963,
+        "y": 7.401248696933913
       },
       "prevControl": {
-        "x": 7.1928595783011815,
-        "y": 7.284140331476099
+        "x": 6.900088664656645,
+        "y": 7.342694514205006
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Mid C-B-A-1",
   "previewStartingState": {
-    "rotation": 30.256437163529416,
+    "rotation": 26.003345844511482,
     "velocity": 0
   },
   "useDefaultConstraints": true
