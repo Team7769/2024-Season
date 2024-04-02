@@ -12,6 +12,7 @@ public final class Constants {
     public static final Translation2d kBlueSpeaker = new Translation2d(
         0,
         5.5
+        
     );
 
     public static final Translation2d kRedSpeaker = new Translation2d(

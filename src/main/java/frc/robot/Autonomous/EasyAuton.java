@@ -1,6 +1,11 @@
 package frc.robot.Autonomous;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.JukeboxEnum;
 import frc.robot.Subsystems.Drivetrain;
@@ -40,6 +45,8 @@ public class EasyAuton extends AutonomousMode {
 
     private boolean _pathFinished;
 
+    private static Translation2d kSpeaker;
+
     private static final double kMaxRotError = 0.25;
 
     EasyAuton(String autoName, AutoCmds[] auton) {
@@ -72,6 +79,17 @@ public class EasyAuton extends AutonomousMode {
         AutoCmds[] auton = _internalAutons[internalIndex];
 
         return auton;
+    }
+
+    @Override
+    public void initialize() {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+
+        if (alliance.isPresent()) {
+            kSpeaker = alliance.get() == Alliance.Blue ?
+                Constants.kBlueSpeaker :
+                Constants.kRedSpeaker;
+        }
     }
 
     @Override
@@ -112,12 +130,12 @@ public class EasyAuton extends AutonomousMode {
 
                 break;
 
-            case FOLLOW_WITH_PVT_AIM:
+            case FOLLOW_WITH_JBX_AIM:
                 pathFinished = follow();
 
                 if (pathFinished) {
                     if (_jukebox.hasNote()) {
-                        if (pvtAim()) {
+                        if (jbxAim()) {
                             reset();
                         }
                     } else {
@@ -132,7 +150,7 @@ public class EasyAuton extends AutonomousMode {
 
                 if (pathFinished) {
                     if (_jukebox.hasNote()) {
-                        if (pvtAim()) {
+                        if (jbxAim()) {
                             reset();
                         }
                     } else {
@@ -148,7 +166,7 @@ public class EasyAuton extends AutonomousMode {
             case FULL_AIM:
                 if (rotAim()) {
                     if (_jukebox.hasNote()) {
-                        if (pvtAim()) {
+                        if (jbxAim()) {
                             reset();
                         }
                     } else {
@@ -169,9 +187,9 @@ public class EasyAuton extends AutonomousMode {
 
                 break;
 
-            case PVT_AIM:
+            case JBX_AIM:
                 if (_jukebox.hasNote()) {
-                    if (pvtAim()) {
+                    if (jbxAim()) {
                         reset();
                     }
                 } else {
@@ -191,6 +209,8 @@ public class EasyAuton extends AutonomousMode {
 
             case SHOOT_RUSHED:
                 _jukebox.setState(JukeboxEnum.SCORE);
+
+                reset();
 
                 break;
 
@@ -226,7 +246,13 @@ public class EasyAuton extends AutonomousMode {
         );
 
         if (rotAim) {
-            double rotation = -(_visionSystem.getTargetAngle() / 105);
+            double angle = kSpeaker
+                .minus(_drivetrain.getPose().getTranslation())
+                .getAngle()
+                .minus(_drivetrain.getGyroRotation())
+                .getDegrees();
+
+            double rotation = angle / 105;
 
             // TODO: double check rotation calc is right
             chassisSpeeds = new ChassisSpeeds(
@@ -284,7 +310,7 @@ public class EasyAuton extends AutonomousMode {
         return false;
     }
 
-    private boolean pvtAim() {
+    private boolean jbxAim() {
         _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
 
         return _jukebox.isPivotReady() && _jukebox.isShooterReady();
