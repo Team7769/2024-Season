@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
+import frc.robot.Utilities.AllianceSpecific;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
@@ -140,23 +141,21 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
-    double angle = kSpeaker
-      .minus(_drivetrain.getPose().getTranslation())
-      .getAngle()
-      .minus(_drivetrain.getGyroRotation())
-      .getDegrees();
+    double speakerDistance = _drivetrain.getDistanceToTarget(
+      AllianceSpecific.getSpeaker()
+    );
 
-    double distance = _drivetrain
-      .getPose()
-      .getTranslation()
-      .getDistance(kSpeaker);
+    double speakerAngle = _drivetrain.getAngleToTarget(
+      AllianceSpecific.getSpeaker()
+    );
 
-    SmartDashboard.putNumber("angle to speaker", angle);
-    SmartDashboard.putNumber("distance to speaker", distance);
+    SmartDashboard.putNumber("angle to speaker", speakerAngle);
+    SmartDashboard.putNumber("distance to speaker", speakerDistance);
 
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
-        rotation = angle / 105;
+
+        rotation = speakerAngle / 105;
         //target angle range is -27 to 27 degrees
     }
 
