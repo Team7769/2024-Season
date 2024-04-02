@@ -17,7 +17,23 @@ public class AllianceSpecific {
         return isRed() ? Constants.kRedSpeaker : Constants.kBlueSpeaker;
     }
 
+    public static Translation2d getZone() {
+        return isRed() ? Constants.kRedZone : Constants.kBlueZone;
+    }
+
     public static Rotation2d getAllianceAngleOffset() {
         return Rotation2d.fromDegrees(isRed() ? 180 : 0);
+    }
+
+    public static Translation2d mirrorTranslation(
+        Translation2d blueTranslation
+    ) {
+        return new Translation2d(
+            blueTranslation.getX() +
+                Constants.kFieldLength -
+                (2 * blueTranslation.getX()),
+
+            blueTranslation.getY()
+        );
     }
 }
