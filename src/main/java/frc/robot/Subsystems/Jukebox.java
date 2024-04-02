@@ -140,9 +140,10 @@ public class Jukebox extends Subsystem{
     //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     // Old
-    private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
+    private final double[] kDistanceIDs = {1.5, 2, 2.5, 3, 3.5, 4};
     // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
-    private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    // private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double[] kShooterAngles = {3, 4, 5, 5.39, 5.73, 6.2};
     private final double[] kShooterSpeeds = {67, 67, 67, 67, 67, 67};
 
     private final double[] kFeedDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
@@ -255,7 +256,7 @@ public class Jukebox extends Subsystem{
             kShooterFeedForwardKv
         );
 
-        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kRising);
+        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kBoth);
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;

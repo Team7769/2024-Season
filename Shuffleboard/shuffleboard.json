@@ -291,7 +291,7 @@
               "_showGlyph": false
             }
           },
-          "9,0": {
+          "7,1": {
             "size": [
               1,
               1
@@ -339,6 +339,19 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Elevator D",
               "_title": "/SmartDashboard/Elevator D",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/distance to speaker",
+              "_title": "SmartDashboard/distance to speaker",
               "_glyph": 148,
               "_showGlyph": false
             }
