@@ -17,7 +17,7 @@ public final class Constants {
     public static final Translation2d kRedSpeaker = new Translation2d(
         kBlueSpeaker.getX() + kFieldLength,
         kBlueSpeaker.getY()
-    )
+    );
 
     // public static final double k
 
