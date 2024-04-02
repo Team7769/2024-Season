@@ -149,6 +149,12 @@ public class Robot extends TimedRobot {
       AllianceSpecific.getSpeaker()
     );
 
+    // amp
+    // rotation = _drivetrain.getRotationDifference(90) / 105;
+
+    // feed
+    // rotation = _drivetrain.getAngleToTarget(AllianceSpecific.getZone()) / 105
+
     SmartDashboard.putNumber("angle to speaker", speakerAngle);
     SmartDashboard.putNumber("distance to speaker", speakerDistance);
 

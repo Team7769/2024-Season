@@ -435,4 +435,11 @@ public class Drivetrain extends Subsystem{
             .getTranslation()
             .getDistance(target);
     }
+
+    public double getRotationDifference(double angle) {
+        return Rotation2d
+            .fromDegrees(angle)
+            .minus(getGyroRotationWithOffset())
+            .getDegrees();
+    }
 }

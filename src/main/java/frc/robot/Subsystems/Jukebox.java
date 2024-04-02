@@ -145,6 +145,11 @@ public class Jukebox extends Subsystem{
     private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
     private final double[] kShooterSpeeds = {67, 67, 67, 67, 67, 67};
 
+    private final double[] kFeedDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
+    // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
+    private final double[] kFeedShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double kFeedShooterSpeed = 67;
+
     private double _manualElevatorSpeed = 0;
     private double _manualFeederSpeed = 0;
     private double _manualShooterAngleSpeed = 0;
@@ -576,19 +581,9 @@ public class Jukebox extends Subsystem{
 
         // _targetDistance = _visionSystem.getDistance();
 
-        Optional<Alliance> alliance = DriverStation.getAlliance();
-
-        if (alliance.isPresent()) {
-            kSpeaker = alliance.get() == Alliance.Blue ?
-                Constants.kBlueSpeaker :
-                Constants.kRedSpeaker;
-        }
-
-        _targetDistance = Drivetrain
-            .getInstance()
-            .getPose()
-            .getTranslation()
-            .getDistance(kSpeaker);
+        _targetDistance = Drivetrain.getInstance().getDistanceToTarget(
+            AllianceSpecific.getSpeaker()
+        );
 
         feeder();
 
@@ -606,6 +601,33 @@ public class Jukebox extends Subsystem{
 
             setShooterAngle(desiredShooterAngle);
             setShooterSpeed(desiredShooterSpeed);
+
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
+    }
+
+    private void prepFeed() {
+        setElevatorPosition(0);
+
+        // _targetDistance = _visionSystem.getDistance();
+
+        _targetDistance = Drivetrain.getInstance().getDistanceToTarget(
+            AllianceSpecific.getZone()
+        );
+
+        feeder();
+
+        if (_targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kFeedDistanceIDs,
+                kFeedShooterAngles,
+                _targetDistance
+            );
+
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(kFeedShooterSpeed);
 
         } else {
             setShooterAngle(Constants.KMinShooterAngle);
@@ -799,6 +821,9 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER:
                 prepSpeaker();
+                break;
+            case PREP_FEED:
+                prepFeed();
                 break;
             case PREP_SPEAKER_PODIUM:
                 prepSpeakerPodium();
