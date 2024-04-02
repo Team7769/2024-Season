@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
     double angle = kSpeaker
       .minus(_drivetrain.getPose().getTranslation())
       .getAngle()
-      .plus(_drivetrain.getGyroRotation())
+      .minus(_drivetrain.getGyroRotation())
       .getDegrees();
 
     double distance = _drivetrain
@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
 
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
-        rotation = -(angle / 105);
+        rotation = angle / 105;
         //target angle range is -27 to 27 degrees
     }
 
