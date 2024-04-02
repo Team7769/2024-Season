@@ -143,6 +143,7 @@ public class Robot extends TimedRobot {
     double angle = kSpeaker
       .minus(_drivetrain.getPose().getTranslation())
       .getAngle()
+      .plus(_drivetrain.getGyroRotation())
       .getDegrees();
 
     double distance = _drivetrain
