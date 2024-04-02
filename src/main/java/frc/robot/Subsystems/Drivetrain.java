@@ -190,8 +190,21 @@ public class Drivetrain extends Subsystem{
         SmartDashboard.putNumber("drivetrainOdometryZ",
                                  pose.getRotation().getDegrees());
     }
+
+    public void updateOdometry() {
+        _drivePoseEstimator.updateWithTime(
+            Timer.getFPGATimestamp(),
+            getGyroRotation(),
+            new SwerveModulePosition[] {
+                _frontLeftModule.getPosition(),
+                _frontRightModule.getPosition(),
+                _backLeftModule.getPosition(),
+                _backRightModule.getPosition()
+            }
+        );
+    }
     
-    public void updateOdometry()
+    public void updateOdometryWithVision()
     {
 
         _drivePoseEstimator.updateWithTime(
@@ -254,10 +267,10 @@ public class Drivetrain extends Subsystem{
             return;
         }
 
-        // _drivePoseEstimator.setVisionMeasurementStdDevs(
-        //     // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
-        //     VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
-        // );
+        _drivePoseEstimator.setVisionMeasurementStdDevs(
+            // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+            VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+        );
 
         // Pose2d pose = new Pose2d(
         //     poseEstimate.pose.getX(),
@@ -265,9 +278,11 @@ public class Drivetrain extends Subsystem{
         //     getGyroRotation()
         // );
 
+        SmartDashboard.putNumber("latency", poseEstimate.latency);
+
         _drivePoseEstimator.addVisionMeasurement(
             poseEstimate.pose,
-            Timer.getFPGATimestamp() - poseEstimate.latency
+            Timer.getFPGATimestamp() - (poseEstimate.latency / 1000)
         );
     }
 

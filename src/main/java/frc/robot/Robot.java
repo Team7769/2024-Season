@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();
-    _drivetrain.updateOdometry();
+    _drivetrain.updateOdometryWithVision();
 
     teleopIntake();
     teleopClimb();
