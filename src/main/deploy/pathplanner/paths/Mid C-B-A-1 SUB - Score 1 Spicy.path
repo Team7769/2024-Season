@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 7.4309552554704394
+        "x": 8.01324523847716,
+        "y": 7.131899456380939
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.279414327730224,
-        "y": 6.915678447456053
+        "x": 6.022403025694302,
+        "y": 6.616622648366553
       },
       "isLocked": false,
       "linkedName": "Mid C-B-A-1 SUB - Note 1"
     },
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.53
+        "x": 3.3319679513942826,
+        "y": 5.940443223838724
       },
       "prevControl": {
-        "x": 2.688192020035965,
-        "y": 5.846192586736101
+        "x": 4.620159971430246,
+        "y": 6.256635810574824
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score A"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.1233027140755487,
+    "rotation": 5.3558250428552165,
     "rotateFast": false
   },
   "reversed": false,

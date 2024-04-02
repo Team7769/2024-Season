@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7511871911042578,
-        "y": 4.493818790857619
+        "x": 1.9346939692452838,
+        "y": 5.398695647605275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1553382851207363,
-        "y": 0.9315705235039422
+        "x": 2.2977299021645106,
+        "y": 5.691466561249813
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Top 1-2-A-B - Score 2"
     },
     {
       "anchor": {
-        "x": 8.490541775359043,
-        "y": 1.0720548095836802
+        "x": 2.5905008158090483,
+        "y": 6.37069508090514
       },
       "prevControl": {
-        "x": 6.540833875943244,
-        "y": 1.1306926411450577
+        "x": 2.4265491041681075,
+        "y": 6.159900023081072
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Note 5 Pickup"
+      "linkedName": "Top 1-2-A-B - Note A"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -2.0095538130212276,
+    "rotation": 42.614055969611165,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Bottom 5-4",
+  "folder": "Top 1-2-A",
   "previewStartingState": {
-    "rotation": -59.036243467926475,
+    "rotation": 18.924644416051084,
     "velocity": 0
   },
   "useDefaultConstraints": true

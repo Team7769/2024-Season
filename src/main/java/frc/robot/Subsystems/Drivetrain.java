@@ -6,13 +6,16 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -21,7 +24,10 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.Constants;
+import frc.robot.LimelightHelpers.PoseEstimate;
+import frc.robot.LimelightHelpers.RawFiducial;
 
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
@@ -44,6 +50,32 @@ public class Drivetrain extends Subsystem{
     private ChassisSpeeds _chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final Field2d m_field = new Field2d();
+    private final Field2d m_vPEField = new Field2d();
+
+    private final String kLimelightName = "";
+
+    // in meters
+    private final double kNearTagAreaMin = 0.8;
+    private final double kFarTagAreaMin = 0.1;
+
+    private final double kMidTrustPoseDiffMax = 0.5;
+    private final double kLowTrustPoseDiffMax = 0.3;
+
+    // std = standard deviation
+    // in meters
+    private final double kHighTrustXYStds = 0.5;
+    private final double kMidTrustXYStds = 1.0;
+    private final double kLowTrustXYStds = 2.0;
+
+    // rotation deviation
+    // in degrees
+    private final double kHighTrustDegStds = 6;
+    private final double kMidTrustDegStds = 12;
+    private final double kLowTrustDegStds = 30;
+
+    // TODO: get these values
+    private final Translation2d kSpeakerTargetBlue = new Translation2d(0.5, 0.5);
+    private final Translation2d kSpeakerTargetRed = new Translation2d(0.5, 0.5);
 
     private Drivetrain()
     {
@@ -108,7 +140,9 @@ public class Drivetrain extends Subsystem{
             },
             new Pose2d()
         );
-        SmartDashboard.putData("Field",m_field);
+
+        SmartDashboard.putData("Field", m_field);
+        
     }
 
     public static Drivetrain getInstance()
@@ -130,6 +164,8 @@ public class Drivetrain extends Subsystem{
         var pose = _drivePoseEstimator.getEstimatedPosition();
         
         m_field.setRobotPose(pose);
+
+        // m_vPEField.setRobotPose(_visionPoseEstimator.getEstimatedPosition());
 
         SmartDashboard.putNumber("drivetrainGyroAngle",
                                  getGyroRotation().getDegrees());
@@ -154,8 +190,21 @@ public class Drivetrain extends Subsystem{
         SmartDashboard.putNumber("drivetrainOdometryZ",
                                  pose.getRotation().getDegrees());
     }
+
+    public void updateOdometry() {
+        _drivePoseEstimator.updateWithTime(
+            Timer.getFPGATimestamp(),
+            getGyroRotation(),
+            new SwerveModulePosition[] {
+                _frontLeftModule.getPosition(),
+                _frontRightModule.getPosition(),
+                _backLeftModule.getPosition(),
+                _backRightModule.getPosition()
+            }
+        );
+    }
     
-    public void updateOdometry()
+    public void updateOdometryWithVision()
     {
 
         _drivePoseEstimator.updateWithTime(
@@ -167,6 +216,73 @@ public class Drivetrain extends Subsystem{
                 _backLeftModule.getPosition(),
                 _backRightModule.getPosition()
             }
+        );
+
+        PoseEstimate poseEstimate = LimelightHelpers
+            .getBotPoseEstimate_wpiBlue(kLimelightName);
+
+        if (poseEstimate.tagCount == 0) return;
+
+        if (poseEstimate.tagCount == 1 &&
+            poseEstimate.rawFiducials[0].ambiguity > 0.5) {
+
+            return;
+        }
+
+        double poseDifference = _drivePoseEstimator
+            .getEstimatedPosition()
+            .getTranslation()
+            .getDistance(poseEstimate.pose.getTranslation());
+
+        double bestTagArea = 0;
+        for (int i = 0; i < poseEstimate.rawFiducials.length; i++) {
+            RawFiducial rawFiducial = poseEstimate.rawFiducials[i];
+
+            if (rawFiducial.ta > bestTagArea) {
+                bestTagArea = rawFiducial.ta;
+            }
+        }
+
+        double xyStds;
+        double degStds;
+        
+        // note that besides the tag count check, there are no equals checks 
+        // (e.g. <=) just < and >, for var name consistency we use =
+        if (poseEstimate.tagCount >= 2) {
+            xyStds = kHighTrustXYStds;
+            degStds = kHighTrustDegStds;
+
+        } else if (bestTagArea >= kNearTagAreaMin &&
+                   poseDifference <= kMidTrustPoseDiffMax) {
+
+            xyStds = kMidTrustXYStds;
+            degStds = kMidTrustDegStds;
+
+        } else if (bestTagArea >= kFarTagAreaMin &&
+                   poseDifference <= kLowTrustPoseDiffMax) {
+
+            xyStds = kLowTrustXYStds;
+            degStds = kLowTrustDegStds;
+        } else {
+            return;
+        }
+
+        _drivePoseEstimator.setVisionMeasurementStdDevs(
+            // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+            VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds))
+        );
+
+        // Pose2d pose = new Pose2d(
+        //     poseEstimate.pose.getX(),
+        //     poseEstimate.pose.getY(),
+        //     getGyroRotation()
+        // );
+
+        SmartDashboard.putNumber("latency", poseEstimate.latency);
+
+        _drivePoseEstimator.addVisionMeasurement(
+            poseEstimate.pose,
+            Timer.getFPGATimestamp() - (poseEstimate.latency / 1000)
         );
     }
 
@@ -240,10 +356,11 @@ public class Drivetrain extends Subsystem{
      */ 
     public void fieldOrientedDrive(double translationX,
                                    double translationY,
-                                   double rotationZ)
-    {   
+                                   double rotationZ) {   
+
         var alliance = DriverStation.getAlliance();
         var invert = alliance.isPresent() && alliance.get() == Alliance.Red ? -1 : 1; 
+
         _chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             invert * translationX * Constants.MAX_VELOCITY_METERS_PER_SECOND,
             invert * translationY * Constants.MAX_VELOCITY_METERS_PER_SECOND, 
@@ -280,6 +397,10 @@ public class Drivetrain extends Subsystem{
         _moduleStates = moduleStates;
         _chassisSpeeds = chassisSpeeds;
     }
+
+    // public void getTargetAngle() {
+    //     Pose2d targetPose
+    // }
 
     /** 
      * Method that resets the pigeon current direction the robot is facing will be the front

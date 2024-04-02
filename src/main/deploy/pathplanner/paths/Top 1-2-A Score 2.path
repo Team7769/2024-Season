@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.53
+        "x": 8.27025654051308,
+        "y": 5.398695647605275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.362841646082722,
-        "y": 5.272361595992807
+        "x": 7.104526706278716,
+        "y": 5.618991049350351
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Score A"
+      "linkedName": "Top 1-2-A-B - Note 2"
     },
     {
       "anchor": {
-        "x": 4.628186374775031,
-        "y": 4.2978770123018135
+        "x": 5.902080971753509,
+        "y": 6.0781278499293965
       },
       "prevControl": {
-        "x": 4.291274013623357,
-        "y": 4.548401588542802
+        "x": 6.714295279519389,
+        "y": 6.066127317787512
       },
       "nextControl": {
-        "x": 5.0849090000605095,
-        "y": 3.958262752474149
+        "x": 5.08986666398763,
+        "y": 6.090128382071281
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - mid point"
+      "linkedName": "Top 1-2-A-B - Avoid Stage"
     },
     {
       "anchor": {
-        "x": 8.094593992326358,
-        "y": 3.80602187737899
+        "x": 1.9346939692452838,
+        "y": 5.398695647605275
       },
       "prevControl": {
-        "x": 5.670450827349584,
-        "y": 3.7006243484669565
+        "x": 3.5226566568243776,
+        "y": 5.582275149059506
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-A-1 SUB - Note 3"
+      "linkedName": "Top 1-2-A-B - Score 2"
     }
   ],
   "rotationTargets": [],
@@ -55,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 15.990410609945569,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Mid C-B-A-3 SUB",
+  "folder": "Top 1-2-A",
   "previewStartingState": {
-    "rotation": 1.671327587666837e-13,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

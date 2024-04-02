@@ -6,6 +6,20 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
+    public static final double kFieldLength = 16.54;
+    public static final double kFieldWidth = 8.21;
+
+    public static final Translation2d kBlueSpeaker = new Translation2d(
+        0,
+        5.5
+    );
+
+    public static final Translation2d kRedSpeaker = new Translation2d(
+        kBlueSpeaker.getX() + kFieldLength,
+        kBlueSpeaker.getY()
+    );
+
+    // public static final double k
 
     // Controller USB ports
     public static final int kDriverControllerUsbSlot = 0;

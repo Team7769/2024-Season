@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
-      "y": 4.49
+      "x": 1.3,
+      "y": 5.5
     },
-    "rotation": -60.55000000000001
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,30 +14,30 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Note 5"
+            "pathName": "Mid - Start to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Shoot Note 5"
+            "pathName": "Mid - B to 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Note 4"
+            "pathName": "Mid - 3 to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom 5-4-C To Shoot Note 4"
+            "pathName": "Mid B-3-C - B to C"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Mid Autos",
   "choreoAuto": false
 }

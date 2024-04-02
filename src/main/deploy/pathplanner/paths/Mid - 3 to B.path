@@ -20,12 +20,12 @@
         "y": 4.496961233580098
       },
       "prevControl": {
-        "x": 5.823478053149932,
-        "y": 3.9454004839520334
+        "x": 5.72153263860025,
+        "y": 3.8005380170650764
       },
       "nextControl": {
-        "x": 4.288572114947367,
-        "y": 4.848286329953544
+        "x": 4.323704624584711,
+        "y": 4.965394695411359
       },
       "isLocked": false,
       "linkedName": null
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid - note B"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
