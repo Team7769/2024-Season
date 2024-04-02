@@ -29,7 +29,7 @@ public class AutoUtil {
             case (TOP_A_1_2_3):
                 return new Top_A_1_2_3();
             case (TOP_A_1_2_3_v2):
-                return new TOP_A_1_2_3_v2()
+                return new TOP_A_1_2_3_v2();
             case(BOTTOM_5_4):
                 return new Bottom_5_4();
             case(MID_C_B_A_3_SUB):

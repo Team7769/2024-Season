@@ -83,8 +83,18 @@ public class EasyAuton extends AutonomousMode {
     public void execute() {
         AutoCmds stepFunction = _auton[_step];
 
+        if (_jukebox.getState() == JukeboxEnum.SCORE && !_jukebox.hasNote()) {
+            _jukebox.setState(JukeboxEnum.IDLE);
+        }
+
+        boolean pathFinished;
+
         switch (stepFunction) {
             case FOLLOW:
+                if (_jukebox.getState() != JukeboxEnum.SCORE) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                }
+
                 if (follow()) {
                     reset();
                 }
@@ -92,6 +102,10 @@ public class EasyAuton extends AutonomousMode {
                 break;
 
             case FOLLOW_WITH_ROT_AIM:
+                if (_jukebox.getState() != JukeboxEnum.SCORE) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
+                }
+
                 if (followWithRotAim()) {
                     reset();
                 }
@@ -99,158 +113,87 @@ public class EasyAuton extends AutonomousMode {
                 break;
 
             case FOLLOW_WITH_PVT_AIM:
-                break;
+                pathFinished = follow();
 
-            case FOLLOW_WITH_POSE_AIM:
-                if (followWithPoseAim()) {
-                    reset();
-
-                    break;
+                if (pathFinished) {
+                    if (_jukebox.hasNote()) {
+                        if (pvtAim()) {
+                            reset();
+                        }
+                    } else {
+                        reset();
+                    }
                 };
 
-            case FOLLOW_WITH_SHOOT_SPKLL_AIM:
-                if (follow() && shootSpkLLAim()) {
-                    reset();
+                break;
 
-                    break;
-                }
+            case FOLLOW_WITH_FULL_AIM:  
+                pathFinished = followWithRotAim();
 
-            case FOLLOW_WITH_SHOOT_SPKPOD_AIM:
-                if (follow() && shootSpkPodAim()) {
-                    reset();
+                if (pathFinished) {
+                    if (_jukebox.hasNote()) {
+                        if (pvtAim()) {
+                            reset();
+                        }
+                    } else {
+                        reset();
+                    }
+                };
 
-                    break;
-                }
-
-            case FOLLOW_WITH_SHOOT_SPKLIN_AIM:
-                if (follow() && shootSpkLinAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case FOLLOW_WITH_SHOOT_SPKSUB_AIM:
-                if (follow() && shootSpkSubAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case FOLLOW_WITH_FULL_SPKLL_AIM:
-                if (followWithPoseAim() && shootSpkLLAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case FOLLOW_WITH_FULL_SPKPOD_AIM:
-                if (followWithPoseAim() && shootSpkPodAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case FOLLOW_WITH_FULL_SPKLIN_AIM:
-                if (followWithPoseAim() && shootSpkLinAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case FOLLOW_WITH_FULL_SPKSUB_AIM:
-                if (followWithPoseAim() && shootSpkSubAim()) {
-                    reset();
-
-                    break;
-                }
+                break;
 
             case FOLLOW_WITH_PASSTHROUGH:
-                // _jukebox.setState(JukeboxEnum.PASSTHROUGH);
+                break;
 
-                if (follow()) {
-                    reset();
-
-                    break;
+            case FULL_AIM:
+                if (rotAim()) {
+                    if (_jukebox.hasNote()) {
+                        if (pvtAim()) {
+                            reset();
+                        }
+                    } else {
+                        reset();
+                    }
                 }
 
-            case FOLLOW:
-                _jukebox.setState(JukeboxEnum.IDLE);
+                break;
 
-                if (follow()) {
-                    reset();
-
-                    break;
+            case ROT_AIM:
+                if (_jukebox.getState() != JukeboxEnum.SCORE) {
+                    _jukebox.setState(JukeboxEnum.IDLE);
                 }
 
-            case SCORE:
-                if (score()) {
+                if (rotAim()) {
                     reset();
-
-                    break;
                 }
 
-            case POSE_AIM:
-                if (poseAim()) {
-                    reset();
+                break;
 
-                    break;
+            case PVT_AIM:
+                if (_jukebox.hasNote()) {
+                    if (pvtAim()) {
+                        reset();
+                    }
+                } else {
+                    reset();
                 }
 
-            case FULL_SPKLL_AIM:
-                if (poseAim() && shootSpkLLAim()) {
-                    reset();
+                break;
 
-                    break;
+            case SHOOT:
+                _jukebox.setState(JukeboxEnum.SCORE);
+
+                if (!_jukebox.hasNote()) {
+                    reset();
                 }
 
-            case FULL_SPKPOD_AIM:
-                if (poseAim() && shootSpkPodAim()) {
-                    reset();
+                break;
 
-                    break;
-                }
+            case SHOOT_RUSHED:
+                _jukebox.setState(JukeboxEnum.SCORE);
 
-            case FULL_SPKLIN_AIM:
-                if (poseAim() && shootSpkLinAim()) {
-                    reset();
+                break;
 
-                    break;
-                }
-
-            case FULL_SPKSUB_AIM:
-                if (poseAim() && shootSpkSubAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case SHOOT_SPKLL_AIM:
-                if (shootSpkLLAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case SHOOT_SPKPOD_AIM:
-                if (shootSpkPodAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case SHOOT_SPKLIN_AIM:
-                if (shootSpkLinAim()) {
-                    reset();
-
-                    break;
-                }
-
-            case SHOOT_SPKSUB_AIM:
-                if (shootSpkSubAim()) {
-                    reset();
-
-                    break;
-                }
         }
     }
 
@@ -341,26 +284,10 @@ public class EasyAuton extends AutonomousMode {
         return false;
     }
 
-    private boolean shootAim(JukeboxEnum state) {
-        _jukebox.setState(state);
+    private boolean pvtAim() {
+        _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
 
-        return _jukebox.getSpeakerShotReady();
-    }
-
-    private boolean shootSpkLLAim() {
-        return shootAim(JukeboxEnum.PREP_SPEAKER);
-    }
-
-    private boolean shootSpkLinAim() {
-        return shootAim(JukeboxEnum.PREP_SPEAKER_LINE);
-    }
-
-    private boolean shootSpkSubAim() {
-        return shootAim(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
-    }
-
-    private boolean shootSpkPodAim() {
-        return shootAim(JukeboxEnum.PREP_SPEAKER_PODIUM);
+        return _jukebox.isPivotReady() && _jukebox.isShooterReady();
     }
 
     private boolean score() {

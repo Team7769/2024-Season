@@ -677,7 +677,11 @@ public class Jukebox extends Subsystem{
     }
 
     private void passthrough() {
-        
+        feeder();
+
+        setElevatorPosition(0.5);
+        setShooterAngle(0);
+        setShooterSpeed(kShooterIdleSpeed);
     }
 
     public void setManualElevatorSpeed(double givenSpeed)
