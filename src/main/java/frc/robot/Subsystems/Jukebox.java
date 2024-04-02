@@ -8,10 +8,15 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.Optional;
 
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -154,6 +159,8 @@ public class Jukebox extends Subsystem{
     private double _shooterSetpointRpm = 0.0;
 
     private int _loopCounter = 0;
+
+    private static Translation2d kSpeaker;
 
     public Jukebox()
     {
@@ -567,7 +574,21 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        _targetDistance = _visionSystem.getDistance();
+        // _targetDistance = _visionSystem.getDistance();
+
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+
+        if (alliance.isPresent()) {
+            kSpeaker = alliance.get() == Alliance.Blue ?
+                Constants.kBlueSpeaker :
+                Constants.kRedSpeaker;
+        }
+
+        _targetDistance = Drivetrain
+            .getInstance()
+            .getPose()
+            .getTranslation()
+            .getDistance(kSpeaker);
 
         feeder();
 

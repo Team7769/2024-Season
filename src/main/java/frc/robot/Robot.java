@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Autonomous.AutonomousMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +28,7 @@ import frc.robot.Utilities.OneDimensionalLookup;
  * project.
  */
 public class Robot extends TimedRobot {
+    private static Translation2d kSpeaker;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -64,6 +70,14 @@ public class Robot extends TimedRobot {
     _jukebox.logTelemetry();
     _intake.logTelemetry();
     _ledController.handleLights();
+
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+
+    if (alliance.isPresent()) {
+      kSpeaker = alliance.get() == Alliance.Blue ?
+        Constants.kBlueSpeaker :
+        Constants.kRedSpeaker;
+    }
   }
 
   @Override
@@ -126,9 +140,22 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
+    double angle = _drivetrain
+      .getGyroRotation()
+      .minus(kSpeaker.getAngle())
+      .getDegrees();
+
+    double distance = _drivetrain
+      .getPose()
+      .getTranslation()
+      .getDistance(kSpeaker);
+
+    SmartDashboard.putNumber("angle to speaker", angle);
+    SmartDashboard.putNumber("distance to speaker", angle);
+
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
-        rotation = -(_visionSystem.getTargetAngle() / 105) ;
+        rotation = -(angle / 105);
         //target angle range is -27 to 27 degrees
     }
 
