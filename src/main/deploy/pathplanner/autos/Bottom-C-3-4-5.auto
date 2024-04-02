@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7853670538059491,
+      "y": 4.459770703191282
+    },
+    "rotation": -61.144338780283555
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom-C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C-Line"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Line-3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3-Line"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
