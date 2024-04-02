@@ -256,7 +256,7 @@ public class Jukebox extends Subsystem{
             kShooterFeedForwardKv
         );
 
-        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kBoth);
+        _shootReadyDebouncer = new Debouncer(.25, DebounceType.kBoth);
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
