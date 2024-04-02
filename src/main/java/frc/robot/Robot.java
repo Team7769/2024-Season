@@ -140,9 +140,9 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
-    double angle = _drivetrain
-      .getGyroRotation()
-      .minus(kSpeaker.getAngle())
+    double angle = kSpeaker
+      .minus(_drivetrain.getPose().getTranslation())
+      .getAngle()
       .getDegrees();
 
     double distance = _drivetrain
@@ -151,7 +151,7 @@ public class Robot extends TimedRobot {
       .getDistance(kSpeaker);
 
     SmartDashboard.putNumber("angle to speaker", angle);
-    SmartDashboard.putNumber("distance to speaker", angle);
+    SmartDashboard.putNumber("distance to speaker", distance);
 
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
