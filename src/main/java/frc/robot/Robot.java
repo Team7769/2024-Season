@@ -163,6 +163,10 @@ public class Robot extends TimedRobot {
 
         rotation = speakerAngle / 105;
         //target angle range is -27 to 27 degrees
+    } else if (_driverController.getYButton()) {
+      rotation = _drivetrain.getAngleToTarget(
+        AllianceSpecific.getZone()
+      ) / 105;
     }
 
     // if (_driverController.getBackButton() && _driverController.getStartButton())
