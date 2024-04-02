@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.309243119380694,
-        "y": 5.565873600441298
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 1.602956765841976,
-        "y": 4.625989931765194
-      },
-      "isLocked": false,
-      "linkedName": "Mid C-B-3 - Mid"
-    },
-    {
-      "anchor": {
         "x": 2.6162688461334,
         "y": 4.376333332273105
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.146327011795348,
+        "y": 4.655361296411323
+      },
+      "isLocked": false,
+      "linkedName": "Mid C-B-3 - Note C"
+    },
+    {
+      "anchor": {
+        "x": 1.8966704123032583,
+        "y": 5.771473152964195
+      },
       "prevControl": {
-        "x": 1.896670412303259,
-        "y": 4.332276285303912
+        "x": 1.9994701885647073,
+        "y": 5.242788589333887
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid C-B-3 - Note C"
+      "linkedName": "Mid C-B-3 - C Turn"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.397181027296356,
+    "rotation": -1.2453642667682534,
     "rotateFast": false
   },
   "reversed": false,

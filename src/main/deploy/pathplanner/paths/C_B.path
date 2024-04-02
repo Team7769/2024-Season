@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.547148467218551,
-        "y": 4.289893615416685
+        "x": 1.8966704123032583,
+        "y": 5.771473152964195
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6599204694846459,
-        "y": 4.4361399886695265
+        "x": 2.1022699648261547,
+        "y": 5.756787470641132
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-3 - Note C"
+      "linkedName": "Mid C-B-3 - C Turn"
     },
     {
       "anchor": {
-        "x": 2.547148467218551,
-        "y": 5.567111941824834
+        "x": 2.8806111279485536,
+        "y": 5.771473152964195
       },
       "prevControl": {
-        "x": 0.5484480327630501,
-        "y": 5.2063708878011585
+        "x": 2.7043829400717843,
+        "y": 5.771473152964195
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0,
-      "rotationDegrees": -27.072080237992772,
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "Mid C-B-3-4",
   "previewStartingState": {
-    "rotation": -26.98023071822286,
+    "rotation": -1.1457628381750173,
     "velocity": 0
   },
   "useDefaultConstraints": true
