@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.309243119380694,
+        "y": 5.565873600441298
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6763851774572966,
+        "y": 5.095931766103247
+      },
+      "isLocked": false,
+      "linkedName": "Mid C-B-3 - Mid"
+    },
+    {
+      "anchor": {
+        "x": 2.6162688461334,
+        "y": 4.376333332273105
+      },
+      "prevControl": {
+        "x": 2.043527235533899,
+        "y": 4.8169038019650285
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Mid C-B-3 - Note C"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -22.619864948040362,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Mid C-B-3-4",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
