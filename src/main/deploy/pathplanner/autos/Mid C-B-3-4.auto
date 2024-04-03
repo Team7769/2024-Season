@@ -20,25 +20,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C_B"
+            "pathName": "C_MID"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B_3"
+            "pathName": "MID_B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B_MID"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MID_3"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "3_MID"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MID_4"
           }
         }
       ]

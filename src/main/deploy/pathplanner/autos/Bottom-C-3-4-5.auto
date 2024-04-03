@@ -14,25 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom-C"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C-Line"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Line-3"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3-Line"
+            "pathName": null
           }
         }
       ]
