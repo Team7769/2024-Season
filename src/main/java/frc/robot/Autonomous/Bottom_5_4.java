@@ -129,9 +129,9 @@ public class Bottom_5_4 extends AutonomousMode{
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
+                break;
             // drives to 3
             default:
-                _jukebox.setState(JukeboxEnum.IDLE);
                 _drivetrain.drive(new ChassisSpeeds());
                 break;
         }
@@ -153,6 +153,7 @@ public class Bottom_5_4 extends AutonomousMode{
         _intake.setWantedState(IntakeState.INTAKE);
         _jukebox.setState(JukeboxEnum.IDLE);
         _loopCounter = 0;
+        _jukebox.setIdleSpeedMax();
     }
     private void nextStep() {
         _count++;

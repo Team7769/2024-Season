@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6373441619921745,
-        "y": 3.630359329192267
+        "x": 1.9113560946263224,
+        "y": 4.640675614088259
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.252769217529226,
-        "y": 1.3393928867942657
+        "x": 3.526781150163374,
+        "y": 2.349709171690258
       },
       "isLocked": false,
       "linkedName": "Bottom 4-5 Start"
     },
     {
       "anchor": {
-        "x": 8.8909308774395,
-        "y": 2.775468261350217
+        "x": 8.62271291626662,
+        "y": 3.451135345920066
       },
       "prevControl": {
-        "x": 6.614650117364563,
-        "y": 1.5418709462128324
+        "x": 6.346432156191683,
+        "y": 2.2175380307826815
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.2,
-      "rotationDegrees": 44.49504277601005,
+      "rotationDegrees": 22.82194443364705,
       "rotateFast": true
     }
   ],
@@ -45,7 +45,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 43.78112476486879,
+    "rotation": 20.13630342824809,
     "rotateFast": false
   },
   "reversed": false,
