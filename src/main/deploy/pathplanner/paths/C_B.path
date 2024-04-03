@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8966704123032583,
-        "y": 5.771473152964195
+        "x": 2.6162688461334,
+        "y": 4.376333332273105
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1756983764414763,
-        "y": 5.771473152964195
+        "x": 1.4120428956421427,
+        "y": 4.831589484288092
       },
       "isLocked": false,
-      "linkedName": "Mid C-B-3 - C Turn"
+      "linkedName": "Mid C-B-3 - Note C"
     },
     {
       "anchor": {
@@ -20,21 +20,15 @@
         "y": 5.888958611548708
       },
       "prevControl": {
-        "x": 2.763125669364041,
-        "y": 5.888958611548708
+        "x": 1.7938706360418095,
+        "y": 5.85958724690258
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Mid C-B-3 - Note B"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -51,7 +45,7 @@
   "reversed": false,
   "folder": "Mid C-B-3-4",
   "previewStartingState": {
-    "rotation": -1.1457628381750173,
+    "rotation": -25.016893478099995,
     "velocity": 0
   },
   "useDefaultConstraints": true
