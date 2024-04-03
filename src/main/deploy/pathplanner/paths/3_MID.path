@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7511871911042578,
-        "y": 4.493818790857619
+        "x": 8.666769963235812,
+        "y": 4.46444742621149
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1553382851207363,
-        "y": 0.9315705235039422
+        "x": 6.765567110948872,
+        "y": 3.8697121749832677
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid C-B-3 - Note 3"
     },
     {
       "anchor": {
-        "x": 8.461170410712915,
-        "y": 0.7489697984762701
+        "x": 2.263812470379861,
+        "y": 5.771473152964195
       },
       "prevControl": {
-        "x": 6.5114625112971165,
-        "y": 0.8076076300376479
+        "x": 3.8058091143015926,
+        "y": 5.624616329733555
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Bottom 4-5 Note 5 Pickup"
+      "linkedName": "Mid C-B-3 - C Turn"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.1,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -2.0095538130212276,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Bottom 5-4-C",
+  "folder": "Mid C-B-3-4",
   "previewStartingState": {
-    "rotation": -59.036243467926475,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

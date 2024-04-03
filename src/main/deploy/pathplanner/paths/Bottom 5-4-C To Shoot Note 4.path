@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.8909308774395,
-        "y": 2.775468261350217
+        "x": 8.784255421820326,
+        "y": 3.039936240874271
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.64402148201069,
-        "y": 1.703413451766537
+        "x": 6.537346026391517,
+        "y": 1.967881431290591
       },
       "isLocked": false,
       "linkedName": "Bottom 4-5 Note 4 Pickup"
     },
     {
       "anchor": {
-        "x": 2.918404239090931,
-        "y": 3.5366726368260153
+        "x": 1.7057565421034249,
+        "y": 5.184045860041631
       },
       "prevControl": {
-        "x": 4.739428847150874,
-        "y": 1.8918762166428356
+        "x": 3.526781150163374,
+        "y": 3.5392494398584513
       },
       "nextControl": null,
       "isLocked": false,
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "Bottom 5-4-C",
   "previewStartingState": {
-    "rotation": 49.398705354995606,
+    "rotation": 20.13630342824809,
     "velocity": 0
   },
   "useDefaultConstraints": true
