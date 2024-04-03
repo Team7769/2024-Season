@@ -11,6 +11,9 @@ package frc.robot.Enums;
         /**Spins up the shooter for a speaker shot. */
         PREP_SPEAKER,
 
+        /* Spins up shooter and pivots for feed shot (sucessor to prep_launch) */
+        PREP_FEED,
+
         /**Spins up the shooter for a speaker shot from the podium (Doesn't use auto aim) */
         PREP_SPEAKER_PODIUM,
 
