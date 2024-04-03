@@ -28,6 +28,7 @@ import frc.robot.LimelightHelpers;
 import frc.robot.Constants.Constants;
 import frc.robot.LimelightHelpers.PoseEstimate;
 import frc.robot.LimelightHelpers.RawFiducial;
+import frc.robot.Utilities.AllianceSpecific;
 
 public class Drivetrain extends Subsystem{
     private static Drivetrain _instance;
@@ -418,5 +419,27 @@ public class Drivetrain extends Subsystem{
 
     public Pose2d getPose(){
         return _drivePoseEstimator.getEstimatedPosition();
+    }
+
+    public double getAngleToTarget(Translation2d target) {
+        return target
+            .minus(getPose().getTranslation())
+            .getAngle()
+            .plus(AllianceSpecific.getAllianceAngleOffset())
+            .minus(getGyroRotationWithOffset())
+            .getDegrees();
+    }
+
+    public double getDistanceToTarget(Translation2d target) {
+        return getPose()
+            .getTranslation()
+            .getDistance(target);
+    }
+
+    public double getRotationDifference(double angle) {
+        return Rotation2d
+            .fromDegrees(angle)
+            .minus(getGyroRotationWithOffset())
+            .getDegrees();
     }
 }
