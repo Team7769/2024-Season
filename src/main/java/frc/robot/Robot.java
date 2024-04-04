@@ -163,11 +163,17 @@ public class Robot extends TimedRobot {
 
         rotation = speakerAngle / 105;
         //target angle range is -27 to 27 degrees
-    } else if (_driverController.getYButton()) {
-      rotation = _drivetrain.getAngleToTarget(
+    } else if (_driverController.getLeftBumper()) {
+      var feedAngle = _drivetrain.getAngleToTarget(
         AllianceSpecific.getZone()
-      ) / 105;
-    }
+      );
+      
+      SmartDashboard.putNumber("angle to zone", feedAngle);
+        rotation = feedAngle / 105;
+      } 
+    // else if (_driverController.getLeftBumper()) {
+    //   rotation = _drivetrain.getRotationDifference(90);
+    // }
 
     // if (_driverController.getBackButton() && _driverController.getStartButton())
     // {

@@ -10,7 +10,7 @@ import frc.robot.Constants.Constants;
 
 public class AllianceSpecific {
     private static boolean isRed() {
-        return DriverStation.getAlliance().get() == Alliance.Red;
+        return DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red;
     }
 
     public static Translation2d getSpeaker() {
@@ -22,7 +22,8 @@ public class AllianceSpecific {
     }
 
     public static Rotation2d getAllianceAngleOffset() {
-        return Rotation2d.fromDegrees(isRed() ? 180 : 0);
+        //return Rotation2d.fromDegrees(isRed() ? 180 : 0);
+        return Rotation2d.fromDegrees(180);
     }
 
     public static Translation2d mirrorTranslation(

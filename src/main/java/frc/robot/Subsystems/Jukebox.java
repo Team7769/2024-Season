@@ -82,13 +82,13 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapElevatorPosition = 60;
-    private final double kTrapShooterAngle = 14;
+    private final double kTrapElevatorPosition = 79;
+    private final double kTrapShooterAngle = 11;
     private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
-    private final double kPodiumSpeakerShotAngle = 5.9;
+    private final double kPodiumSpeakerShotAngle = 6;
     private final double kPodiumSpeakerShotSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
@@ -148,7 +148,8 @@ public class Jukebox extends Subsystem{
 
     private final double[] kFeedDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
     // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
-    private final double[] kFeedShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    // private final double[] kFeedShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double[] kFeedShooterAngles = {4.5, 5.15, 5.60, 5.90, 6.25, 6.40}; // might work
     private final double kFeedShooterSpeed = 67;
 
     private double _manualElevatorSpeed = 0;
@@ -640,14 +641,14 @@ public class Jukebox extends Subsystem{
     private void prepSpeakerPodium() {
         feeder();
         setShooterAngle(kPodiumSpeakerShotAngle);
-        setShooterSpeed(kPodiumSpeakerShotSpeed);
+        setShooterSpeed(67);
         setElevatorPosition(0);
     }
 
     private void prepSpeakerLine() {
         feeder();
         setShooterAngle(kLineSpeakerShotAngle);
-        setShooterSpeed(kLineSpeakerShotSpeed);
+        setShooterSpeed(67);
         setElevatorPosition(0);
     }
 

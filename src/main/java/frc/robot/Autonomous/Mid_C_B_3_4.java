@@ -28,7 +28,7 @@ public class Mid_C_B_3_4 extends AutonomousMode {
         switch (_count) {
             case 0:
                 // Initial Position - Prep for Speaker Shot
-                _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
                 nextStep();
                 break;
             case 1:
@@ -67,7 +67,7 @@ public class Mid_C_B_3_4 extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);                
                 }
 
                 if (_pathFollower.isPathFinished()){
@@ -115,7 +115,7 @@ public class Mid_C_B_3_4 extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);                
                 }
 
                 if (_pathFollower.isPathFinished()){
@@ -163,7 +163,7 @@ public class Mid_C_B_3_4 extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);                
                 }
 
                 if (_pathFollower.isPathFinished()){

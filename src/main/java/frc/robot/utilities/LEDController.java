@@ -123,6 +123,7 @@ public class LEDController {
                 }
                 break;
             case SCORE:
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_LAUNCH:
