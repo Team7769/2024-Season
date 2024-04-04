@@ -14,37 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MID_C"
+            "pathName": "Mid C-B-A-3 SUB - Note C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C_MID"
+            "pathName": "Mid C-B-A-3 SUB - Score C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MID_B"
+            "pathName": "Mid C-B-A-3 SUB - Note B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B_MID"
+            "pathName": "Mid C-B-A-3 SUB - Score B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MID_3"
+            "pathName": "Mid C-B-A-3 SUB - Note 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3_MID"
+            "pathName": "Mid C-B-A-3 SUB - Score 3 Yeet"
           }
         }
       ]

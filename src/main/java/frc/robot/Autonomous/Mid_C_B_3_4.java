@@ -188,7 +188,6 @@ public class Mid_C_B_3_4 extends AutonomousMode {
                     _jukebox.setState(JukeboxEnum.IDLE);
 
                     // Start Path to Note B (2)
-                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     nextStep();
                 }
 

@@ -56,12 +56,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Mid C-B-A-1 SUB - Score 1 Normal"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Mid Autos",
   "choreoAuto": false
 }
