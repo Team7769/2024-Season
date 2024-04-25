@@ -46,6 +46,12 @@
           "data": {
             "pathName": "Mid C-B-A-3 SUB - Score 3 Yeet"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note 3"
+          }
         }
       ]
     }

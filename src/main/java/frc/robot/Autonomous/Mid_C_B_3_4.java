@@ -189,6 +189,15 @@ public class Mid_C_B_3_4 extends AutonomousMode {
 
                     // Start Path to Note B (2)
                     nextStep();
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
+                }
+                break;
+            case 15:
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+                if (_pathFollower.isPathFinished()){
+                    // At Note C turn position (1)
+                    _drivetrain.drive(new ChassisSpeeds());
+                    nextStep();
                 }
 
                 break;

@@ -127,9 +127,17 @@ public class LEDController {
                 upperCandle.setLEDs(0, 255, 255, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_LAUNCH:
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(170, 51, 106, 0, 0, _jukebox.getShooterLeds(jukeboxNumLeds));
                 break;
+            case PREP_SPEAKER_SUBWOOFER:
+                upperCandle.clearAnimation(0);
+                upperCandle.setLEDs(0, 0, 255, 0, 0, _jukebox.getShooterLeds(jukeboxNumLeds));
+                break;
             case PREP_SPEAKER_PODIUM:
+                upperCandle.clearAnimation(0);
+                upperCandle.setLEDs(255, 0, 255, 0, 0, _jukebox.getShooterLeds(jukeboxNumLeds));
+                break;
             case PREP_SPEAKER_LINE:
             case PREP_SPEAKER:
                 // upperCandle.clearAnimation(0);
@@ -144,6 +152,7 @@ public class LEDController {
             case PREP_AMP:
                 // upperCandle.clearAnimation(0);
                 // upperCandle.animate(PREP_AMP_LIGHTS);
+                upperCandle.clearAnimation(0);
                 upperCandle.setLEDs(255, 153, 51, 0, 0, jukeboxNumLeds);
                 break;
             case PREP_TRAP:

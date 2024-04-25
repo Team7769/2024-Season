@@ -589,7 +589,7 @@ public class Jukebox extends Subsystem{
 
         feeder();
 
-        if (_targetDistance != 0.0) {
+        if (_targetDistance > 1.75) {
             double desiredShooterAngle = OneDimensionalLookup.interpLinear(
                 kDistanceIDs,
                 kShooterAngles,
