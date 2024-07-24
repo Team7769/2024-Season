@@ -4,15 +4,21 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Autonomous.AutonomousMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Constants;
 import frc.robot.Enums.*;
 import frc.robot.Subsystems.*;
+import frc.robot.Utilities.AllianceSpecific;
 import frc.robot.Utilities.AutoUtil;
 import frc.robot.Utilities.LEDController;
 import frc.robot.Utilities.OneDimensionalLookup;
@@ -23,6 +29,7 @@ import frc.robot.Utilities.OneDimensionalLookup;
  * project.
  */
 public class Robot extends TimedRobot {
+    private static Translation2d kSpeaker;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -64,6 +71,14 @@ public class Robot extends TimedRobot {
     _jukebox.logTelemetry();
     _intake.logTelemetry();
     _ledController.handleLights();
+
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+
+    if (alliance.isPresent()) {
+      kSpeaker = alliance.get() == Alliance.Blue ?
+        Constants.kBlueSpeaker :
+        Constants.kRedSpeaker;
+    }
   }
 
   @Override
@@ -98,7 +113,7 @@ public class Robot extends TimedRobot {
     // _ledController.handleBottomLights(); Add this code when we get the bottom lights setup on the robot
     teleopDrive();
     teleopJukebox();
-    _drivetrain.updateOdometry();
+    _drivetrain.updateOdometryWithVision();
 
     teleopIntake();
     teleopClimb();
@@ -126,11 +141,39 @@ public class Robot extends TimedRobot {
       _drivetrain.reset();
     }
 
+    double speakerDistance = _drivetrain.getDistanceToTarget(
+      AllianceSpecific.getSpeaker()
+    );
+
+    double speakerAngle = _drivetrain.getAngleToTarget(
+      AllianceSpecific.getSpeaker()
+    );
+
+    // amp
+    // rotation = _drivetrain.getRotationDifference(90) / 105;
+
+    // feed
+    // rotation = _drivetrain.getAngleToTarget(AllianceSpecific.getZone()) / 105
+
+    SmartDashboard.putNumber("angle to speaker", speakerAngle);
+    SmartDashboard.putNumber("distance to speaker", speakerDistance);
+
     if (Math.abs(_driverController.getLeftTriggerAxis()) > 0.25)
     {
-        rotation = -(_visionSystem.getTargetAngle() / 105) ;
+
+        rotation = speakerAngle / 105;
         //target angle range is -27 to 27 degrees
-    }
+    } else if (_driverController.getLeftBumper()) {
+      var feedAngle = _drivetrain.getAngleToTarget(
+        AllianceSpecific.getZone()
+      );
+      
+      SmartDashboard.putNumber("angle to zone", feedAngle);
+        rotation = feedAngle / 105;
+      } 
+    // else if (_driverController.getLeftBumper()) {
+    //   rotation = _drivetrain.getRotationDifference(90);
+    // }
 
     // if (_driverController.getBackButton() && _driverController.getStartButton())
     // {
@@ -148,7 +191,7 @@ public class Robot extends TimedRobot {
       _jukebox.setState(JukeboxEnum.PREP_AMP);
       //_jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
     } else if (_operatorController.getXButton()) {
-      _jukebox.setState(JukeboxEnum.PREP_SPEAKER_LINE);
+      _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
       //_jukebox.setState(JukeboxEnum.PREP_AMP);
     } else if (_operatorController.getYButton()) {
       _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
@@ -159,12 +202,12 @@ public class Robot extends TimedRobot {
     }
   }
   if (_driverController.getXButtonPressed()) {
-    // _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
-    if (_jukebox.getDisableAutoSpinup()) {
-      _jukebox.enableAutoSpinup();
-    } else {
-      _jukebox.disableAutoSpinup();
-    }
+    _jukebox.setState(JukeboxEnum.JUKEBOX_TEST);
+    // if (_jukebox.getDisableAutoSpinup()) {
+    //   _jukebox.enableAutoSpinup();
+    // } else {
+    //   _jukebox.disableAutoSpinup();
+    // }
   }
 
   if (_score) {

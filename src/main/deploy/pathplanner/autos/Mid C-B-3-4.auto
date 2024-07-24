@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3186789318946823,
-      "y": 5.567111941824834
+      "x": 1.27,
+      "y": 5.53
     },
     "rotation": 0
   },
@@ -14,31 +14,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MID_C"
+            "pathName": "Mid C-B-A-3 SUB - Note C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C_B"
+            "pathName": "Mid C-B-A-3 SUB - Score C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B_3"
+            "pathName": "Mid C-B-A-3 SUB - Note B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3_MID"
+            "pathName": "Mid C-B-A-3 SUB - Score B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MID_4"
+            "pathName": "Mid C-B-A-3 SUB - Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Score 3 Yeet"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid C-B-A-3 SUB - Note 3"
           }
         }
       ]

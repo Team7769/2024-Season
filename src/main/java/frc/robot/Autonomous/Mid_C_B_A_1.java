@@ -238,7 +238,6 @@ public class Mid_C_B_A_1 extends AutonomousMode{
         // Set initial subsystem states. We should never need to change the Intake state as it is autonomous.
         _intake.setWantedState(IntakeState.INTAKE);
         _jukebox.setState(JukeboxEnum.IDLE);
-        _jukebox.setIdleSpeedMax();
     }
 
     private void nextStep() {

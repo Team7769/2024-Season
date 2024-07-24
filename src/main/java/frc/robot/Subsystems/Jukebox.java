@@ -8,10 +8,15 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.Optional;
 
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -77,13 +82,13 @@ public class Jukebox extends Subsystem{
     private final double kPhotoEyeDebounceTime = 0.04;
 
     // Set Points
-    private final double kTrapElevatorPosition = 60;
-    private final double kTrapShooterAngle = 14;
+    private final double kTrapElevatorPosition = 79;
+    private final double kTrapShooterAngle = 11;
     private final double kExtendClimbElevatorPosition = 83; // change this
     private final double kExtendClimbShooterAngle = 4;
     private final double kAmpElevatorPosition = 60;
     private final double kFeedShooterAngle = 7;
-    private final double kPodiumSpeakerShotAngle = 5.9;
+    private final double kPodiumSpeakerShotAngle = 6;
     private final double kPodiumSpeakerShotSpeed = 38;
     private final double kLineSpeakerShotAngle = 5.2;
     private final double kLineSpeakerShotSpeed = 35;
@@ -135,10 +140,17 @@ public class Jukebox extends Subsystem{
     //private final double[] kShooterSpeeds = {35, 36, 38, 41, 44};
 
     // Old
-    private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
+    private final double[] kDistanceIDs = {1.5, 2, 2.5, 3, 3.5, 4};
     // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
-    private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    // private final double[] kShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double[] kShooterAngles = {3, 4, 5, 5.39, 5.73, 6.2};
     private final double[] kShooterSpeeds = {67, 67, 67, 67, 67, 67};
+
+    private final double[] kFeedDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
+    // private final double[] kShooterAngles = {5.25, 5.75, 5.85, 6.2, 6.375};
+    // private final double[] kFeedShooterAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
+    private final double[] kFeedShooterAngles = {4.5, 5.15, 5.60, 5.90, 6.25, 6.40}; // might work
+    private final double kFeedShooterSpeed = 67;
 
     private double _manualElevatorSpeed = 0;
     private double _manualFeederSpeed = 0;
@@ -154,6 +166,8 @@ public class Jukebox extends Subsystem{
     private double _shooterSetpointRpm = 0.0;
 
     private int _loopCounter = 0;
+
+    private static Translation2d kSpeaker;
 
     public Jukebox()
     {
@@ -243,7 +257,7 @@ public class Jukebox extends Subsystem{
             kShooterFeedForwardKv
         );
 
-        _shootReadyDebouncer = new Debouncer(.04, DebounceType.kRising);
+        _shootReadyDebouncer = new Debouncer(.25, DebounceType.kBoth);
         
         _manualShooterSpeed = 0.0;
         _shooterSetpoint = 0.0;
@@ -567,11 +581,15 @@ public class Jukebox extends Subsystem{
     private void prepSpeaker() {
         setElevatorPosition(0);
 
-        _targetDistance = _visionSystem.getDistance();
+        // _targetDistance = _visionSystem.getDistance();
+
+        _targetDistance = Drivetrain.getInstance().getDistanceToTarget(
+            AllianceSpecific.getSpeaker()
+        );
 
         feeder();
 
-        if (_targetDistance != 0.0) {
+        if (_targetDistance > 1.75) {
             double desiredShooterAngle = OneDimensionalLookup.interpLinear(
                 kDistanceIDs,
                 kShooterAngles,
@@ -582,8 +600,36 @@ public class Jukebox extends Subsystem{
                 kShooterSpeeds,
                 _targetDistance
             );
+
             setShooterAngle(desiredShooterAngle);
             setShooterSpeed(desiredShooterSpeed);
+
+        } else {
+            setShooterAngle(Constants.KMinShooterAngle);
+            setShooterSpeed(Constants.kMaxShooterSpeed);
+        }
+    }
+
+    private void prepFeed() {
+        setElevatorPosition(0);
+
+        // _targetDistance = _visionSystem.getDistance();
+
+        _targetDistance = Drivetrain.getInstance().getDistanceToTarget(
+            AllianceSpecific.getZone()
+        );
+
+        feeder();
+
+        if (_targetDistance != 0.0) {
+            double desiredShooterAngle = OneDimensionalLookup.interpLinear(
+                kFeedDistanceIDs,
+                kFeedShooterAngles,
+                _targetDistance
+            );
+
+            setShooterAngle(desiredShooterAngle);
+            setShooterSpeed(kFeedShooterSpeed);
 
         } else {
             setShooterAngle(Constants.KMinShooterAngle);
@@ -595,14 +641,14 @@ public class Jukebox extends Subsystem{
     private void prepSpeakerPodium() {
         feeder();
         setShooterAngle(kPodiumSpeakerShotAngle);
-        setShooterSpeed(kPodiumSpeakerShotSpeed);
+        setShooterSpeed(67);
         setElevatorPosition(0);
     }
 
     private void prepSpeakerLine() {
         feeder();
         setShooterAngle(kLineSpeakerShotAngle);
-        setShooterSpeed(kLineSpeakerShotSpeed);
+        setShooterSpeed(67);
         setElevatorPosition(0);
     }
 
@@ -777,6 +823,9 @@ public class Jukebox extends Subsystem{
                 break;
             case PREP_SPEAKER:
                 prepSpeaker();
+                break;
+            case PREP_FEED:
+                prepFeed();
                 break;
             case PREP_SPEAKER_PODIUM:
                 prepSpeakerPodium();

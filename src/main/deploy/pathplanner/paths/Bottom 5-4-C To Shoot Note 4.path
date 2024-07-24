@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.784255421820326,
-        "y": 3.039936240874271
+        "x": 8.62271291626662,
+        "y": 3.451135345920066
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.537346026391517,
-        "y": 1.967881431290591
+        "x": 7.345058554160041,
+        "y": 3.0252505585512077
       },
       "isLocked": false,
       "linkedName": "Bottom 4-5 Note 4 Pickup"
     },
     {
       "anchor": {
-        "x": 1.7057565421034249,
-        "y": 5.184045860041631
+        "x": 4.231693901670451,
+        "y": 3.039936240874271
       },
       "prevControl": {
-        "x": 3.526781150163374,
-        "y": 3.5392494398584513
+        "x": 6.3376567059933215,
+        "y": 2.2180970977238825
+      },
+      "nextControl": {
+        "x": 3.0274679511791946,
+        "y": 3.5098780752123226
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.131641329472284,
+        "y": 6.094558164071605
+      },
+      "prevControl": {
+        "x": 2.5575261168411423,
+        "y": 4.816903801965028
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.4,
       "rotationDegrees": -27.663471922084646,
       "rotateFast": true
     }

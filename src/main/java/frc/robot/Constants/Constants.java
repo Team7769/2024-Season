@@ -4,8 +4,29 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import frc.robot.Utilities.AllianceSpecific;
 
 public final class Constants {
+    public static final double kFieldLength = 16.54;
+    public static final double kFieldWidth = 8.21;
+
+    public static final Translation2d kBlueSpeaker = new Translation2d(
+        0,
+        5.5
+    );
+
+    public static final Translation2d kRedSpeaker = AllianceSpecific
+        .mirrorTranslation(kBlueSpeaker);
+
+    public static final Translation2d kBlueZone = new Translation2d(
+        1.3,
+        7.0
+    );
+
+    public static final Translation2d kRedZone = AllianceSpecific
+        .mirrorTranslation(kBlueZone);
+
+    // public static final double k
 
     // Controller USB ports
     public static final int kDriverControllerUsbSlot = 0;

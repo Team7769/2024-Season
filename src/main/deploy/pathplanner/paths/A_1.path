@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.93935385724081,
-        "y": 6.990384785778517
+        "x": 0.9127296966579629,
+        "y": 6.623242727701913
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.161140321454306,
-        "y": 7.216123744966993
+        "x": 2.1345161608714593,
+        "y": 6.848981686890389
       },
       "isLocked": false,
-      "linkedName": "TOP_A_1_2_3-A"
+      "linkedName": "TOP_A_1_2_3-TOP"
     },
     {
       "anchor": {
-        "x": 8.328810723241988,
-        "y": 7.37782702384235
+        "x": 8.284942222836145,
+        "y": 7.4309552554704394
       },
       "prevControl": {
-        "x": 5.130961637508229,
-        "y": 7.329136060505501
+        "x": 5.087093137102387,
+        "y": 7.38226429213359
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Top A-1-2-3",
   "previewStartingState": {
-    "rotation": 32.0,
+    "rotation": 59.85861444792467,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -35,7 +35,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
         switch (_step) {
             case 0:
                 // Initial Position - Prep for Speaker Shot
-                _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
                 nextStep();
                 break;
             case 1:
@@ -62,6 +62,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
 
                 if (_pathFollower.isPathFinished()){
                     // At Note A (1)
+                    _pathFollower.startNextPath(new ChassisSpeeds(), _drivetrain.getPose());
                     _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
@@ -69,10 +70,18 @@ public class Top_A_1_2_3 extends AutonomousMode {
                 break;
             case 4:
                 // Once the note is detected, we can set prep speaker.
+                _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
+
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);                
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_SUBWOOFER);
+                }
+
+                if (_pathFollower.isPathFinished()){
+                    // At Note A (2)
+                    _drivetrain.drive(new ChassisSpeeds());
                     nextStep();
                 }
+
                 break;
             case 5:
                 // Once ready for the shot, set score.
@@ -116,7 +125,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
                 }
 
                 if (_pathFollower.isPathFinished()){
@@ -167,7 +176,7 @@ public class Top_A_1_2_3 extends AutonomousMode {
                 _drivetrain.drive(_pathFollower.getPathTarget(_drivetrain.getPose()));
 
                 if (_jukebox.hasNote()) {
-                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER);
+                    _jukebox.setState(JukeboxEnum.PREP_SPEAKER_PODIUM);
                 }
 
                 if (_pathFollower.isPathFinished()){
